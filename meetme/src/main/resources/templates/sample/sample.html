@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ 	<th:block th:each="employee:${sample}">
+ 		<h1 th:text="${employee}"></h1>
+ 	</th:block>
+</body>
+</html>
