@@ -12,12 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.mvn
-pom.xml
-mvnw
-mvnw.cmd
-application.properties
-MeetmeApplication.java
+
 
 ### IntelliJ IDEA ###
 .idea
