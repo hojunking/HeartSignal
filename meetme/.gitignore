@@ -3,6 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+application.properties
+target
+pom.xml
 
 ### STS ###
 .apt_generated
@@ -12,9 +15,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-pom.xml
-application.properties
-target
 
 ### IntelliJ IDEA ###
 .idea

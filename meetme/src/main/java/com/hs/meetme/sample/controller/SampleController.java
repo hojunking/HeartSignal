@@ -18,8 +18,8 @@ public class SampleController {
 	
 	@GetMapping("/")
 	public String mypage(Model model) {
-		model.addAttribute("sample", sampleService.getList());
-		System.out.println(sampleService.getList());
+		model.addAttribute("sample", sampleService.getTagList());
+		System.out.println(sampleService.getTagList());
 		return "sample/sample";
 	}
 }

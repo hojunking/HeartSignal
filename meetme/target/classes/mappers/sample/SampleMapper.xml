@@ -4,5 +4,9 @@
 	<select id="getList" resultType="SampleVO">
 		SELECT * FROM employees
 	</select>
+	
+	<select id="getTagList" resultType="TagVO">
+		SELECT * FROM tags
+	</select>
 
 </mapper>
