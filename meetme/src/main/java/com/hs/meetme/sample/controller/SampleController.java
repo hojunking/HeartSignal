@@ -16,7 +16,7 @@ public class SampleController {
 	@Autowired
 	SampleService sampleService;
 	
-	@GetMapping("/")
+	@GetMapping("/sample")
 	public String mypage(Model model) {
 		model.addAttribute("sample", sampleService.getTagList());
 		System.out.println(sampleService.getTagList());

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.sample.mapper.MypageMapper">
 	<!-- MyPage 회원정보 -->
-	<select id="userList" resultType="MypageVO">
+	<!-- <select id="userList" resultType="MypageVO">
 		SELECT
 			email,
 			password,
@@ -26,34 +26,34 @@
 			address
 		FROM USERINFO
 		WHERE email=#{email}
-	</select>
+	</select> -->
 	<!-- 회원정보 수정 (패스워드)-->
-	<update id="userUpdatePassword" parameterType="MypageVO">
+	<!-- <update id="userUpdatePassword" parameterType="MypageVO">
 		UPDATE userinfo
 		SET password=#{password}
 		WHERE email=#{email}
-	</update>
+	</update> -->
 	<!-- 회원정보 수정 (닉네임)-->
-	<update id="userUpdateNickname" parameterType="MypageVO">
+	<!-- <update id="userUpdateNickname" parameterType="MypageVO">
 		UPDATE userinfo
 		SET nickname=#{nickname}
 		WHERE email=#{email}
-	</update>
+	</update> -->
 	<!-- 회원정보 수정 (전화번호)-->
-	<update id="userUpdatePhonenum" parameterType="MypageVO">
+	<!-- <update id="userUpdatePhonenum" parameterType="MypageVO">
 		UPDATE userinfo
 		SET phone_num=#{phoneNum}
 		WHERE email=#{email}
-	</update>
+	</update> -->
 	<!-- 회원정보 수정 (주소)-->
-	<update id="userUpdateAddress" parameterType="MypageVO">
+	<!-- <update id="userUpdateAddress" parameterType="MypageVO">
 		UPDATE userinfo
 		SET address=#{address}
 		WHERE email=#{email}
-	</update>
+	</update> -->
 	
 	<!-- 내가 쓴 글 리스트 -->
-	<select id="myBoardList" resultType="MypageVO">
+	<!-- <select id="myBoardList" resultType="MypageVO">
 		SELECT
 		  p.post_title "title",
 		  p.post_updated "update", 
@@ -62,9 +62,9 @@
 		FROM POST p JOIN  POST_LIKE l
 		ON p.post_id = l.post_id;
 		
-	</select>
+	</select> -->
 	<!-- 내가 쓴 코멘트 리스트 -->
-	<select id="myCommentList" resultType="MypageVO">
+	<!-- <select id="myCommentList" resultType="MypageVO">
 		
-	</select>
+	</select> -->
 </mapper>
