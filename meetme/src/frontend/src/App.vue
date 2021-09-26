@@ -1,25 +1,22 @@
 <template>
-  <HelloWorld msg="Welcome"/>
+  <Header />
+  <!-- hello world 에다가 집어 넣으면 될 듯 함. -->
+  <HelloWorld /> 
+  <Footer />
 </template>
 
 <script>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header,
+    HelloWorld,
+    Footer,
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
