@@ -1,22 +1,8 @@
-import {
-    createRouter,
-    createWebHistory
-  } from 'vue-router'
-  import CoupleLogList from '../views/inyeong/CoupleLogList.vue'
-  
-  
-  const routes = [{
-      path: '/CoupleLogList',
-      name: 'CoupleLogList',
-      component: CoupleLogList
-    },
-  
-]
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './routes'
 
-const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
-  })
-  
-  export default router
-  
+export const router = createRouter({
+  history: createWebHistory(),
+  linkActiveClass: 'active',
+  routes
+})
