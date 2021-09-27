@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+	
+<th:block layout:fragment="content">
+	
+	<th:block th:text="${count}">
+	
+	</th:block>
+	
+	<th:block th:each="tag:${list}">
+		<h5 th:text="${tag.postTitle}"></h5>
+	</th:block>
+	
+</th:block>
+
+</html>
