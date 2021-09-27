@@ -34,6 +34,7 @@
             <!-- .tm-top-bar -->
         </div>
     </header>
+    
 </template>
 
 <script>
