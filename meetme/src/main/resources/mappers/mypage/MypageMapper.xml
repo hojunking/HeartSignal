@@ -1,70 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hs.meetme.sample.mapper.MypageMapper">
-	<!-- MyPage 회원정보 -->
-	<!-- <select id="userList" resultType="MypageVO">
-		SELECT
-			email,
-			password,
-			user_name,
-			nickname,
-			phone_num,
-			img_id,
-			address
-		FROM USERINFO
-			WHERE COUPLE_STATE='n'
-			ORDER BY created DESC
+<mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
+	
+	<!-- 게시글 검색기능 -->
+    <sql id = "search">
+         <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+           <foreach collection="typeArr" item="type">
+             <trim prefix="OR">
+               <choose>
+	               <when test="type=='T'.toString()">
+	                 post_title LIKE '%'||#{keyword}||'%' 
+	               </when>
+	               <when test="type=='C'.toString()">
+	                 post_content LIKE '%'||#{keyword}||'%'
+	               </when>
+	               <when test="type=='D'.toString()"> 
+	                 post_distinct LIKE '%'||#{keyword}||'%' 
+	               </when>
+               </choose>
+             </trim>
+           </foreach>
+         </trim>
+    </sql>
+  <!--게시글 페이징을 위한 -->
+  <select id="getTotalCount" resultType="int">
+    SELECT COUNT(*) FROM post
+    WHERE
+      <include refid="search"></include>
+    post_id >0 AND user_id=#{userId}
+  </select>
+    	
+	<!-- 내가 쓴글 리스트 SELECT -->
+	<select id="getPostList" resultType="com.hs.meetme.mypage.domain.PostVO">
+  	  SELECT *
+      FROM
+        (SELECT /*+ INDEX_DESC(post POST_PK)*/ROWNUM rn, a.post_id, a.post_title, a.post_updated, a.user_id, a.hit, b.up
+         FROM post a JOIN (SELECT post_id, count(*) up
+                           FROM post_like
+                           GROUP BY post_id) b
+         ON a.post_id = b.post_id
+      <where>
+        <include refid="search"></include>
+         
+           <![CDATA[ ROWNUM <= #{pageNum} * #{amount} ]]>
+      </where> )
+      WHERE rn > (#{pageNum}-1) * #{amount} AND user_id=#{userId}
 	</select>
-	<select id="userOne" resultType="MypageVO">
-		SELECT
-			email,
-			password,
-			user_name,
-			nickname,
-			phone_num,
-			img_id,
-			address
-		FROM USERINFO
-		WHERE email=#{email}
+	
+	<!-- 내가 쓴글 갯수 -->
+	<select id="getPostCount" resultType="int">
+	  SELECT count(*)
+      FROM post
+      WHERE user_id=#{userId}
+	</select>
+	
+	<!-- 내가 쓴 댓글 리스트 SELECT -->
+<!-- 	<select id="">
+
 	</select> -->
-	<!-- 회원정보 수정 (패스워드)-->
-	<!-- <update id="userUpdatePassword" parameterType="MypageVO">
+    <!-- 내가 쓴 댓글 갯수 -->
+<!-- 	<select id="">
+	  SELECT count(*)
+      FROM post_comment
+      WHERE user_id=#{userId}
+	</select> -->
+	
+	
+	<!-- 회원정보 SELECT -->
+<!-- 	<select id="">
+	  SELECT a.*, b.img_url
+      FROM userinfo a JOIN img b
+      ON a.img_id = b.img_id
+	</select> -->
+	
+	<!-- 회원정보 비밀번호 확인 -->
+<!-- 	<select id="">
+	  SELECT password
+	  FROM userinfo
+	  WHERE email = #{email}
+	</select> -->
+	<!-- 회원정보 수정 (패스워드) -->
+<!-- 	<update id="userUpdatePassword" parameterType="">
 		UPDATE userinfo
 		SET password=#{password}
 		WHERE email=#{email}
 	</update> -->
-	<!-- 회원정보 수정 (닉네임)-->
-	<!-- <update id="userUpdateNickname" parameterType="MypageVO">
+	
+	<!-- 회원정보 닉네임 중복확인 -->
+<!-- 	<select id="">
+	  SELECT nickname
+	  FROM userinfo
+	  WHERE nickname=#{nickName}
+	</select> -->
+	<!-- 회원정보 수정 (닉네임) -->
+<!-- 	<update id="" parameterType="">
 		UPDATE userinfo
-		SET nickname=#{nickname}
-		WHERE email=#{email}
-	</update> -->
-	<!-- 회원정보 수정 (전화번호)-->
-	<!-- <update id="userUpdatePhonenum" parameterType="MypageVO">
-		UPDATE userinfo
-		SET phone_num=#{phoneNum}
-		WHERE email=#{email}
-	</update> -->
-	<!-- 회원정보 수정 (주소)-->
-	<!-- <update id="userUpdateAddress" parameterType="MypageVO">
-		UPDATE userinfo
-		SET address=#{address}
-		WHERE email=#{email}
+		SET nickname = #{nickName}
+		WHERE email = #{email}
 	</update> -->
 	
-	<!-- 내가 쓴 글 리스트 -->
-	<!-- <select id="myBoardList" resultType="MypageVO">
-		SELECT
-		  p.post_title "title",
-		  p.post_updated "update", 
-        (SELECT COUNT(*) "view" from post) "view", 
-        (SELECT COUNT(*) "like" from post_like) "like"
-		FROM POST p JOIN  POST_LIKE l
-		ON p.post_id = l.post_id;
-		
+	<!-- 회원정보 수정 (전화번호) -->
+<!-- 	<update id="" parameterType="">
+		UPDATE userinfo
+		SET phone_num = #{phoneNum}
+		WHERE email = #{email}
+	</update> -->
+	<!-- 회원정보 수정 (주소) -->
+<!-- 	<update id="" parameterType="">
+		UPDATE userinfo
+		SET address= #{address}
+		WHERE email= #{email}
+	</update> -->
+	
+	
+	<!-- 알림내역 회원별 SELECT -->
+<!-- 	<select id="">
+	  SELECT 
+      notice_id,
+      user_received,
+      notice_content,
+      notice_date,
+      notice_confirmed,
+      user_sent
+      FROM
+      notification
+      WHERE
+      user_received=#{userReceived}
+      ORDER BY notice_date DESC
 	</select> -->
-	<!-- 내가 쓴 코멘트 리스트 -->
-	<!-- <select id="myCommentList" resultType="MypageVO">
-		
-	</select> -->
+	<!-- 알림내역 개별삭제 -->
+<!-- 	<delete id="">
+	  DELETE
+	  FROM notification
+	  WHERE notice_id=#{noticeId}
+	</delete> -->
+	<!-- 알림내역 모두삭제 -->
+<!-- 	<delete id="">
+	  DELETE
+	  FROM notification
+	  WHERE user_received=#{userReceived}
+	</delete> -->
+	
 </mapper>
