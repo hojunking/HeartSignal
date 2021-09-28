@@ -33,6 +33,13 @@
             <!--사진 여러 개 올리기-->
             <div class="mb-3">
                <UploadImages />
+            </div>
+            <br>
+            <div class="text-center">
+                 <button type="button" class="btn" onclick="location.href='/coupleLogList'"
+                    style="background-color: rgb(105, 198, 187); color:white">
+                    <i class="far fa-heart"></i>저장하기
+                </button>
             </div> 
 
             <!--미리보기에 보여주기-->

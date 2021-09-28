@@ -8,20 +8,22 @@ import 'bootstrap/dist/js/bootstrap.esm.min.js'
 
 import './others/css/datepicker.css'
 import './others/css/templatemo-style.css'
-import './others/js/datepicker.min.js'
+// import './others/js/datepicker.min.js'
 
 import './others/font-awesome-4.7.0/css/font-awesome.min.css'
 
 import './others/slick/slick.css'
 import './others/slick/slick-theme.css'
-import './others/slick/slick.min.js'
+// import './others/slick/slick.min.js'
 
-import './others/js/jquery-3.6.0.min.js'
+// import './others/js/jquery-3.6.0.min.js'
 
+import VueEasyLightbox from 'vue-easy-lightbox'
 
 
 const app = createApp(App)
 app.use(store)
 app.use(router)
+app.use(VueEasyLightbox)
 app.mount('#app')
 
