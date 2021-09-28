@@ -1,5 +1,6 @@
 import CoupleLogList from '../views/inyeong/CoupleLogList.vue'
 import CoupleLogInsert from '../views/inyeong/CoupleLogInsert.vue'
+import CoupleLogDetail from '../views/inyeong/CoupleLogDetail.vue'
 import CreateCourse from '../views/jaeho/CreateCourse.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import { defineComponent } from 'vue'
@@ -22,6 +23,12 @@ const routes = [
         name: 'CoupleLogInsert',
         component: CoupleLogInsert,
         alias:'/CoupleLogInsert'
+    },
+    {
+        path: '/coupleLogDetail',
+        name: 'CoupleLogDetail',
+        component: CoupleLogDetail,
+        alias:'/CoupleLogDetail'
     },
 
     {

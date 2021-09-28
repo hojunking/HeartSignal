@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.mypage.domain.UserInfoVO2;
 import com.hs.meetme.mypage.mapper.MypageMapper;
 
 @Service
@@ -15,18 +16,23 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired MypageMapper mypageMapper;
 	
 	@Override
-	public int getPostCount(Criteria cri) {
-		return mypageMapper.getPostCount(cri);
+	public int getPostCount(Criteria cri, long userId) {
+		return mypageMapper.getPostCount(cri, userId);
 	}
 
 	@Override
-	public List<PostVO> getPostList(Criteria cri) {
-		return mypageMapper.getPostList(cri);
+	public List<PostVO> getPostList(Criteria cri, long userId) {
+		return mypageMapper.getPostList(cri, userId);
 	}
 
 	@Override
-	public int getTotalCount(Criteria cri) {
-		return mypageMapper.getTotalCount(cri);
+	public int getTotalCount(Criteria cri, long userId) {
+		return mypageMapper.getTotalCount(cri, userId);
+	}
+
+	@Override
+	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO) {
+		return mypageMapper.getMyinfo(userInfoVO);
 	}
 
 }

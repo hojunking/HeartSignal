@@ -10,10 +10,11 @@
 	width: 50px;
 	height: 30px;
 	line-height: 28px;
-	background-color: #69c6ba
+	background-color: #69c6ba;
+	border:0px;
 }
-
-.insertcustom {
+/* 입력 칸 */
+.insertcustom,.insertcustomOne {
 	border: 2px;
 	border-style: solid;
 	border-color: #69c6ba;
@@ -38,11 +39,19 @@
 .customCard {
 	border: 0px;
 	background-color: transparent;
+	
 }
 
-.cardbtn {
+.cardbtn,.cardbtn2 {
 	text-align: center;
 	font-size: 12px;
+	border:0px;
+}
+.cardbtn2:hover,
+.cardbtn2:focus,
+.cardbtn2:active {
+    background:#69c6ba;
+    color: white;
 }
 </style>
 </head>
@@ -50,7 +59,7 @@
 	<th:block layout:fragment="content">
 		<div class="tm-page-wrap mx-auto">
 			<section class="tm-banner">
-				<div id="demo" class="carousel slide" data-ride="carousel">
+				<div id="demo" class="carousel slide" data-ride="carousel" data-interval="false"> <!-- false = 자동슬라이드 해지 -->
 					<!-- Carousel  -->
 
 					<!-- Indicators -->
@@ -87,15 +96,15 @@
 													<label for="inputCity" class="select">관심있는 태그를
 														설정해주세요</label>
 													<div class="input-group">
-														<input class="insertcustom form-control" type="text"
+														<input class="insertcustomOne form-control" type="text" value=""
 															placeholder=" # 태그를 선택해주세요">
 														<button class="tagButton btn btn-primary">검색</button>
 													</div>
 													<br>
 													<div class="customBg">
-														<span class="tcustom badge badge-secondary m-1" th:each ="t : ${tag}">
-															<span th:text="${t.tagId}"></span> 	
-														</span>
+														<button type="button" id="tagClick" class="tcustom badge badge-secondary m-1"
+															th:each="t : ${tag}"> <span id="tagOn" th:text="${t.tagId}"></span>
+														</button>
 													</div>
 												</div>
 
@@ -115,8 +124,6 @@
 
 									</div>
 									<!-- row -->
-
-
 								</div>
 								<!-- .container -->
 							</div>
@@ -144,9 +151,6 @@
 									<div class="row tm-banner-row" id="tm-section-search">
 										<div class="col-lg-7 map">
 											<!-- API 지도 들어갈 곳  -->
-
-
-
 
 										</div>
 										<!-- END OF map -->
@@ -248,14 +252,15 @@
 									<div class="col-9">
 										<!-- CONTENTS -->
 										<div class="card-body">
-											<h4>하시식당</h4>
+											<h4 th:each="p:${place}"><span th:text="${p.placeName}"></span></h4>
 											<p class="card-text">
 												<img th:src="@{/img/mapIcon.png}"
-													style="width: 15px; height: 15px;"> 제주시
+													style="width: 15px; height: 15px;">
+													제주시
 											</p>
-											<a href="#"
+											<button type="button"
 												class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
-												보기</a>
+												보기</button>
 										</div>
 									</div>
 									<!-- END OF CONTENTS -->
@@ -295,16 +300,16 @@
 									<!-- END OF IMAGE  -->
 
 									<div class="col-9">
-										<!-- CONTENTS -->
+										<!-- CONTENTS pink -->
 										<div class="card-body">
 											<h4>하시식당</h4>
 											<p class="card-text">
 												<img th:src="@{/img/mapIcon.png}"
 													style="width: 15px; height: 15px;"> 제주시
 											</p>
-											<a href="#"
-												class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
-												보기</a>
+											<button type="button"
+												class="cardbtn2 text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
+												보기</button>
 										</div>
 									</div>
 									<!-- END OF CONTENTS -->
@@ -918,6 +923,19 @@
 	<!-- .main-content -->
 </body>
 <th:block layout:fragment="script">
-
+	<script>
+		$(function(){
+			$(".tcustom").on("click",function(){
+				var tagId = $(this).text();
+				/* console.log(this); */
+					
+				$(".insertcustomOne").attr("value",tagId);
+			});/* tcustom click 이벤트 */
+		});
+		
+		
+		
+	</script>
+	
 </th:block>
 </html>
