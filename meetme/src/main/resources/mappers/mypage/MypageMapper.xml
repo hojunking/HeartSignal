@@ -5,17 +5,17 @@
 	<!-- 게시글 검색기능 -->
     <sql id = "search">
          <trim prefix="(" suffix=") AND " prefixOverrides="OR">
-           <foreach collection="typeArr" item="type">
+           <foreach collection="cri.typeArr" item="type">
              <trim prefix="OR">
                <choose>
 	               <when test="type=='T'.toString()">
-	                 post_title LIKE '%'||#{keyword}||'%' 
+	                 post_title LIKE '%'||#{cri.keyword}||'%' 
 	               </when>
 	               <when test="type=='C'.toString()">
-	                 post_content LIKE '%'||#{keyword}||'%'
+	                 post_content LIKE '%'||#{cri.keyword}||'%'
 	               </when>
 	               <when test="type=='D'.toString()"> 
-	                 post_distinct LIKE '%'||#{keyword}||'%' 
+	                 post_distinct LIKE '%'||#{cri.keyword}||'%' 
 	               </when>
                </choose>
              </trim>
@@ -31,7 +31,7 @@
   </select>
     	
 	<!-- 내가 쓴글 리스트 SELECT -->
-	<select id="getPostList" resultType="com.hs.meetme.mypage.domain.PostVO">
+	<select id="getPostList" resultType="PostVO">
   	  SELECT *
       FROM
         (SELECT /*+ INDEX_DESC(post POST_PK)*/ROWNUM rn, a.post_id, a.post_title, a.post_updated, a.user_id, a.hit, b.up
@@ -39,12 +39,12 @@
                            FROM post_like
                            GROUP BY post_id) b
          ON a.post_id = b.post_id
-      <where>
-        <include refid="search"></include>
+         <where>
+            <include refid="search"></include>
          
-           <![CDATA[ ROWNUM <= #{pageNum} * #{amount} ]]>
-      </where> )
-      WHERE rn > (#{pageNum}-1) * #{amount} AND user_id=#{userId}
+             <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
+         </where> )
+      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount} AND user_id=#{userId}
 	</select>
 	
 	<!-- 내가 쓴글 갯수 -->
@@ -67,11 +67,12 @@
 	
 	
 	<!-- 회원정보 SELECT -->
-<!-- 	<select id="">
+	<select id="getMyinfo" resultType="com.hs.meetme.mypage.domain.UserInfoVO2">
 	  SELECT a.*, b.img_url
-      FROM userinfo a JOIN img b
+      FROM user_info a LEFT OUTER JOIN img b
       ON a.img_id = b.img_id
-	</select> -->
+      WHERE user_id = #{userId}
+	</select>
 	
 	<!-- 회원정보 비밀번호 확인 -->
 <!-- 	<select id="">
@@ -87,11 +88,12 @@
 	</update> -->
 	
 	<!-- 회원정보 닉네임 중복확인 -->
-<!-- 	<select id="">
+	<select id="getNickname">
 	  SELECT nickname
-	  FROM userinfo
+	  FROM user_info
 	  WHERE nickname=#{nickName}
-	</select> -->
+	</select>
+	
 	<!-- 회원정보 수정 (닉네임) -->
 <!-- 	<update id="" parameterType="">
 		UPDATE userinfo
