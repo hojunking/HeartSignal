@@ -13,15 +13,16 @@ public class Criteria {
   public Criteria( ){
 	  this(1, 10);
   }
+  
   public Criteria(int pageNum, int amount) {
 	  this.pageNum = pageNum;
 	  this.amount = amount;
   }
   
-  public String [] getTypeArr() {
+  public String[] getTypeArr() {
 	  return type == null ? new String[] {} : type.split("");
   }
-  
-  private long userId;   //회원 아이디
+
+  // private long userId;   //회원 아이디
   
 }

@@ -23,13 +23,12 @@ public class MypageController {
 	
 	@GetMapping("/myinfo_my_write_list")
 	public String myinfo_my_write_list(Model model, @ModelAttribute("cri") Criteria cri) {
+
 		
-		cri.setUserId(1);
+		int total = mypageService.getTotalCount(cri, 1);
 		
-		int total = mypageService.getTotalCount(cri);
-		
-		model.addAttribute("count",mypageService.getPostCount(cri));
-		model.addAttribute("list", mypageService.getPostList(cri));
+		model.addAttribute("count",mypageService.getPostCount(cri, 1));
+		model.addAttribute("list", mypageService.getPostList(cri, 1));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "mypage/myinfo_my_write_list";
