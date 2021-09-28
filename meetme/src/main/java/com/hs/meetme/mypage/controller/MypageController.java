@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.mypage.domain.UserInfoVO2;
 import com.hs.meetme.mypage.service.MypageService;
 
 @Controller
@@ -34,5 +35,14 @@ public class MypageController {
 		return "mypage/myinfo_my_write_list";
 	}
 	
+	@GetMapping("/myinfo")
+	public String myinfo(Model model, UserInfoVO2 userinfoVO) {
+		
+		userinfoVO.setUserId(1);
+		
+		model.addAttribute("userInfo", mypageService.getMyinfo(userinfoVO));
+		
+		return "mypage/myinfo";
+	}
 	
 }
