@@ -8,5 +8,10 @@ import com.hs.meetme.main.domain.MainVO;
 
 @Mapper
 public interface MainMapper {
-	List<MainVO> tagList();
+	public List<MainVO> tagList();	// 태그 불러오기
+	
+	public List<MainVO> placeList(); // 장소 불러오기
+	
+	
+	
 }

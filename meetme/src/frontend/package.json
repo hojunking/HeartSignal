@@ -13,10 +13,12 @@
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "vue": "^3.0.0",
+    "vue-draggable-next": "^2.0.1",
+    "vue-easy-lightbox": "^1.2.4",
     "vue-gallery": "^2.0.1",
     "vue-router": "^4.0.11",
     "vue-upload-drop-images": "^1.0.7",
-    "vuesax": "^4.0.1-alpha.25"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
