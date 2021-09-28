@@ -16,7 +16,12 @@ import './others/slick/slick.css'
 import './others/slick/slick-theme.css'
 import './others/slick/slick.min.js'
 
+import './others/js/jquery-3.6.0.min.js'
+
+
+
 const app = createApp(App)
 app.use(store)
 app.use(router)
 app.mount('#app')
+

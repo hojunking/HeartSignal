@@ -1,7 +1,5 @@
 import CoupleLogList from '../views/inyeong/CoupleLogList.vue'
-
 import CreateCourse from '../views/jaeho/CreateCourse.vue'
-
 import HelloWorld from '../components/HelloWorld.vue'
 import { defineComponent } from 'vue'
 
@@ -11,11 +9,18 @@ const NotFound = defineComponent({
 
 const routes = [
     { path: '/', redirect: '/hello' },
-    { path: '/hello', name: 'HelloWorld', component: HelloWorld },
+    { path: '/hello', name: 'HelloWorld', component: HelloWorld, },
     {
         path: '/coupleLogList',
         name: 'CoupleLogList',
-        component: CoupleLogList
+        component: CoupleLogList,
+        alias:'/CoupleLogList'
+    },
+    {
+        path: '/coupleLogInsert',
+        name: 'CoupleLogInsert',
+        component: CoupleLogInsert,
+        alias:'/CoupleLogInsert'
     },
 
     {
