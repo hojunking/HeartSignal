@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="showSingle">Show single picture.</button>
+    <!-- <button @click="showSingle">Show single picture.</button> -->
     <button @click="showMultiple">Show a group of pictures.</button>
 
     <!-- all props & events -->

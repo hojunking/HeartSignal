@@ -6,8 +6,8 @@
             </div>
 
             <main role="main" class="probootstrap-main js-probootstrap-main">
-                <div>
-                    
+                <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <img :src=pic alt="사진">
                 </div>
 
 
@@ -17,16 +17,16 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">커플로그 제목 넣기</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                ...
+                            <div class="modal-body" >
+                                <img :src=pic alt="사진">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary">수정하기</button>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
 
                 <button type="button" class="btn" onclick="location.href='/coupleLogInsert'"
                     style="background-color: rgb(105, 198, 187); color:white">
-                    <i class="far fa-heart"></i>새로운 추억 기록하기
+                    <i class="fas fa-sign-in-alt">  새로운 추억 기록하기</i>
                 </button>
             </div>
         </div>
@@ -66,7 +66,15 @@
     }
 </style>
 <script>
-    export default [
-
-    ]
+    import pic from '@/assets/logo.png'
+ 
+    
+    export default {
+       
+        data() {
+            return {
+                pic:pic 
+            }
+    }
+    }
 </script>

@@ -2,6 +2,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { router } from './router/index.js'
 import { store } from './store/index.js'
+//fontawsome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.esm.min.js'
@@ -26,4 +32,8 @@ app.use(store)
 app.use(router)
 app.use(VueEasyLightbox)
 app.mount('#app')
+library.add(faUserSecret)
 
+app.component('font-awesome-icon', FontAwesomeIcon)
+
+app.config.productionTip = false
