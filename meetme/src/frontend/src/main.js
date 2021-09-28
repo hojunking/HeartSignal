@@ -24,7 +24,11 @@ import './others/slick/slick-theme.css'
 
 // import './others/js/jquery-3.6.0.min.js'
 
+// search tag
+import '@mayank1513/vue-tag-input/dist/TagInput.css'
+
 import VueEasyLightbox from 'vue-easy-lightbox'
+
 
 
 const app = createApp(App)
