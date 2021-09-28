@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { router } from './router/index.js'
+import { store } from './store/index.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap/dist/js/bootstrap.esm.min.js'
 
 import './others/css/datepicker.css'
 import './others/css/templatemo-style.css'
@@ -20,6 +21,7 @@ import './others/js/jquery-3.6.0.min.js'
 
 
 const app = createApp(App)
+app.use(store)
 app.use(router)
 app.mount('#app')
 

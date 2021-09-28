@@ -1,10 +1,10 @@
 import CoupleLogList from '../views/inyeong/CoupleLogList.vue'
-import CoupleLogInsert from '../views/inyeong/CoupleLogInsert.vue'
+import CreateCourse from '../views/jaeho/CreateCourse.vue'
 import HelloWorld from '../components/HelloWorld.vue'
-import { defineComponent  } from 'vue'
+import { defineComponent } from 'vue'
 
 const NotFound = defineComponent({
-    template: '<div>Not Found</div>'
+    template: '<div>404 Not Found</div>'
 })
 
 const routes = [
@@ -23,9 +23,15 @@ const routes = [
         alias:'/CoupleLogInsert'
     },
 
-    
     {
-        path: '/:catchAll(.*)+', 
+        path: '/createCourse',
+        name: 'CreateCourse',
+        component: CreateCourse
+    },
+
+    {
+        path: '/:catchAll(.*)+',
+        name: 'NotFound',
         component: NotFound,
     }
 ]
