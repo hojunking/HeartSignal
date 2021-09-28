@@ -1,4 +1,5 @@
 import CoupleLogList from '../views/inyeong/CoupleLogList.vue'
+import CoupleLogInsert from '../views/inyeong/CoupleLogInsert.vue'
 import CreateCourse from '../views/jaeho/CreateCourse.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import { defineComponent } from 'vue'

@@ -6,12 +6,13 @@
     </p>
     <div v-if="!loading">
         <span v-for="post of data" :key="post.id">
-            <button @click="onClick" class="btn btn-primary m-1">#{{ post.tagId }}</button>
+            <button class="btn btn-primary m-1">#{{ post.tagId }}</button>
         </span>
     </div>
 </template>
 
 <script>
+
 import { ref, onMounted } from 'vue'
 
 export default {

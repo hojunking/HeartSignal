@@ -18,6 +18,8 @@ import './others/slick/slick.min.js'
 
 import './others/js/jquery-3.6.0.min.js'
 
+// search tag
+import '@mayank1513/vue-tag-input/dist/TagInput.css'
 
 
 const app = createApp(App)
