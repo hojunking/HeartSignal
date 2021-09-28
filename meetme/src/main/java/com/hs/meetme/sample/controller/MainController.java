@@ -26,7 +26,9 @@ public class MainController {
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("tag",service.tagList());
+		model.addAttribute("place",service.placeList());
 		return "main/main";
 	}
+	
 
 }

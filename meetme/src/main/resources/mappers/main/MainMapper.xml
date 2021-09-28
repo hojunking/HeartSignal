@@ -3,7 +3,11 @@
 <mapper namespace="com.hs.meetme.main.mapper.MainMapper">
 	
 	<select id="tagList" resultType="MainVO">
-		select * from tags
+		SELECT * FROM TAGS
+	</select>
+	
+	<select id="placeList" resultType="MainVO">
+		SELECT PLACE_NAME,REGION FROM PLACE
 	</select>
 	
 </mapper>
