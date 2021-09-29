@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hs.meetme.coursecreate.api.SearchPlaceDetailAPI;
 import com.hs.meetme.coursecreate.domain.PlaceVO;
 import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.service.PlaceService;
@@ -45,6 +46,26 @@ public class RestCourseController {
 			log.info(key);
 		}
 		return placeService.getListBySearched(keywords);
+	}
+	
+	// 장소 한개 가져오기
+	@GetMapping("/place/searchOne/{placeName}")
+	public PlaceVO getPlaceOne(@PathVariable("placeName") String placeName) {
+		return placeService.getPlace(placeName);
+	}
+	
+	// 네이버 장소 검색 (1개)
+	@GetMapping("/place/searchOneNaver")
+	public String getPlaceBySearched(String placeName) {
+		String result = SearchPlaceDetailAPI.SearchPlaceByNaver(placeName);
+		return result;
+	}
+	
+	// 네이버 장소 이미지 검색 (1개)
+	@GetMapping("/place/searchOneImage")
+	public String getPlaceImageBySearched(String placeName) {
+		String result = SearchPlaceDetailAPI.SearchPlaceImageByNaver(placeName);
+		return result;
 	}
 	
 }

@@ -9,9 +9,12 @@ public interface PlaceService {
 	
 	List<PlaceVO> getList();
 	
+	PlaceVO getPlace(String placeName);
+	
 	List<TagVO> getTagList();
+	
 	List<TagVO> getTagsSelected(int placeId);
 	
 	List<PlaceVO> getListBySearched(String[] keywords); // 검색 결과
-	
+
 }

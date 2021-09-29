@@ -7,6 +7,13 @@
 		SELECT * FROM PLACE
 	</select>
 	
+	<!-- 한 장소 가져오기 -->
+	<select id="getPlace" resultType="PlaceVO">
+		SELECT * 
+		FROM PLACE
+		WHERE PLACE_NAME = #{placeName}
+	</select>
+	
 	<select id="getTagList" resultType="TagVO">
 		SELECT * FROM tags
 	</select>

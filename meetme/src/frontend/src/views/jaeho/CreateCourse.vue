@@ -1,6 +1,6 @@
 <template>
-    <div class="tm-page-wrap mx-auto mt-3">
-        <div class="tm-container-outer mt-5 p-5" id="tm-section-2">
+    <div class="tm-page-wrap mx-auto">
+        <div class="tm-container-outer p-5" id="tm-section-2">
             <div class="row">
                 <div class="col-lg-7">
                     <div class="row">
@@ -44,7 +44,7 @@
                                             <div class="row">
                                                 <!-- 이미지 들어갈곳 -->
                                                 <div class="col-2">
-                                                    <!-- img api 검색 -->
+                                                    <img :src="imgHref" :alt="result.placeName">
                                                 </div>
                                                 <!-- 장소 내용 -->
                                                 <div class="col-10">
@@ -203,10 +203,55 @@ export default defineComponent ({
          */
         // 모달 추가
         const modalTitle = ref(null)
+        const modalLoading = ref(false)
+        const modalData = ref(null)
+        const modalError = ref(null)
         const detailOfPlace = (placeName) => {
             console.log(placeName)
             // 코스 디테일 모달 추가.
             modalTitle.value = placeName
+             // search start
+            modalLoading.value = true;
+            console.log(2);
+            if(placeName == '') {
+                alert('json 호출 중 에러')
+                return
+            }
+            // 장소 가져오기
+            fetch('api/course/place/searchOne/' + placeName, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                modalData.value = json;
+            })
+            .catch(err => {
+                searchError.value = err;
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        modalError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                modalLoading.value = false;
+            });
         }
 
 
@@ -268,7 +313,7 @@ export default defineComponent ({
             fetch('api/course/place/search?keywords=' + keywords, {
                 method: 'get',
                 headers: {
-                'content-type': 'application/json'
+                    'content-type': 'application/json'
                 }
             })
             .then((res) => {
@@ -300,6 +345,48 @@ export default defineComponent ({
                 loadingSearch.value = false;
             });
         }
+        
+        // 검색한 이미지 보여주기
+        const imgHref = ref(null);
+        const showThumbnail = (placeName) => {
+            console.log("dd")
+            imgHref.value = [];
+            fetch('api/course/place/searchOneImage?placeName=' + placeName, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                imgHref.value.push(json.items[0].thumbnail)
+                console.log(imgHref.value)
+            })
+            .catch(err => {
+                searchError.value = err;
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        searchError.value.message = json.message;
+                    });
+                }
+            })
+            .finally(() => {
+                return imgHref
+            });
+        }
 
         return {
             // tags
@@ -317,6 +404,9 @@ export default defineComponent ({
             // placeDetail
             detailOfPlace,
             modalTitle,
+            modalLoading,
+            modalData,
+            modalError,
             
             // course insert
             insertCourse,
@@ -331,8 +421,10 @@ export default defineComponent ({
             searchData,
             loadingSearch,
             searchError,
+            imgHref,
             // search func
             searchByTag,
+            showThumbnail,
         };
     },
   
