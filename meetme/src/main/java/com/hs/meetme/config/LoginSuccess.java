@@ -17,6 +17,7 @@ public class LoginSuccess implements AuthenticationSuccessHandler{
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
 		List<String> roleNames = new ArrayList<>();
+		System.out.println(roleNames.toString());
 		
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
