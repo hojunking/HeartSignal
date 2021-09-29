@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.post.mapper.PostMapper">
+	<!-- 커뮤니티 가져오기 -->
+	<select id="getCMList" resultType="PostVO">
+		select distinct p.*, 
+		(select count(*) from post_comment a where p.post_id = a.post_id) comments,
+		(select count(*) from post_like b where p.post_id = b.post_id) likes
+		from post p 
+		left outer join 
+		post_comment c
+		on p.post_id = c.post_id
+		left outer join 
+		post_like l
+		on p.post_id = l.post_id
+	</select>
+	
+	
+	
+
+	
+
+</mapper>
