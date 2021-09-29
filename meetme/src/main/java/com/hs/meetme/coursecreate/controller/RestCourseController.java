@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.meetme.coursecreate.domain.PlaceVO;
+import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.service.PlaceService;
-import com.hs.meetme.sample.domain.TagVO;
 import com.hs.meetme.sample.service.SampleService;
 
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +21,6 @@ import lombok.extern.log4j.Log4j2;
 public class RestCourseController {
 	
 	@Autowired PlaceService placeService; 
-	@Autowired SampleService sampleService;
 	
 	@GetMapping("/place")
 	public List<PlaceVO> getPlaceList() {
@@ -30,7 +29,7 @@ public class RestCourseController {
 	
 	@GetMapping("/place/tags")
 	public List<TagVO> getTagsAll() {
-		return sampleService.getTagList();
+		return placeService.getTagList();
 	}
 	
 	@GetMapping("/place/tags/{id}")

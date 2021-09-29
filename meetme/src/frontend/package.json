@@ -12,6 +12,7 @@
     "@popperjs/core": "^2.10.1",
     "bootstrap": "^5.0.0-beta3",
     "core-js": "^3.6.5",
+    "gitart-vue-dialog": "^1.0.3",
     "jquery": "^3.6.0",
     "vue": "^3.0.0",
     "vue-draggable-next": "^2.0.1",

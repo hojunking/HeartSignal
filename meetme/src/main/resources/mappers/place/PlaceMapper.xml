@@ -7,6 +7,10 @@
 		SELECT * FROM PLACE
 	</select>
 	
+	<select id="getTagList" resultType="TagVO">
+		SELECT * FROM tags
+	</select>
+	
 	<!-- 정해진 장소의 태그들만 가져오기 -->
 	<select id="getTagsSelected" parameterType="int" resultType="TagVO">
 		SELECT * FROM PLACE_TAGS

@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#"> <img src="../assets/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="http://localhost:8000/"> <img src="../assets/logo.png" alt="Site logo">
                                 Journey
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler"
@@ -34,7 +34,7 @@
             <!-- .tm-top-bar -->
         </div>
     </header>
-    
+
 </template>
 
 <script>

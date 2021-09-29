@@ -1,4 +1,4 @@
-package com.hs.meetme.sample.domain;
+package com.hs.meetme.coursecreate.domain;
 
 import lombok.Data;
 
