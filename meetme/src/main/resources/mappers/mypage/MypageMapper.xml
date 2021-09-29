@@ -15,56 +15,75 @@
 	                 post_content LIKE '%'||#{cri.keyword}||'%'
 	               </when>
 	               <when test="type=='D'.toString()"> 
-	                 post_distinct LIKE '%'||#{cri.keyword}||'%' 
+	                 post_distinct LIKE '%'||#{cri.keyword}||'%'
 	               </when>
                </choose>
              </trim>
            </foreach>
          </trim>
     </sql>
-  <!--게시글 페이징을 위한 -->
-  <select id="getTotalCount" resultType="int">
-    SELECT COUNT(*) FROM post
-    WHERE
-      <include refid="search"></include>
-    post_id >0 AND user_id=#{userId}
-  </select>
-    	
+    <!--게시글 페이징을 위한 -->
+    <select id="getTotalCount" resultType="int">
+      SELECT COUNT(*) FROM post
+      WHERE
+        <include refid="search"></include>
+      post_id >0 AND user_id=#{userId}
+    </select>
 	<!-- 내가 쓴글 리스트 SELECT -->
 	<select id="getPostList" resultType="PostVO">
   	  SELECT *
       FROM
-        (SELECT /*+ INDEX_DESC(post POST_PK)*/ROWNUM rn, a.post_id, a.post_title, a.post_updated, a.user_id, a.hit, b.up
-         FROM post a JOIN (SELECT post_id, count(*) up
-                           FROM post_like
-                           GROUP BY post_id) b
-         ON a.post_id = b.post_id
+		 (SELECT /*+ INDEX_DESC(a post_updated_idx) */
+		 ROWNUM rn, 
+		 a.post_id, 
+		 a.post_title, 
+		 a.post_updated,
+		 a.user_id,
+		 a.hit,
+		 a.post_distinct,
+		 (SELECT count(*) FROM post_like b WHERE a.post_id = b.post_id) post_like_count
+		 FROM post a
          <where>
             <include refid="search"></include>
          
              <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
          </where> )
       WHERE rn > (#{cri.pageNum}-1) * #{cri.amount} AND user_id=#{userId}
-	</select>
-	
+	</select>	
 	<!-- 내가 쓴글 갯수 -->
 	<select id="getPostCount" resultType="int">
 	  SELECT count(*)
       FROM post
       WHERE user_id=#{userId}
 	</select>
-	
-	<!-- 내가 쓴 댓글 리스트 SELECT -->
-<!-- 	<select id="">
 
-	</select> -->
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
+		
+	<!-- 내가 쓴 댓글 리스트 SELECT -->
+	<select id="getCommentList" resultType="CommentVO">
+      SELECT /*+ INDEX_DESC(a post_com_updated_idx) */
+        ROWNUM rn,
+        a.comment_id,
+		a.com_content,
+		a.com_created,
+		a.com_updated,
+		a.user_id,
+		a.post_id,
+		a.log_id,
+		a.com_distinct
+	  FROM post_comment a
+	  WHERE user_id=#{userId};
+	</select>
     <!-- 내가 쓴 댓글 갯수 -->
-<!-- 	<select id="">
+	<select id="getCommentCount" resultType="int">
 	  SELECT count(*)
       FROM post_comment
       WHERE user_id=#{userId}
-	</select> -->
+	</select>
 	
+
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+		
 	
 	<!-- 회원정보 SELECT -->
 	<select id="getMyinfo" resultType="com.hs.meetme.mypage.domain.UserInfoVO2">
@@ -114,6 +133,7 @@
 		WHERE email= #{email}
 	</update> -->
 	
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
 	
 	<!-- 알림내역 회원별 SELECT -->
 <!-- 	<select id="">

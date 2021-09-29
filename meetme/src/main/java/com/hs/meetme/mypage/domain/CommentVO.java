@@ -5,14 +5,14 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class PostCommentVO {
+public class CommentVO {
   
-	private long commentId;
+	private String commentId;
 	private String comContent;
 	private Date comCreated;
 	private Date comUpdated;
 	
-	private long userId;
-	private long postId;
-	private long logId;
+	private String userId;
+	private String postId;
+	private String logId;
 }

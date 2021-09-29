@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class UserInfoVO2{
 
-	private long userId;
+	private String userId;
 	private String userName;
 	private String email;
 	private String nickName;
@@ -18,7 +18,7 @@ public class UserInfoVO2{
 	private Date birthDate;
 	private String address;
 	private String coupleStatus;
-	private long imgId;
+	private String imgId;
 	
 	private String imgUrl;
 	private String imgName;

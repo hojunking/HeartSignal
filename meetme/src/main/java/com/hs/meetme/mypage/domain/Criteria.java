@@ -22,7 +22,5 @@ public class Criteria {
   public String[] getTypeArr() {
 	  return type == null ? new String[] {} : type.split("");
   }
-
-  // private long userId;   //회원 아이디
   
 }
