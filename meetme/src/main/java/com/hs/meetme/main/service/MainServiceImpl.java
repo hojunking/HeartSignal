@@ -19,4 +19,12 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.tagList();
 	}
 
+	@Override
+	public List<MainVO> placeList() {
+		
+		return mainMapper.placeList();
+	}
+
+
+
 }

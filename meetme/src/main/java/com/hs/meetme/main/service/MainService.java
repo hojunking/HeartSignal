@@ -5,5 +5,8 @@ import java.util.List;
 import com.hs.meetme.main.domain.MainVO;
 
 public interface MainService {
-	List<MainVO> tagList();
+	public List<MainVO> tagList(); // 태그 불러오기
+
+	public List<MainVO> placeList(); // place_name 불러오기
+
 }
