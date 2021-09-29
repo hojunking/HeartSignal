@@ -23,7 +23,6 @@ public class MypageController {
 	
 	@GetMapping("/myinfo_my_write_list")
 	public String myinfo_my_write_list(Model model, @ModelAttribute("cri") Criteria cri) {
-
 		
 		int total = mypageService.getTotalCount(cri, 1);
 		
@@ -37,7 +36,7 @@ public class MypageController {
 	@GetMapping("/myinfo")
 	public String myinfo(Model model, UserInfoVO2 userinfoVO) {
 		
-		userinfoVO.setUserId(1);
+		userinfoVO.setUserId("1");
 		
 		model.addAttribute("userInfo", mypageService.getMyinfo(userinfoVO));
 		
