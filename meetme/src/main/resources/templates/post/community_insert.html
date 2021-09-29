@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout}">
+<!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
+    <th:block layout:fragment="css">
+		<style>
+			.container{
+						background-color:white;
+					}
+		</style>
+	</th:block>
+		
+		
+		<th:block layout:fragment="content">
+		    <!-- 여기에 body에 들어갈 내용을 적어주세요 -->
+		    <div class="container" >
+		    <br>
+		    	<div>
+			    	<h2>커뮤니티 글쓰기</h2>
+		    	</div>
+		    <br>
+		  	<div class="card-content">
+			<form class="form-horizontal form-view" th:object="${list}">
+				<div class="form-group">
+					<label for="inp-type-1" class="col-sm-2 control-label">제목</label>
+					<div class="col-sm-10">
+						<p class="form-control" th:text="*{postTitle}"></p>
+					</div>
+				</div>
+
+			
+				<div class="form-group">
+					<label for="inp-type-5" class="col-sm-2 control-label">내용</label>
+					<div class="col-sm-10">
+						<p class="form-control" th:text="*{postContent}"></p>
+					</div>
+				</div>
+
+
+			</form>
+
+		</div>	
+		</div>
+		<!-- /.card-content -->
+		    
+		</th:block>
+		<th:block layout:fragment="script">
+				<script>
+
+				</script>
+		</th:block>
+</html>
