@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
+	
+	<!-- 게시글 검색기능 -->
+    <sql id = "search">
+         <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+           <foreach collection="cri.typeArr" item="type">
+             <trim prefix="OR">
+               <choose>
+	               <when test="type=='T'.toString()">
+	                 post_title LIKE '%'||#{cri.keyword}||'%' 
+	               </when>
+	               <when test="type=='C'.toString()">
+	                 post_content LIKE '%'||#{cri.keyword}||'%'
+	               </when>
+	               <when test="type=='D'.toString()"> 
+	                 post_distinct LIKE '%'||#{cri.keyword}||'%' 
+	               </when>
+               </choose>
+             </trim>
+           </foreach>
+         </trim>
+    </sql>
+  <!--게시글 페이징을 위한 -->
+  <select id="getTotalCount" resultType="int">
+    SELECT COUNT(*) FROM post
+    WHERE
+      <include refid="search"></include>
+    post_id >0 AND user_id=#{userId}
+  </select>
+    	
+	<!-- 내가 쓴글 리스트 SELECT -->
+	<select id="getPostList" resultType="PostVO">
+  	  SELECT *
+      FROM
+        (SELECT /*+ INDEX_DESC(post POST_PK)*/ROWNUM rn, a.post_id, a.post_title, a.post_updated, a.user_id, a.hit, b.up
+         FROM post a JOIN (SELECT post_id, count(*) up
+                           FROM post_like
+                           GROUP BY post_id) b
+         ON a.post_id = b.post_id
+         <where>
+            <include refid="search"></include>
+         
+             <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
+         </where> )
+      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount} AND user_id=#{userId}
+	</select>
+	
+	<!-- 내가 쓴글 갯수 -->
+	<select id="getPostCount" resultType="int">
+	  SELECT count(*)
+      FROM post
+      WHERE user_id=#{userId}
+	</select>
+	
+	<!-- 내가 쓴 댓글 리스트 SELECT -->
+<!-- 	<select id="">
+
+	</select> -->
+    <!-- 내가 쓴 댓글 갯수 -->
+<!-- 	<select id="">
+	  SELECT count(*)
+      FROM post_comment
+      WHERE user_id=#{userId}
+	</select> -->
+	
+	
+	<!-- 회원정보 SELECT -->
+	<select id="getMyinfo" resultType="com.hs.meetme.mypage.domain.UserInfoVO2">
+	  SELECT a.*, b.img_url
+      FROM user_info a LEFT OUTER JOIN img b
+      ON a.img_id = b.img_id
+      WHERE user_id = #{userId}
+	</select>
+	
+	<!-- 회원정보 비밀번호 확인 -->
+<!-- 	<select id="">
+	  SELECT password
+	  FROM userinfo
+	  WHERE email = #{email}
+	</select> -->
+	<!-- 회원정보 수정 (패스워드) -->
+<!-- 	<update id="userUpdatePassword" parameterType="">
+		UPDATE userinfo
+		SET password=#{password}
+		WHERE email=#{email}
+	</update> -->
+	
+	<!-- 회원정보 닉네임 중복확인 -->
+	<select id="getNickname">
+	  SELECT nickname
+	  FROM user_info
+	  WHERE nickname=#{nickName}
+	</select>
+	
+	<!-- 회원정보 수정 (닉네임) -->
+<!-- 	<update id="" parameterType="">
+		UPDATE userinfo
+		SET nickname = #{nickName}
+		WHERE email = #{email}
+	</update> -->
+	
+	<!-- 회원정보 수정 (전화번호) -->
+<!-- 	<update id="" parameterType="">
+		UPDATE userinfo
+		SET phone_num = #{phoneNum}
+		WHERE email = #{email}
+	</update> -->
+	<!-- 회원정보 수정 (주소) -->
+<!-- 	<update id="" parameterType="">
+		UPDATE userinfo
+		SET address= #{address}
+		WHERE email= #{email}
+	</update> -->
+	
+	
+	<!-- 알림내역 회원별 SELECT -->
+<!-- 	<select id="">
+	  SELECT 
+      notice_id,
+      user_received,
+      notice_content,
+      notice_date,
+      notice_confirmed,
+      user_sent
+      FROM
+      notification
+      WHERE
+      user_received=#{userReceived}
+      ORDER BY notice_date DESC
+	</select> -->
+	<!-- 알림내역 개별삭제 -->
+<!-- 	<delete id="">
+	  DELETE
+	  FROM notification
+	  WHERE notice_id=#{noticeId}
+	</delete> -->
+	<!-- 알림내역 모두삭제 -->
+<!-- 	<delete id="">
+	  DELETE
+	  FROM notification
+	  WHERE user_received=#{userReceived}
+	</delete> -->
+	
+</mapper>
