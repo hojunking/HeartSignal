@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.main.mapper.MainMapper">
-	
+	<!-- 태그 전체 불러오기  -->
 	<select id="tagList" resultType="MainVO">
 		SELECT * FROM TAGS
 	</select>
 	
+	<!-- 수정 -->
 	<select id="placeList" resultType="MainVO">
-		SELECT PLACE_NAME,REGION FROM PLACE
+		SELECT p.PLACE_NAME,p.REGION, t.TAG_ID
+		FROM PLACE p JOIN PLACE_TAGS t
+		ON p.place_id = t.place_id
+		ORDER BY DBMS_RANDOM.VALUE
 	</select>
 	
 </mapper>

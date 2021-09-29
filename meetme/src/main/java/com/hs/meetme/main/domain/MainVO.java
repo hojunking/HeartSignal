@@ -7,5 +7,7 @@ public class MainVO {
 	private String tagId;
 	private String placeName;
 	private String region;
+	private String placeId;
+	
 	
 }
