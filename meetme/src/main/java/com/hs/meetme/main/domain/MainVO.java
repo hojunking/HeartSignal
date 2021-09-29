@@ -1,3 +1,4 @@
+
 package com.hs.meetme.main.domain;
 
 import lombok.Data;
@@ -11,3 +12,4 @@ public class MainVO {
 	
 	
 }
+

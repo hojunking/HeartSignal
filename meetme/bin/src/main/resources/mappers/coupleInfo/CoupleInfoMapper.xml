@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.coupleinfo.mapper.CoupleInfoMapper">
+<select id="coupleInfoSelect" resultType="CoupleInfoVO">
+	SELECT C.COUPLE_DATE AS COUPLE_DATE,I.IMG_URL AS IMG_URL
+	FROM COUPLE_INFO C,IMG I
+	WHERE C.IMG_ID = I.IMG_ID
+	AND C.COUPLE_ID = #{coupleId}
+</select>
+<insert id="coupleInfoInsert"> <!-- 커플 탄생 -->
+	<selectKey keyProperty="coupleId" resultType="int" order="BEFORE">
+		SELECT SEQ_COUPLEINFO.NEXTVAL FROM DUAL
+		</selectKey>
+	INSERT INTO COUPLE_INFO(COUPLE_ID,
+                               COUPLE_STATUS,
+                               USER_REQUEST,
+                               IMG_ID,
+                               SUB_TERM,
+                               START_DATE)
+	VALUES(#{coupleId},
+			default,
+			#{userRequest},
+			default,
+			#{subTerm},
+			default)
+</insert>
+<update id="coupleCustomUpdate"> <!-- 커플정보 사용자 insert -->
+	UPDATE COUPLE_INFO SET COUPLE_DATE=#{coupleDate},
+							IMG_ID=#{imageId}
+	WHERE COUPLE_ID=#{coupleId}
+</update>
+<update id="couplePhotoDefault"> <!-- 대문이미지 초기화 -->
+	UPDATE COUPLE_INFO SET IMG_ID=default
+	WHERE COUPLE_ID=#{coupleId}
+</update>
+<update id="coupleInfoUpdate"> <!-- 기존 커플 갱신 -->
+	UPDATE COUPLE_INFO SET USER_REQUEST=#{userRequest},
+							SUB_TERM=#{subTerm},
+							START_DATE=SYSDATE
+	WHERE COUPLE_ID=#{coupleId}
+</update>
+<update id="coupleMatching"> <!-- 커플 신청 수락 시 -->
+	UPDATE COUPLE_INFO SET user_received=#{userReceived}
+	WHERE COUPLE_ID=#{coupleId}
+</update>
+<select id="read" resultType="CoupleInfoVO">
+	SELECT *
+	FROM COUPLE_INFO
+	WHERE COUPLE_ID =#{coupleId}
+</select>
+</mapper>
