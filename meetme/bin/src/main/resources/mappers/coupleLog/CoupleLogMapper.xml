@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.coupleLog.mapper.CoupleLogMapper">
+	<!-- 대문사진은 첫 한 장만 -->
+	<select id="getList" resultType="CoupleLogVO">
+		select a.log_title, a.log_created, a.log_date, b.img_id, c.img_url
+		from couple_log a inner join couple_log_img b 
+		on a.log_id = b.log_id
+		inner join img c on b.img_id = c.img_id
+		where a.couple_id = 1 and rownum=1;
+	</select>
+	
+
+	<select id="getLog" resultType="CoupleLogVO">
+		select a.log_title, a.log_created, a.log_date, a.log_content, b.caption 캡션, b.img_id, c.img_url
+		from couple_log a inner join couple_log_img b 
+		on a.log_id = b.log_id
+		inner join img c on b.img_id = c.img_id
+		where a.couple_id = 1 
+	</select>
+	
+
+</mapper>

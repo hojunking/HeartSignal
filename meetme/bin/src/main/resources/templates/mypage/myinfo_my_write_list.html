@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+	
+	<th:block layout:fragment="content">
+		<div class="tm-page-wrap mx-auto">
+			<section class="p-5 tm-container-outer tm-bg-gray">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 mx-auto tm-about-text-wrap text-center">
+							<th:block th:each="tag:${list}">
+								<div th:text=${tag}></div>
+							</th:block>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</th:block>
+	
+</html>
