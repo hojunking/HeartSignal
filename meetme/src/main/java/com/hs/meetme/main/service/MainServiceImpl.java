@@ -25,6 +25,4 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.placeList();
 	}
 
-
-
 }

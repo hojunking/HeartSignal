@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hs.meetme.coursecreate.domain.PlaceVO;
+import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.mapper.PlaceMapper;
-import com.hs.meetme.sample.domain.TagVO;
-import com.hs.meetme.sample.mapper.SampleMapper;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {
@@ -21,6 +20,16 @@ public class PlaceServiceImpl implements PlaceService {
 		return placeMapper.getList();
 	}
 	
+	@Override
+	public PlaceVO getPlace(String placeName) {
+		return placeMapper.getPlace(placeName);
+	}
+	
+	@Override
+	public List<TagVO> getTagList() {
+		return placeMapper.getTagList();
+	}
+	
 	// 지정한 장소의 태그들 출력
 	@Override
 	public List<TagVO> getTagsSelected(int placeId) {
@@ -31,5 +40,7 @@ public class PlaceServiceImpl implements PlaceService {
 	public List<PlaceVO> getListBySearched(String[] keywords) {
 		return placeMapper.getListBySearched(keywords);
 	}
+
+	
 
 }

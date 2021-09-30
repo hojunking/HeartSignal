@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.coursecreate.mapper.PlaceMapper">
+	
+	<!-- 모든 장소 리스트 가져오기 -->
+	<select id="getList" resultType="PlaceVO">
+		SELECT * FROM PLACE
+	</select>
+	
+	<!-- 정해진 장소의 태그들만 가져오기 -->
+	<select id="getTagsSelected" parameterType="int" resultType="TagVO">
+		SELECT * FROM PLACE_TAGS
+		WHERE PLACE_ID = #{placeId}
+	</select>
+	
+	<!-- 검색 기능 넣기 -->
+	<select id="getListBySearched" resultType="PlaceVO">
+		select DISTINCT a.*
+		from place a join place_tags b
+		on (a.place_id = b.place_id)
+		where 
+		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
+			b.tag_id like '%' || #{arr} || '%'
+		</foreach>
+		or
+		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
+			place_name like '%' || #{arr} || '%'
+		</foreach>
+		or 
+		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
+		 	address like '%' || #{arr} || '%'
+		</foreach>
+		or
+		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
+			description like '%' || #{arr} || '%'
+		</foreach>
+		ORDER BY a.place_id
+	</select>
+	
+</mapper>
