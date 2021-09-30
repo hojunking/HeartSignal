@@ -35,19 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/s/member").hasRole("USER")
-                .antMatchers("/s/admin").hasRole("[ADMIN]")
+                .antMatchers("/s/member").hasAuthority("USER")
+                .antMatchers("/s/admin").hasAuthority("ADMIN")
                 .antMatchers("/**").permitAll();
 
         http.formLogin()
-//                .loginPage("/login")
+                .loginPage("/s/login")
+                .loginProcessingUrl("/login")
                 .successHandler(new LoginSuccess())
-//                .defaultSuccessUrl("/")
                 ;
         
         http.logout()
         		.logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
         
         http.csrf().disable();
