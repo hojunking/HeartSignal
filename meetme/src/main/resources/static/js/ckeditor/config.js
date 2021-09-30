@@ -35,4 +35,6 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+	//readonly
+	// config.readOnly = true;CKEDITOR.editor.setReadOnly;
 };
