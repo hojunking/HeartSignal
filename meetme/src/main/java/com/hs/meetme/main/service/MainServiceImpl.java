@@ -26,4 +26,10 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.placeList();
 	}
 
+	@Override
+	public List<MainVO> courseList() {
+		
+		return mainMapper.courseList();
+	}
+
 }

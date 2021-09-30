@@ -27,6 +27,7 @@ public class MainController {
 	public String home(Model model) {
 		model.addAttribute("tag",service.tagList());
 		model.addAttribute("place",service.placeList());
+		model.addAttribute("course",service.courseList());
 		return "main/main";
 	}
 	

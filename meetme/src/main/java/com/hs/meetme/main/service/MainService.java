@@ -9,4 +9,5 @@ public interface MainService {
 
 	public List<MainVO> placeList(); // place_name 불러오기
 
+	public List<MainVO> courseList(); // 지역별 코스 리스트
 }
