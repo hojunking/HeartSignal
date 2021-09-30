@@ -21,7 +21,14 @@ public class CoupleInfoVO {
 	private int imageId;	//커플대문
 	private long subTerm;	//구독기간(1,3,6,0)
 	private Date startDate; //결제날(시작날)
-	private String imgUrl; //이미지 url
+	private String coupleImg; //커플이미지 url
+	
+	//유저 정보에 필요한 vo
+	private int userId;
+	private String name;
+	private String nickName;
+	private Date birthDate;  
+	private String userImg; //유저이미지 url
 }
 
 
