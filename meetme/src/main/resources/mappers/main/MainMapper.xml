@@ -14,4 +14,9 @@
 		ORDER BY DBMS_RANDOM.VALUE
 	</select>
 	
+	<select id="courseList" resultType="MainVO">
+		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
+		FROM course c JOIN course_order o
+		ON c.COURSE_ID = o.COURSE_ID
+	</select>
 </mapper>
