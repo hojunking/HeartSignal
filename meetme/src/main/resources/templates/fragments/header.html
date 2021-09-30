@@ -24,7 +24,12 @@
                                     </li>
                                     <li class="nav-item"><a class="nav-link" href="@{/coupleMain}">커플로그</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+                                    <li class="nav-item" th:if="${session.userSession == null}">
+                                    	<a class="nav-link" th:href="@{/s/login}">Login</a>
+                                    </li>
+                                    <li class="nav-item" th:if="${session.userSession != null}">
+                                    	<a class="nav-link" th:href="@{/logout}" th:text="${session.userSession.name}"></a>
+                                    </li>
                                 </ul>
                             </div>
                         </nav>
