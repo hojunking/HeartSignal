@@ -3,7 +3,7 @@
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
 	
 	<!-- 게시글 검색기능 -->
-    <sql id = "search">
+    <sql id = "postSearch">
          <trim prefix="(" suffix=") AND " prefixOverrides="OR">
            <foreach collection="cri.typeArr" item="type">
              <trim prefix="OR">
@@ -23,10 +23,10 @@
          </trim>
     </sql>
     <!--게시글 페이징을 위한 -->
-    <select id="getTotalCount" resultType="int">
+    <select id="getTotalPostCount" resultType="int">
       SELECT COUNT(*) FROM post
       WHERE
-        <include refid="search"></include>
+        <include refid="postSearch"></include>
       post_id >0 AND user_id=#{userId}
     </select>
 	<!-- 내가 쓴글 리스트 SELECT -->
@@ -44,11 +44,12 @@
 		 (SELECT count(*) FROM post_like b WHERE a.post_id = b.post_id) post_like_count
 		 FROM post a
          <where>
-            <include refid="search"></include>
+            <include refid="postSearch"></include>
          
              <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
+                       AND user_id=#{userId}
          </where> )
-      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount} AND user_id=#{userId}
+      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount} 
 	</select>	
 	<!-- 내가 쓴글 갯수 -->
 	<select id="getPostCount" resultType="int">
@@ -58,21 +59,54 @@
 	</select>
 
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
-		
+
+	<!-- 댓글 검색기능 -->
+    <sql id = "commentSearch">
+         <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+           <foreach collection="cri.typeArr" item="type">
+             <trim prefix="OR">
+               <choose>
+	               <when test="type=='C'.toString()">
+	                 com_content LIKE '%'||#{cri.keyword}||'%'
+	               </when>
+	               <when test="type=='D'.toString()"> 
+	                 com_distinct LIKE '%'||#{cri.keyword}||'%'
+	               </when>
+               </choose>
+             </trim>
+           </foreach>
+         </trim>
+    </sql>
+    <!--댓글 페이징을 위한 -->
+    <select id="getTotalCommentCount" resultType="int">
+      SELECT COUNT(*) FROM post_comment
+      WHERE
+        <include refid="commentSearch"></include>
+      comment_id >0 AND user_id=#{userId}
+    </select>		
 	<!-- 내가 쓴 댓글 리스트 SELECT -->
-	<select id="getCommentList" resultType="CommentVO">
-      SELECT /*+ INDEX_DESC(a post_com_updated_idx) */
-        ROWNUM rn,
-        a.comment_id,
-		a.com_content,
-		a.com_created,
-		a.com_updated,
-		a.user_id,
-		a.post_id,
-		a.log_id,
-		a.com_distinct
-	  FROM post_comment a
-	  WHERE user_id=#{userId};
+	<select id="getCommentList" resultType="PostCommentVO">
+     SELECT *
+     FROM  
+         (SELECT /*+ INDEX_DESC(a post_com_updated_idx) */
+          ROWNUM rn,
+          a.comment_id,
+		  a.com_content,
+	      a.com_created,
+		  a.com_updated,
+		  a.user_id,
+		  a.post_id,
+		  a.log_id,
+		  a.com_distinct
+	      FROM post_comment a
+         <where>
+            <include refid="commentSearch"></include>
+         
+             <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
+                       AND log_id IS NULL
+                       AND user_id=#{userId}
+         </where> )
+      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 	</select>
     <!-- 내가 쓴 댓글 갯수 -->
 	<select id="getCommentCount" resultType="int">
@@ -81,10 +115,8 @@
       WHERE user_id=#{userId}
 	</select>
 	
-
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 		
-	
 	<!-- 회원정보 SELECT -->
 	<select id="getMyinfo" resultType="com.hs.meetme.mypage.domain.UserInfoVO2">
 	  SELECT a.*, b.img_url
