@@ -2,10 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.coupleinfo.mapper.CoupleInfoMapper">
 <select id="coupleInfoSelect" resultType="CoupleInfoVO">
-	SELECT C.COUPLE_DATE AS COUPLE_DATE,I.IMG_URL AS IMG_URL
-	FROM COUPLE_INFO C,IMG I
-	WHERE C.IMG_ID = I.IMG_ID
-	AND C.COUPLE_ID = #{coupleId}
+	SELECT U.NAME,
+           U.NICKNAME,
+           U.BIRTH_DATE,
+           I.IMG_URL AS USER_IMG,
+           CO.COUPLE_DATE,
+           CO.START_DATE,
+           CO.SUB_TERM,
+           CO.USER_REQUEST,
+           CO.USER_RECEIVED,
+           CO.IMG_URL AS COUPLE_IMG
+	FROM USER_INFO U
+	JOIN IMG I
+	ON U.IMG_ID = I.IMG_ID
+	JOIN (SELECT C.COUPLE_DATE,
+	             C.START_DATE,
+	             C.SUB_TERM,
+	             C.USER_REQUEST,
+	             C.USER_RECEIVED,
+	             M.IMG_URL
+        FROM COUPLE_INFO C JOIN IMG M
+        ON C.IMG_ID = M.IMG_ID) CO
+	ON U.USER_ID IN(CO.USER_REQUEST,
+                    CO.USER_RECEIVED)
+	WHERE USER_ID=#{userId}
 </select>
 <insert id="coupleInfoInsert"> <!-- 커플 탄생 -->
 	<selectKey keyProperty="coupleId" resultType="int" order="BEFORE">
