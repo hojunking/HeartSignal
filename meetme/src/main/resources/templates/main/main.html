@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
-
-
 <th:block layout:fragment="css">
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
@@ -26,7 +24,7 @@
 	background-color: #69c6ba;
 	color: white;
 	font-size: x-small;
-	font-weight:bold;
+	font-weight: bold;
 }
 
 .placeTag2 {
@@ -45,8 +43,9 @@
 /* 검색 버튼 */
 .tagButton {
 	width: 50px;
-	height: 33px;
+	height: 33.5px;
 	font-size: small;
+	border-radius: 0px;
 }
 /* 자세히 보기 버튼  */
 .cusButton {
@@ -96,126 +95,63 @@
 		<section class="tm-banner">
 			<div class="tm-container-outer tm-banner-bg">
 				<div class="container">
-					<div id="demo" class="carousel slide" data-ride="carousel"
-						data-interval="false">
-						<!-- false = 자동슬라이드 해지 -->
-						<!-- Carousel  -->
-						<!-- Indicators -->
-						<ul class="carousel-indicators">
-							<li data-target="#demo" data-slide-to="0" class="active"></li>
-							<li data-target="#demo" data-slide-to="1"></li>
-						</ul>
-						<!-- END OF Indicators -->
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<!-- 첫번째 페이지 -->
-								<div class="tm-container-outer tm-banner-bg">
-									<!-- main -->
-									<div class="container">
-										<div class="row tm-banner-row tm-banner-row-header">
-											<div class="col-xs-12">
-												<div class="tm-banner-header">
-													<h1 class="text-uppercase tm-banner-title">나만의 데이트 코스
-														설정하기</h1>
-													<p class="tm-banner-subtitle" style="font-size: 15px;">나만의
-														맞춤 데이트 코스를 생성해보세요! :)</p>
-												</div>
-											</div>
-											<!-- col-xs-12 -->
-										</div>
-										<!-- row -->
-										<div class="row tm-banner-row" id="tm-section-search">
-											<form action="main.html" method="get"
-												class="tm-search-form tm-section-pad-2">
-												<div class="form-row tm-search-form-row">
-													<div
-														class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
-														<label for="inputCity" class="select">관심있는 태그를
-															설정해주세요</label>
-														<div class="input-group">
-															<input class="insertcustomOne form-control" name="insert"
-																type="text" value="" placeholder=" # 태그를 선택해주세요">
-															<button class="tagButton btn btn-primary">검색</button>
-														</div>
-														<br>
-														<div class="customBg">
-															<button type="button" id="tagClick"
-																class="tcustom badge badge-secondary m-1"
-																th:each="t : ${tag}">
-																<span class="tagOn" th:text="${t.tagId}"></span>
-															</button>
-														</div>
-													</div>
-
-													<div
-														class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
-														<label for="inputCity" class="select">데이트 할 지역을
-															입력해주세요</label> <input name="destination" type="text"
-															class="insertcustom form-control" id="inputCity"
-															placeholder="  입력해주세요"> <br>
-														<button type="submit"
-															class="btn btn-primary tm-btn tm-btn-search text-uppercase"
-															id="btnSubmit" style="width: 200px; margin-left: 100px;">코스
-															생성하기</button>
-													</div>
-												</div>
-											</form>
-
-										</div>
-										<!-- row -->
+					<!-- 첫번째 페이지 -->
+					<div class="tm-container-outer tm-banner-bg">
+						<!-- main -->
+						<div class="container">
+							<div class="row tm-banner-row tm-banner-row-header">
+								<div class="col-xs-12">
+									<div class="tm-banner-header">
+										<h1 class="text-uppercase tm-banner-title">나만의 데이트 코스
+											설정하기</h1>
+										<p class="tm-banner-subtitle" style="font-size: 15px;">나만의
+											맞춤 데이트 코스를 생성해보세요! :)</p>
 									</div>
-									<!-- .container -->
 								</div>
+								<!-- col-xs-12 -->
 							</div>
-							<!-- END OF MAIN -->
-						</div>
-						<!-- END OF carousel active 첫번째 페이지 끝-->
-
-						<!-- carousel-item 두번째 페이지 -->
-						<div class="carousel-item">
-							<div class="tm-container-outer tm-banner-bg">
-								<!-- main -->
-								<div class="container">
-									<div class="row tm-banner-row tm-banner-row-header">
-										<div class="col-xs-12">
-											<div class="tm-banner-header">
-												<h1 class="text-uppercase tm-banner-title"></h1>
+							<!-- row -->
+							<div class="row tm-banner-row" id="tm-section-search">
+								<form action="main.html" method="get"
+									class="tm-search-form tm-section-pad-2">
+									<div class="form-row tm-search-form-row">
+										<div
+											class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
+											<label for="inputCity" class="select">관심있는 태그를 설정해주세요</label>
+											<div class="input-group">
+												<input class="insertcustomOne form-control" name="insert"
+													type="text" value="" placeholder=" # 태그를 선택해주세요">
+												<button class="tagButton btn btn-primary">검색</button>
 											</div>
-											<!-- END OF tm-banner-header -->
+											<br>
+											<div class="customBg">
+												<button type="button" id="tagClick"
+													class="tcustom badge badge-secondary m-1"
+													th:each="t : ${tag}">
+													<span class="tagOn" th:text="${t.tagId}"></span>
+												</button>
+											</div>
 										</div>
-										<!-- END OF col-xs-12-->
-									</div>
-									<!-- END OF row tm-banner-row tm-banner-row-header-->
 
-									<!-- SECOND SECTION -->
-									<div class="row tm-banner-row" id="tm-section-search">
-										<div class="col-lg-7"></div>
-										<!-- END OF map -->
+										<div
+											class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
+											<label for="inputCity" class="select">데이트 할 지역을
+												입력해주세요</label> <input name="destination" type="text"
+												class="insertcustom form-control" id="inputCity"
+												placeholder="  입력해주세요"> <br>
+											<button type="submit"
+												class="btn btn-primary tm-btn tm-btn-search text-uppercase"
+												id="btnSubmit" style="width: 200px; margin-left: 100px;">코스
+												생성하기</button>
+										</div>
 									</div>
-									<!-- END OF SECOND SECTION -->
-								</div>
-								<!-- END OF carousel-inner  -->
+								</form>
 							</div>
-							<!-- END OF container -->
 						</div>
-						<!-- END OF tm-container-outer tm-banner-bg -->
 					</div>
-					<!-- END OF carousel-item -->
-
-
-					<div class="tm-banner-overlay"></div>
 				</div>
-				<!-- .container -->
-				<!-- 백그라운드 어둡게 -->
-				<!-- Left and right controls 캐러셀 -->
-				<a class="carousel-control-prev" href="#demo" data-slide="prev">
-					<span class="carousel-control-prev-icon"></span>
-				</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-					<span class="carousel-control-next-icon"></span>
-				</a>
+				<div class="tm-banner-overlay"></div>
 			</div>
-			<!-- Carousel -->
-			<!-- .tm-container-outer -->
 		</section>
 		<!-- 메인페이지 끝  -->
 
@@ -290,7 +226,8 @@
 								<!-- 버튼 -->
 								<div class="text-center">
 									<button type="button"
-										class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
+										class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary"
+										onclick="location.href='./courseDetail?course_id=${detail.courseId}'">자세히
 										보기</button>
 								</div>
 								<!-- 버튼 끝 -->
@@ -374,13 +311,12 @@
 				<!-- 코스 구현될곳 끝-->
 			</section>
 		</div>
-		<div class="tm-container-outer swiper-container" id="tm-section-3"  style="background:#69c6ba; padding-top: 17px;" >
+		<div class="tm-container-outer swiper-container" id="tm-section-3"
+			style="background: #69c6ba; padding-top: 17px;">
 			<ul class="swiper-wrapper">
 				<li class="tm-tab-link-li tm-tab-link swiper-slide"
-					th:each="p:${place}">
-					<a href="" class="tm-tab-link">
-					<span th:text="${p.region}"></span></a>
-				</li>
+					th:each="p:${place}"><a href="" class="tm-tab-link"> <span
+						th:text="${p.address}"></span></a></li>
 			</ul>
 
 			<div class="swiper-pagination"></div>
@@ -394,7 +330,7 @@
 
 
 		<!-- Tab 4 -->
-		<div class="tab-pane fade show active" >
+		<div class="tab-pane fade show active">
 			<th:block th:each="c: ${#numbers.sequence(0, course.size-1)}">
 				<!-- Current Active Tab WITH "show active" classes in DIV tag -->
 				<div class="tm-recommended-place-wrap">
@@ -403,27 +339,40 @@
 							class="img-fluid tm-recommended-img">
 						<div class="tm-recommended-description-box">
 							<br>
-							<h3 class="tm-recommended-title" th:text="${course[c].courseName}"></h3> <!-- 코스 -->
+							<h3 class="tm-recommended-title"
+								th:text="${course[c].courseName}"></h3>
+							<!-- 코스 -->
 							<br>
-							<p class="tm-text-highlight" th:text="${course[c].region}" style="font-size:15px;"></p>
+							<p class="tm-text-highlight" th:text="${course[c].region}"
+								style="font-size: 15px;"></p>
 							<p class="tm-text-gray"></p>
-						</div >
+						</div>
 						<!-- <a href="#" class="tm-recommended-price-box"> -->
 						<div class="tm-recommended-price-box">
-							<p class="tm-recommended-price-link"
-							style="font-size:15px;">평균 비용</p>
-							<p class="tm-recommended-price" th:text="'₩ '+${course[c].avgCost}"
-							style="font-size:20px;"></p>
+							<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+								비용</p>
+							<p class="tm-recommended-price"
+								th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
 						</div>
 						<!-- </a> -->
-					</div>
-				</div>
 
+					</div>
+
+				</div>
 				<!-- 	<a href="#"
 						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
 						More Places</a> -->
 		</div>
 		<!-- tab-pane -->
+		<br><br>
+		<div class="" style="text-align:center;">
+			<h4 class="text-uppercase mb-4"><strong style="color:#70D2B4;">호준공주</strong> 님의 핫플레이스</h4>
+			<div class="row tm-banner-row" style="padding-top: 20px;"
+				id="tm-section-search">
+				<img src="img/tm-img-01.jpg" alt="Image">
+				<!-- 지도 -->
+			</div>
+		</div>
 		<br>
 	</div>
 </th:block>
@@ -432,12 +381,12 @@
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-			var tag =" ";
-			
+			var tag = " ";
+
 			$(".tagOn").on("click", function() {
 				var tagId = $(this).text();
 				console.log(tagId);
-				tag +=tagId + " ";	
+				tag += tagId + " ";
 				$(".insertcustomOne").attr("value", tag);
 			});/* tcustom click 이벤트 */
 
@@ -451,26 +400,26 @@
 
 			// 지역 swiper 버튼
 			var mySwiper = new Swiper('.swiper-container', {
-		        slidesPerView: 7,
-		        slidesPerGroup: 7,
-		        observer: true,
-		        observeParents: true,
-		        spaceBetween: 24,
-		        navigation: {
-		            nextEl: '.swiper-button-next',
-		            prevEl: '.swiper-button-prev',
-		        },
-		        breakpoints: {
-		            1280: {
-		                slidesPerView: 3,
-		                slidesPerGroup: 3,
-		            },
-		            720: {
-		                slidesPerView: 1,
-		                slidesPerGroup: 1,
-		            }
-		        } 
-		    });
+				slidesPerView : 7,
+				slidesPerGroup : 7,
+				observer : true,
+				observeParents : true,
+				spaceBetween : 24,
+				navigation : {
+					nextEl : '.swiper-button-next',
+					prevEl : '.swiper-button-prev',
+				},
+				breakpoints : {
+					1280 : {
+						slidesPerView : 3,
+						slidesPerGroup : 3,
+					},
+					720 : {
+						slidesPerView : 1,
+						slidesPerGroup : 1,
+					}
+				}
+			});
 
 		});
 	</script>
