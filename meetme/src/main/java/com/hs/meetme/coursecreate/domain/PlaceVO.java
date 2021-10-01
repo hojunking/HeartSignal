@@ -14,5 +14,6 @@ public class PlaceVO {
 	private String avgCost;
 	private String description;
 	private String region;
+	private String thumbnailHref;
 	
 }
