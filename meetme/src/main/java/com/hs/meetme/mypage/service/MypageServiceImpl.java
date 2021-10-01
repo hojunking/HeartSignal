@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PostCommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
-import com.hs.meetme.mypage.domain.UserInfoVO2;
+import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.mapper.MypageMapper;
 
 @Service
@@ -16,6 +16,7 @@ public class MypageServiceImpl implements MypageService {
     
 	@Autowired MypageMapper mypageMapper;
 	
+	//마이페이지 나의 게시글 관련
 	@Override
 	public int getPostCount(long userId) {
 		return mypageMapper.getPostCount(userId);
@@ -31,7 +32,7 @@ public class MypageServiceImpl implements MypageService {
 		return mypageMapper.getTotalPostCount(cri, userId);
 	}
 
-
+	//마이페이지 나의 댓글 관련
 	@Override
 	public int getCommentCount(long userId) {
 		return mypageMapper.getCommentCount(userId);
@@ -46,9 +47,20 @@ public class MypageServiceImpl implements MypageService {
 	public int getTotalCommentCount(Criteria cri, long userId) {
 		return mypageMapper.getTotalCommentCount(cri, userId);
 	}
+    
+	//마이페이지 userinfo 관련
+	@Override
+	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO MyPageuserInfoVO) {
+		return mypageMapper.getMyinfo(MyPageuserInfoVO);
+	}
 
 	@Override
-	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO) {
-		return mypageMapper.getMyinfo(userInfoVO);
+	public int setDateUpdated(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.setDateUpdated(myPageUserInfoVO);
+	}
+
+	@Override
+	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.updateAddress(myPageUserInfoVO);
 	}
 }

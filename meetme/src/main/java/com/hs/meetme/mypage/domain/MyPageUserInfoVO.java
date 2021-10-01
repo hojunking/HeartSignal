@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class UserInfoVO2{
+public class MyPageUserInfoVO{
 
 	private String userId;
 	private String userName;
@@ -16,7 +16,9 @@ public class UserInfoVO2{
 	private Date created;
 	private Date updated;
 	private Date birthDate;
-	private String address;
+	private String address1;
+	private String address2;
+	private String address3;
 	private String coupleStatus;
 	private String imgId;
 	

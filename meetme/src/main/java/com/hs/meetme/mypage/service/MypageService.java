@@ -5,7 +5,7 @@ import java.util.List;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PostCommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
-import com.hs.meetme.mypage.domain.UserInfoVO2;
+import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 public interface MypageService {
 	
@@ -24,5 +24,9 @@ public interface MypageService {
 	public int getTotalCommentCount(Criteria cri, long userId);
 	
 	//회원정보 불러오기
-	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO);
+	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageuserInfoVO);
+	//회원정보 수정
+	public int setDateUpdated(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 수정(주소)
+	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO);
 }

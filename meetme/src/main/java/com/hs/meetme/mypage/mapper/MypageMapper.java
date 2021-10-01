@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PostCommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
-import com.hs.meetme.mypage.domain.UserInfoVO2;
+import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 @Mapper
 public interface MypageMapper {
@@ -28,5 +28,10 @@ public interface MypageMapper {
 	public int getTotalCommentCount(@Param("cri") Criteria cri, @Param("userId") long userId);
 	
 	//회원정보 불러오기
-	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO2);
+	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageUserInfoVO);
+	
+	//회원정보 수정
+	public int setDateUpdated(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 수정(주소)
+	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO);
 }
