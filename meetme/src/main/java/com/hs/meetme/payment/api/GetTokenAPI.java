@@ -1,4 +1,4 @@
-package com.hs.meetme.coupleinfo.controller;
+package com.hs.meetme.payment.api;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -6,7 +6,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RestTestAPI {
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+
+
+public class GetTokenAPI {
 	HttpURLConnection con = null;
 	StringBuilder sb;
 	
@@ -23,9 +29,6 @@ public class RestTestAPI {
 			con = (HttpURLConnection)url.openConnection();
 			con.setRequestMethod("POST"); // POST
 //			con.setRequestProperty("Authorization", token); //해더
-			
-			
-			
 			// post request
             String postParams = "imp_key=" +imp_key+ "&imp_secret=" +imp_secret;
             con.setDoOutput(true);
@@ -60,7 +63,23 @@ public class RestTestAPI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		String token =sb.toString();
+		JSONParser parser = new JSONParser();
+		JSONObject obj = null;
+		String access_token = "";
+        try {
+             obj = (JSONObject)parser.parse(token);
+             access_token = ((JSONObject) obj.get("response")).get("access_token").toString();
+             
+             System.out.println("파싱최종="+access_token);
+        } catch (ParseException e) {
+             System.out.println("변환에 실패");
+             e.printStackTrace();
+        }
+		
 			
-		return sb.toString();
+		return access_token;
 	}
 }

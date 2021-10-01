@@ -30,9 +30,9 @@
 							<p class="mb-5 probootstrap-stagger lead">함께 그려가는 아름다운 기억</p>
 							<p class="probootstrap-stagger">
 								<a href="#tm-section-10" class="btn btn-primary mr-2 mb-2"><span
-									class="icon-ipad"></span>커플로그시작하기</a> <a href=""
-									class="btn btn-primary btn-outline-black mb-2">Visit
-									uiCookies uiCookies</a>
+									class="icon-ipad"></span>커플로그시작하기</a> <button type="button" id="payment_process"
+									href="" class="btn btn-primary btn-outline-black mb-2">Visit
+									uiCookies uiCookies</button>
 							</p>
 						</div>
 					</div>
@@ -80,11 +80,11 @@
 						<div class="media d-block mb-4 text-center">
 							<img src="" alt=""
 								class="img-fluid mb-3 rounded-circle w-25">
-							<div class="media-body p-3">
+							<div class="media-body p-3" >
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&rdquo;</p>
-								<h5 class="mt-0">1개월</h5>
+								<h5 class="mt-0" id="one">1개월</h5>
 								<p>Invision</p>
 							</div>
 						</div>
@@ -97,7 +97,7 @@
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0">3개월</h5>
+								<h5 class="mt-0" id="three">3개월</h5>
 								<p>Google</p>
 							</div>
 						</div>
@@ -110,7 +110,7 @@
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0">6개월</h5>
+								<h5 class="mt-0" id="six">6개월</h5>
 								<p>Twitter</p>
 							</div>
 						</div>
@@ -123,7 +123,7 @@
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0">평생권</h5>
+								<h5 class="mt-0" id="forever">평생권</h5>
 								<p>Twitter</p>
 							</div>
 						</div>
@@ -140,11 +140,70 @@
 	<script th:src="@{/js/ScrollMagic.min.js}"></script>
 	<script th:src="@{/js/debug.addIndicators.min.js}"></script>
 	<script th:src="@{/js/animation.gsap.min.js}"></script>
-
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script th:src="@{/js/main.js}"></script>
-
 	<script>
-		
+	$(document).ready(function(){
+		$("#payment_process").on('click',function requestPay() {
+			var IMP = window.IMP; 			// 생략가능
+	        IMP.init("imp61283402");
+	        let userId=1; 				//session의 아이디값 여기 넣기
+			let subTerm=3; 				//정기권 기간
+	        let	subPrice=200;			//정기권 가격
+	        let buyerName= "송호준";		//이름 필요합니다.
+			const merchantUid = Math.floor(Math.random() * 1000000)+1; //난수설정
+			console.log(merchantUid);
+			let passName=subTerm+'개월 커플로그 이용권'; //결제시 정기권 이름
+			 
+			IMP.request_pay({ // param
+	            pg: "html5_inicis",
+	            pay_method: "card",
+	            merchant_uid: merchantUid,
+	            name: passName,
+	            amount: subPrice,
+	            buyer_email: "gkwlal3@gmail.com",
+	            buyer_name: buyerName,
+	            // buyer_tel: $('#bPhone').text(),
+	            // buyer_addr: $('#bAddress').text(),
+	            // buyer_postcode: "우편번호",
+	            m_redirect_url: 'http://localhost:8000/coupleMain'
+
+
+	        }, function (rsp) { // callback
+		            console.log(rsp);
+		     	   	var msg="결제 성공하셨습니다!";
+		            if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+					 
+		            alert(msg);
+		            
+		            /* 결제 성공 시 결과 저장 */
+		            $.ajax({
+		         	   url:'payment', //'../AddItemServlet.do'
+		   	            method: 'post',
+		   	            data: {
+		   	            	userId: userId,
+	            			subTerm: subTerm, 
+	            			payCost: rsp.paid_amount,
+	            			merchantUid:rsp.merchant_uid
+		   	            },
+		   	            success: function(result){
+		   	            	console.log(result);
+		   	            	alert(result);
+			   	            },
+			   	            error: function (error) {
+			   	                console.log("문제발생");
+								console.log(error);
+			   	            } 
+		            	});
+		            
+		            } else {	
+			               alert("결제에 실패하였습니다. " + rsp.error_msg);
+					}
+	        });
+	       }
+	   );//import 결제 API 끝
+	});//ajax 끝	
+
 	</script>
 </th:block>
 </html>
