@@ -63,9 +63,19 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public CommentVO commentCM(long postId) {
+	public List<CommentVO> commentCM(long postId) {
 		// TODO Auto-generated method stub
 		return pMapper.commentCM(postId);
+	}
+
+	@Override
+	public int commentDelete(long commentId) {
+		return pMapper.commentDelete(commentId);
+	}
+
+	@Override
+	public int commentInsert(CommentVO vo) {
+		return pMapper.commentInsert(vo);
 	}
 
 

@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.hs.meetme.useraccess.domain.AccountVO;
+
 import lombok.Data;
 
 @Data
-public class PostVO {
+public class PostVO extends AccountVO{
   
 	private String postId; //게시물 번호 시퀀스
 	private String postTitle; 

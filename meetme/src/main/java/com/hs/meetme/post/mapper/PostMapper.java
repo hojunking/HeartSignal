@@ -21,5 +21,7 @@ public interface PostMapper {
 	
 	
 	public long countHit(long postId); //조회수 up
-	public CommentVO commentCM(long postId);//커뮤니티 댓글 가져오기
+	public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
+	public int commentDelete(long commentId); // 댓글 삭제
+	public int commentInsert(CommentVO vo); // 댓글 입력
 }
