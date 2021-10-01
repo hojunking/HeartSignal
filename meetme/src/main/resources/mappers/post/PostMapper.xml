@@ -5,7 +5,8 @@
 	<select id="getCMList" resultType="PostVO">
 		select distinct p.*, 
 		(select count(*) from post_comment a where p.post_id = a.post_id) comments,
-		(select count(*) from post_like b where p.post_id = b.post_id) likes
+		(select count(*) from post_like b where p.post_id = b.post_id) likes,
+		(select nickname from user_info where user_id=p.user_id) "nickname"
 		from post p 
 		left outer join 
 		post_comment c
@@ -16,8 +17,63 @@
 	</select>
 	
 	
+	<select id="getPost" resultType="PostVO">
+		select a.*, b.nickname from post a join user_info b on a.user_id = b.user_id where post_id=#{postId}
+	</select>
 	
-
+	<!-- 커뮤니티 게시판 댓글 가져오기 -->
+<!-- 	<select id="commentCM" resultType="CommentVO">
+		select a.post_id,
+		(select nickname from user_info where user_id=b.user_id) "nickname", 
+		b.com_content from post a join post_comment b 
+		on a.post_id = b.post_id 
+		where b.com_distinct='c'and a.post_id=#{postId}
+	</select> -->
 	
+	<!-- 커뮤니티 게시판 입력하기 -->
+	<!-- null과 null 사이에 나중에 userId넣어주기 -->
+	<insert id="CMInsert">
+		insert into post values(SEQ_POST.nextval,#{postTitle},#{postContent},sysdate,null,2,null,0,'c')
+	</insert>
+	
+	<!-- 조회수 up -->
+	<update id="countHit">
+		update post set hit=hit+1 where post_id=#{postId}
+	</update>
+	
+	<!-- 수정하기 -->
+	<update id="postUpdate">
+		update post set post_title=#{postTitle}, post_content=#{postContent}, post_updated=sysdate where post_id=#{postId}
+	</update>
+	
+	<!-- 삭제하기 -->
+	<delete id="postDelete">
+		delete post where post_id=#{postId}
+	</delete>
 
+	<!-- 커뮤니티 댓글 가져오기 - 한 페이지 보기에 넣기위함.(comment, post, account) -->
+	<select id="commentCM" resultType="CommentVO" parameterType="long">
+		select a.post_id, b.*, 
+		(select nickname from user_info where user_id=b.user_id)"nickname" 
+		from post a join post_comment b 
+		on a.post_id = b.post_id
+		where b.com_distinct='c'
+		and a.post_id=#{postId}
+	</select>
+	
+	<!-- 커뮤니티 댓글 입력 -->
+<!-- 	<insert id="">
+		insert into post_comment VALUES(seq_comment.nextval, #{comContent},sysdate,null,2,1,null,'c')
+	</insert>
+	
+	댓글 수정
+	<update id="">
+		
+	</update>
+	
+	댓글 삭제
+	<delete id="">
+		
+	</delete> -->
+	
 </mapper>
