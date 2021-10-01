@@ -7,4 +7,5 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 @Mapper
 public interface AccountMapper {
 	public AccountVO findByEmail(String email);
+	public void signUp(AccountVO vo);
 }
