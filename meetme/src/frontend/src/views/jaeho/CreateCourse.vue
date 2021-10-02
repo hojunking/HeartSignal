@@ -2,10 +2,16 @@
     <div class="tm-page-wrap mx-auto">
         <div class="tm-container-outer p-5" id="tm-section-2">
             <div class="row">
+                <div class="px-4">
+                    <h1 class="display-4">코스 만들기</h1>
+                </div>
                 <div class="col-lg-7">
                     <div class="row">
                         <!-- 검색 창 -->
-                        <div class="col-10">
+                        <div class="col-12">
+                            <hr class="m-2">
+                        </div>
+                        <div class="col-10 px-4">
                             <div class="form-control" @click="searched = false">
                                 <TagInput :options="options" :allowCustom="true" tagBgColor="#69c6ba" :customDelimiter="customDelimiter" v-model="tags" />
                             </div>
@@ -13,7 +19,9 @@
                         <div class="col-2 my-auto">
                             <button class="btn btn-primary btn-lg mt-1" @click="searchByTag()">검색</button>
                         </div>
-
+                        <div class="col-12">
+                            <hr class="m-2">
+                        </div>
                         <!-- 검색 전 -->
                         <div v-if="!searched">
                             <div class="col-12">
@@ -43,21 +51,21 @@
                                         <div class="p-4">
                                             <div class="row">
                                                 <!-- 이미지 들어갈곳 -->
-                                                <div class="col-2">
-                                                    <img :src="imgHref" :alt="result.placeName">
+                                                <div class="col-3">
+                                                    <img :src="result.thumbnailHref" class="img-thumbnail" alt="result.placeName">
                                                 </div>
                                                 <!-- 장소 내용 -->
-                                                <div class="col-10">
+                                                <div class="col-9">
                                                     <h4>
                                                         {{ result.placeName }}
                                                         <!-- 장소 자세히 보기 -->
-                                                        <button class="btn btn-primary btn-sm mx-auto" 
+                                                        <button class="btn btn-light btn-sm mx-2 " 
                                                         @click="detailOfPlace(result.placeName)" data-bs-toggle="modal" data-bs-target="#placeModal">
                                                             자세히
                                                         </button>&nbsp;
                                                         <!-- 장소 코스에 추가하기 -->
-                                                        <button class="btn btn-primary btn-sm mx-auto" 
-                                                        @click="insertCourse(result.placeId)">
+                                                        <button class="btn btn-primary btn-sm" 
+                                                        @click="insertCourse(result.placeName)">
                                                             추가하기
                                                         </button>
                                                     </h4>
@@ -74,19 +82,36 @@
                             </div>
                         </div>
                         <!-- 검색 후 끝 -->
+                        <hr class="m-2">
+
                     </div>
                 </div>
                 <!-- 코스 만들기 -->
                 <div class="col-lg-5">
                     <div class="m-10">
-                        <h1>나만의 코스</h1>
+                        <!-- 디비에 저장된다. -->
+                        <div class="d-flex justify-content-between">
+                            <span class="fs-4">나만의 코스</span>
+                            <button class="btn btn-primary m-2 my-auto"
+                             data-bs-toggle="modal" data-bs-target="#courseTitleModal"   
+                            >코스 등록
+                            </button>
+                        </div>
                         <draggable class="dragArea list-group w-full" :list="list" @change="log">
-                            <div
-                                class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+                            <div class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
                                 v-for="element in list"
-                                :key="element.name"
-                            >
-                                {{ element.name }}
+                                :key="element.name">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fs-5">{{ element.placeName }}</span>
+                                    <button type="button" class="btn-close btn-lg m-2" @click="deletePlaceInCourse(element.placeId)"
+                                    ></button>
+                                </div>
+                                <div>
+                                    <span class="text-muted mx-2">{{element.subTitle}}</span>
+                                    <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
+                                    data-bs-toggle="modal" data-bs-target="#replaceSubtitleModal"></a>
+                                </div>
+                                <img :src="element.thumbnailHref" class="img-thumbnail" :alt="element.placeName">
                             </div>
                         </draggable>
                     </div>
@@ -95,25 +120,95 @@
             </div>
 		</div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+
+    <!-- Modal place Detail-->
+    <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="modalPlaceDetailLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPlaceDetailLabel">{{ modalTitle }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div v-if="!(modalLoading && modalImagesLoading) == true">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img :src="modalData.thumbnailHref" class="d-block w-100" style="width: 32rem; height: 18rem;" alt="..." v-if="modalData != null">
+                                </div>
+                                <div class="carousel-item" v-for="image of modalImagesData" :key="image.id">
+                                    <img :src="image.thumbnail" style="width: 32rem; height: 18rem;" class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <div v-if="modalData != null">
+                            <span v-if="modalData.placeName">장소 : {{modalData.placeName}}</span><br>
+                            <span v-if="modalData.address">주소 : {{modalData.address}}</span><br>
+                            <span v-if="modalData.avgCost">평균 비용 : {{modalData.avgCost}}</span><br>
+                            <span v-if="modalData.description">설명 : {{modalData.description}}</span><br>
+                            <span v-if="modalData.placePhone">전화번호 : {{modalData.placePhone}}</span><br>
+                        </div>
+                        <!-- 지도 열어보자 -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
             </div>
-            <div class="modal-body">
-                ...
-                <!-- 
-                    검색 api를 통해서 보여주는 곳 
-                    1. 사진
-                    2. 내용
-                -->
+        </div>
+    </div>
+    
+    <!-- replaceSubtitle Modal -->
+    <div class="modal fade" id="replaceSubtitleModal" tabindex="-1" aria-labelledby="replaceSubtitleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replaceSubtitleModalLabel">소제목 수정하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="replaceFormInput" class="form-label">원하시는 소제목을 적어주세요!</label>
+                        <input type="email" class="form-control" id="replaceFormInput" placeholder="저녁 코스 ㅎㅎ" v-model="replaceSubtitleText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    @click="changeSubTitle(replaceSubtitleOfPlaceId, replaceSubtitleText)">저장 후 닫기</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            </div>
+        </div>
+    </div>
+
+    <!-- Course title register Modal -->
+    <div class="modal fade" id="courseTitleModal" tabindex="-1" aria-labelledby="courseTitleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="courseTitleModalLabel">코스 이름 정하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="titleFormInput" class="form-label">마지막으로 코스 이름을 적어주세요!</label>
+                        <input type="email" class="form-control" id="titleFormInput" placeholder="멋진 데이트 코스!" v-model="titleText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    @click="registerCourse(titleText)">등록</button>
+                </div>
             </div>
         </div>
     </div>
@@ -205,19 +300,25 @@ export default defineComponent ({
         const modalTitle = ref(null)
         const modalLoading = ref(false)
         const modalData = ref(null)
+
+        const modalImagesLoading = ref(false)
+        const modalImagesData = ref(null);
+        
         const modalError = ref(null)
+
         const detailOfPlace = (placeName) => {
             console.log(placeName)
             // 코스 디테일 모달 추가.
             modalTitle.value = placeName
              // search start
             modalLoading.value = true;
+            modalImagesLoading.value = true;
             console.log(2);
             if(placeName == '') {
                 alert('json 호출 중 에러')
                 return
             }
-            // 장소 가져오기
+            // 장소 디테일 가져오기
             fetch('api/course/place/searchOne/' + placeName, {
                 method: 'get',
                 headers: {
@@ -252,29 +353,134 @@ export default defineComponent ({
             .then(() => {
                 modalLoading.value = false;
             });
+
+
+            //장소 이미지들 가져와서 Carosel로다가 만들기
+            fetch('api/course/place/searchOneImages?placeName=' + placeName, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                modalImagesData.value = json.items;
+            })
+            .catch(err => {
+                searchError.value = err;
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        modalError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                modalImagesLoading.value = false;
+            });
         }
 
 
         /**
          * 코스 추가하기.
          */
-        const insertCourse = (placeId) => {
-            console.log(placeId)
+        const insertPlaceData = ref(null);
+        const insertLoading = ref(false);
+        const insertError = ref(null);
+        const insertCourse = (placeName) => {
+            console.log(placeName)
             // 코스를 추가 해주는것.
+            // 부제목 넣기
+        
+            // 장소 디테일 가져오기
+            insertLoading.value = true;
+            fetch('api/course/place/searchOne/' + placeName, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                insertPlaceData.value = json;
+            })
+            .catch(err => {
+                searchError.value = err;
+                alert("코스입력 문제 발생")
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        insertError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                insertLoading.value = false;
+                insertPlaceData.value.subTitle = "소제목";
+                list.value.push(insertPlaceData.value)
+            });
         }
-
 
         /**
          *  코스 순서 정해주기
          */
         const enabled = ref(true)
-        const list = ref([
-          { name: 'John', id: 1 },
-          { name: 'Joao', id: 2 },
-          { name: 'Jean', id: 3 },
-          { name: 'Gerard', id: 4 },
-        ])
+        const list = ref([])
         const dragging = ref(true)
+        // 코스 삭제하기
+        const deletePlaceInCourse = (placeIdX) => {
+            console.log(placeIdX)
+            console.log(list.value)
+            for( let i = 0; i < list.value.length; i++){ 
+                if ( list.value[i].placeId === placeIdX) { 
+                    list.value.splice(i, 1); 
+                }
+            }
+        }
+        // 코스 소제목 수정
+        const replaceSubtitleOfPlaceId = ref(null);
+        const replaceSubtitleText = ref(null);
+        const replaceSubtitle = (placeId, subTitle) => {
+            console.log(subTitle)
+            replaceSubtitleOfPlaceId.value = placeId;
+            if(subTitle != '소제목') {
+                replaceSubtitleText.value = subTitle
+            }
+        }
+
+        const changeSubTitle = (placeId, subTitle) => {
+            for( let i = 0; i < list.value.length; i++){ 
+                if ( list.value[i].placeId === placeId ) { 
+                    list.value[i].subTitle = subTitle; 
+                }
+            }
+            replaceSubtitleOfPlaceId.value = null;
+            replaceSubtitleText.value = null;
+        }
 
 
         /**
@@ -345,17 +551,61 @@ export default defineComponent ({
                 loadingSearch.value = false;
             });
         }
-        
-        // 검색한 이미지 보여주기
-        const imgHref = ref(null);
-        const showThumbnail = (placeName) => {
-            console.log("dd")
-            imgHref.value = [];
-            fetch('api/course/place/searchOneImage?placeName=' + placeName, {
-                method: 'get',
-                headers: {
-                    'content-type': 'application/json'
-                }
+
+
+        /**
+            코스 등록
+         */
+        // 코스 등록 버튼 
+        const titleText = ref(null);
+        let sendList = null;
+        let subList = null;
+        let sendTitleText = null;
+        const registerCourseError = ref(null);
+        const registerConfirm = ref(null);
+        const registerCourse = (titleTextx) => {
+            console.log(list.value);
+            console.log(titleTextx);
+
+            if(list.value.length == 0) {
+                alert('장소를 등록해 주세요!')
+                return;
+            }
+            
+            if(titleText.value == null || titleText.value == "") {
+                titleText.value = "기본값 코스"
+            }
+
+            sendTitleText = titleText.value
+            console.log(sendTitleText);
+
+            sendList = [];
+            for( let i = 0; i < list.value.length; i++){ 
+                subList = null;
+                subList = {};
+                //     PLACE_ID,
+                // COURSE_ORDER,
+                // COURSE_COMMENT,
+                // AVG_COST,
+                subList.placeId = list.value[i].placeId;
+                subList.courseOrder = (i+1) + "";
+                subList.courseComment = list.value[i].subTitle
+                subList.avgCost = list.value[i].avgCost
+
+                sendList.push(subList);
+            }
+            console.log(JSON.stringify(sendList));
+            for(let i=0; i<sendList.length; i++) {
+                console.log(sendList[i]);
+            }
+            // I prefer to use fetch
+            // you can use use axios as an alternative
+            var formData = new FormData();
+            formData.append("courseName", sendTitleText);
+            formData.append("list", JSON.stringify(sendList))
+            fetch('api/course/register', {
+                method: 'POST',
+                body: formData
             })
             .then((res) => {
                 // a non-200 response code
@@ -370,21 +620,20 @@ export default defineComponent ({
             .then(json => {
                 // set the response data
                 console.log(json)
-                imgHref.value.push(json.items[0].thumbnail)
-                console.log(imgHref.value)
+                registerConfirm.value = json;
             })
             .catch(err => {
-                searchError.value = err;
+                registerCourseError.value = err;
                 // In case a custom JSON error response was provided
                 if (err.json) {
                     return err.json.then(json => {
                         // set the JSON response message
-                        searchError.value.message = json.message;
+                        registerCourseError.value.message = json.message;
                     });
                 }
             })
-            .finally(() => {
-                return imgHref
+            .then(() => {
+                alert(registerConfirm.value)
             });
         }
 
@@ -407,24 +656,39 @@ export default defineComponent ({
             modalLoading,
             modalData,
             modalError,
-            
+            modalImagesLoading,
+            modalImagesData,
+
             // course insert
             insertCourse,
+            insertPlaceData,
+            insertLoading,
+            insertError,
 
             // course list move
             enabled,
             list,
             dragging,
+            deletePlaceInCourse,
+            replaceSubtitle,
+            replaceSubtitleText,
+            replaceSubtitleOfPlaceId,
+            changeSubTitle,
 
             // search
             searched,
             searchData,
             loadingSearch,
             searchError,
-            imgHref,
             // search func
             searchByTag,
-            showThumbnail,
+
+            // last.. register course
+            registerCourse,
+            titleText,
+            sendTitleText,
+            sendList,
+            subList,
         };
     },
   

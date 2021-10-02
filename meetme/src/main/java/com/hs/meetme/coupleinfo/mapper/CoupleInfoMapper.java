@@ -12,5 +12,5 @@ public interface CoupleInfoMapper {
 	public int coupleCustomUpdate(CoupleInfoVO vo); //커플 대문이미지, d-day 수정
 	public int couplePhotoDefault(CoupleInfoVO vo); //커플 대문사진 초기화
 	public CoupleInfoVO read(CoupleInfoVO vo); //커플정보상세보기
-
+	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo); //내여친정보
 }

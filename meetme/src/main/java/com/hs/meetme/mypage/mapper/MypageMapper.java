@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.PostCommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
@@ -23,7 +23,7 @@ public interface MypageMapper {
 	//내 댓글 전체 갯수
 	public int getCommentCount(@Param("userId") long userId);
 	//내 댓글 조회
-	public List<PostCommentVO> getCommentList(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public List<CommentVO> getCommentList(@Param("cri") Criteria cri, @Param("userId") long userId);
 	//내 댓글 페이징 위한 갯수
 	public int getTotalCommentCount(@Param("cri") Criteria cri, @Param("userId") long userId);
 	

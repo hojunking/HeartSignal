@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.PostCommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.mapper.MypageMapper;
@@ -39,7 +39,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<PostCommentVO> getCommentList(Criteria cri, long userId) {
+	public List<CommentVO> getCommentList(Criteria cri, long userId) {
 		return mypageMapper.getCommentList(cri, userId);
 	}
 

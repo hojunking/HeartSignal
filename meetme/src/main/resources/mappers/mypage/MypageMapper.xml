@@ -85,7 +85,7 @@
       comment_id >0 AND user_id=#{userId}
     </select>		
 	<!-- 내가 쓴 댓글 리스트 SELECT -->
-	<select id="getCommentList" resultType="PostCommentVO">
+	<select id="getCommentList" resultType="CommentVO">
      SELECT *
      FROM  
          (SELECT /*+ INDEX_DESC(a post_com_updated_idx) */
@@ -118,6 +118,7 @@
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 		
 	<!-- 회원정보 SELECT -->
+
 	<select id="getMyinfo" resultType="MypageUserInfoVO">
 	  SELECT 
 	  a.user_id,
@@ -135,6 +136,7 @@
 	  a.couple_status,
 	  a.role,
 	  b.img_url
+
       FROM user_info a LEFT OUTER JOIN img b
       ON a.img_id = b.img_id
       WHERE user_id = #{userId}

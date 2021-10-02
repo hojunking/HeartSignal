@@ -49,4 +49,10 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 		return map.read(vo);
 	}
 
+	@Override
+	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo) {
+		// TODO Auto-generated method stub
+		return map.myLoverInfo(vo);
+	}
+
 }

@@ -27,6 +27,25 @@
                     CO.USER_RECEIVED)
 	WHERE USER_ID=#{userId}
 </select>
+<select id="myLoverInfo" resultType="CoupleInfoVO">
+	SELECT U.NAME AS name,
+			U.NICKNAME AS nickName,
+			U.BIRTH_DATE AS birthDate,
+			I.IMG_URL AS userImg
+	FROM USER_INFO U 
+	JOIN IMG I
+	ON U.IMG_ID = I.IMG_ID
+	JOIN 
+	COUPLE_INFO C
+	ON U.USER_ID 
+	IN (C.USER_RECEIVED,C.USER_REQUEST)
+	WHERE U.USER_ID=(SELECT US.USER_ID
+	                 FROM USER_INFO US JOIN COUPLE_INFO CO
+	                 ON US.USER_ID IN (CO.USER_REQUEST,CO.USER_RECEIVED)
+	                 WHERE CO.COUPLE_ID = #{coupleId}
+	                 <![CDATA[AND US.USER_ID <> #{userId}]]>
+	                 )
+</select>
 <insert id="coupleInfoInsert"> <!-- 커플 탄생 -->
 	<selectKey keyProperty="coupleId" resultType="int" order="BEFORE">
 		SELECT SEQ_COUPLEINFO.NEXTVAL FROM DUAL
