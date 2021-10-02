@@ -7,7 +7,7 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 import lombok.Data;
 
 @Data
-public class CommentVO extends AccountVO{
+public class CommentVO {
   
 	private String commentId;
 	private String comContent;
@@ -18,4 +18,7 @@ public class CommentVO extends AccountVO{
 	private String userId;
 	private String postId;
 	private String logId;
+	
+	private String nickname;
+	private String imgId;
 }

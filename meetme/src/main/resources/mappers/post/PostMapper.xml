@@ -69,7 +69,7 @@
 	</select>
 
 	<!-- 커뮤니티 댓글 입력 -->
-	<insert id="commentInsert">
+	<insert id="insertCMComment">
 		INSERT INTO
 			post_comment
 		VALUES
@@ -87,7 +87,11 @@
 	</insert>
 
 
-	<!-- <update id="commentUpdate"> </update> -->
+	<update id="commentUpdate">
+		update post_comment 
+		set com_content=#{comContent} , com_updated = sysdate
+		where comment_id =#{commentId}
+	</update>
 
 
 	<delete id="commentDelete">

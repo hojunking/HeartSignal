@@ -19,7 +19,10 @@ public interface PostService {
 	
 	public long countHit(long postId); //조회수 up
 	public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
+	public int insertCMComment(CommentVO vo); // 커뮤니티댓글 입력
+	
+	
 	public int commentDelete(long commentId); // 댓글 삭제
-	public int commentInsert(CommentVO vo); // 댓글 입력
+	public int commentUpdate(CommentVO vo);//댓글 수정
 
 }
