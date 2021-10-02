@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,8 @@ public class AccountVO implements UserDetails{
 	private String phoneNum;
 	private Date created;
 	private Date updated;
-	private Date birth_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthDate;
 	private String address;
 	private String coupleStatus;
 	private String imgId;
