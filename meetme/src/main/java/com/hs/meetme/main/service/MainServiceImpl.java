@@ -1,4 +1,3 @@
-
 package com.hs.meetme.main.service;
 
 import java.util.List;
@@ -24,6 +23,12 @@ public class MainServiceImpl implements MainService {
 	public List<MainVO> placeList() {
 		
 		return mainMapper.placeList();
+	}
+
+	@Override
+	public List<MainVO> courseList() {
+		
+		return mainMapper.courseList();
 	}
 
 }

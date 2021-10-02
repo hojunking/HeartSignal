@@ -2,12 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.useraccess.mapper.AccountMapper">
 	<select id="findByEmail" parameterType="String" resultType="AccountVO">
-		select 
-    u.*, 
-    s.role
-from user_info u
-join security s
-on u.email = s.email
-where u.email = #{email}
+		SELECT 
+    		* 
+		FROM 
+			user_info 
+		WHERE 
+			email = #{email}
 	</select>
+	
+	<insert id="signUp">
+		insert into
+			user_info
+		values
+			(seq_user_info.nextval,
+			 #{name},
+			 #{email},
+			 #{nickname},
+			 #{password},
+			 #{phoneNum},
+			 sysdate,
+			 sysdate,
+			 #{birthDate},
+			 null,
+			 default,
+			 null,
+			 'USER')
+	</insert>
 </mapper>

@@ -20,7 +20,17 @@ public class RestCoupleInfoController {
 		}
 		
 		@GetMapping("/coupleImg") //커플이미지, d-day 발사
-		public CoupleInfoVO coupleImg(CoupleInfoVO vo) {
-			return coupleService.coupleInfoSelect(vo);
+		public CoupleInfoVO coupleMainInfo(CoupleInfoVO vo) {
+			vo =coupleService.coupleInfoSelect(vo);
+			vo.getUserId();
+			return vo;
 		}
+		@GetMapping("/mylove")
+		public CoupleInfoVO myLoveInfo(CoupleInfoVO vo) {
+			vo = coupleService.myLoverInfo(vo);
+			System.out.println(vo);
+			return vo;
+		}
+		
+		
 }

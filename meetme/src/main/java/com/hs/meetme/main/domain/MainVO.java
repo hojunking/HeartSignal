@@ -9,7 +9,9 @@ public class MainVO {
 	private String placeName;
 	private String region;
 	private String placeId;
-	
+	private String courseName;
+	private String avgCost;
+	private String address;
 	
 }
 

@@ -8,10 +8,16 @@
 	
 	<!-- 수정 -->
 	<select id="placeList" resultType="MainVO">
-		SELECT p.PLACE_NAME,p.REGION, t.TAG_ID
+		SELECT p.PLACE_NAME,SUBSTR(p.ADDRESS,'1',INSTR(p.ADDRESS,' ',1,1)-1) ADDRESS,p.REGION, t.TAG_ID
 		FROM PLACE p JOIN PLACE_TAGS t
 		ON p.place_id = t.place_id
 		ORDER BY DBMS_RANDOM.VALUE
+        
 	</select>
 	
+	<select id="courseList" resultType="MainVO">
+		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
+		FROM course c JOIN course_order o
+		ON c.COURSE_ID = o.COURSE_ID
+	</select>
 </mapper>

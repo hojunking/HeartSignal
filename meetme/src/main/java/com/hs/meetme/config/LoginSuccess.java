@@ -7,9 +7,12 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 public class LoginSuccess implements AuthenticationSuccessHandler{
 
@@ -22,15 +25,10 @@ public class LoginSuccess implements AuthenticationSuccessHandler{
 			roleNames.add(authority.getAuthority());
 		});
 		
-		System.out.println(roleNames.toString());
-		
-		if (roleNames.contains("ADMIN")) {
-			response.sendRedirect("/s/admin");
-		} else if(roleNames.contains("USER")) {
-			response.sendRedirect("/s/member");
-		} else {
-			response.sendRedirect("/s/login");
-		}
+		HttpSession session = request.getSession();
+		session.setAttribute("userSession", auth.getPrincipal());
+
+		response.sendRedirect("/");
 	}
 
 }

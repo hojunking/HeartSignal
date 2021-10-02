@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+<th:block layout:fragment="content">
+	<h3>회원가입</h3>
+    <form name="f" action="/signUp" method="POST">
+        <input th:name="${_csrf.parameterName}" type="hidden" th:value="${_csrf.token}">
+        <table>
+            <tbody>
+                <tr>
+                    <td>이메일:</td>
+                    <td><input type="email" name="email"></td>
+                </tr>
+                <tr>
+                    <td>비밀번호:</td>
+                    <td><input type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td>이름:</td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td>닉네임:</td>
+                    <td><input type="text" name="nickname"></td>
+                </tr>
+                <tr>
+                    <td>전화번호:</td>
+                    <td><input type="text" name="phoneNum"></td>
+                </tr>
+                <tr>
+                    <td>생년월일:</td>
+                    <td><input type="date" name="birthDate"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input name="submit" type="submit" value="회원가입"></td>
+                    <button type="button">확인</button>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</th:block>
+<th:block layout:fragment="script">
+	<script>
+        $(function(){
+            $('button').click(function(){
+                console.log($('input[name="birthDate"]').val());
+            })
+        });
+    </script>
+</th:block>
+</html>

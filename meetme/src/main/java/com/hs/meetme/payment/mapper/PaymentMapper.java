@@ -7,7 +7,7 @@ import com.hs.meetme.payment.domain.PaymentVO;
 public interface PaymentMapper {
 	
 	public int paymentInsert(PaymentVO vo);
-	public String test(PaymentVO vo);
+	public PaymentVO readPayInfo(PaymentVO vo);
 	
 
 }

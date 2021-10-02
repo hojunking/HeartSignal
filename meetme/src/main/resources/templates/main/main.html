@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
-<head>
-<style>
+<th:block layout:fragment="css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+	<style>
 /* 태그 */
 .tcustom {
 	width: 50px;
@@ -22,6 +24,11 @@
 	background-color: #69c6ba;
 	color: white;
 	font-size: x-small;
+	font-weight: bold;
+}
+
+.placeTag2 {
+	background-color: #FF8E99;
 }
 /* 입력 칸 */
 .insertcustom, .insertcustomOne {
@@ -31,13 +38,14 @@
 }
 
 .select {
-	margin-left:100px;
+	margin-left: 100px;
 }
 /* 검색 버튼 */
 .tagButton {
 	width: 50px;
-	height: 33px;
+	height: 33.5px;
 	font-size: small;
+	border-radius: 0px;
 }
 /* 자세히 보기 버튼  */
 .cusButton {
@@ -51,9 +59,9 @@
 	background-color: transparent;
 }
 /* 카드 이미지 사이즈*/
-.cardImg{
-	margin: 30px 30px; 
-	width: 80px; 
+.cardImg {
+	margin: 30px 30px;
+	width: 80px;
 	height: 80px;
 }
 
@@ -70,7 +78,7 @@
 }
 
 .selectCard {
-	background-color:rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.7);
 	color: grey;
 	border-radius: 10px;
 }
@@ -79,372 +87,341 @@
 	padding: 10px;
 }
 </style>
-</head>
-<body>
-	<th:block layout:fragment="content">
-		<div class="tm-page-wrap mx-auto">
-			<section class="tm-banner">
-				<div class="tm-container-outer tm-banner-bg">
-                <div class="container">
-				<div id="demo" class="carousel slide" data-ride="carousel"
-					data-interval="false">
-					<!-- false = 자동슬라이드 해지 -->
-					<!-- Carousel  -->
-
-					<!-- Indicators -->
-					<ul class="carousel-indicators">
-						<li data-target="#demo" data-slide-to="0" class="active"></li>
-						<li data-target="#demo" data-slide-to="1"></li>
-					</ul>
-					<!-- END OF Indicators -->
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<!-- 첫번째 페이지 -->
-							<div class="tm-container-outer tm-banner-bg">
-								<!-- main -->
-								<div class="container">
-									<div class="row tm-banner-row tm-banner-row-header">
-										<div class="col-xs-12">
-											<div class="tm-banner-header">
-												<h1 class="text-uppercase tm-banner-title">나만의 데이트 코스
-													설정하기</h1>
-												<p class="tm-banner-subtitle" style="font-size: 15px;">나만의
-													맞춤 데이트 코스를 생성해보세요! :)</p>
-											</div>
-										</div>
-										<!-- col-xs-12 -->
-									</div>
-									<!-- row -->
-									<div class="row tm-banner-row" id="tm-section-search">
-										<form action="main.html" method="get"
-											class="tm-search-form tm-section-pad-2">
-											<div class="form-row tm-search-form-row">
-												<div
-													class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
-													<label for="inputCity" class="select">관심있는 태그를
-														설정해주세요</label>
-													<div class="input-group">
-														<input class="insertcustomOne form-control" type="text"
-															value="" placeholder=" # 태그를 선택해주세요">
-														<button class="tagButton btn btn-primary">검색</button>
-													</div>
-													<br>
-													<div class="customBg">
-														<button type="button" id="tagClick"
-															class="tcustom badge badge-secondary m-1"
-															th:each="t : ${tag}">
-															<span id="tagOn" th:text="${t.tagId}"></span>
-														</button>
-													</div>
-												</div>
-
-												<div
-													class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
-													<label for="inputCity" class="select">데이트 할 지역을
-														입력해주세요</label> <input name="destination" type="text"
-														class="insertcustom form-control" id="inputCity"
-														placeholder="  입력해주세요"> <br>
-													<button type="submit"
-														class="btn btn-primary tm-btn tm-btn-search text-uppercase"
-														id="btnSubmit" style="width: 200px; margin-left: 100px;">코스
-														생성하기</button>
-												</div>
-											</div>
-										</form>
-
-									</div>
-									<!-- row -->
-								</div>
-								<!-- .container -->
-								</div>
-							</div>
-							<!-- END OF MAIN -->
-						</div>
-						<!-- END OF carousel active 첫번째 페이지 끝-->
-
-						<!-- carousel-item 두번째 페이지 -->
-						<div class="carousel-item">
-							<div class="tm-container-outer tm-banner-bg">
-								<!-- main -->
-								<div class="container">
-									<div class="row tm-banner-row tm-banner-row-header">
-										<div class="col-xs-12">
-											<div class="tm-banner-header">
-												<h1 class="text-uppercase tm-banner-title"></h1>
-											</div>
-											<!-- END OF tm-banner-header -->
-										</div>
-										<!-- END OF col-xs-12-->
-									</div>
-									<!-- END OF row tm-banner-row tm-banner-row-header-->
-
-									<!-- SECOND SECTION -->
-									<div class="row tm-banner-row" id="tm-section-search">
-										<div class="col-lg-7">
-
-										</div>
-										<!-- END OF map -->
-									</div>
-									<!-- END OF SECOND SECTION -->
-								</div>
-								<!-- END OF carousel-inner  -->
-							</div>
-							<!-- END OF container -->
-						</div>
-						<!-- END OF tm-container-outer tm-banner-bg -->
-					</div>
-					<!-- END OF carousel-item -->
-
-					
-					<div class="tm-banner-overlay"></div>
-					</div> <!-- .container -->
-					<!-- 백그라운드 어둡게 -->
-					<!-- Left and right controls 캐러셀 -->
-					<a class="carousel-control-prev" href="#demo" data-slide="prev">
-						<span class="carousel-control-prev-icon"></span>
-					</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-						<span class="carousel-control-next-icon"></span>
-					</a>
-				</div>
-				<!-- Carousel -->
-				<!-- .tm-container-outer -->
-			</section>
-			<!-- 메인페이지 끝  -->
+</th:block>
 
 
-			<section class="p-5 tm-container-outer tm-bg-gray">
+<th:block layout:fragment="content">
+	<div class="tm-page-wrap mx-auto">
+		<section class="tm-banner">
+			<div class="tm-container-outer tm-banner-bg">
 				<div class="container">
-					<div class="row">
-						<div class="col-xs-12 mx-auto tm-about-text-wrap text-center">
-							<h2 class="text-uppercase mb-4">
-								<strong>AI</strong> 코스 추천
-							</h2>
-							<a href="javascript:void(0)" class="tm-down-arrow-link"><i
-								class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<div class="tm-container-outer" id="tm-section-2">
-				<section class="tm-slideshow-section">	<!-- 민트색 버튼 슬라이드 쇼 -->
-					<div class="tm-slideshow">
-						<img src="img/tm-img-01.jpg" alt="Image">
-						<img src="img/tm-img-02.jpg" alt="Image"> 
-						<img src="img/tm-img-03.jpg" alt="Image">
-					</div>
-					<!-- 코스 구현될 곳 -->
-					<div class="cource tm-slideshow-description tm-bg-primary">
-						<!-- 민트색 카드 -->
-						<div class="customCard card">
-						<!-- 하얀색 카드 넓이 -->
-							<div class="col-12" style="padding-left:30px; padding-right:30px;">
-								<!-- 하얀 카드들 감싸는 곳 -->
-								<div class="customCard card">
-									<!-- <h4 th:each="p:${place}">
-											<span th:text="${p.placeName}"></span></h4> -->
-									<br>
-									<!-- th:block 하얀카드 안 -->
-									<th:block th:each="p: ${#numbers.sequence(0, 1)}">
-										<div class="selectCard">
-											<!-- 민트 카드 안의 하얀 카드 -->
-											<div class="row no-gutters">
-												<!-- 이미지 -->
-													<div class="col-3">
-														<img class="card-img-left cardImg" th:src="@{/img/testimage.png}"
-															alt="Site logo">
-													</div>
-												<!-- END OF 이미지 -->
-											<!-- CONTENTS -->
-												<div class="col-9">
-													<div class="card-body">
-														<h5 th:text="${place[p].placeName}"></h5>
-														<img th:src="@{/img/mapIcon.png}"
-															style="width: 15px; height: 15px;">
-														<th:block th:text="${place[p].region}"></th:block>
-														<br> <br>
-														<th:block th:each="t: ${#numbers.sequence(0, 3)}">
-															<span class="placeTag" th:text="${place[t].tagId}"></span>
-														</th:block>
-													</div> <!-- END OF CARD-BODY -->
-												</div> <!-- END OF col-9 -->
-											</div> <!-- row - no gutter -->
-										</div> <!-- END OF selectCard  -->
-										<br>
-									</th:block>
-									<!-- END OF th:block 하얀카드 안 -->
-									<!-- 버튼 -->
-									<div class="text-center">
-										<button type="button"
-											class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
-											보기</button>
+					<!-- 첫번째 페이지 -->
+					<div class="tm-container-outer tm-banner-bg">
+						<!-- main -->
+						<div class="container">
+							<div class="row tm-banner-row tm-banner-row-header">
+								<div class="col-xs-12">
+									<div class="tm-banner-header">
+										<h1 class="text-uppercase tm-banner-title">나만의 데이트 코스
+											설정하기</h1>
+										<p class="tm-banner-subtitle" style="font-size: 15px;">나만의
+											맞춤 데이트 코스를 생성해보세요! :)</p>
 									</div>
-									<!-- 버튼 끝 -->
 								</div>
-								<!-- 하얀 카드들 감싸는 곳 끝 -->
+								<!-- col-xs-12 -->
 							</div>
-							<!-- END OF CONTENTS / 하얀색 카드 넓이 col-12 닫기 -->
-						</div>
-						<!-- END OF MINT CARD -->
-					</div>
-					<!-- 코스 구현될곳 끝-->
-				</section>
-				<section
-					class="clearfix tm-slideshow-section tm-slideshow-section-reverse">
-					<div class="tm-right tm-slideshow tm-slideshow-highlight">  <!-- 핑크 버튼 슬라이드 쇼-->
-						<img src="img/tm-img-02.jpg" alt="Image">
-						<img src="img/tm-img-03.jpg" alt="Image"> 
-						<img src="img/tm-img-01.jpg" alt="Image">
-					</div>
+							<!-- row -->
+							<div class="row tm-banner-row" id="tm-section-search">
+								<form action="main.html" method="get"
+									class="tm-search-form tm-section-pad-2">
+									<div class="form-row tm-search-form-row">
+										<div
+											class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
+											<label for="inputCity" class="select">관심있는 태그를 설정해주세요</label>
+											<div class="input-group">
+												<input class="insertcustomOne form-control" name="insert"
+													type="text" value="" placeholder=" # 태그를 선택해주세요">
+												<button class="tagButton btn btn-primary">검색</button>
+											</div>
+											<br>
+											<div class="customBg">
+												<button type="button" id="tagClick"
+													class="tcustom badge badge-secondary m-1"
+													th:each="t : ${tag}">
+													<span class="tagOn" th:text="${t.tagId}"></span>
+												</button>
+											</div>
+										</div>
 
-					<div class="tm-slideshow-description tm-slideshow-description-left tm-bg-highlight">
-						<!-- 코스 구현될 곳 -->
-						<div>
-							<div class="customCard card">
-								<div class="row no-gutters">
-									<div class="col-3">
-										<!-- IMAGE  -->
-										<img class="card-img-left" th:src="@{/img/testimage.png}"
-											alt="Site logo"
-											style="margin: 30px 20px; width: 80px; height: 80px">
-									</div>
-									<!-- END OF IMAGE  -->
-
-									<div class="col-9">
-										<!-- CONTENTS pink -->
-										<div class="card-body">
-											<h4>하시식당</h4>
-											<p class="card-text">
-												<img th:src="@{/img/mapIcon.png}"
-													style="width: 15px; height: 15px;"> 제주시
-											</p>
-											<button type="button"
-												class="cardbtn2 text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
-												보기</button>
+										<div
+											class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
+											<label for="inputCity" class="select">데이트 할 지역을
+												입력해주세요</label> <input name="destination" type="text"
+												class="insertcustom form-control" id="inputCity"
+												placeholder="  입력해주세요"> <br>
+											<button type="submit"
+												class="btn btn-primary tm-btn tm-btn-search text-uppercase"
+												id="btnSubmit" style="width: 200px; margin-left: 100px;">코스
+												생성하기</button>
 										</div>
 									</div>
-									<!-- END OF CONTENTS -->
-
-								</div>
-								<!-- END OF row no-gutters -->
+								</form>
 							</div>
-							<!-- END OF CARD -->
-						</div>
-						<!-- 코스 구현될곳 끝-->
-					</div>
-				</section>
-			</div>
-			<div></div>
-			<div class="tm-container-outer" id="tm-section-3">
-				<ul class="nav nav-pills tm-tabs-links">
-					<li class="tm-tab-link-li" th:each="p:${place}"><a href="#1a"
-						data-toggle="tab" class="tm-tab-link"> <!-- <img src="img/north-america.png"
-							alt="Image" class="img-fluid">  --> <span th:text="${p.region}"></span>
-					</a></li>
-				</ul>
-				
-				<!-- Tab 4 -->
-				<div class="tab-pane fade show active" id="4a">
-					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
-					<div class="tm-recommended-place-wrap">
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-06.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<h3 class="tm-recommended-title">Asia Resort Hotel</h3>
-								<p class="tm-text-highlight">Singapore</p>
-								<p class="tm-text-gray">Sed egestas, odio nec bibendum
-									mattis, quam odio hendrerit risus, eu varius eros lacus sit
-									amet lectus. Donec blandit luctus dictum...</p>
-							</div>
-							<a href="#" class="tm-recommended-price-box">
-								<p class="tm-recommended-price">$440</p>
-								<p class="tm-recommended-price-link">Continue Reading</p>
-							</a>
-						</div>
-
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-07.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<h3 class="tm-recommended-title">Nullam eget est a nisl</h3>
-								<p class="tm-text-highlight">Yangon, Myanmar</p>
-								<p class="tm-text-gray">Sed egestas, odio nec bibendum
-									mattis, quam odio hendrerit risus, eu varius eros lacus sit
-									amet lectus. Donec blandit luctus dictum...</p>
-							</div>
-							<div id="preload-hover-img"></div>
-							<a href="#" class="tm-recommended-price-box">
-								<p class="tm-recommended-price">$450</p>
-								<p class="tm-recommended-price-link">Continue Reading</p>
-							</a>
-						</div>
-
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-05.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<h3 class="tm-recommended-title">Proin interdum ullamcorper</h3>
-								<p class="tm-text-highlight">Bangkok, Thailand</p>
-								<p class="tm-text-gray">Sed egestas, odio nec bibendum
-									mattis, quam odio hendrerit risus, eu varius eros lacus sit
-									amet lectus. Donec blandit luctus dictum...</p>
-							</div>
-							<a href="#" class="tm-recommended-price-box">
-								<p class="tm-recommended-price">$460</p>
-								<p class="tm-recommended-price-link">Continue Reading</p>
-							</a>
-						</div>
-
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-04.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<h3 class="tm-recommended-title">Lorem ipsum dolor sit</h3>
-								<p class="tm-text-highlight">Vientiane, Laos</p>
-								<p class="tm-text-gray">Sed egestas, odio nec bibendum
-									mattis, quam odio hendrerit risus, eu varius eros lacus sit
-									amet lectus. Donec blandit luctus dictum...</p>
-							</div>
-							<a href="#" class="tm-recommended-price-box">
-								<p class="tm-recommended-price">$470</p>
-								<p class="tm-recommended-price-link">Continue Reading</p>
-							</a>
 						</div>
 					</div>
-
-					<a href="#"
-						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
-						More Places</a>
 				</div>
-				<!-- tab-pane -->
-				<br>
+				<div class="tm-banner-overlay"></div>
+			</div>
+		</section>
+		<!-- 메인페이지 끝  -->
+
+
+		<section class="p-5 tm-container-outer tm-bg-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 mx-auto tm-about-text-wrap text-center">
+						<h2 class="text-uppercase mb-4">
+							<strong>AI</strong> 코스 추천
+						</h2>
+						<a href="javascript:void(0)" class="tm-down-arrow-link"><i
+							class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="tm-container-outer" id="tm-section-2">
+			<section class="tm-slideshow-section">
+				<!-- 민트색 버튼 슬라이드 쇼 -->
+				<div class="tm-slideshow">
+					<img src="img/tm-img-01.jpg" alt="Image"> <img
+						src="img/tm-img-02.jpg" alt="Image"> <img
+						src="img/tm-img-03.jpg" alt="Image">
+				</div>
+				<!-- 코스 구현될 곳 -->
+				<div class="cource tm-slideshow-description tm-bg-primary">
+					<!-- 민트색 카드 -->
+					<div class="customCard card">
+						<!-- 하얀색 카드 넓이 -->
+						<div class="col-12"
+							style="padding-left: 30px; padding-right: 30px;">
+							<!-- 하얀 카드들 감싸는 곳 -->
+							<div class="customCard card">
+								<!-- <h4 th:each="p:${place}">
+											<span th:text="${p.placeName}"></span></h4> -->
+								<br>
+								<!-- th:block 하얀카드 안 -->
+								<th:block th:each="p: ${#numbers.sequence(0, 1)}">
+									<div class="selectCard">
+										<!-- 민트 카드 안의 하얀 카드 -->
+										<div class="row no-gutters">
+											<!-- 이미지 -->
+											<div class="col-3">
+												<img class="card-img-left cardImg"
+													th:src="@{/img/testimage.png}" alt="Site logo">
+											</div>
+											<!-- END OF 이미지 -->
+											<!-- CONTENTS -->
+											<div class="col-9">
+												<div class="card-body">
+													<h5 th:text="${place[p].placeName}"></h5>
+													<img th:src="@{/img/mapIcon.png}"
+														style="width: 15px; height: 15px;">
+													<th:block th:text="${place[p].region}"></th:block>
+													<br> <br>
+													<th:block th:each="t: ${#numbers.sequence(0, 3)}">
+														<span class="placeTag" th:text="${place[t].tagId}"></span>
+													</th:block>
+												</div>
+												<!-- END OF CARD-BODY -->
+											</div>
+											<!-- END OF col-9 -->
+										</div>
+										<!-- row - no gutter -->
+									</div>
+									<!-- END OF selectCard  -->
+									<br>
+								</th:block>
+								<!-- END OF th:block 하얀카드 안 -->
+								<!-- 버튼 -->
+								<div class="text-center">
+									<button type="button"
+										class="cardbtn text-uppercase tm-btn tm-btn-white tm-btn-white-primary"
+										onclick="location.href='./courseDetail?course_id=${detail.courseId}'">자세히
+										보기</button>
+								</div>
+								<!-- 버튼 끝 -->
+							</div>
+							<!-- 하얀 카드들 감싸는 곳 끝 -->
+						</div>
+						<!-- END OF CONTENTS / 하얀색 카드 넓이 col-12 닫기 -->
+					</div>
+					<!-- END OF MINT CARD -->
+				</div>
+				<!-- 코스 구현될곳 끝-->
+			</section>
+			<section
+				class="clearfix tm-slideshow-section tm-slideshow-section-reverse">
+				<div class="tm-right tm-slideshow tm-slideshow-highlight">
+					<!-- 핑크 버튼 슬라이드 쇼-->
+					<img src="img/tm-img-02.jpg" alt="Image"> <img
+						src="img/tm-img-03.jpg" alt="Image"> <img
+						src="img/tm-img-01.jpg" alt="Image">
+				</div>
+				<!-- 코스 구현될 곳 -->
+				<div
+					class="cource tm-slideshow-description tm-slideshow-description-left tm-bg-highlight">
+					<div class="customCard card">
+						<!-- 하얀색 카드 넓이 -->
+						<div class="col-12"
+							style="padding-left: 30px; padding-right: 30px;">
+							<!-- 하얀 카드들 감싸는 곳 -->
+							<div class="customCard card">
+								<!-- <h4 th:each="p:${place}">
+											<span th:text="${p.placeName}"></span></h4> -->
+								<br>
+								<!-- th:block 하얀카드 안 -->
+								<th:block th:each="p: ${#numbers.sequence(0, 1)}">
+									<div class="selectCard">
+										<!-- 핑크 카드 안의 하얀 카드 -->
+										<div class="row no-gutters">
+											<!-- 이미지 -->
+											<div class="col-3">
+												<img class="card-img-left cardImg"
+													th:src="@{/img/testimage.png}" alt="Site logo">
+											</div>
+											<!-- END OF 이미지 -->
+											<!-- CONTENTS -->
+											<div class="col-9">
+												<div class="card-body">
+													<h5 th:text="${place[p].placeName}"></h5>
+													<img th:src="@{/img/mapIcon.png}"
+														style="width: 15px; height: 15px;">
+													<th:block th:text="${place[p].region}"></th:block>
+													<br> <br>
+													<th:block th:each="t: ${#numbers.sequence(0, 3)}">
+														<span class="placeTag placeTag2"
+															th:text="${place[t].tagId}"></span>
+													</th:block>
+												</div>
+												<!-- END OF CARD-BODY -->
+											</div>
+											<!-- END OF col-9 -->
+										</div>
+										<!-- row - no gutter -->
+									</div>
+									<!-- END OF selectCard  -->
+									<br>
+								</th:block>
+								<!-- END OF th:block 하얀카드 안 -->
+								<!-- 버튼 -->
+								<div class="text-center">
+									<button type="button"
+										class="cardbtn2 text-uppercase tm-btn tm-btn-white tm-btn-white-primary">자세히
+										보기</button>
+								</div>
+								<!-- 버튼 끝 -->
+							</div>
+							<!-- 하얀 카드들 감싸는 곳 끝 -->
+						</div>
+						<!-- END OF CONTENTS / 하얀색 카드 넓이 col-12 닫기 -->
+					</div>
+					<!-- END OF CARD -->
+				</div>
+				<!-- 코스 구현될곳 끝-->
+			</section>
+		</div>
+		<div class="tm-container-outer swiper-container" id="tm-section-3"
+			style="background: #69c6ba; padding-top: 17px;">
+			<ul class="swiper-wrapper">
+				<li class="tm-tab-link-li tm-tab-link swiper-slide"
+					th:each="p:${place}"><a href="" class="tm-tab-link"> <span
+						th:text="${p.address}"></span></a></li>
+			</ul>
+
+			<div class="swiper-pagination"></div>
+			<!-- navigation buttons -->
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+
+
+		</div>
+		<!-- END OF tm-container-outer  -->
+
+
+		<!-- Tab 4 -->
+		<div class="tab-pane fade show active">
+			<th:block th:each="c: ${#numbers.sequence(0, course.size-1)}">
+				<!-- Current Active Tab WITH "show active" classes in DIV tag -->
+				<div class="tm-recommended-place-wrap">
+					<div class="tm-recommended-place">
+						<img src="img/tm-img-06.jpg" alt="Image"
+							class="img-fluid tm-recommended-img">
+						<div class="tm-recommended-description-box">
+							<br>
+							<h3 class="tm-recommended-title"
+								th:text="${course[c].courseName}"></h3>
+							<!-- 코스 -->
+							<br>
+							<p class="tm-text-highlight" th:text="${course[c].region}"
+								style="font-size: 15px;"></p>
+							<p class="tm-text-gray"></p>
+						</div>
+						<!-- <a href="#" class="tm-recommended-price-box"> -->
+						<div class="tm-recommended-price-box">
+							<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+								비용</p>
+							<p class="tm-recommended-price"
+								th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+						</div>
+						<!-- </a> -->
+
+					</div>
+
+				</div>
+				<!-- 	<a href="#"
+						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
+						More Places</a> -->
+		</div>
+		<!-- tab-pane -->
+		<br><br>
+		<div class="" style="text-align:center;">
+			<h4 class="text-uppercase mb-4"><strong style="color:#70D2B4;">호준공주</strong> 님의 핫플레이스</h4>
+			<div class="row tm-banner-row" style="padding-top: 20px;"
+				id="tm-section-search">
+				<img src="img/tm-img-01.jpg" alt="Image">
+				<!-- 지도 -->
 			</div>
 		</div>
-		<!-- .tm-container-outer -->
+		<br>
+	</div>
 </th:block>
-	<!-- .main-content -->
-</body>
+<!-- .main-content -->
+
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-			$(".tcustom").on("click", function() {
-				var tagId = $(this).text();
-				/* console.log(this); */
+			var tag = " ";
 
-				$(".insertcustomOne").attr("value", tagId);
+			$(".tagOn").on("click", function() {
+				var tagId = $(this).text();
+				console.log(tagId);
+				tag += tagId + " ";
+				$(".insertcustomOne").attr("value", tag);
 			});/* tcustom click 이벤트 */
-			
-			
-			 // Slick Carousel 카드 옆 이미지 변환
-            $('.tm-slideshow').slick({
-                infinite: true,
-                arrows: true,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            });    
+
+			// Slick Carousel 카드 옆 이미지 변환
+			$('.tm-slideshow').slick({
+				infinite : true,
+				arrows : true,
+				slidesToShow : 1,
+				slidesToScroll : 1
+			});
+
+			// 지역 swiper 버튼
+			var mySwiper = new Swiper('.swiper-container', {
+				slidesPerView : 7,
+				slidesPerGroup : 7,
+				observer : true,
+				observeParents : true,
+				spaceBetween : 24,
+				navigation : {
+					nextEl : '.swiper-button-next',
+					prevEl : '.swiper-button-prev',
+				},
+				breakpoints : {
+					1280 : {
+						slidesPerView : 3,
+						slidesPerGroup : 3,
+					},
+					720 : {
+						slidesPerView : 1,
+						slidesPerGroup : 1,
+					}
+				}
+			});
+
 		});
 	</script>
-
 </th:block>
 </html>

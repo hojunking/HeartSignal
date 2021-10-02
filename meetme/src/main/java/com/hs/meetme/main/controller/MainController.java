@@ -1,6 +1,6 @@
 package com.hs.meetme.main.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +27,7 @@ public class MainController {
 	public String home(Model model) {
 		model.addAttribute("tag",service.tagList());
 		model.addAttribute("place",service.placeList());
+		model.addAttribute("course",service.courseList());
 		return "main/main";
 	}
 	
