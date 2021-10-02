@@ -11,6 +11,7 @@ public class MainVO {
 	private String placeId;
 	private String courseName;
 	private String avgCost;
+	private String address;
 	
 }
 
