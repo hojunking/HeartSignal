@@ -186,7 +186,8 @@
 		UPDATE user_info
 		SET address1=#{address1},
 		    address2=#{address2},
-		    address3=#{address3}
+		    address3=#{address3},
+		    updated=sysdate
 		WHERE user_id= #{userId}
 	</update>
 	

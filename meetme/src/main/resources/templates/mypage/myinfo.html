@@ -17,22 +17,22 @@
                        
             <div class="col-6 my-1">
               <label for="address" class="form-label">Address</label>
-              <input type="text" style="width:40%;" class="form-control" name="address1" id="address1" readonly="readonly">
+              <input type="text" style="width:40%;" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
             </div>
             <div class="col-10 my-1">
-              <input type="text" class="form-control" name="address2" id="address2" readonly="readonly">
+              <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
             </div>
             <div class="col-10 my-1">
-              <input type="text" class="form-control" name="address3" id="address3" readonly="readonly">
+              <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
             </div>
             
             <div class="col-12" id="u_address" style="display: none;"> 
 		      <div class="form-group col-sm-6" >
-		        <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+		        <input class="form-control" style="width: 150px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
 		        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
 		      </div>
 			  <div class="form-group col-sm-12">
-		        <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
+		        <input class="form-control" style="top: 5px;" placeholder="도로명 및 지번 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
 		      </div>
 		      <div class="form-group col-sm-12">
 		        <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
@@ -277,12 +277,15 @@
     			 	                   address1:$("#addr1").val(),
     			 	                   address2:$("#addr2").val(),
     			 	                   address3:$("#addr3").val()
-    			       }),
+    			                     }),
     			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
     			dataType : "json",
     			contentType : "application/json;charset=UTF-8",
     			success: function(data){
     				console.log(data)
+    				$("#address1").val(data.address1);
+    				$("#address2").val(data.address2);
+    				$("#address3").val(data.address3);
     			},
     			error : function(){
     				
@@ -291,6 +294,7 @@
     		
     		$("#u_address").css("display","none");
     		$("#addrUpdateBtn").css("display","block");
+    		$("#u_address").find("input").val("");
     		alert("주소 수정 완료");
     	})
     })
