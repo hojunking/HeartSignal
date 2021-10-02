@@ -13,6 +13,7 @@ public class CommentVO extends AccountVO{
 	private String comContent;
 	private Date comCreated;
 	private Date comUpdated;
+	private String comDistinct;
 	
 	private String userId;
 	private String postId;

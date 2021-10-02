@@ -25,8 +25,10 @@ public interface MypageService {
 	
 	//회원정보 불러오기
 	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageuserInfoVO);
-	//회원정보 수정
-	public int setDateUpdated(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(주소)
 	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 비밀번호 불러오기
+	public MyPageUserInfoVO userSelectPassword(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 수정(비밀번호)
+	public int userUpdatePassword(MyPageUserInfoVO myPageUserInfoVO);
 }

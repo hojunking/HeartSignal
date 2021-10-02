@@ -54,18 +54,13 @@ public class MypageController {
 	
 	// 유저 인포 보기
 	@GetMapping("/myinfo")
-	public String myinfo(Model model, HttpServletRequest request, MyPageUserInfoVO myPageUserInfoVO) {
+	public String myinfo(Model model, MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
 		
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		
-		if(accountVO==null) {
-			return "mypage/myinfo";
-		}else {
-		  myPageUserInfoVO.setUserId(accountVO.getUserId());
-		}
-		
+		myPageUserInfoVO.setUserId("1");
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		return "mypage/myinfo";
