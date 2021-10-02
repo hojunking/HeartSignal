@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PageVO;
-import com.hs.meetme.mypage.domain.UserInfoVO2;
+import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.service.MypageService;
 
 @Controller
@@ -50,12 +50,13 @@ public class MypageController {
 		return "mypage/myinfo_my_comment_list";
 	}
 	
+	// 유저 인포 보기
 	@GetMapping("/myinfo")
-	public String myinfo(Model model, UserInfoVO2 userinfoVO) {
+	public String myinfo(Model model, MyPageUserInfoVO myPageUserInfoVO) {
 		
-		userinfoVO.setUserId("1");
+		myPageUserInfoVO.setUserId("1");
 		
-		model.addAttribute("userInfo", mypageService.getMyinfo(userinfoVO));
+		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		return "mypage/myinfo";
 	}
