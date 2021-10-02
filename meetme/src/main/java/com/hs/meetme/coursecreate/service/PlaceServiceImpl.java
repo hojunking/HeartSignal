@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.hs.meetme.coursecreate.domain.PlaceVO;
 import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.mapper.PlaceMapper;
-import com.hs.meetme.sample.mapper.SampleMapper;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {

@@ -12,7 +12,6 @@ import com.hs.meetme.coursecreate.api.SearchPlaceDetailAPI;
 import com.hs.meetme.coursecreate.domain.PlaceVO;
 import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.service.PlaceService;
-import com.hs.meetme.sample.service.SampleService;
 
 import lombok.extern.log4j.Log4j2;
 
