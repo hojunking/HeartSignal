@@ -141,26 +141,19 @@
       ON a.img_id = b.img_id
       WHERE user_id = #{userId}
 	</select>
-	
-	<!-- 회원정보 수정 했을때 수정날짜 UPDATE -->
-	<update id="setDateUpdated" parameterType="MyPageUserInfoVO">
-	  UPDATE user_info
-	  SET updated=sysdate
+		
+	<!-- 회원정보 비밀번호 확인 -->
+	<select id="userSelectPassword">
+	  SELECT password
+	  FROM user_info
+	  WHERE user_id = #{userId}
+	</select>
+	<!-- 회원정보 수정 (패스워드) -->
+	<update id="userUpdatePassword" parameterType="MypageUserInfoVO">
+		UPDATE user_info
+		SET password=#{password}
 	  WHERE user_id = #{userId}
 	</update>
-	
-	<!-- 회원정보 비밀번호 확인 -->
-<!-- 	<select id="">
-	  SELECT password
-	  FROM userinfo
-	  WHERE email = #{email}
-	</select> -->
-	<!-- 회원정보 수정 (패스워드) -->
-<!-- 	<update id="userUpdatePassword" parameterType="">
-		UPDATE userinfo
-		SET password=#{password}
-		WHERE email=#{email}
-	</update> -->
 	
 	<!-- 회원정보 닉네임 중복확인 -->
 <!-- 	<select id="getNickname">
@@ -188,7 +181,8 @@
 		UPDATE user_info
 		SET address1=#{address1},
 		    address2=#{address2},
-		    address3=#{address3}
+		    address3=#{address3},
+		    updated=sysdate
 		WHERE user_id= #{userId}
 	</update>
 	

@@ -1,18 +1,20 @@
 package com.hs.meetme.mypage.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
+import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.service.MypageService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 @Controller
 @RequestMapping("/mypage/*")
@@ -52,10 +54,13 @@ public class MypageController {
 	
 	// 유저 인포 보기
 	@GetMapping("/myinfo")
-	public String myinfo(Model model, MyPageUserInfoVO myPageUserInfoVO) {
+	public String myinfo(Model model, MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+		
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		
 		myPageUserInfoVO.setUserId("1");
-		
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		return "mypage/myinfo";
