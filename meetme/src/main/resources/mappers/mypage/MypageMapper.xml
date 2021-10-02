@@ -85,7 +85,7 @@
       comment_id >0 AND user_id=#{userId}
     </select>		
 	<!-- 내가 쓴 댓글 리스트 SELECT -->
-	<select id="getCommentList" resultType="PostCommentVO">
+	<select id="getCommentList" resultType="CommentVO">
      SELECT *
      FROM  
          (SELECT /*+ INDEX_DESC(a post_com_updated_idx) */
@@ -118,7 +118,7 @@
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 		
 	<!-- 회원정보 SELECT -->
-	<select id="getMyinfo" resultType="com.hs.meetme.mypage.domain.UserInfoVO2">
+	<select id="getMyinfo" resultType="UserInfoVO2">
 	  SELECT a.*, b.img_url
       FROM user_info a LEFT OUTER JOIN img b
       ON a.img_id = b.img_id

@@ -25,12 +25,8 @@ public class LoginSuccess implements AuthenticationSuccessHandler{
 			roleNames.add(authority.getAuthority());
 		});
 		
-		System.out.println("====================================================");
-		System.out.println("session : "+auth.getPrincipal());
 		HttpSession session = request.getSession();
 		session.setAttribute("userSession", auth.getPrincipal());
-		AccountVO vo = (AccountVO) session.getAttribute("userSession");
-		System.out.println("session info : "+vo.getUserId());
 
 		response.sendRedirect("/");
 	}

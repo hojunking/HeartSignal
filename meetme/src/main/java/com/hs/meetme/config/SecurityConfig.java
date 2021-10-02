@@ -10,20 +10,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.hs.meetme.useraccess.service.AccountService;
+import com.hs.meetme.useraccess.service.AccountServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private AccountService accountService;
-//	
-//	@Bean
-//	PasswordEncoder getEncoder() {
-//	    return new BCryptPasswordEncoder();
-//	}
+	private AccountServiceImpl accountService;
+	
+	@Bean
+	PasswordEncoder getEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
 	
     @Override
 //  security를 적용하지 않을 url 경로
@@ -35,28 +36,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/s/member").hasAuthority("USER")
-                .antMatchers("/s/admin").hasAuthority("ADMIN")
-                .antMatchers("/**").permitAll();
+                .antMatchers("/member").hasAuthority("USER")
+                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers("/**").permitAll()
+                ;
 
         http.formLogin()
-                .loginPage("/s/login")
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .successHandler(new LoginSuccess())
                 ;
         
         http.logout()
-        		.logoutUrl("/logout")
+        		.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true);
+                ;
+
         
-        http.csrf().disable();
+        http.csrf();
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
     	auth.userDetailsService(accountService)
-//    			.passwordEncoder(new BCryptPasswordEncoder())
+    			.passwordEncoder(new BCryptPasswordEncoder())
     			;
     }
 
