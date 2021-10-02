@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.coursecreate.mapper.CourseCreateMapper">
+	
+	<insert id="createCourse" >
+		<selectKey keyProperty="courseId" resultType="string" order="BEFORE">
+        	SELECT SEQ_COURSE.NEXTVAL FROM dual
+    	</selectKey>	
+		INSERT INTO COURSE(
+			COURSE_ID,
+			COURSE_NAME,
+			USER_ID
+		) VALUES (
+			#{courseId},
+			#{courseName},
+			<!-- userId -->
+			4
+		)
+	</insert>
+	
+	<insert id="createCourseOrder">
+		INSERT INTO COURSE_ORDER(
+		    PLACE_ID,
+		    COURSE_ORDER,
+		    COURSE_COMMENT,
+		    AVG_COST,
+		    COURSE_ID
+		)
+		<foreach collection="list" item="arr" separator="UNION ALL">
+			<foreach collection="arr" item="item"  open="SELECT" close="FROM DUAL" separator=",">
+				#{item}
+			</foreach>
+		</foreach>
+	</insert>
+	
+</mapper>

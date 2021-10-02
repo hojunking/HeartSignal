@@ -10,6 +10,7 @@
   "dependencies": {
     "@mayank1513/vue-tag-input": "0.0.4",
     "@popperjs/core": "^2.10.1",
+    "axios": "^0.21.4",
     "bootstrap": "^5.0.0-beta3",
     "core-js": "^3.6.5",
     "gitart-vue-dialog": "^1.0.3",
