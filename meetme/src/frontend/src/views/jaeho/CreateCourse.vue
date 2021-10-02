@@ -91,7 +91,11 @@
                     <div class="m-10">
                         <!-- 디비에 저장된다. -->
                         <div class="d-flex justify-content-between">
-                            <span class="fs-4">나만의 코스</span><button class="btn btn-primary m-2 my-auto">코스 등록</button>
+                            <span class="fs-4">나만의 코스</span>
+                            <button class="btn btn-primary m-2 my-auto"
+                             data-bs-toggle="modal" data-bs-target="#courseTitleModal"   
+                            >코스 등록
+                            </button>
                         </div>
                         <draggable class="dragArea list-group w-full" :list="list" @change="log">
                             <div class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
@@ -99,7 +103,13 @@
                                 :key="element.name">
                                 <div class="d-flex justify-content-between">
                                     <span class="fs-5">{{ element.placeName }}</span>
-                                    <button type="button" class="btn-close btn-lg m-2" @click="deletePlaceInCourse(element.placeId)"></button>
+                                    <button type="button" class="btn-close btn-lg m-2" @click="deletePlaceInCourse(element.placeId)"
+                                    ></button>
+                                </div>
+                                <div>
+                                    <span class="text-muted mx-2">{{element.subTitle}}</span>
+                                    <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
+                                    data-bs-toggle="modal" data-bs-target="#replaceSubtitleModal"></a>
                                 </div>
                                 <img :src="element.thumbnailHref" class="img-thumbnail" :alt="element.placeName">
                             </div>
@@ -112,12 +122,12 @@
     </div>
     
 
-    <!-- Modal -->
-    <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal place Detail-->
+    <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="modalPlaceDetailLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
+                    <h5 class="modal-title" id="modalPlaceDetailLabel">{{ modalTitle }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -152,6 +162,52 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- replaceSubtitle Modal -->
+    <div class="modal fade" id="replaceSubtitleModal" tabindex="-1" aria-labelledby="replaceSubtitleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replaceSubtitleModalLabel">소제목 수정하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="replaceFormInput" class="form-label">원하시는 소제목을 적어주세요!</label>
+                        <input type="email" class="form-control" id="replaceFormInput" placeholder="저녁 코스 ㅎㅎ" v-model="replaceSubtitleText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    @click="changeSubTitle(replaceSubtitleOfPlaceId, replaceSubtitleText)">저장 후 닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course title register Modal -->
+    <div class="modal fade" id="courseTitleModal" tabindex="-1" aria-labelledby="courseTitleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="courseTitleModalLabel">코스 이름 정하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="titleFormInput" class="form-label">마지막으로 코스 이름을 적어주세요!</label>
+                        <input type="email" class="form-control" id="titleFormInput" placeholder="멋진 데이트 코스!" v-model="titleText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    @click="registerCourse(titleText)">등록</button>
                 </div>
             </div>
         </div>
@@ -373,6 +429,7 @@ export default defineComponent ({
             })
             .catch(err => {
                 searchError.value = err;
+                alert("코스입력 문제 발생")
                 // In case a custom JSON error response was provided
                 if (err.json) {
                     return err.json.then(json => {
@@ -383,10 +440,10 @@ export default defineComponent ({
             })
             .then(() => {
                 insertLoading.value = false;
+                insertPlaceData.value.subTitle = "소제목";
                 list.value.push(insertPlaceData.value)
             });
         }
-
 
         /**
          *  코스 순서 정해주기
@@ -404,6 +461,27 @@ export default defineComponent ({
                 }
             }
         }
+        // 코스 소제목 수정
+        const replaceSubtitleOfPlaceId = ref(null);
+        const replaceSubtitleText = ref(null);
+        const replaceSubtitle = (placeId, subTitle) => {
+            console.log(subTitle)
+            replaceSubtitleOfPlaceId.value = placeId;
+            if(subTitle != '소제목') {
+                replaceSubtitleText.value = subTitle
+            }
+        }
+
+        const changeSubTitle = (placeId, subTitle) => {
+            for( let i = 0; i < list.value.length; i++){ 
+                if ( list.value[i].placeId === placeId ) { 
+                    list.value[i].subTitle = subTitle; 
+                }
+            }
+            replaceSubtitleOfPlaceId.value = null;
+            replaceSubtitleText.value = null;
+        }
+
 
         /**
          * 검색하기
@@ -473,8 +551,91 @@ export default defineComponent ({
                 loadingSearch.value = false;
             });
         }
-        
-        
+
+
+        /**
+            코스 등록
+         */
+        // 코스 등록 버튼 
+        const titleText = ref(null);
+        let sendList = null;
+        let subList = null;
+        let sendTitleText = null;
+        const registerCourseError = ref(null);
+        const registerConfirm = ref(null);
+        const registerCourse = (titleTextx) => {
+            console.log(list.value);
+            console.log(titleTextx);
+
+            if(list.value.length == 0) {
+                alert('장소를 등록해 주세요!')
+                return;
+            }
+            
+            if(titleText.value == null || titleText.value == "") {
+                titleText.value = "기본값 코스"
+            }
+
+            sendTitleText = titleText.value
+            console.log(sendTitleText);
+
+            sendList = [];
+            for( let i = 0; i < list.value.length; i++){ 
+                subList = null;
+                subList = {};
+                //     PLACE_ID,
+                // COURSE_ORDER,
+                // COURSE_COMMENT,
+                // AVG_COST,
+                subList.placeId = list.value[i].placeId;
+                subList.courseOrder = (i+1) + "";
+                subList.courseComment = list.value[i].subTitle
+                subList.avgCost = list.value[i].avgCost
+
+                sendList.push(subList);
+            }
+            console.log(JSON.stringify(sendList));
+            for(let i=0; i<sendList.length; i++) {
+                console.log(sendList[i]);
+            }
+            // I prefer to use fetch
+            // you can use use axios as an alternative
+            var formData = new FormData();
+            formData.append("courseName", sendTitleText);
+            formData.append("list", JSON.stringify(sendList))
+            fetch('api/course/register', {
+                method: 'POST',
+                body: formData
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                registerConfirm.value = json;
+            })
+            .catch(err => {
+                registerCourseError.value = err;
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        registerCourseError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                alert(registerConfirm.value)
+            });
+        }
 
         return {
             // tags
@@ -509,6 +670,10 @@ export default defineComponent ({
             list,
             dragging,
             deletePlaceInCourse,
+            replaceSubtitle,
+            replaceSubtitleText,
+            replaceSubtitleOfPlaceId,
+            changeSubTitle,
 
             // search
             searched,
@@ -517,6 +682,13 @@ export default defineComponent ({
             searchError,
             // search func
             searchByTag,
+
+            // last.. register course
+            registerCourse,
+            titleText,
+            sendTitleText,
+            sendList,
+            subList,
         };
     },
   
