@@ -33,8 +33,8 @@
       <div class="container">
         <div class="row mb-5 justify-content-center text-center">
           <div class="col-lg-8">
-            <h2 class="probootstrap-heading">우리 만난지...</h2>
-            <p class="mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <h2 class="probootstrap-heading" >우리 만난지...</h2>
+            <p class="mb-5 lead" id="coupleDate"></p>
           </div>  
         </div>
         <div class="row">
@@ -43,8 +43,8 @@
               <img src="images/square-person_1.jpg" alt="" class="img-fluid mb-3 rounded-circle w-25">
               <div class="media-body p-3">
                 <p class="mb-5">&ldquo;사랑해요 너&rdquo;</p>
-                <h5 class="mt-0">박준욱</h5>
-                <p>Invision</p>
+                <h5 class="mt-0" id="nickName"></h5>
+                <p id="birthDate"></p>
               </div>
             </div>
           </div>
@@ -72,7 +72,44 @@
 	<script th:src="@{/js/main.js}"></script>
 
 	<script>
+	$(function(){
+		coupleInfo();
+		myloveInfo();
+		// ${session.userSession.userId}  session의 아이디값 여기 넣기
 		
+		/*<![CDATA[*/ 
+			let userId= /*[[ ${session.userSession.userId} ]]*/ 
+		/*]]*/
+
+		
+		function coupleInfo(){
+			$.ajax({
+				url : "coupleInfo/"+1,
+				dataType : "json",
+				success : function(datas){
+				console.log(datas);
+				$('#nickName').text(datas.nickName);
+				$('#birthDate').text(datas.birthDate);
+				$('#coupleDate').text(datas.coupleDate);
+			}
+		});
+	}; //ajax 끝
+	
+		function myloveInfo(){
+			$.ajax({
+				url : "myloveInfo/"+1,
+				dataType : "json",
+				success : function(datas){
+				console.log(datas);
+				$('#nickName').text(datas.nickName);
+				$('#birthDate').text(datas.birthDate);
+				$('#coupleDate').text(datas.coupleDate);
+				$('#nickName').text(datas.nickName);
+			}
+		});
+		}; //ajax 끝
+		
+	}); //function 끝
 	</script>
 </th:block>
 </html>

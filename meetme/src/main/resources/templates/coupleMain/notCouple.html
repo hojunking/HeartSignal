@@ -24,7 +24,7 @@
 					<div class="col-md-6 order-md-1 order-2">
 						<div class="probootstrap-text">
 							<h1
-								class="probootstrap-heading probootstrap-stagger text-black mb-2">
+								class="probootstrap-heading probootstrap-stagger text-black mb-2"> 
 								너와 나<br> 우리 함께
 							</h1>
 							<p class="mb-5 probootstrap-stagger lead">함께 그려가는 아름다운 기억</p>
@@ -76,58 +76,63 @@
 					</div>
 				</div>
 				<div class="row">
+				<!------------------------------------------------------------------------------- -->
 					<div class="col-md">
 						<div class="media d-block mb-4 text-center">
 							<img src="" alt=""
 								class="img-fluid mb-3 rounded-circle w-25">
-							<div class="media-body p-3" >
+							<div class="media-body p-3" id="one">
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&rdquo;</p>
-								<h5 class="mt-0" id="one">1개월</h5>
-								<p>Invision</p>
+								<h5 class="mt-0" >1개월</h5>
+								<p>2,000원</p>
 							</div>
 						</div>
 					</div>
+					<!------------------------------------------------------------------------------- -->
 					<div class="col-md">
 						<div class="media d-block mb-4 text-center">
 							<img src="" alt=""
 								class="img-fluid mb-3 rounded-circle w-25">
-							<div class="media-body p-3">
+							<div class="media-body p-3" id="three">
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0" id="three">3개월</h5>
+								<h5 class="mt-0" >3개월</h5>
 								<p>Google</p>
 							</div>
 						</div>
 					</div>
+					<!------------------------------------------------------------------------------- -->
 					<div class="col-md">
 						<div class="media d-block mb-4 text-center">
 							<img src="" alt=""
 								class="img-fluid mb-3 rounded-circle w-25">
-							<div class="media-body p-3">
+							<div class="media-body p-3" id="six">
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0" id="six">6개월</h5>
+								<h5 class="mt-0">6개월</h5>
 								<p>Twitter</p>
 							</div>
 						</div>
 					</div>
+					<!------------------------------------------------------------------------------- -->
 					<div class="col-md">
 						<div class="media d-block mb-4 text-center">
 							<img src="" alt=""
 								class="img-fluid mb-3 rounded-circle w-25">
-							<div class="media-body p-3" onclick="">
+							<div class="media-body p-3" id="forever">
 								<p class="mb-5">&ldquo;Far far away, behind the word
 									mountains, far from the countries Vokalia and Consonantia,
 									there live the blind texts.&ldquo;</p>
-								<h5 class="mt-0" id="forever">평생권</h5>
+								<h5 class="mt-0" >평생권</h5>
 								<p>Twitter</p>
 							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 		</section>
@@ -142,14 +147,43 @@
 	<script th:src="@{/js/animation.gsap.min.js}"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script th:src="@{/js/main.js}"></script>
-	<script>
-	$(document).ready(function(){
-		$("#payment_process").on('click',function requestPay() {
+	<script th:inline='javascript'>
+	
+	
+	$(function(){
+		console.log();
+		let subTerm; 				//정기권 기간
+        let	subPrice;				//정기권 가격
+		
+		$("#one").on('click',function(){
+		let subTerm=1;
+		let subPrice=1000;
+		requestPay(subTerm,subPrice);
+		});
+
+		$("#three").on('click',function(){
+		let subTerm=3;
+		let subPrice=2000;
+		requestPay(subTerm,subPrice);
+		});
+
+		$("#six").on('click',function(){
+		let subTerm=6;
+		let subPrice=3000;
+		requestPay(subTerm,subPrice);
+		});
+		
+		$("#forever").on('click',function(){
+		let subTerm=1000;
+		let subPrice=5000;
+		requestPay(subTerm,subPrice);
+		});
+		
+		
+		function requestPay(subTerm,subPrice) {
 			var IMP = window.IMP; 			// 생략가능
 	        IMP.init("imp61283402");
-	        let userId=1; 				//session의 아이디값 여기 넣기
-			let subTerm=3; 				//정기권 기간
-	        let	subPrice=200;			//정기권 가격
+	        let userId=1; 				//session의 아이디값 여기 넣기 //${session.userSession.userId}
 	        let buyerName= "송호준";		//이름 필요합니다.
 			const merchantUid = Math.floor(Math.random() * 1000000)+1; //난수설정
 			console.log(merchantUid);
@@ -195,14 +229,13 @@
 								console.log(error);
 			   	            } 
 		            	});
-		            
 		            } else {	
 			               alert("결제에 실패하였습니다. " + rsp.error_msg);
 					}
 	        });
-	       }
-	   );//import 결제 API 끝
-	});//ajax 끝	
+	       };//import 결제 API 끝
+	});
+	//ajax 끝	
 
 	</script>
 </th:block>

@@ -19,13 +19,14 @@ public class RestCoupleInfoController {
 			return null;
 		}
 		
-		@GetMapping("/coupleImg") //커플이미지, d-day 발사
-		public CoupleInfoVO coupleMainInfo(CoupleInfoVO vo) {
+		@GetMapping("/coupleInfo/{id}") //커플정보와 나의 정보 불러오기
+		public CoupleInfoVO coupleMainInfo(@PathVariable int id) {
+			CoupleInfoVO vo = new CoupleInfoVO();
+			vo.setUserId(id);
 			vo =coupleService.coupleInfoSelect(vo);
-			vo.getUserId();
 			return vo;
 		}
-		@GetMapping("/mylove")
+		@GetMapping("/myloveInfo")
 		public CoupleInfoVO myLoveInfo(CoupleInfoVO vo) {
 			vo = coupleService.myLoverInfo(vo);
 			System.out.println(vo);
