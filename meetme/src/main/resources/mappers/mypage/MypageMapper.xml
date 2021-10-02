@@ -118,12 +118,36 @@
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 		
 	<!-- 회원정보 SELECT -->
-	<select id="getMyinfo" resultType="UserInfoVO2">
-	  SELECT a.*, b.img_url
+
+	<select id="getMyinfo" resultType="MypageUserInfoVO">
+	  SELECT 
+	  a.user_id,
+	  a.name,
+	  a.email,
+	  a.nickname,
+	  a.password,
+	  a.phone_num,
+	  a.created,
+	  a.updated,
+	  a.birth_date,
+	  a.address1,
+	  a.address2,
+	  a.address3,
+	  a.couple_status,
+	  a.role,
+	  b.img_url
+
       FROM user_info a LEFT OUTER JOIN img b
       ON a.img_id = b.img_id
       WHERE user_id = #{userId}
 	</select>
+	
+	<!-- 회원정보 수정 했을때 수정날짜 UPDATE -->
+	<update id="setDateUpdated" parameterType="MyPageUserInfoVO">
+	  UPDATE user_info
+	  SET updated=sysdate
+	  WHERE user_id = #{userId}
+	</update>
 	
 	<!-- 회원정보 비밀번호 확인 -->
 <!-- 	<select id="">
@@ -139,11 +163,11 @@
 	</update> -->
 	
 	<!-- 회원정보 닉네임 중복확인 -->
-	<select id="getNickname">
+<!-- 	<select id="getNickname">
 	  SELECT nickname
 	  FROM user_info
 	  WHERE nickname=#{nickName}
-	</select>
+	</select> -->
 	
 	<!-- 회원정보 수정 (닉네임) -->
 <!-- 	<update id="" parameterType="">
@@ -158,12 +182,15 @@
 		SET phone_num = #{phoneNum}
 		WHERE email = #{email}
 	</update> -->
+	
 	<!-- 회원정보 수정 (주소) -->
-<!-- 	<update id="" parameterType="">
-		UPDATE userinfo
-		SET address= #{address}
-		WHERE email= #{email}
-	</update> -->
+	<update id="updateAddress" parameterType="MypageUserInfoVO">
+		UPDATE user_info
+		SET address1=#{address1},
+		    address2=#{address2},
+		    address3=#{address3}
+		WHERE user_id= #{userId}
+	</update>
 	
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
 	

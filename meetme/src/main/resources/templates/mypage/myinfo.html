@@ -3,19 +3,298 @@
 	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="content">
+		
 		<div class="tm-page-wrap mx-auto">
-			<section class="p-5 tm-container-outer tm-bg-gray">
+			<section class="p-5 tm-container-outer tm-bg-white">
 				<div class="container">
-					<div class="row">
-						<div class="col-xs-12 mx-auto tm-about-text-wrap text-center">
-							<th:block th:each="tag:${userInfo}">
-								<div th:text=${tag}></div>
-							</th:block>
-						</div>
-					</div>
+
+<div class="row g-5">
+      
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">회원정보</h4>
+        <form class="needs-validation" novalidate="">
+          <div class="row g-3">
+                       
+            <div class="col-6 my-1">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" style="width:40%;" class="form-control" name="address1" id="address1" readonly="readonly">
+            </div>
+            <div class="col-10 my-1">
+              <input type="text" class="form-control" name="address2" id="address2" readonly="readonly">
+            </div>
+            <div class="col-10 my-1">
+              <input type="text" class="form-control" name="address3" id="address3" readonly="readonly">
+            </div>
+            
+            <div class="col-12" id="u_address" style="display: none;"> 
+		      <div class="form-group col-sm-6" >
+		        <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+		        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+		      </div>
+			  <div class="form-group col-sm-12">
+		        <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
+		      </div>
+		      <div class="form-group col-sm-12">
+		        <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
+		      </div>
+		      <div class="col-12">
+		        <button id="address_cncl" type="button" onclick="">수정취소</button><button id="address_reg" type="button" onclick="">수정완료</button>
+		      </div>
+            </div>
+            
+            <div class="col-12" style="display: block;">
+              <button type="button" id="addrUpdateBtn">수정</button>
+            </div>
+                        
+          <hr class="my-4">
+          
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">First name</label>
+              <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="username" class="form-label">Username</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">@</span>
+                <input type="text" class="form-control" id="username" placeholder="Username" required="">
+              <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+
+
+            <div class="col-md-5">
+              <label for="country" class="form-label">Country</label>
+              <select class="form-select" id="country" required="">
+                <option value="">Choose...</option>
+                <option>United States</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="state" class="form-label">State</label>
+              <select class="form-select" id="state" required="">
+                <option value="">Choose...</option>
+                <option>California</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="zip" class="form-label">Zip</label>
+              <input type="text" class="form-control" id="zip" placeholder="" required="">
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="save-info">
+            <label class="form-check-label" for="save-info">Save this information for next time</label>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="my-3">
+            <div class="form-check">
+              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+              <label class="form-check-label" for="credit">Credit card</label>
+            </div>
+            <div class="form-check">
+              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+              <label class="form-check-label" for="debit">Debit card</label>
+            </div>
+            <div class="form-check">
+              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+              <label class="form-check-label" for="paypal">PayPal</label>
+            </div>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cc-name" class="form-label">Name on card</label>
+              <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+              <small class="text-muted">Full name as displayed on card</small>
+              <div class="invalid-feedback">
+                Name on card is required
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-number" class="form-label">Credit card number</label>
+              <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+              <div class="invalid-feedback">
+                Credit card number is required
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-expiration" class="form-label">Expiration</label>
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+              <div class="invalid-feedback">
+                Expiration date required
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+              <div class="invalid-feedback">
+                Security code required
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+    </div>
+
 				</div>
 			</section>
 		</div>
+</th:block>
+
+<th:block layout:fragment="script">
+  <!-- 카카오 주소찾기 api -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+  //카카오 주소 찾기 메서드
+  function execPostCode() {
+	      new daum.Postcode({
+	          oncomplete: function(data) {
+	             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	             // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+	             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	             var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+	             var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+	             var jibunAddr = data.jibunAddress; //지번 주소 변수
+	
+	             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	             if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                 extraRoadAddr += data.bname;
+	             }
+	             // 건물명이 있고, 공동주택일 경우 추가한다.
+	             if(data.buildingName !== '' && data.apartment === 'Y'){
+	                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	             }
+	             // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	             if(extraRoadAddr !== ''){
+	                 extraRoadAddr = ' (' + extraRoadAddr + ')';
+	             }
+	             // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+	             if(fullRoadAddr !== ''){
+	                 fullRoadAddr += extraRoadAddr;
+	             }
+	
+	             // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	             console.log(data.zonecode);
+	             console.log(fullRoadAddr);
+	             
+	             $("[name=addr1]").val(data.zonecode);
+	             
+	             //사용자가 도로명 주소 선택 했을때,
+	             if (data.userSelectedType === 'R'){
+	               $("[name=addr2]").val(fullRoadAddr);
+	             }
+	             //사용자가 지번 주소 선택 했을때,
+	             else if (data.userSelectedType === 'J'){
+	               $("[name=addr2]").val(jibunAddr);
+	             }
+	             
+	             //주소 변경 했을때, 상세주소 비우기
+	               $("#addr3").val("");
+	
+	             //커서를 상세주소 필드로 이동
+	             document.getElementById("addr3").focus();
+	             
+	             //document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+	             //document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+	             //document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress;
+	         }
+	      }).open();
+  }//function execPostCode() END
+
+    $(function(){
+    	//주소 수정 시작
+    	$("#addrUpdateBtn").on('click',function(){
+    		$("#u_address").css("display","block");
+    		$("#addrUpdateBtn").css("display","none");
+    	})
+    	//주소 수정 취소
+    	$("#address_cncl").on('click',function(){
+    		$("#u_address").css("display","none");
+    		$("#addrUpdateBtn").css("display","block");
+    	})
+    	//주소 수정 완료
+    	$("#address_reg").on('click',function(){
+    		
+    		$.ajax({
+    			url: "addressUpdate",
+    			method : "put",
+    			data : JSON.stringify({ userId:"1",
+    			 	                   address1:$("#addr1").val(),
+    			 	                   address2:$("#addr2").val(),
+    			 	                   address3:$("#addr3").val()
+    			       }),
+    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+    			dataType : "json",
+    			contentType : "application/json;charset=UTF-8",
+    			success: function(data){
+    				console.log(data)
+    			},
+    			error : function(){
+    				
+    			}
+    		})
+    		
+    		$("#u_address").css("display","none");
+    		$("#addrUpdateBtn").css("display","block");
+    		alert("주소 수정 완료");
+    	})
+    })
+  </script>
 </th:block>
 
 </html>
