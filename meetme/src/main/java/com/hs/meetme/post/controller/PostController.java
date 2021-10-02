@@ -19,16 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.post.service.PostService;
 
@@ -58,8 +62,9 @@ public class PostController {
 	@GetMapping("/get_community/{postId}")
 	public String get_community(@PathVariable long postId, PostVO vo, Model model) {
 		pService.countHit(postId);
-		pService.commentCM(postId);
+		
 		model.addAttribute("list",pService.getPost(postId));
+		model.addAttribute("cmt", pService.commentCM(postId));
 		return "post/community_get";
 		/*
 		 * if(idx==null) { //올바르지 않은 접근 return "post/community_lis"; }
@@ -123,6 +128,37 @@ public class PostController {
 		pService.postDelete(vo);
 		return "redirect:/post/community_list";
 	}
+	
+	/*
+	 * //커뮤니티 댓글 불러오기
+	 * 
+	 * @GetMapping("/commentCM") public String commentCM(CommentVO cVo) {
+	 * pService.commentCM(Long.parseLong(cVo.getPostId())); return
+	 * "post/community_get"; }
+	 */
+	
+	
+	//커뮤니티 댓글 작성
+	@ResponseBody
+	@PostMapping("/commentInsert")
+	public void commentInsert(
+				@RequestBody CommentVO vo) {
+		pService.commentInsert(vo);
+//		return vo;
+	}
+	
+	//커뮤니티 댓글 수정
+	@PostMapping("/updateCMComment")
+	public String updateCMComment() {
+		return "";
+	}
+	//커뮤니티 댓글 삭제
+	@ResponseBody
+	@DeleteMapping("/delCMComment/{commentId}")
+	public int delCMComment(@PathVariable long commentId) {
+		return pService.commentDelete(commentId);
+	}
+	
 	
 	@RequestMapping(value="/ckeditor/fileUpload", method = RequestMethod.POST) 
 	public void imageUpload(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile , @RequestParam MultipartFile upload)
