@@ -14,6 +14,8 @@ public class PaymentVO {
 	private Date payDate;
 	private int payCost;
 	private int userId;
-	private long payConfirmNum;
+	private long merchantUid;
 	private long subTerm;
+	private String token;
+	
 }
