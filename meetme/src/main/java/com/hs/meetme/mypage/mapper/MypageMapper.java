@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.UserInfoVO2;
@@ -13,13 +14,19 @@ import com.hs.meetme.mypage.domain.UserInfoVO2;
 public interface MypageMapper {
   
 	//내 게시글 전체 갯수
-	public int getPostCount(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public int getPostCount(@Param("userId") long userId);
 	//내 게시글 조회
 	public List<PostVO> getPostList(@Param("cri") Criteria cri, @Param("userId") long userId);
 	//내 게시글 페이징 위한 갯수
-	public int getTotalCount(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public int getTotalPostCount(@Param("cri") Criteria cri, @Param("userId") long userId);
 	
+	//내 댓글 전체 갯수
+	public int getCommentCount(@Param("userId") long userId);
+	//내 댓글 조회
+	public List<CommentVO> getCommentList(@Param("cri") Criteria cri, @Param("userId") long userId);
+	//내 댓글 페이징 위한 갯수
+	public int getTotalCommentCount(@Param("cri") Criteria cri, @Param("userId") long userId);
 	
 	//회원정보 불러오기
-	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO);
+	public UserInfoVO2 getMyinfo(UserInfoVO2 userInfoVO2);
 }

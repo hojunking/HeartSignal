@@ -38,7 +38,7 @@ public class RestCourseController {
 		return placeService.getTagsSelected(id);
 	}
 	
-	// 검색 하기 (여러개받아서 할 수 있음.)
+	// 검색 하기 (여러개 받아서 할 수 있음.)
 	@GetMapping("/place/search")
 	public List<PlaceVO> getPlaceBySearched(String[] keywords) {
 		for(String key : keywords) {
@@ -67,4 +67,10 @@ public class RestCourseController {
 		return result;
 	}
 	
+	// 네이버 장소 이미지 검색 (10개 2번째부터)
+	@GetMapping("/place/searchOneImages")
+	public String getPlaceImagesBySearched(String placeName) {
+		String result = SearchPlaceDetailAPI.SearchPlaceImagesByNaver(placeName);
+		return result;
+	}
 }

@@ -9,7 +9,7 @@
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#"> <img th:src="@{/img/logo.png}" alt="Site logo">
-                                Journey
+                                우리오늘뭐하노?
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed"
                                 data-toggle="collapse" data-target="#mainNav" aria-expanded="false"
@@ -22,7 +22,7 @@
                                                 class="sr-only">(current)</span></a></li>
                                     <li class="nav-item"><a class="nav-link" href="#tm-section-2">Top Destinations</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="#tm-section-3">Recommended Places</a>
+                                    <li class="nav-item"><a class="nav-link" href="@{/coupleMain}">커플로그</a>
                                     </li>
                                     <li class="nav-item" th:if="${session.userSession == null}">
                                     	<a class="nav-link" th:href="@{/s/login}">Login</a>

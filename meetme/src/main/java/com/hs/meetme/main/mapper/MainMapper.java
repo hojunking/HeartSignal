@@ -1,4 +1,3 @@
-
 package com.hs.meetme.main.mapper;
 
 import java.util.List;
@@ -13,6 +12,7 @@ public interface MainMapper {
 	
 	public List<MainVO> placeList(); // 장소 불러오기
 	
+	public List<MainVO> courseList(); // 지역별 코스 리스트
 	
 	
 	

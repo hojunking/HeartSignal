@@ -65,7 +65,32 @@ public class SearchPlaceDetailAPI {
         
         return responseBody;
     }
+	
+	public static String SearchPlaceImagesByNaver(String text) {
+        String clientId = "0_E0jbABwfXTcXAh0rVR"; //애플리케이션 클라이언트 아이디값"
+        String clientSecret = "B3XVUu4X4J"; //애플리케이션 클라이언트 시크릿값"
 
+        try {
+            text = URLEncoder.encode(text, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("검색어 인코딩 실패",e);
+        }
+
+
+        String apiURL = "https://openapi.naver.com/v1/search/image?query=" + text + "&display=10&start=2&sort=sim";    // json 결과
+        //String apiURL = "https://openapi.naver.com/v1/search/local.xml?query="+ text; // xml 결과
+
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", clientId);
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+        String responseBody = get(apiURL,requestHeaders);
+
+
+        System.out.println(responseBody);
+        
+        return responseBody;
+    }
 
     private static String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);

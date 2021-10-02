@@ -22,7 +22,7 @@ public class PostVO {
 	
 	  
 	//다른 테이블 꺼
-	private String up; //게시글 추천수
+	private String postLikeCount; //게시글 추천수
   
 	private String postCount;      //게시글 갯수
   
