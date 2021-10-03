@@ -23,7 +23,6 @@ public class SecurityController {
 	@PostMapping("/signUp")
 	public String signUpPro(
 			@ModelAttribute("account") AccountVO vo) {
-		
 		accountService.signUp(vo);
 		return "security/login";
 	}
@@ -31,5 +30,10 @@ public class SecurityController {
 	@GetMapping("/login")
 	public String login() {
 		return "security/login";
+	}
+	
+	@GetMapping("/naver/login")
+	public String naverLogin() {
+		return "security/naverLogin";
 	}
 }
