@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hs.meetme.coursecreate.api.SearchPlaceDetailAPI;
 import com.hs.meetme.coursecreate.domain.CourseCreateVO;
+import com.hs.meetme.coursecreate.domain.CourseTempVO;
 import com.hs.meetme.coursecreate.domain.PlaceVO;
 import com.hs.meetme.coursecreate.domain.TagVO;
 import com.hs.meetme.coursecreate.service.CourseCreateService;
@@ -107,22 +108,39 @@ public class RestCourseController {
 		courseCreateService.createCourse(vo);
 		System.out.println(vo.getCourseId());
 		
-		String courseId = vo.getCourseId();
+		// jackson
+		ObjectMapper objectMapper = new ObjectMapper();
 		
+		// List
+		ArrayList<String[]> newList = new ArrayList<String[]>();
+		CourseTempVO[] arr = objectMapper.readValue(list, CourseTempVO[].class);
+		for (CourseTempVO item : arr) {
+			System.out.println(item.getPlaceId());
+//			PLACE_ID,
+//		    COURSE_ORDER,
+//		    COURSE_COMMENT,
+//		    AVG_COST,
+//		    COURSE_ID
+			String[] inArray = {
+					item.getPlaceId(),
+					item.getCourseOrder(),
+					item.getCourseComment(),
+					item.getAvgCost(),
+					vo.getCourseId()
+			};
+			
+			newList.add(inArray);
+		}
+		// 등록
+		int resultNum = courseCreateService.createCourseOrder(newList);
 		
-//		for (String[] inList : list) {
-//			inList.add(courseId);
-//		}
+		String result = "";
+		if(resultNum == 0) {
+			result = "error";
+		} else {
+			result = "success";
+		}
 		
-		//int resultNum = courseCreateService.createCourseOrder(list);
-		
-//		String result = "";
-//		if(resultNum == 0) {
-//			result = "error";
-//		} else {
-//			result = "success";
-//		}
-		
-		return "";
+		return result;
 	}
 }
