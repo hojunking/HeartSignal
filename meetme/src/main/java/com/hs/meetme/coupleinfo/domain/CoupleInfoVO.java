@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hs.meetme.image.domain.ImageVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CoupleInfoVO {
+public class CoupleInfoVO extends ImageVO{
 	private int coupleId;
 	private int userRequest; //커플신청유저
 	private int userReceived; //신청받은유저
