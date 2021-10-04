@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td colspan="2"><input name="submit" type="submit" value="회원가입"></td>
-                    <button type="button">확인</button>
+                    
                 </tr>
             </tbody>
         </table>
@@ -41,11 +41,6 @@
 </th:block>
 <th:block layout:fragment="script">
 	<script>
-        $(function(){
-            $('button').click(function(){
-                console.log($('input[name="birthDate"]').val());
-            })
-        });
     </script>
 </th:block>
 </html>

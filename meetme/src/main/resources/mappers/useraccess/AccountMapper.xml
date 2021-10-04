@@ -10,9 +10,31 @@
 			email = #{email}
 	</select>
 	
+	<select id="emailCheck" parameterType="String" resultType="int">
+		select
+			count(*)
+		from
+			user_info
+		where
+			email = #{email}
+	</select>
+	
 	<insert id="signUp">
 		insert into
 			user_info
+			(user_id,
+			 name,
+			 email,
+			 nickname,
+			 password,
+			 phone_num,
+			 address1,
+			 address2,
+			 address3,
+			 birth_year,
+			 birth_day,
+			 img_id,
+			 role)
 		values
 			(seq_user_info.nextval,
 			 #{name},
@@ -20,12 +42,12 @@
 			 #{nickname},
 			 #{password},
 			 #{phoneNum},
-			 sysdate,
-			 sysdate,
-			 #{birthDate},
-			 null,
-			 default,
-			 null,
+			 #{address1},
+			 #{address2},
+			 #{address3},
+			 #{birthYear},
+			 #{birthDay},
+			 #{imgId},
 			 'USER')
 	</insert>
 </mapper>
