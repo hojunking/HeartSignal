@@ -19,16 +19,18 @@ public class RestCoupleInfoController {
 			return null;
 		}
 		
-		@GetMapping("/coupleInfo/{id}") //커플정보와 나의 정보 불러오기
+		@GetMapping("/coupleInfo/{id}") //커플테이블정보와 나의 정보 불러오기
 		public CoupleInfoVO coupleMainInfo(@PathVariable int id) {
 			CoupleInfoVO vo = new CoupleInfoVO();
 			vo.setUserId(id);
 			vo =coupleService.coupleInfoSelect(vo);
 			return vo;
 		}
-		@GetMapping("/myloveInfo")
+		@GetMapping("/myloveInfo") //내 여친정보 불러오기
 		public CoupleInfoVO myLoveInfo(CoupleInfoVO vo) {
+			if(vo.getCoupleStatus().equals("y")) {
 			vo = coupleService.myLoverInfo(vo);
+			}
 			System.out.println(vo);
 			return vo;
 		}
