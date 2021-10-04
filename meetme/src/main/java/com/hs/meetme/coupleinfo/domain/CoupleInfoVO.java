@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hs.meetme.image.domain.ImageVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CoupleInfoVO {
+public class CoupleInfoVO extends ImageVO{
 	private int coupleId;
-	private String coupleStatus; //연결중 y, 끊김 n 
 	private int userRequest; //커플신청유저
 	private int userReceived; //신청받은유저
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
@@ -27,8 +28,10 @@ public class CoupleInfoVO {
 	private int userId;
 	private String name;
 	private String nickName;
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date birthDate;  
 	private String userImg; //유저이미지 url
+	private String coupleStatus; //솔로=n ,커플연결중=y, 구독기간만료=m, 커플매칭대기중 w 
 }
 
 

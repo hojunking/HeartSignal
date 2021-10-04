@@ -10,38 +10,32 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 	@Autowired CoupleInfoMapper map;
 	@Override
 	public int coupleInfoInsert(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
 		return map.coupleInfoInsert(vo);
 	}
 
 	@Override
 	public int coupleInfoUpdate(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
 		return map.coupleInfoUpdate(vo);
 	}
 
 	@Override
 	public int coupleMatching(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
 		return map.coupleMatching(vo);
 	}
 
 	@Override
 	public CoupleInfoVO coupleInfoSelect(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
 		return map.coupleInfoSelect(vo);
 	}
 
 	@Override
 	public int coupleCustomUpdate(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return map.coupleCustomUpdate(vo);
 	}
 
 	@Override
 	public int couplePhotoDefault(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return map.couplePhotoDefault(vo);
 	}
 
 	@Override
@@ -51,7 +45,6 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 
 	@Override
 	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo) {
-		// TODO Auto-generated method stub
 		return map.myLoverInfo(vo);
 	}
 
