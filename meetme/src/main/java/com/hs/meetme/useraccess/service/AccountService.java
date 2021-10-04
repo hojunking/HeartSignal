@@ -6,4 +6,5 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 
 public interface AccountService extends UserDetailsService{
 	public void signUp(AccountVO vo);
+	public int emailCheck(String email);
 }

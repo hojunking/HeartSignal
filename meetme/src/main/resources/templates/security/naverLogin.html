@@ -1,24 +1,41 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
 <head>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
 </head>
 
 <body>
-    <div id="naver_id_login"></div>
-    <script type = "text/javascript" src = "https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            var naver_id_login = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
-            var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("white", 2, 40);
-            naver_id_login.setDomain("http://localhost:8000/login");
-            naver_id_login.setState(state);
-            naver_id_login.setPopup();
-            naver_id_login.init_naver_id_login();
-        });
-    </script>
+	<div id="naver_id_login"></div>
+	
+	<script type="text/javascript">
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+		let naverIdLogin=null;
+		$(function() {
+			naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
+			// 접근 토큰 값 출력
+			// 네이버 사용자 프로필 조회
+			$.ajax({
+				url: "/naver/login",
+				method: "post",
+				data : naverIdLogin.oauthParams.access_token,
+				contentType : "application/json;charset='utf-8'",
+				success : function(data){
+					opener.parent.location = "/";
+					window.close();			
+				}
+			})
+		});
+	</script>
 </body>
 
 </html>
