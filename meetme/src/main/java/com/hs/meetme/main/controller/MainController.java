@@ -28,6 +28,7 @@ public class MainController {
 		model.addAttribute("tag",service.tagList());
 		model.addAttribute("place",service.placeList());
 		model.addAttribute("course",service.courseList());
+		model.addAttribute("address",service.addressList());
 		return "main/main";
 	}
 	

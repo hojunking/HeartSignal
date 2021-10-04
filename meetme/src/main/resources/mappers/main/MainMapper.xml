@@ -8,16 +8,36 @@
 	
 	<!-- 수정 -->
 	<select id="placeList" resultType="MainVO">
-		SELECT p.PLACE_NAME,SUBSTR(p.ADDRESS,'1',INSTR(p.ADDRESS,' ',1,1)-1) ADDRESS,p.REGION, t.TAG_ID
+		SELECT p.PLACE_NAME,p.REGION, t.TAG_ID
 		FROM PLACE p JOIN PLACE_TAGS t
 		ON p.place_id = t.place_id
 		ORDER BY DBMS_RANDOM.VALUE
         
 	</select>
+	<!-- 서울, 인천 -->
+	<select id="addressList" resultType="MainVO">
+		SELECT DISTINCT SUBSTR(ADDRESS,'1',INSTR(ADDRESS,' ',1,1)-1) ADDRESS 
+		FROM PLACE
+	
+	</select>
+	<!-- 중구, 송파구 -->
+   <select id="addressSec" resultType="MainVO">
+	  SELECT DISTINCT SUBSTR(ADDRESS,INSTR(ADDRESS,' ',1,1)+1,((INSTR(ADDRESS,' ',1,2)-INSTR(ADDRESS,' ',1,1))-1)) ADDRESSSEC 
+      FROM PLACE
+      WHERE SUBSTR(ADDRESS,'1',INSTR(ADDRESS,' ',1,1)-1) =#{address}
+	</select>
 	
 	<select id="courseList" resultType="MainVO">
+		SELECT c.COURSE_NAME, c.RE  GION, o.AVG_COST
+		FROM course c JOIN course_order o
+		ON c.COURSE_ID = o.COURSE_ID
+		ORDER BY DBMS_RANDOM.VALUE
+	</select>
+	
+	<select id="regionCourse" resultType="MainVO">
 		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
 		FROM course c JOIN course_order o
 		ON c.COURSE_ID = o.COURSE_ID
+		WHERE c.region=#{region}
 	</select>
 </mapper>
