@@ -8,14 +8,15 @@ import lombok.Data;
 public class MyPageUserInfoVO{
 
 	private String userId;
-	private String userName;
+	private String name;
 	private String email;
 	private String nickName;
 	private String password;
 	private String phoneNum;
 	private Date created;
 	private Date updated;
-	private Date birthDate;
+	private String birthYear;
+	private String birthDay;
 	private String address1;
 	private String address2;
 	private String address3;
