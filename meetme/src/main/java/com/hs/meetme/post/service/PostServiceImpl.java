@@ -74,10 +74,15 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public int commentInsert(CommentVO vo) {
-		return pMapper.commentInsert(vo);
+	public int insertCMComment(CommentVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.insertCMComment(vo);
 	}
 
+	@Override
+	public int commentUpdate(CommentVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.commentUpdate(vo);
+	}
 
-	
 }

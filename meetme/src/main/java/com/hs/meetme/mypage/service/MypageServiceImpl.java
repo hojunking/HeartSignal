@@ -55,12 +55,17 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int setDateUpdated(MyPageUserInfoVO myPageUserInfoVO) {
-		return mypageMapper.setDateUpdated(myPageUserInfoVO);
+	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.updateAddress(myPageUserInfoVO);
 	}
 
 	@Override
-	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO) {
-		return mypageMapper.updateAddress(myPageUserInfoVO);
+	public MyPageUserInfoVO userSelectPassword(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.userSelectPassword(myPageUserInfoVO);
+	}
+
+	@Override
+	public int userUpdatePassword(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.userUpdatePassword(myPageUserInfoVO);
 	}
 }

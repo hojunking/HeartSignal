@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +37,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.post.service.PostService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 import lombok.extern.java.Log;
 
@@ -140,17 +143,22 @@ public class PostController {
 	
 	//커뮤니티 댓글 작성
 	@ResponseBody
-	@PostMapping("/commentInsert")
-	public void commentInsert(
-				@RequestBody CommentVO vo) {
-		pService.commentInsert(vo);
-//		return vo;
+	@PostMapping("/insertCMComment")
+	public CommentVO insertCMComment(@RequestBody CommentVO vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		pService.insertCMComment(vo);
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		vo.setNickname(accountVO.getNickname());
+		vo.setImgId(accountVO.getImgId());
+		return vo;
 	}
 	
 	//커뮤니티 댓글 수정
-	@PostMapping("/updateCMComment")
-	public String updateCMComment() {
-		return "";
+	@ResponseBody
+	@PutMapping("/commentUpdate")
+	public CommentVO commentUpdate(@RequestBody CommentVO vo) {
+		pService.commentUpdate(vo);
+		return vo;
 	}
 	//커뮤니티 댓글 삭제
 	@ResponseBody
