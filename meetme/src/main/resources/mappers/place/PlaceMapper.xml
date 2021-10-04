@@ -26,14 +26,9 @@
 	
 	<!-- 검색 기능 넣기 -->
 	<select id="getListBySearched" resultType="PlaceVO">
-		select DISTINCT a.*
-		from place a join place_tags b
-		on (a.place_id = b.place_id)
+		select *
+		from place
 		where 
-		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
-			b.tag_id like '%' || #{arr} || '%'
-		</foreach>
-		or
 		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
 			place_name like '%' || #{arr} || '%'
 		</foreach>
@@ -45,7 +40,7 @@
 		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
 			description like '%' || #{arr} || '%'
 		</foreach>
-		ORDER BY a.place_id
+		ORDER BY place_id
 	</select>
 	
 </mapper>

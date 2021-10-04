@@ -68,4 +68,14 @@ public class MypageServiceImpl implements MypageService {
 	public int userUpdatePassword(MyPageUserInfoVO myPageUserInfoVO) {
 		return mypageMapper.userUpdatePassword(myPageUserInfoVO);
 	}
+
+	@Override
+	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.userSelectNickName(myPageUserInfoVO);
+	}
+
+	@Override
+	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.userUpdateNickName(myPageUserInfoVO);
+	}
 }

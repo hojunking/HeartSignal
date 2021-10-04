@@ -101,4 +101,9 @@
 		comment_id = #{commentId}
 	</delete>
 
+	<!-- 글 좋아요(스크랩) -->
+	<insert id="postLike">
+		insert into post_like values(#{postId}, #{userId})
+	</insert>
+	
 </mapper>

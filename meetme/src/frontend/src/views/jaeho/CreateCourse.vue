@@ -282,6 +282,15 @@ export default defineComponent ({
             });
         }
 
+        // function securityFetch() {
+        //     var token = $("meta[name='_csrf']").attr("content");
+        //     var header = $("meta[name='_csrf_header']").attr("content");
+        //     $(document).ajaxSend(function(e, xhr) {
+        //         console.log(e)
+        //         xhr.setRequestHeader(header, token);
+        //     });
+        // }
+
         // 클릭한 태그 가져오기
         const pushTag = (tagId) => {
             tags.value.push(tagId);
@@ -290,6 +299,7 @@ export default defineComponent ({
         // 페이지 진입하자마자 실행.
         onMounted(() => {
             fetchData();
+            // securityFetch();
         });
         
 
@@ -615,12 +625,12 @@ export default defineComponent ({
                     error.json = res.json();
                     throw error;
                 }
-                return res.json()
+                return res.text();
             })
-            .then(json => {
+            .then(text => {
                 // set the response data
-                console.log(json)
-                registerConfirm.value = json;
+                console.log(text)
+                registerConfirm.value = text;
             })
             .catch(err => {
                 registerCourseError.value = err;
@@ -633,7 +643,13 @@ export default defineComponent ({
                 }
             })
             .then(() => {
-                alert(registerConfirm.value)
+                if (registerConfirm.value == 'success') {
+                    alert('코스 업로드에 성공했습니다.')
+                } else if (registerConfirm.value == 'error') {
+                    alert('등록이 되지 않았습니다.')
+                } else {
+                    alert('자바스크립트에서 문제가 발생 하였습니다.')
+                }
             });
         }
 

@@ -19,9 +19,9 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		AccountVO account = accountMapper.findByEmail(email);
-		if( account == null ) {
-			throw new UsernameNotFoundException(email);
-		}
+//		if( account == null ) {
+//			throw new UsernameNotFoundException(email);
+//		}
 		return account;
 	}
 
@@ -29,6 +29,11 @@ public class AccountServiceImpl implements AccountService{
 	public void signUp(AccountVO vo) {
 		vo.setPassword(encoder.encode(vo.getPassword()));
 		accountMapper.signUp(vo);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		return accountMapper.emailCheck(email);
 	}
 
 }

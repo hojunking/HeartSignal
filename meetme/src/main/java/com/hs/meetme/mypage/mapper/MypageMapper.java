@@ -35,5 +35,8 @@ public interface MypageMapper {
 	public MyPageUserInfoVO userSelectPassword(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(비밀번호)
 	public int userUpdatePassword(MyPageUserInfoVO myPageUserInfoVO);
-	
+	//회원정보 닉네임 불러오기
+	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 수정(닉네임)
+	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
 }
