@@ -18,7 +18,7 @@ public interface PostMapper {
 	public int RCInsert(PostVO vo); //추천 인서트
 	public int postUpdate(PostVO vo);
 	public int postDelete(PostVO vo);
-	
+	public int postLike(long userId); // 글 좋아요
 	
 	public long countHit(long postId); //조회수 up
 	public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
@@ -26,4 +26,6 @@ public interface PostMapper {
 	
 	public int commentDelete(long commentId); // 댓글 삭제
 	public int commentUpdate(CommentVO vo);//댓글 수정
+	
+	
 }

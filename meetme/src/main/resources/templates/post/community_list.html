@@ -55,9 +55,14 @@
 				</tbody>
 			</table>
 
-			<div class="btn_wrap text-right">
-				<a th:href="@{/post/community_insert}" class="btn btn-primary waves-effect waves-light">글쓰기</a>
-			</div>
+
+			<!--로그인 했을 때만 글쓰기 버튼 보이도록!-->
+			<li sec:authorize="isAuthenticated()">
+				<div class="btn_wrap text-right">
+					<a th:href="@{/post/community_insert}" class="btn btn-primary waves-effect waves-light">글쓰기</a>
+				</div>
+			</li>
+			
 
 			<th:block layout:fragment="paging">
 				<nav aria-label="Page navigation" class="text-center">

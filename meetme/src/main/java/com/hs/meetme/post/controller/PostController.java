@@ -89,23 +89,8 @@ public class PostController {
 	//입력하면 부르는 함수
 	@GetMapping("/insertCommunity")
 	public String insertCommunity(@ModelAttribute PostVO vo, HttpServletResponse insert/*, HttpSession session*/) {
-		
-		/*
-		 * //로그인한 사용자의 아이디를 체크 //아이디를 체크해서 자신의 글에만 수정과 삭제가 가능하게 할 예정 String user_id =
-		 * (String)session.getAttribute("user_id"); dto.setUser_id(user_id);
-		 * 
-		 * 
-		 * insert.setContentType("text/html; charset=UTF-8"); PrintWriter out_write =
-		 * insert.getWriter();
-		 * out_write.println("<script>alert('글이 작성되었습니다.');</script>");
-		 * out_write.flush();
-		 */
-        
-        //레코드를 저장함
-        pService.CMInsert(vo);
-		
+	    pService.CMInsert(vo);
 		return "redirect:/post/community_list";
-		
 	}
 	
 	
@@ -167,6 +152,11 @@ public class PostController {
 		return pService.commentDelete(commentId);
 	}
 	
+	//글 좋아요(스크랩)
+	@PostMapping("/postLike")
+	public void postLike(@RequestBody long userId) {
+		pService.postLike(userId);
+	}
 	
 	@RequestMapping(value="/ckeditor/fileUpload", method = RequestMethod.POST) 
 	public void imageUpload(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile , @RequestParam MultipartFile upload)

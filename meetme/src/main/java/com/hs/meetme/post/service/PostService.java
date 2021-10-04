@@ -16,6 +16,7 @@ public interface PostService {
 	public int RCInsert(PostVO vo); //추천 인서트
 	public int postUpdate(PostVO vo);
 	public int postDelete(PostVO vo);
+	public int postLike(long userId); // 글 좋아요
 	
 	public long countHit(long postId); //조회수 up
 	public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
