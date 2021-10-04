@@ -85,4 +85,11 @@ public class PostServiceImpl implements PostService{
 		return pMapper.commentUpdate(vo);
 	}
 
+	@Override
+	public int postLike(long userId) {
+		// TODO Auto-generated method stub
+		return pMapper.postLike(userId);
+	}
+
+
 }
