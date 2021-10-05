@@ -4,9 +4,127 @@
 
 <th:block layout:fragment="content">
 		
-		<div class="tm-page-wrap mx-auto">
-			<section class="p-5 tm-container-outer tm-bg-white">
-				<div class="container">
+  <div class="tm-page-wrap mx-auto">
+    <section class="p-5 tm-container-outer tm-bg-white">
+      	<div class="container">
+		  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+		    <span class="link-dark fs-4"><h5>회원정보</h5></span>
+		  </div>
+		  
+		  <div class="row pb-3 mb-3">
+			<div class="col-sm-9">
+				<form class="needs-validation" id="frm" name="frm" novalidate>
+				
+					<div class="row pb-3 mb-3 border-bottom">
+						<label for="email" class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="email" name="email" readonly="readonly" th:value="${userInfo.email}">
+						</div>
+					</div>
+					
+				    <div class="row pb-3 mb-3 border-bottom">
+						<label for="pass1" class="col-sm-2 col-form-label">Password</label>
+						<div class="col-sm-7" id="u_password" style="display: none;">
+						  <div class="form-group">
+					        <input class="form-control" placeholder="현재비밀번호" name="pass1" id="pass1" type="password">
+					        <div class="invalid-feedback" id="password_message1">
+			                  현재 비밀번호를 입력하세요.
+			                </div>
+			              </div>
+						  <div class="form-group">
+					        <input class="form-control" placeholder="새 비밀번호" name="pass2" id="pass2" type="password">
+					        <br>
+					        <input class="form-control" placeholder="새 비밀번호 확인" name="pass3" id="pass3" type="password">
+					        <div class="invalid-feedback" id="password_message3">
+			                  8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합
+			                </div>
+			              </div>
+					        <button class="btn btn-primary btn-sm" id="password_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="password_reg" type="button">수정하기</button>
+						</div>
+						<div class="col-sm-7" style="display: block;">
+                          <button class="btn btn-primary btn-sm" type="button" id="passwordUpdateBtn">수정</button>
+                        </div>
+					</div>
+					
+					<div class="row pb-3 mb-3 border-bottom">
+						<label for="name" class="col-sm-2 col-form-label">Name</label>
+						<div class="col-sm-7 ">
+						  <input type="text" class="form-control" id="name" readonly="readonly" th:value="${userInfo.name}">
+						</div>
+					</div>
+				    
+				    <div class="row pb-3 mb-3 border-bottom">
+						<label for="nickName" class="col-sm-2 col-form-label">NickName</label>
+						<div class="col-sm-7">
+						  <input type="text" class="form-control" id="name" readonly="readonly" th:value="${userInfo.nickName}">
+						    <div class="mt-3" id="u_nickName" style="display: none;">
+						       <div class="form-group" >
+						        <input class="form-control" placeholder="새로운 닉네임" name="nick1" id="nick1" type="text">
+						        <div class="invalid-feedback" id="nickName_message">
+				                  닉네임을 입력해주세요.
+				                </div>
+				                <div class="mt-3">
+						          <button class="btn btn-primary btn-sm" id="nickName_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="nickName_reg" type="button">수정하기</button>
+						        </div>
+						       </div>
+						    </div>
+						  <div class="mt-3" style="display: block;">
+             			    <button class="btn btn-primary btn-sm" type="button" id="nickNameUpdateBtn">수정</button>
+                          </div>
+						</div>
+					</div>
+					
+				    <div class="row pb-3 mb-3 border-bottom">
+						<label for="phoneNum" class="col-sm-2 col-form-label">PhoneNumber</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="phoneNum" readonly="readonly" th:value="${userInfo.phoneNum}">
+					      <div class="mt-3" style="display: block;">
+             			    <button class="btn btn-danger btn-sm" type="button" id="phoneNumUpdateBtn">수정</button>
+                          </div>
+					    </div>
+					</div>
+					
+					 <div class="row pb-3 mb-3 border-bottom">
+						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
+					    <div class="col-sm-7">
+					      <div class="mb-3">
+					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
+					      </div>
+					      <div class="mb-3">
+					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
+					      </div>
+					      <div class="mb-3">
+					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
+					      </div>
+					      
+					    <div class="" id="u_address" style="display: none;"> 
+					      <div class="form-group" >
+					        <input class="form-control" style="width:100px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+					        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+					      </div>
+						  <div class="form-group">
+					        <input class="form-control" style="top: 5px;" placeholder="도로명 및 지번 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
+					      </div>
+					      <div class="form-group">
+					        <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
+					      </div>
+					      <div class="">
+					        <button class="btn btn-primary btn-sm" id="address_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="address_reg" type="button" >수정하기</button>
+					      </div>
+			            </div>
+			            
+					      <div class="" style="display: block;">
+             			    <button class="btn btn-primary btn-sm" type="button" id="addrUpdateBtn">수정</button>
+                          </div>
+					    </div>
+					</div>
+					
+		  		</form>
+			</div> <!-- col-sm-9 end -->
+		  </div> <!-- row pb-3 mb-3 end -->
+	    </div> <!-- container end -->
+    
+<!-- 				<div class="container">
 
 <div class="row g-5">
       
@@ -174,15 +292,17 @@
       </div>
     </div>
 
-				</div>
+				</div> -->
+				
 			</section>
 		</div>
 </th:block>
 
-<th:block layout:fragment="script">  
-  <!-- 카카오 주소찾기 api -->
+<th:block layout:fragment="script">
+  <!-- 카카오 주소찾기 API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script th:inline="javascript">  
+  <script th:inline="javascript">
+  
   //카카오 주소 찾기 메서드
   function execPostCode() {
 	      new daum.Postcode({
@@ -374,6 +494,7 @@
       $("#pass2").on('click',function(){
     	  if($(this).val()=="" || $(this).val()==null){
     	  $("#pass2").attr("class","form-control is-invalid");
+    	  $("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
     	  }
       });
       

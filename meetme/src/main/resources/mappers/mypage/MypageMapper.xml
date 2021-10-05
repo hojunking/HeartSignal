@@ -149,6 +149,7 @@
 	  FROM user_info
 	  WHERE user_id = #{userId}
 	</select>
+	
 	<!-- 회원정보 수정 (패스워드) -->
 	<update id="userUpdatePassword" parameterType="MypageUserInfoVO">
 		UPDATE user_info
@@ -189,7 +190,12 @@
 		WHERE user_id= #{userId}
 	</update>
 	
-<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+
+<!-- 저장된 코스 보기 -->
+
+
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 	
 	<!-- 알림내역 회원별 SELECT -->
 <!-- 	<select id="">
