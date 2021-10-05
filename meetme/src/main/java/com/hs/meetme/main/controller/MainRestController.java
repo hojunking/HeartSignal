@@ -19,11 +19,20 @@ public class MainRestController {
 	MainMapper mapper;
 	@Autowired
 	MainService service;
-	
+
 	@GetMapping("/{address}")
 	public List<MainVO> addressSec(@PathVariable String address) {
 		return service.addressSec(address);
-		
-		
 	}
+		
+	@GetMapping("/{address}/{detailAddr}")
+	public List<MainVO> courseList(@PathVariable String address, @PathVariable String detailAddr) {
+		String fullAddr = address + " " + detailAddr;
+		return service.courseList(fullAddr);
+	}
+		
+
+	
+		
+	
 }
