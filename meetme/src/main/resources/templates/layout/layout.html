@@ -41,7 +41,9 @@
             $('.tm-current-year').text(new Date().getFullYear()); // Update year in copyright  
         })
     </script>
-
+    
+    <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
+    <th:block layout:fragment="script"></th:block>
 </head>
 
 <body>
@@ -50,9 +52,7 @@
     <th:block layout:fragment="content"></th:block>
 
     <th:block th:replace="fragments/footer :: footerFragment"></th:block>
-    
-    <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
-    <th:block layout:fragment="script"></th:block>
+
 </body>
 
 </html>

@@ -26,18 +26,21 @@
       FROM PLACE
       WHERE SUBSTR(ADDRESS,'1',INSTR(ADDRESS,' ',1,1)-1) =#{address}
 	</select>
-	
-	<select id="courseList" resultType="MainVO">
-		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
-		FROM course c JOIN course_order o
-		ON c.COURSE_ID = o.COURSE_ID
-		ORDER BY DBMS_RANDOM.VALUE
-	</select>
-	
+	<!-- 대전광역시 중구 -->
 	<select id="regionCourse" resultType="MainVO">
-		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
+		SELECT * FROM COURSE WHERE REGION = #{region}
+	</select>
+	
+	<select id="courseList" parameterType="String" resultType="MainVO">
+		<!-- SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
 		FROM course c JOIN course_order o
 		ON c.COURSE_ID = o.COURSE_ID
-		WHERE c.region=#{region}
+		ORDER BY DBMS_RANDOM.VALUE -->
+		SELECT p.THUMBNAIL_HREF,c.COURSE_NAME, c.REGION, o.AVG_COST
+		FROM course c , course_order o , PLACE p
+        WHERE c.COURSE_ID = o.COURSE_ID AND o.PLACE_ID = p.PLACE_ID 
+        AND c.region = #{address}
 	</select>
+	
+	
 </mapper>
