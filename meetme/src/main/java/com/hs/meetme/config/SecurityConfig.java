@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ;
 
 //        재호가 함
-//        http.csrf();
-        http.csrf().disable();
+        http.csrf();
+//        http.csrf().disable();
     }
 
     @Override

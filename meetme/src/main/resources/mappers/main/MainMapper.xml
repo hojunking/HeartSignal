@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="courseList" resultType="MainVO">
-		SELECT c.COURSE_NAME, c.RE  GION, o.AVG_COST
+		SELECT c.COURSE_NAME, c.REGION, o.AVG_COST
 		FROM course c JOIN course_order o
 		ON c.COURSE_ID = o.COURSE_ID
 		ORDER BY DBMS_RANDOM.VALUE
