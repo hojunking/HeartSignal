@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.coursecreate.mapper.TensorMapper">
+
+	<select id="createTensorData" resultType="com.hs.meetme.coursecreate.domain.TensorVO">
+		SELECT
+		    T.TAG_NUM "tagNum",
+		    UI.ADDRESS1 "address",
+		    UI.BIRTH_YEAR "birthYear",
+		    SUM(CASE WHEN CO.COURSE_ORDER = 1 THEN CO.PLACE_ID END) "place1",
+		    SUM(CASE WHEN CO.COURSE_ORDER = 2 THEN CO.PLACE_ID END) "place2",
+		    SUM(CASE WHEN CO.COURSE_ORDER = 3 THEN CO.PLACE_ID END) "place3"
+		FROM COURSE_ORDER CO JOIN COURSE C
+			ON(CO.COURSE_ID = C.COURSE_ID)
+		JOIN USER_INFO UI
+			ON(C.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN USER_TAGS UT
+			ON(UT.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN TAGS T
+			ON(UT.TAG_ID = T.TAG_ID)
+		GROUP BY 
+			T.TAG_NUM, 
+			UI.ADDRESS1,
+		    UI.BIRTH_YEAR, 
+		    C.USER_ID, 
+		    C.COURSE_ID
+	</select>
+	
+	<select id="createTensorCauseData" resultType="com.hs.meetme.coursecreate.domain.TensorCauseVO">
+		SELECT
+		    T.TAG_NUM "tagNum",
+		    UI.ADDRESS1 "address",
+		    UI.BIRTH_YEAR "birthYear"
+		FROM COURSE_ORDER CO JOIN COURSE C
+			ON(CO.COURSE_ID = C.COURSE_ID)
+		JOIN USER_INFO UI
+			ON(C.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN USER_TAGS UT
+			ON(UT.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN TAGS T
+			ON(UT.TAG_ID = T.TAG_ID)
+		GROUP BY 
+			T.TAG_NUM, 
+			UI.ADDRESS1,
+		    UI.BIRTH_YEAR, 
+		    C.USER_ID, 
+		    C.COURSE_ID
+	</select>
+	
+	<select id="createTensorResultData" resultType="com.hs.meetme.coursecreate.domain.TensorResultVO">
+		SELECT
+			SUM(CASE WHEN CO.COURSE_ORDER = 1 THEN CO.PLACE_ID END) "place1",
+		    SUM(CASE WHEN CO.COURSE_ORDER = 2 THEN CO.PLACE_ID END) "place2",
+		    SUM(CASE WHEN CO.COURSE_ORDER = 3 THEN CO.PLACE_ID END) "place3"
+		FROM COURSE_ORDER CO JOIN COURSE C
+			ON(CO.COURSE_ID = C.COURSE_ID)
+		JOIN USER_INFO UI
+			ON(C.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN USER_TAGS UT
+			ON(UT.USER_ID = UI.USER_ID)
+		LEFT OUTER JOIN TAGS T
+			ON(UT.TAG_ID = T.TAG_ID)
+		GROUP BY 
+			T.TAG_NUM, 
+			UI.ADDRESS1,
+		    UI.BIRTH_YEAR, 
+		    C.USER_ID, 
+		    C.COURSE_ID
+	</select>
+
+</mapper>
