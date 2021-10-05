@@ -40,6 +40,8 @@ public class RestCoupleInfoController {
 			System.out.println(vo);
 			return vo;
 		}
+		
+		
 		@PostMapping("/coupleImage")
 		public CoupleInfoVO updateCoupleImage(MultipartFile uploadFile, CoupleInfoVO vo)
 				throws IllegalStateException, IOException {
@@ -48,12 +50,16 @@ public class RestCoupleInfoController {
 			if(!ufile.isEmpty() && ufile.getSize() > 0) {
 				String filename = ufile.getOriginalFilename();
 				UUID uuid = UUID.randomUUID();
-				File file = new File(path, uuid + filename+".jpg");
-				ufile.transferTo(file);
-				vo.setImgName(filename);
+				String imgUrl =uuid + filename + ".jpg";
+				File file = new File(path, imgUrl);
+//				ufile.transferTo(file); //파일 옮기기
+				vo.setImgUrl(imgUrl);
+				System.out.println("이미지URL="+vo.getImgUrl());
+				/* coupleService.insertImage(vo); */ //이미지 테이블에 등록
+				System.out.println("커플디데이="+vo.getCoupleDate());
+				/* coupleService.coupleCustomUpdate(vo); */ //커플 테이블 이미지, 디데이 업뎃
 			}
 			
-			System.out.println(vo.getImgName());
 			return vo;
 		}
 		

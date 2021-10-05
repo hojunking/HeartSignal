@@ -15,7 +15,7 @@
 	<style>
 .product-image {
 	width: 100%;
-	height: 800px;
+	height: 640px;
 	overflow: hidden;
 }
 
@@ -23,27 +23,34 @@
 	max-width: 100%;
 }
 .photo_box{margin:0 auto ;max-width:500px;} 
-.upload_btn{overflow:hidden;width:100%;}
-.upload_btn #photoBtn{display:none;}
-.upload_btn .upload, .upload_btn a{float:left;width:calc(50% - 10px);text-align:center;text-decoration: none;color:#fff;padding:15px 0;}
-.upload_btn .upload{background-color:steelblue;} 
-.upload_btn a{margin-left:20px; background:#ccc;}
-.photo_them{position:relative;width:100%;height:400px;background:#eee;}
+.upload_btn{overflow:auto;width:100%;}
+
+.upload_btn #photoBtn,#resetPhoto{display:none;} /* 사진 첨부하기 버튼 숨김*/ 
+.upload_btn .upload, .upload_btn a{float:left; padding: 6px 20px;
+  background:#eee;;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;}
+.upload_btn a{ background:#ccc;}
+#resetPhoto,#complete {float:right; padding: 10px 20px;}
+.photo_them{position:relative;width:100%;height:420px;background:#eee;margin :10px 0;}
+
 .them_img, .result_box{position:absolute;top:0;left:0;width:100%;height:100%;}
 .them_img img, .result_box img{display:block;margin:0 auto;height:100%;}
-#complete{display:block;margin-top:20px;padding:15px 0;width:100%;text-align:center;color:#fff;text-decoration: none;background-color: steelblue;}
 </style>
 </th:block>
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
 	<div class="tm-page-wrap mx-auto">
+		<BR>
 		<section class="probootstrap-cover probootstrap-bg"
-			style="background-image: url(../img/coupleSample2.jpg); background-size: cover; background-position: center;">
+			>
 			<div class="container-fluid mb-5">
 				<div class="row">
-					<div class="probootstrap-devices product-image">
-						<img th:src="@{/img/coupleSample2.jpg}"
-							class="probootstrap-device-left img-fluid">
+					<div class="probootstrap-devices product-image" id="coupleUrl"
+					style="background-image: url(../img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg); background-size: cover; background-position: center;">
+						<!-- <img th:src="@{/img/coupleSample2.jpg}"
+							class="probootstrap-device-left img-fluid"> -->
 					</div>
 				</div>
 			</div>
@@ -116,18 +123,18 @@
 					<div class="photo_box">
 						<div class="upload_btn">
 							<div class="upload">
-								<input type="file" name="photoBtn"
-									accept="image/jpeg, image/png" capture="camera" id="photoBtn"><label
-									for="photoBtn">사진 첨부하기</label>
+								<label for="photoBtn"><input type="file" name="photoBtn"
+									accept="image/jpeg, image/png" id="photoBtn">사진 첨부하기</label>
 							</div>
-							<a href="javascript:void(0);" id="resetPhoto">다시 올리기</a>
+							<button type="button" class="btn-primary " id="resetPhoto">다시 올리기</button>
 						</div>
 						<div class="photo_them">
 							<div class="them_img">
 								<img id="image" src="">
 							</div>
 						</div>
-						<a href="javascript:void(0);" id="complete">업로드</a>
+						D-DAY설정하기&nbsp;<input type="date" required="required">
+						<button type="button"class="btn-primary " id="complete">업데이트</button>
 					</div>
 				</div>
 			</div>
@@ -164,7 +171,7 @@
 					success : function(datas) {
 					console.log(datas);
 					$('#nickName1').text(datas.nickName);
-					$('#birthDate1').text(datas.birthDate);
+					$('#birthDate1').text(datas.birthDay);
 					var today = new Date();
 					var coupleDate = new Date(datas.coupleDate);
 					var gap = today.getTime() - coupleDate.getTime();
@@ -188,7 +195,7 @@
 					dataType : "json",
 					success : function(datas) {
 						$('#nickName2').text(datas.nickName);
-						$('#birthDate2').text(datas.birthDate);
+						$('#birthDate2').text(datas.birthDay);
 						console.log(datas);
 					}
 				});
@@ -199,6 +206,7 @@
 			// 사진 업로드하기 버튼 cropper 수정
 			$('#photoBtn').on('change', function() {
 				$('.them_img').empty().append('<img id="image" src="">');
+				$('#resetPhoto').css("display","block");
 				var image = $('#image');
 				var imgFile = $('#photoBtn').val();
 				var fileForm = /(.*?)\.(jpg|jpeg|png)$/;
@@ -208,24 +216,27 @@
 					var reader = new FileReader();
 					reader.onload = function(event) {
 					image.attr("src", event.target.result);
-
+					
+					image.css("display","block");
+					
 					cropper = image.cropper({
-					dragMode : 'crop',
+					dragMode : 'move',
 					viewMode : 3,
-					autoCropArea : 0.9,
+					autoCropArea :0.8,
 					minContainerHeight : 400,
 					minContainerWidth : 400,
 					
-					minCropBoxWidth : 400,
+					minCropBoxWidth : 600,
+					minCropBoxHeight:240,
 					minCanvasWidth : 400,
-					minCanvasHeight:300,
+					minCanvasHeight:400,
 					responsive : true,
 					checkCrossOrigin:true,
+					autoCropArea:0.5,
+					
 					restore : false,
 					guides : true,
-					scalable : true,
-					center : false,
-					highlight : true,
+					center : true,
 					cropBoxMovable : true,
 					cropBoxResizable : false,
 					toggleDragModeOnDblclick : false
@@ -251,24 +262,27 @@
 			});
 			// 업로드 버튼
 			$('#complete').on('click',function() {
-				$('.them_img').append('<div class="result_box"><img id="result" src=""></div>');
+				//$('.them_img').append('<div class="result_box"><img id="result" src=""></div>');
 			var image = $('#image');
 			var result = $('#result');
 			var canvas;
 			if ($('input[type="file"]').val() != "") {
 				canvas = image.cropper('getCroppedCanvas',
 				{
-					width : 800,
-					height : 640
+					height : 840
 				});
 				result.attr('src', canvas.toDataURL("image/jpg"));
 
 				canvas.toBlob(function(blob) {
-					var formData = new FormData();
-					formData.append('uploadFile', blob/*, 'example.png' */);
+				var formData = new FormData();
+				formData.append('uploadFile', blob/*, 'example.png' */);
+				
+				console.log($('input[type="date"]').val());
 				console.log(result);
 				console.log(canvas);
 				console.log(blob);
+				if ($('input[type="date"]').val() != ""){
+				formData.append('coupleDate',$('input[type="date"]').val());
 				$.ajax({
 					url : "coupleImage",
 					method : 'POST',
@@ -276,13 +290,20 @@
 					processData : false,
 					contentType : false,
 					success : function() {
-						alert('업로드 성공');
+						$('.bd-example-modal-lg').hide();
+						alert('업데이트 성공!');
+						location.href = location.href;
 					},
 					error : function() {
 						alert('업로드 실패');
 						$('.result_box').remove()
 					},
 				}); 
+				}else {
+					alert('D-day 날짜를 입력해주세요.');
+					$('input[type="date"]').focus();
+					return;
+				}
 				})
 			} else {
 				alert('사진을 업로드 해주세요');
