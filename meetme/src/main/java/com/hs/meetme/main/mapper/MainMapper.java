@@ -12,13 +12,14 @@ public interface MainMapper {
 	
 	public List<MainVO> placeList(); // 장소 불러오기
 	
-	public List<MainVO> courseList(); // 지역별 코스 리스트
+	public List<MainVO> courseList(String address); // 지역별 코스 리스트
 	
 	public List<MainVO> addressList();
 	
 	public List<MainVO> addressSec(String address); // 중구, 남구
 	
 	public List<MainVO> regionCourse(); // 해당 지역 누르면 나오는 코스
+	
 	
 }
 

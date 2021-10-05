@@ -9,7 +9,7 @@ public interface MainService {
 
 	public List<MainVO> placeList(); // place_name 불러오기
 
-	public List<MainVO> courseList(); // 지역별 코스 리스트
+	public List<MainVO> courseList(String address); // 지역별 코스 리스트
 	
 	public List<MainVO> addressList(); // 인천, 서울
 	

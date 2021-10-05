@@ -93,6 +93,13 @@
 .cource {
 	padding: 10px;
 }
+
+/* 이미지 크기 고정하기 */
+.customImg {
+	width: 270px;
+	height: 180px;
+	object-fit: cover;
+}
 </style>
 </th:block>
 
@@ -344,6 +351,7 @@
 
 
 		<!-- Tab 4 -->
+		<th:block th:if="${course} != null">
 		<div class="tab-pane fade show active">
 			<!-- 카드1 -->
 			<div>
@@ -352,8 +360,9 @@
 					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
 					<div class="tm-recommended-place-wrap">
 						<div class="tm-recommended-place">
-							<img src="img/tm-img-06.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
+							<img th:src="${course[c].thumbnailHref}"
+								style="width: 270; height: 180;" alt="Image"
+								class="img-fluid tm-recommended-img customImg">
 							<div class="tm-recommended-description-box">
 								<br>
 								<h3 class="tm-recommended-title"
@@ -385,8 +394,8 @@
 					<!-- (0,course.size-1) -->
 					<div class="tm-recommended-place-wrap">
 						<div class="tm-recommended-place">
-							<img src="img/tm-img-06.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
+							<img th:src="${course[c].thumbnailHref}" alt="Image"
+								class="img-fluid tm-recommended-img customImg">
 							<div class="tm-recommended-description-box">
 								<br>
 								<h3 class="tm-recommended-title"
@@ -416,12 +425,13 @@
 		<!-- 더보기, 접기 버튼 -->
 		<div class="row">
 			<div class="col text-center">
-				<button type="button" id="regToggle" class="cardbtn2 cmt-20" style="padding:10px;">더보기</button>
+				<button type="button" id="regToggle" class="cardbtn2 cmt-20"
+					style="padding: 10px; border-radius: 5px;">더보기</button>
 			</div>
 		</div>
 		<!-- 더보기, 접기 버튼 -->
-		
-		
+		</th:block>
+
 		<!-- tab-pane -->
 		<br> <br>
 		<div class="" style="text-align: center;">
@@ -443,6 +453,7 @@
 	<script>
 		$(function() {
 			var tag = " ";
+			let address;
 
 			$(".tagOn").on("click", function() {
 				var tagId = $(this).text();
@@ -483,7 +494,7 @@
 			}); /* swiper 끝 */
 			
 			$(".region").on("click",function(){
-				let address = $(this).text();
+				address = $(this).text();
 				let regionBtn = $(this);
 				$.ajax({
 					url:"/" + address,
@@ -496,6 +507,7 @@
 							list = $("<a />")
 								.addClass("dropdown-item addressSec")
 								/* .css("z-index", "9999") */
+								.click(findAddrSec)
 								.text(row.addressSec);
 							console.log(list)
 							$(dropdownItem).append(list);
@@ -510,11 +522,11 @@
 				
 			}); /* onclick */
 			
-			// 숨겨진 카테고리들
+			// 숨겨진 코스
 			let moreCourse = $(".moreCourse");
 			$(moreCourse).hide();
 
-			// 지역 더보기, 접기
+			// 더보기 , 접기
 			$("#regToggle").click(function () {
 				$(moreCourse).slideToggle(500);
 				if ($(this).text() == '더보기') {
@@ -523,8 +535,19 @@
 					$(this).text('더보기');
 				}
 			});
-
 		});/* script function 끝! */
+		
+		function findAddrSec(){
+			address= $(this).closest(".dropdown-menu").prev().text();
+			let detailAddr = $(this).text();
+		    $.ajax({
+		    	url:"/" + address +"/" + detailAddr,
+		    	method:"get",
+		    	success:function(data){
+		    		console.log(data);
+		    	}
+		    })/* ajax */
+		};/* course */
 	</script>
 </th:block>
 </html>

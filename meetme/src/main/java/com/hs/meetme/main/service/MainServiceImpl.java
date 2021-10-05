@@ -26,9 +26,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<MainVO> courseList() {
+	public List<MainVO> courseList(String address) {
 		
-		return mainMapper.courseList();
+		return mainMapper.courseList(address);
 	}
 
 	@Override
