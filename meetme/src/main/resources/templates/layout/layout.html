@@ -38,6 +38,13 @@
      <!-- <script type="text/javascript" src ="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
     <script>
         $(function () {
+            $(window).on("scroll", function() {
+                if($(window).scrollTop() > 100) {
+                    $(".tm-top-bar").addClass("active");
+                } else {                    
+                 $(".tm-top-bar").removeClass("active");
+                }
+            });
             $('.tm-current-year').text(new Date().getFullYear()); // Update year in copyright  
         })
     </script>

@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageVO {
 	private int imgId;
-	private String url;
+	private String imgUrl;
 	private String imgName;
 	private String uuid;
-	private long size;
-	private Date createdAt;
+	private long imgSize;
+	private Date imgDate;
 	private String usage;
 	
 

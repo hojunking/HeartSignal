@@ -11,16 +11,16 @@
 	</select>
 	
 	<select id="emailCheck" parameterType="String" resultType="int">
-		select
-			count(*)
-		from
+		SELECT
+			COUNT(*)
+		FROM
 			user_info
-		where
+		WHERE
 			email = #{email}
 	</select>
 	
 	<insert id="signUp">
-		insert into
+		INSERT INTO
 			user_info
 			(user_id,
 			 name,
@@ -35,7 +35,7 @@
 			 birth_day,
 			 img_id,
 			 role)
-		values
+		VALUES
 			(seq_user_info.nextval,
 			 #{name},
 			 #{email},
@@ -50,4 +50,41 @@
 			 #{imgId},
 			 'USER')
 	</insert>
+	
+<!-- 	<insert id="signUpTag">
+		INSERT INTO
+			user_tags
+			(user_id,
+			 tag_id)
+		VALUES
+			(#{userId},
+			 #{tagId})
+	</insert>
+	
+	<insert id="signUpImage">
+		INSERT INTO
+			img
+			(img_id,
+			 img_url,
+			 img_usage
+			)
+		VALUES
+			(SEQ_IMG.nextval,
+			 #{imgUrl},
+			 'y'
+			)
+		<selectKey keyProperty="imgId" order="AFTER" resultType="int">
+			SELECT 
+				SEQ_IMG.currval 
+			FROM 
+				dual
+		</selectKey>
+	</insert>
+	
+	<select id="userTags" resultType="TagVO">
+		SELECT 
+			*
+		FROM
+			tags
+	</select> -->
 </mapper>
