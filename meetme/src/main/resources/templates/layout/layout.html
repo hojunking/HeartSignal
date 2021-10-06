@@ -29,26 +29,44 @@
 
     <!-- 공통으로 쓰이는 javascript파일을넣는다.-->
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{/js/popper.js}"></script>					   <!-- dropdown  -->
+    <script th:src="@{/js/popper.js}"></script> <!-- dropdown  -->
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/datepicker.min.js}"></script> <!-- https://github.com/qodesmith/datepicker -->
     <script th:src="@{/js/jquery.singlePageNav.min.js}"></script> <!-- slick과 함께 사용(?)-->
     <script th:src="@{/slick/slick.min.js}"></script> <!-- http://kenwheeler.github.io/slick/ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-     <!-- <script type="text/javascript" src ="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
-    <script>
+    <!-- <script type="text/javascript" src ="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
+    <script th:inline="javascript">
+        let userSession;
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajaxSetup({
+
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader(header, token);           
+            }
+
+        });
+
         $(function () {
-            $(window).on("scroll", function() {
-                if($(window).scrollTop() > 100) {
+            /*<![CDATA[*/
+            userSession = /*[[${session.userSession}]]*/ '';
+            console.log(userSession);
+            /*]]>*/
+
+            $(window).on("scroll", function () {
+                if ($(window).scrollTop() > 100) {
                     $(".tm-top-bar").addClass("active");
-                } else {                    
-                 $(".tm-top-bar").removeClass("active");
+                } else {
+                    $(".tm-top-bar").removeClass("active");
                 }
             });
             $('.tm-current-year').text(new Date().getFullYear()); // Update year in copyright  
         })
     </script>
-    
+
     <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
     <th:block layout:fragment="script"></th:block>
 </head>
