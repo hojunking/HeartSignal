@@ -107,7 +107,7 @@
 			</plugin>
 			
 			<!-- 빌드를 위한 플러그인들 -->
-			<plugin>
+		<!--	<plugin>
 			    <groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>1.12.0</version>
@@ -175,7 +175,7 @@
 			            </configuration>
 			        </execution>
 			    </executions>
-			</plugin>
+			</plugin> -->
 			<!-- 빌드를 위한 플러그인들 끝 -->
 		</plugins>
 	</build>
