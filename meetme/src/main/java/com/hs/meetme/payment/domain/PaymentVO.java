@@ -13,9 +13,16 @@ public class PaymentVO {
 	
 	private Date payDate;
 	private int payCost;
-	private int userId;
-	private long merchantUid;
 	private long subTerm;
 	private String token;
+	//공동
+	private long merchantUid;
+	private int userId;
+	//환불VO
+	private String email;
+	private String userName;
+	private long cancelAmount;
+	//coupleId 확인
+	private int coupleId;
 	
 }

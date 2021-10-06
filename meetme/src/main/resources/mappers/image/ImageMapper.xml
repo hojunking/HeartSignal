@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.meetme.image.mapper.ImageMapper">
+<insert id="insertImage">
+<selectKey keyProperty="imgId" resultType="int" order="BEFORE">
+		SELECT SEQ_IMG.NEXTVAL FROM DUAL
+		</selectKey>
+INSERT INTO IMG VALUES(#{imgId},
+						#{imgUrl},
+						DEFAULT,
+						DEFAULT)
+</insert>
+
+</mapper>
