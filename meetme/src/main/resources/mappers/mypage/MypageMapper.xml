@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
-	
+  <!-- 저장된 코스 보기 -->
+  	<!-- 코스 검색기능 -->
+    <sql id = "courseSearch">
+         <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+           <foreach collection="cri.typeArr" item="type">
+             <trim prefix="OR">
+               <choose>
+	               <when test="type=='T'.toString()">
+	                 post_title LIKE '%'||#{cri.keyword}||'%' 
+	               </when>
+	               <when test="type=='C'.toString()">
+	                 post_content LIKE '%'||#{cri.keyword}||'%'
+	               </when>
+	               <when test="type=='D'.toString()"> 
+	                 post_distinct LIKE '%'||#{cri.keyword}||'%'
+	               </when>
+               </choose>
+             </trim>
+           </foreach>
+         </trim>
+    </sql>
+
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
 	<!-- 게시글 검색기능 -->
     <sql id = "postSearch">
          <trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -149,6 +171,7 @@
 	  FROM user_info
 	  WHERE user_id = #{userId}
 	</select>
+	
 	<!-- 회원정보 수정 (패스워드) -->
 	<update id="userUpdatePassword" parameterType="MypageUserInfoVO">
 		UPDATE user_info
@@ -189,7 +212,7 @@
 		WHERE user_id= #{userId}
 	</update>
 	
-<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
 	
 	<!-- 알림내역 회원별 SELECT -->
 <!-- 	<select id="">
