@@ -8,11 +8,14 @@
 	
 	<!-- 수정 -->
 	<select id="placeList" resultType="MainVO">
-		SELECT p.PLACE_NAME,p.REGION, t.TAG_ID
-		FROM PLACE p JOIN PLACE_TAGS t
+	<!-- SELECT p.PLACE_NAME,p.REGION, t.TAG_ID
+		FROM PLACE p  JOIN PLACE_TAGS t
 		ON p.place_id = t.place_id
-		ORDER BY DBMS_RANDOM.VALUE
-        
+		ORDER BY DBMS_RANDOM.VALUE -->
+		SELECT p.*, t.TAG_ID
+	    FROM PLACE p  LEFT OUTER JOIN PLACE_TAGS t
+	    ON p.place_id = t.place_id
+	    WHERE p.place_id=#{placeId}
 	</select>
 	<!-- 서울, 인천 -->
 	<select id="addressList" resultType="MainVO">

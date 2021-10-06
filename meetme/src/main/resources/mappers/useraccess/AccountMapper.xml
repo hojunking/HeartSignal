@@ -2,12 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.useraccess.mapper.AccountMapper">
 	<select id="findByEmail" parameterType="String" resultType="AccountVO">
-		SELECT 
-    		* 
-		FROM 
-			user_info 
-		WHERE 
-			email = #{email}
+		SELECT
+		    a.*, 
+		    b.couple_id,
+		    b.user_request,
+		    b.user_received,
+		    b.sub_term,
+		    b.start_date
+		FROM
+		    user_info a
+		LEFT OUTER JOIN
+		    couple_info b
+		ON 
+		    a.user_id = b.user_request
+		OR
+		    a.user_id = b.user_received
+		WHERE
+		    a.email = #{email}
 	</select>
 	
 	<select id="emailCheck" parameterType="String" resultType="int">

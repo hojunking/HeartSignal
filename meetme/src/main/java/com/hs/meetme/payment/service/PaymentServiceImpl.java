@@ -1,5 +1,7 @@
 package com.hs.meetme.payment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,23 @@ public class PaymentServiceImpl implements PaymentService{
 		return payMap.paymentInsert(vo);
 	}
 	@Override
-	public PaymentVO readPayInfo(PaymentVO vo) {
-		return payMap.readPayInfo(vo);
+	public PaymentVO latestpaid(PaymentVO vo) {
+		return payMap.latestpaid(vo);
+	}
+	@Override
+	public int insertRefundInfo(PaymentVO vo) {
+		// TODO Auto-generated method stub
+		return payMap.insertRefundInfo(vo);
+	}
+	@Override
+	public List<PaymentVO> readRefund(PaymentVO vo) {
+		// TODO Auto-generated method stub
+		return payMap.readRefund(vo);
+	}
+	@Override
+	public List<PaymentVO> readPayment(PaymentVO vo) {
+		// TODO Auto-generated method stub
+		return payMap.readPayment(vo);
 	}
 	
 	

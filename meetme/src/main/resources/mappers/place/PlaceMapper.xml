@@ -14,12 +14,12 @@
 		WHERE PLACE_NAME = #{placeName}
 	</select>
 	
-	<select id="getTagList" resultType="TagVO">
+	<select id="getTagList" resultType="com.hs.meetme.coursecreate.domain.TagVO2">
 		SELECT * FROM tags
 	</select>
 	
 	<!-- 정해진 장소의 태그들만 가져오기 -->
-	<select id="getTagsSelected" parameterType="int" resultType="TagVO">
+	<select id="getTagsSelected" parameterType="int" resultType="com.hs.meetme.coursecreate.domain.TagVO2">
 		SELECT * FROM PLACE_TAGS
 		WHERE PLACE_ID = #{placeId}
 	</select>

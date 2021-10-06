@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headerFragment">
     <header>
-    <th:block th:if="${session.userSession != null}">
-    	<input type="hidden" id="sessionUserId" th:value="${session.userSession.userId}">
-    </th:block>
         <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
@@ -23,7 +20,7 @@
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item"><a class="nav-link active" href="#top">Home <span
                                                 class="sr-only">(current)</span></a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#tm-section-2">Top Destinations</a>
+                                    <li class="nav-item"><a class="nav-link" href="/vue/asdf">Top Destinations</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" th:href="@{/coupleMain}">커플로그</a>
                                     </li>

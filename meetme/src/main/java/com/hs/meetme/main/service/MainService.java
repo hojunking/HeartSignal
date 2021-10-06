@@ -7,7 +7,7 @@ import com.hs.meetme.main.domain.MainVO;
 public interface MainService {
 	public List<MainVO> tagList(); // 태그 불러오기
 
-	public List<MainVO> placeList(); // place_name 불러오기
+	public List<MainVO> placeList(int placeId); // place_name 불러오기
 
 	public List<MainVO> courseList(String address); // 지역별 코스 리스트
 	

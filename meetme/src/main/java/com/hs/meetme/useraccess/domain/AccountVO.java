@@ -32,6 +32,12 @@ public class AccountVO implements UserDetails{
 	private String address3;
 	private String birthYear;
 	private String birthDay;
+	
+	private String coupleId;
+	private String userRequest;
+	private String userReceived;
+	private String subTerm;
+	private String startDate;
 
 	@Override
 	public String getUsername() {

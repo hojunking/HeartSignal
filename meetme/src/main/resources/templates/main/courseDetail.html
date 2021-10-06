@@ -41,7 +41,7 @@
 						<!-- 지도 -->
 					</div>
 					<br>
-					<div class="CourseExp">A 장소 -> B 장소 -> C 장소로 이동하는 코스입니다</div>
+					<div class="CourseExp" th:value="${detail.courseOrder}"></div>
 				</div>
 			</div>
 		</section>
@@ -63,10 +63,10 @@
 									<div class="tm-recommended-description-box">
 										<br>
 										<h3 class="tm-recommended-title"
-											th:text="${detail[c].courseName}"></h3>
+											th:text="${detail[c].placeName}"></h3>
 										<!-- 코스 -->
 										<br>
-										<p class="tm-text-highlight" th:text="${detail[c].region}"
+										<p class="tm-text-highlight" th:text="${detail[c].address}"
 											style="font-size: 15px;"></p>
 										<p class="tm-text-gray"></p>
 									</div>
