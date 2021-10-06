@@ -42,10 +42,13 @@
 }
 /* 검색 버튼 */
 .tagButton {
+	background-color: #69c6ba;
+	border: 0px;
 	width: 50px;
 	height: 33.5px;
 	font-size: small;
 	border-radius: 0px;
+	color:white;
 }
 /* 자세히 보기 버튼  */
 .cusButton {
@@ -135,7 +138,7 @@
 											<div class="input-group">
 												<input class="insertcustomOne form-control" name="insert"
 													type="text" value="" placeholder=" # 태그를 선택해주세요">
-												<button class="tagButton btn btn-primary">검색</button>
+												<button class="tagButton">검색</button>
 											</div>
 											<br>
 											<div class="customBg">
@@ -293,10 +296,10 @@
 														style="width: 15px; height: 15px;">
 													<th:block th:text="${place[p].region}"></th:block>
 													<br> <br>
-													<th:block th:each="t: ${#numbers.sequence(0, 3)}">
+													<!--<th:block th:each="t: ${#numbers.sequence(0, 3)}">-->
 														<span class="placeTag placeTag2"
-															th:text="${place[t].tagId}"></span>
-													</th:block>
+															th:text="${place[p].tagId}"></span>
+													<!--</th:block>-->
 												</div>
 												<!-- END OF CARD-BODY -->
 											</div>
@@ -535,6 +538,27 @@
 					$(this).text('더보기');
 				}
 			});
+			
+			var placeList = [26,21,24];
+			var sendList = "";
+			for(let i=0; i<placeList.length; i++) {
+				sendList += placeList[i];
+				sendList += ","
+			}
+			sendList = sendList.substr(0, sendList.length-1);
+			 $.ajax({
+				 url: "/search/?list=" + sendList,
+				 method:"get",
+				 dataType:"json",
+				 success:function(result){
+					 console.log(result)
+				 }
+			 })
+			
+			
+			
+			
+			
 		});/* script function 끝! */
 		
 		function findAddrSec(){
@@ -547,7 +571,9 @@
 		    		console.log(data);
 		    	}
 		    })/* ajax */
-		};/* course */
+		};/* findAddrSec */
+		
+		
 	</script>
 </th:block>
 </html>

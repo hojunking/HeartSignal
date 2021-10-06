@@ -20,9 +20,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<MainVO> placeList() {
+	public List<MainVO> placeList(int placeId) {
 		
-		return mainMapper.placeList();
+		return mainMapper.placeList(placeId);
 	}
 
 	@Override

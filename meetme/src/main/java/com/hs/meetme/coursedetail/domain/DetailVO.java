@@ -9,5 +9,7 @@ public class DetailVO {
 	private String courseName;
 	private String region;
 	private String avgCost;
+	private String thumbnailHref;
+	private String courseOrder;
 
 }
