@@ -16,7 +16,7 @@ import com.hs.meetme.coursecreate.api.SearchPlaceDetailAPI;
 import com.hs.meetme.coursecreate.domain.CourseCreateVO;
 import com.hs.meetme.coursecreate.domain.CourseTempVO;
 import com.hs.meetme.coursecreate.domain.PlaceVO;
-import com.hs.meetme.coursecreate.domain.TagVO;
+import com.hs.meetme.coursecreate.domain.TagVO2;
 import com.hs.meetme.coursecreate.service.CourseCreateService;
 import com.hs.meetme.coursecreate.service.PlaceService;
 
@@ -46,12 +46,12 @@ public class RestCourseController {
 	}
 	
 	@GetMapping("/place/tags")
-	public List<TagVO> getTagsAll() {
+	public List<TagVO2> getTagsAll() {
 		return placeService.getTagList();
 	}
 	
 	@GetMapping("/place/tags/{id}")
-	public List<TagVO> getTagsBySelected(@PathVariable("id") int id) {
+	public List<TagVO2> getTagsBySelected(@PathVariable("id") int id) {
 		log.info(id);
 		return placeService.getTagsSelected(id);
 	}

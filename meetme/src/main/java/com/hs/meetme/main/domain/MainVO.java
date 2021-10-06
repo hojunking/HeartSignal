@@ -13,6 +13,7 @@ public class MainVO {
 	private String avgCost;
 	private String address;
 	private String addressSec;
+	private String thumbnailHref;
 	
 }
 

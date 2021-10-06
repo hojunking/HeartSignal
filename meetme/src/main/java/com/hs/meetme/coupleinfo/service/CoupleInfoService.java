@@ -11,4 +11,5 @@ public interface CoupleInfoService {
 	public int couplePhotoDefault(CoupleInfoVO vo); //커플 대문사진 초기화
 	public CoupleInfoVO read(CoupleInfoVO vo); //커플정보상세보기
 	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo); //내여친정보
+	public int insertImage(CoupleInfoVO vo); //사진테이블에 사진등록
 }
