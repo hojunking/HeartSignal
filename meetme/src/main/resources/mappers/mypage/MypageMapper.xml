@@ -9,20 +9,83 @@
              <trim prefix="OR">
                <choose>
 	               <when test="type=='T'.toString()">
-	                 post_title LIKE '%'||#{cri.keyword}||'%' 
+	                 course_name LIKE '%'||#{cri.keyword}||'%' 
 	               </when>
 	               <when test="type=='C'.toString()">
-	                 post_content LIKE '%'||#{cri.keyword}||'%'
-	               </when>
-	               <when test="type=='D'.toString()"> 
-	                 post_distinct LIKE '%'||#{cri.keyword}||'%'
+	                 course_name LIKE '%'||#{cri.keyword}||'%'
 	               </when>
                </choose>
              </trim>
            </foreach>
          </trim>
     </sql>
-
+    <!--코스 페이징을 위한 -->
+    <select id="getTotalCourseCount" resultType="int">
+      SELECT COUNT(*)
+		FROM
+		(SELECT
+		        DISTINCT
+		        a.user_id,
+		        a.course_id,
+		        a.course_name
+		FROM course a, course_order b
+		WHERE a.course_id IN (SELECT course_id FROM course_like WHERE user_id = #{userId}) AND a.course_id=b.course_id
+		UNION ALL
+		SELECT
+		       DISTINCT
+		       a.user_id,
+		       a.course_id,
+		       a.course_name
+		FROM course a, course_order b
+		WHERE a.user_id=#{userId} AND a.course_id=b.course_id)		
+	  WHERE 
+	    <include refid="courseSearch"></include>
+	  course_id >0
+    </select>
+    <!-- 나의 코스 리스트 SELECT -->
+    <select id="getCourseList" resultType="MyPageCourseVO">
+  	  SELECT *
+      FROM
+			(SELECT ROW_NUMBER()OVER(ORDER BY x.course_id DESC) rn,
+			  x.user_id,
+			  x.course_id,
+			  x.course_name,
+			  x.course_state,
+			  x.course_open,
+			  x.region,
+			  x.sum_cost
+			FROM
+			(SELECT
+			  DISTINCT
+			  a.user_id,
+			  a.course_id,
+			  a.course_name,
+			  a.course_state,
+			  a.course_open,
+			  a.region,
+			  (SELECT sum_cost FROM (SELECT course_id, SUM(avg_cost) sum_cost FROM course_order GROUP BY course_id) c WHERE c.course_id = b.course_id) sum_cost
+			FROM course a, course_order b
+			WHERE a.course_id IN (SELECT course_id FROM course_like WHERE user_id = #{userId}) AND a.course_id=b.course_id
+			UNION ALL
+			SELECT
+			  DISTINCT
+			  a.user_id,
+			  a.course_id,
+			  a.course_name,
+			  a.course_state,
+			  a.course_open,
+			  a.region,
+			  (SELECT sum_cost FROM (SELECT course_id, SUM(avg_cost) sum_cost FROM course_order GROUP BY course_id) c WHERE c.course_id = b.course_id) sum_cost
+			FROM course a, course_order b
+			WHERE a.user_id=#{userId} AND a.course_id=b.course_id) x
+         <where>
+            <include refid="courseSearch"></include>
+         
+             <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
+                       
+         </where> )
+      WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+	</select>
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
 	<!-- 게시글 검색기능 -->
     <sql id = "postSearch">
