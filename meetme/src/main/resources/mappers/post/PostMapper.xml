@@ -82,7 +82,7 @@
       a.post_id=#{postId} </select> -->
 
    <!-- 커뮤니티 게시판 입력하기 -->
-   <!-- null과 null 사이에 나중에 userId넣어주기 -->
+   <!-- userId 뒤에 courseId 넣어주기-->
    <insert id="CMInsert">
       insert into post
       values(SEQ_POST.nextval,#{postTitle},#{postContent},sysdate,sysdate,#{userId},null,0,'c')
@@ -155,5 +155,7 @@
    <insert id="postLike">
       insert into post_like values(#{postId}, #{userId})
    </insert>
+   
+   
    
 </mapper>
