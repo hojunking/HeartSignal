@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headerFragment">
     <header>
-    <th:block th:if="${session.userSession != null}">
-    	<input type="hidden" id="sessionUserId" th:value="${session.userSession.userId}">
-    </th:block>
         <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
