@@ -48,4 +48,9 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 		return map.myLoverInfo(vo);
 	}
 
+	@Override
+	public int insertImage(CoupleInfoVO vo) { //이미지테이블에 이미지 등록
+		return map.insertImage(vo); //imgUrl만 필요합니다.
+	}
+
 }

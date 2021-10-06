@@ -16,6 +16,4 @@ public class ImageVO {
 	private long imgSize;
 	private Date imgDate;
 	private String usage;
-	
-
 }

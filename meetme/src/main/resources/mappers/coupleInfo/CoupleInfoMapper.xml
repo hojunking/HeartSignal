@@ -4,7 +4,7 @@
 <select id="coupleInfoSelect" resultType="CoupleInfoVO">
 	SELECT U.NAME,
            U.NICKNAME,
-           U.BIRTH_DATE,
+           U.BIRTH_DAY,
            I.IMG_URL AS USER_IMG,
            CO.COUPLE_DATE,
            CO.START_DATE,
@@ -30,7 +30,7 @@
 <select id="myLoverInfo" resultType="CoupleInfoVO">
 	SELECT U.NAME AS name,
 			U.NICKNAME AS nickName,
-			U.BIRTH_DATE AS birthDate,
+			U.BIRTH_DAY AS birthDay,
 			I.IMG_URL AS userImg
 	FROM USER_INFO U 
 	JOIN IMG I
@@ -65,8 +65,10 @@
 </insert>
 <update id="coupleCustomUpdate"> <!-- 커플정보 사용자 insert -->
 	UPDATE COUPLE_INFO SET COUPLE_DATE=#{coupleDate},
-							IMG_ID=#{imageId}
-	WHERE COUPLE_ID=#{coupleId}
+									IMG_ID=#{imgId}
+	WHERE IMG_ID =(SELECT IMG_ID
+                            FROM IMG
+                            WHERE IMG_URL=#{imgUrl})
 </update>
 <update id="couplePhotoDefault"> <!-- 대문이미지 초기화 -->
 	UPDATE COUPLE_INFO SET IMG_ID=default
@@ -87,4 +89,13 @@
 	FROM COUPLE_INFO
 	WHERE COUPLE_ID =#{coupleId}
 </select>
+<insert id="insertImage">
+<selectKey keyProperty="imgId" resultType="int" order="BEFORE">
+		SELECT SEQ_IMG.NEXTVAL FROM DUAL
+		</selectKey>
+INSERT INTO IMG VALUES(#{imgId},
+						#{imgUrl},
+						DEFAULT,
+						DEFAULT)
+</insert>
 </mapper>
