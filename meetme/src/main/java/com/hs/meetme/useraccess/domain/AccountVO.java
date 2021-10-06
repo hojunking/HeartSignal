@@ -23,13 +23,21 @@ public class AccountVO implements UserDetails{
 	private String phoneNum;
 	private Date created;
 	private Date updated;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birthDate;
-	private String address;
+	private String address1;
 	private String coupleStatus;
 	private String imgId;
 	
 	private String role;
+	private String address2;
+	private String address3;
+	private String birthYear;
+	private String birthDay;
+	
+	private String coupleId;
+	private String userRequest;
+	private String userReceived;
+	private String subTerm;
+	private String startDate;
 
 	@Override
 	public String getUsername() {

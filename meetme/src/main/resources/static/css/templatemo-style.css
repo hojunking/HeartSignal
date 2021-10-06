@@ -47,10 +47,13 @@ p:last-child { margin-bottom: 0; }
 .tm-bg-highlight { background: #c66995; }
 
 .btn-primary {
+	font-weight: bold;
     background: #69c6ba;
     border: none;
     border-radius: 6px;
     outline: none;
+    padding: 20px 30px;
+    letter-spacing: .05em;
 }
 
 .btn-danger {

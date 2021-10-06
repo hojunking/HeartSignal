@@ -26,9 +26,27 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<MainVO> courseList() {
+	public List<MainVO> courseList(String address) {
 		
-		return mainMapper.courseList();
+		return mainMapper.courseList(address);
+	}
+
+	@Override
+	public List<MainVO> addressList() {
+		// TODO Auto-generated method stub
+		return mainMapper.addressList();
+	}
+
+	@Override
+	public List<MainVO> addressSec(String address) {
+		
+		return mainMapper.addressSec(address);
+	}
+
+	@Override
+	public List<MainVO> regionCourse() {
+		// TODO Auto-generated method stub
+		return mainMapper.regionCourse();
 	}
 
 }

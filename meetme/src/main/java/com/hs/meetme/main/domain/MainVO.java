@@ -12,6 +12,8 @@ public class MainVO {
 	private String courseName;
 	private String avgCost;
 	private String address;
+	private String addressSec;
+	private String thumbnailHref;
 	
 }
 

@@ -2,30 +2,100 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.useraccess.mapper.AccountMapper">
 	<select id="findByEmail" parameterType="String" resultType="AccountVO">
-		SELECT 
-    		* 
-		FROM 
-			user_info 
-		WHERE 
+		SELECT
+		    a.*, 
+		    b.couple_id,
+		    b.user_request,
+		    b.user_received,
+		    b.sub_term,
+		    b.start_date
+		FROM
+		    user_info a
+		LEFT OUTER JOIN
+		    couple_info b
+		ON 
+		    a.user_id = b.user_request
+		OR
+		    a.user_id = b.user_received
+		WHERE
+		    a.email = #{email}
+	</select>
+	
+	<select id="emailCheck" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user_info
+		WHERE
 			email = #{email}
 	</select>
 	
 	<insert id="signUp">
-		insert into
+		INSERT INTO
 			user_info
-		values
+			(user_id,
+			 name,
+			 email,
+			 nickname,
+			 password,
+			 phone_num,
+			 address1,
+			 address2,
+			 address3,
+			 birth_year,
+			 birth_day,
+			 img_id,
+			 role)
+		VALUES
 			(seq_user_info.nextval,
 			 #{name},
 			 #{email},
 			 #{nickname},
 			 #{password},
 			 #{phoneNum},
-			 sysdate,
-			 sysdate,
-			 #{birthDate},
-			 null,
-			 default,
-			 null,
+			 #{address1},
+			 #{address2},
+			 #{address3},
+			 #{birthYear},
+			 #{birthDay},
+			 #{imgId},
 			 'USER')
 	</insert>
+	
+<!-- 	<insert id="signUpTag">
+		INSERT INTO
+			user_tags
+			(user_id,
+			 tag_id)
+		VALUES
+			(#{userId},
+			 #{tagId})
+	</insert>
+	
+	<insert id="signUpImage">
+		INSERT INTO
+			img
+			(img_id,
+			 img_url,
+			 img_usage
+			)
+		VALUES
+			(SEQ_IMG.nextval,
+			 #{imgUrl},
+			 'y'
+			)
+		<selectKey keyProperty="imgId" order="AFTER" resultType="int">
+			SELECT 
+				SEQ_IMG.currval 
+			FROM 
+				dual
+		</selectKey>
+	</insert>
+	
+	<select id="userTags" resultType="TagVO">
+		SELECT 
+			*
+		FROM
+			tags
+	</select> -->
 </mapper>

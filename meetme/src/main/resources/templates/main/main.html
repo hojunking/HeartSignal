@@ -58,6 +58,13 @@
 	border: 0px;
 	background-color: transparent;
 }
+
+.region {
+	color: white;
+	border: 0px;
+	background-color: transparent;
+}
+
 /* 카드 이미지 사이즈*/
 .cardImg {
 	margin: 30px 30px;
@@ -85,6 +92,13 @@
 
 .cource {
 	padding: 10px;
+}
+
+/* 이미지 크기 고정하기 */
+.customImg {
+	width: 270px;
+	height: 180px;
+	object-fit: cover;
 }
 </style>
 </th:block>
@@ -312,11 +326,18 @@
 			</section>
 		</div>
 		<div class="tm-container-outer swiper-container" id="tm-section-3"
-			style="background: #69c6ba; padding-top: 17px;">
-			<ul class="swiper-wrapper">
+			style="background: #69c6ba; padding-top: 17px; overflow: visible;">
+			<ul class="swiper-wrapper" style="padding-bottom: 15px;">
 				<li class="tm-tab-link-li tm-tab-link swiper-slide"
-					th:each="p:${place}"><a href="" class="tm-tab-link"> <span
-						th:text="${p.address}"></span></a></li>
+					th:each="p:${address}">
+					<!-- <a href="" class="tm-tab-link">  -->
+					<div class="dropdown">
+						<button th:text="${p.address}" class="region dropdown-toggle"
+							data-toggle="dropdown"></button>
+						<!-- </a> -->
+						<div class="dropdown-menu"></div>
+					</div>
+				</li>
 			</ul>
 
 			<div class="swiper-pagination"></div>
@@ -330,43 +351,93 @@
 
 
 		<!-- Tab 4 -->
+		<th:block th:if="${course} != null">
 		<div class="tab-pane fade show active">
-			<th:block th:each="c: ${#numbers.sequence(0, course.size-1)}">
-				<!-- Current Active Tab WITH "show active" classes in DIV tag -->
-				<div class="tm-recommended-place-wrap">
-					<div class="tm-recommended-place">
-						<img src="img/tm-img-06.jpg" alt="Image"
-							class="img-fluid tm-recommended-img">
-						<div class="tm-recommended-description-box">
-							<br>
-							<h3 class="tm-recommended-title"
-								th:text="${course[c].courseName}"></h3>
-							<!-- 코스 -->
-							<br>
-							<p class="tm-text-highlight" th:text="${course[c].region}"
-								style="font-size: 15px;"></p>
-							<p class="tm-text-gray"></p>
+			<!-- 카드1 -->
+			<div>
+				<th:block th:each="c: ${#numbers.sequence(0, 4)}">
+					<!-- (0,course.size-1) -->
+					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
+					<div class="tm-recommended-place-wrap">
+						<div class="tm-recommended-place">
+							<img th:src="${course[c].thumbnailHref}"
+								style="width: 270; height: 180;" alt="Image"
+								class="img-fluid tm-recommended-img customImg">
+							<div class="tm-recommended-description-box">
+								<br>
+								<h3 class="tm-recommended-title"
+									th:text="${course[c].courseName}"></h3>
+								<!-- 코스 -->
+								<br>
+								<p class="tm-text-highlight" th:text="${course[c].region}"
+									style="font-size: 15px;"></p>
+								<p class="tm-text-gray"></p>
+							</div>
+							<!-- <a href="#" class="tm-recommended-price-box"> -->
+							<div class="tm-recommended-price-box">
+								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+									비용</p>
+								<p class="tm-recommended-price"
+									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+							</div>
+							<!-- </a> -->
 						</div>
-						<!-- <a href="#" class="tm-recommended-price-box"> -->
-						<div class="tm-recommended-price-box">
-							<p class="tm-recommended-price-link" style="font-size: 15px;">평균
-								비용</p>
-							<p class="tm-recommended-price"
-								th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
-						</div>
-						<!-- </a> -->
-
 					</div>
-
-				</div>
-				<!-- 	<a href="#"
+			</div>
+			<!-- 카드1  -->
+			<!-- 	<a href="#"
 						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
 						More Places</a> -->
+			<!-- 카드2 -->
+			<div class="moreCourse">
+				<th:block th:each="c: ${#numbers.sequence(5,course.size-1)}">
+					<!-- (0,course.size-1) -->
+					<div class="tm-recommended-place-wrap">
+						<div class="tm-recommended-place">
+							<img th:src="${course[c].thumbnailHref}" alt="Image"
+								class="img-fluid tm-recommended-img customImg">
+							<div class="tm-recommended-description-box">
+								<br>
+								<h3 class="tm-recommended-title"
+									th:text="${course[c].courseName}"></h3>
+								<!-- 코스 -->
+								<br>
+								<p class="tm-text-highlight" th:text="${course[c].region}"
+									style="font-size: 15px;"></p>
+								<p class="tm-text-gray"></p>
+							</div>
+							<!-- <a href="#" class="tm-recommended-price-box"> -->
+							<div class="tm-recommended-price-box">
+								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+									비용</p>
+								<p class="tm-recommended-price"
+									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+							</div>
+							<!-- </a> -->
+						</div>
+					</div>
+			</div>
+			<!-- End of card2 -->
+
+
 		</div>
+
+		<!-- 더보기, 접기 버튼 -->
+		<div class="row">
+			<div class="col text-center">
+				<button type="button" id="regToggle" class="cardbtn2 cmt-20"
+					style="padding: 10px; border-radius: 5px;">더보기</button>
+			</div>
+		</div>
+		<!-- 더보기, 접기 버튼 -->
+		</th:block>
+
 		<!-- tab-pane -->
-		<br><br>
-		<div class="" style="text-align:center;">
-			<h4 class="text-uppercase mb-4"><strong style="color:#70D2B4;">호준공주</strong> 님의 핫플레이스</h4>
+		<br> <br>
+		<div class="" style="text-align: center;">
+			<h4 class="text-uppercase mb-4">
+				<strong style="color: #70D2B4;">호준공주</strong> 님의 핫플레이스
+			</h4>
 			<div class="row tm-banner-row" style="padding-top: 20px;"
 				id="tm-section-search">
 				<img src="img/tm-img-01.jpg" alt="Image">
@@ -381,7 +452,9 @@
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
+
 			var tag = " ";
+			let address;
 
 			$(".tagOn").on("click", function() {
 				var tagId = $(this).text();
@@ -419,9 +492,63 @@
 						slidesPerGroup : 1,
 					}
 				}
-			});
+			}); /* swiper 끝 */
+			
+			$(".region").on("click",function(){
+				address = $(this).text();
+				let regionBtn = $(this);
+				$.ajax({
+					url:"/search/" + address,
+					method:"get",
+					success:function(data){
+						let dropdownItem = $('<list />'); /* 임시 */
+						let list = '';
+						console.log(data)
+						for(row of data){
+							list = $("<a />")
+								.addClass("dropdown-item addressSec")
+								/* .css("z-index", "9999") */
+								.click(findAddrSec)
+								.text(row.addressSec);
+							console.log(list)
+							$(dropdownItem).append(list);
+						}
+						$(regionBtn).next().html(dropdownItem);
+						// <a class="dropdown-item adressSec" href="#"></a> 
+						console.log($(regionBtn).next());
+						console.log(data);
+					}
+					
+				}); /* region ajax */
+				
+			}); /* onclick */
+			
+			// 숨겨진 코스
+			let moreCourse = $(".moreCourse");
+			$(moreCourse).hide();
 
-		});
+			// 더보기 , 접기
+			$("#regToggle").click(function () {
+				$(moreCourse).slideToggle(500);
+				if ($(this).text() == '더보기') {
+					$(this).text('접기');
+				} else {
+					$(this).text('더보기');
+				}
+			});
+		});/* script function 끝! */
+		
+		function findAddrSec(){
+			address= $(this).closest(".dropdown-menu").prev().text();
+			let detailAddr = $(this).text();
+		    $.ajax({
+		    	url:"/search/" + address +"/" + detailAddr,
+		    	method:"get",
+		    	success:function(data){
+		    		console.log(data);
+		    	}
+		    })/* ajax */
+		};/* course */
 	</script>
 </th:block>
 </html>

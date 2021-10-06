@@ -2,15 +2,10 @@ package com.hs.meetme.mypage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
@@ -23,14 +18,15 @@ public class MypageRestController {
 	@Autowired MypageService mypageService;
 	@Autowired private PasswordEncoder encoder;
 	
-	//수정하기 (주소)
-	@PutMapping("/addressUpdate")
-	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
+	//현재 비밀번호 확인
+	@PostMapping("/passwordRead")
+	public boolean passwordRead(@RequestBody MyPageUserInfoVO vo) {
+		String currentPassword = vo.getPassword();
+		String dbPassword = mypageService.userSelectPassword(vo).getPassword();
 		
-		mypageService.updateAddress(myPageUserInfoVO);
-		
-		return myPageUserInfoVO;
+		return encoder.matches(currentPassword, dbPassword);
 	}
+	
 	//수정하기 (비밀번호)
 	@PutMapping("/passwordUpdate")
 	public boolean passwordUpdate(@RequestBody MyPageUserInfoVO vo) {
@@ -38,11 +34,38 @@ public class MypageRestController {
 		
 		// 암호화 된 비밀번호
 		String encodedPw = encoder.encode(newPassword);
-
+		
 		vo.setPassword(encodedPw);	
-	
+		
 		int r = mypageService.userUpdatePassword(vo);
 		
 		return r == 1 ? true : false;
+	}
+	
+	//닉네임 중복 확인
+	@PostMapping("/nickNameRead")
+	public boolean nickNameRead(@RequestBody MyPageUserInfoVO vo) {
+		if( mypageService.userSelectNickName(vo) == null) {
+		  	return true;
+		} else {
+			return false;
+		}
+	}
+	//수정하기 (닉네임)
+	@PutMapping("/nickNameUpdate")
+	public MyPageUserInfoVO nickNameUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
+		
+		mypageService.userUpdateNickName(myPageUserInfoVO);
+		
+		return myPageUserInfoVO;
+	}
+	
+	//수정하기 (주소)
+	@PutMapping("/addressUpdate")
+	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
+		
+		mypageService.updateAddress(myPageUserInfoVO);
+		
+		return myPageUserInfoVO;
 	}
 }

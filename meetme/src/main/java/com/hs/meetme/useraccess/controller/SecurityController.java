@@ -1,35 +1,149 @@
 package com.hs.meetme.useraccess.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hs.meetme.useraccess.domain.AccountVO;
 import com.hs.meetme.useraccess.service.AccountServiceImpl;
 
 @Controller
 public class SecurityController {
-	
+
 	@Autowired
 	AccountServiceImpl accountService;
-	
+
 	@GetMapping("/signUp")
 	public String signUp() {
 		return "security/signUp";
 	}
-	
+
 	@PostMapping("/signUp")
-	public String signUpPro(
-			@ModelAttribute("account") AccountVO vo) {
-		
+	public String signUpPro(@ModelAttribute("account") AccountVO vo) {
 		accountService.signUp(vo);
 		return "security/login";
 	}
-	
+
 	@GetMapping("/login")
 	public String login() {
 		return "security/login";
 	}
+	
+	@GetMapping("/naver/login")
+	public String naverLogin() {
+		return "security/naverLogin";
+	}
+	
+	@PostMapping("/naver/login")
+	@ResponseBody
+	public Object naverLogin(@RequestBody String token, AccountVO vo, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
+		String apiURL = "https://openapi.naver.com/v1/nid/me";
+
+		Map<String, String> requestHeaders = new HashMap<>();
+		requestHeaders.put("Authorization", header);
+		String responseBody = get(apiURL, requestHeaders);
+		
+		JSONParser parser = new JSONParser();
+		JSONObject obj = null;
+		try {
+			obj = (JSONObject) parser.parse(responseBody);
+			obj = (JSONObject) obj.get("response");
+			System.out.println(obj);
+			vo.setEmail((String) obj.get("email"));
+			vo.setPassword((String) obj.get("id"));
+			vo.setName((String) obj.get("name"));
+			vo.setNickname((String) obj.get("nickname"));
+			vo.setPhoneNum((String) obj.get("mobile"));
+			vo.setBirthYear((String) obj.get("birthyear"));
+			vo.setBirthDay((String) obj.get("birthday"));
+			
+			if(accountService.emailCheck(vo.getEmail()) == 0) {
+				accountService.signUp(vo);
+			}
+	
+			session.setAttribute("userSession", accountService.loadUserByUsername(vo.getEmail()));
+			
+			System.out.println(((AccountVO) session.getAttribute("userSession")).toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return obj.get("response");
+	}
+	
+
+	private static String get(String apiUrl, Map<String, String> requestHeaders) {
+		HttpURLConnection con = connect(apiUrl);
+		try {
+			con.setRequestMethod("GET");
+			for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
+				con.setRequestProperty(header.getKey(), header.getValue());
+			}
+
+			int responseCode = con.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
+				return readBody(con.getInputStream());
+			} else { // 에러 발생
+				return readBody(con.getErrorStream());
+			}
+		} catch (IOException e) {
+			throw new RuntimeException("API 요청과 응답 실패", e);
+		} finally {
+			con.disconnect();
+		}
+	}
+	
+
+	private static HttpURLConnection connect(String apiUrl) {
+		try {
+			URL url = new URL(apiUrl);
+			return (HttpURLConnection) url.openConnection();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+		} catch (IOException e) {
+			throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+		}
+	}
+	
+
+	private static String readBody(InputStream body) {
+		InputStreamReader streamReader = new InputStreamReader(body);
+
+		try (BufferedReader lineReader = new BufferedReader(streamReader)) {
+			StringBuilder responseBody = new StringBuilder();
+
+			String line;
+			while ((line = lineReader.readLine()) != null) {
+				responseBody.append(line);
+			}
+
+			return responseBody.toString();
+		} catch (IOException e) {
+			throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
+		}
+	}
+
 }

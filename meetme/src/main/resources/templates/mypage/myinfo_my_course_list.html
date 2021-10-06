@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="~{layout/layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+	<style>
+/* 태그 */
+.tcustom {
+	width: 50px;
+	height: 30px;
+	line-height: 28px;
+	background-color: #69c6ba;
+	border: 0px;
+}
+
+.placeTag {
+	padding: 8px;
+	border-radius: 5px;
+	width: 50px;
+	height: 30px;
+	line-height: 28px;
+	background-color: #69c6ba;
+	color: white;
+	font-size: x-small;
+	font-weight: bold;
+}
+
+.placeTag2 {
+	background-color: #FF8E99;
+}
+/* 입력 칸 */
+.insertcustom, .insertcustomOne {
+	border: 2px;
+	border-style: solid;
+	border-color: #69c6ba;
+}
+
+.select {
+	margin-left: 100px;
+}
+/* 검색 버튼 */
+.tagButton {
+	width: 50px;
+	height: 33.5px;
+	font-size: small;
+	border-radius: 0px;
+}
+/* 자세히 보기 버튼  */
+.cusButton {
+	border-radius: 5px;
+	font-size: x-small;
+}
+
+/* 코스 카드  */
+.customCard {
+	border: 0px;
+	background-color: transparent;
+}
+
+.region {
+	color: white;
+	border: 0px;
+	background-color: transparent;
+}
+
+/* 카드 이미지 사이즈*/
+.cardImg {
+	margin: 30px 30px;
+	width: 80px;
+	height: 80px;
+}
+
+.cardbtn, .cardbtn2 {
+	text-align: center;
+	font-size: 12px;
+	border: 0px;
+	margin-right: auto;
+}
+
+.cardbtn2:hover, .cardbtn2:focus, .cardbtn2:active {
+	background: #69c6ba;
+	color: white;
+}
+
+.selectCard {
+	background-color: rgba(255, 255, 255, 0.7);
+	color: grey;
+	border-radius: 10px;
+}
+
+.cource {
+	padding: 10px;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="tm-page-wrap mx-auto">
+		
+		<div class="tm-container-outer swiper-container" id="tm-section-3"
+			style="background: #69c6ba; padding-top: 17px; overflow: visible;">
+			<ul class="swiper-wrapper" style="padding-bottom: 15px;">
+				<li class="tm-tab-link-li tm-tab-link swiper-slide"
+					th:each="p:${address}">
+					<!-- <a href="" class="tm-tab-link">  -->
+					<div class="dropdown">
+						<button th:text="${p.address}" class="region dropdown-toggle"
+							data-toggle="dropdown"></button>
+						<!-- </a> -->
+						<div class="dropdown-menu"></div>
+					</div>
+				</li>
+			</ul>
+
+			<div class="swiper-pagination"></div>
+			<!-- navigation buttons -->
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+
+
+		</div>
+		<!-- END OF tm-container-outer  -->
+
+
+		<!-- Tab 4 -->
+		<div class="tab-pane fade show active">
+			<!-- 카드1 -->
+			<div>
+				<th:block th:each="c: ${#numbers.sequence(0, 4)}">
+					<!-- (0,course.size-1) -->
+					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
+					<div class="tm-recommended-place-wrap">
+						<div class="tm-recommended-place">
+							<img src="img/tm-img-06.jpg" alt="Image"
+								class="img-fluid tm-recommended-img">
+							<div class="tm-recommended-description-box">
+								<br>
+								<h3 class="tm-recommended-title"
+									th:text="${course[c].courseName}"></h3>
+								<!-- 코스 -->
+								<br>
+								<p class="tm-text-highlight" th:text="${course[c].region}"
+									style="font-size: 15px;"></p>
+								<p class="tm-text-gray"></p>
+							</div>
+							<!-- <a href="#" class="tm-recommended-price-box"> -->
+							<div class="tm-recommended-price-box">
+								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+									비용</p>
+								<p class="tm-recommended-price"
+									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+							</div>
+							<!-- </a> -->
+						</div>
+					</div>
+			</div>
+			<!-- 카드1  -->
+			<!-- 	<a href="#"
+						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
+						More Places</a> -->
+			<!-- 카드2 -->
+			<div class="moreCourse">
+				<th:block th:each="c: ${#numbers.sequence(5,course.size-1)}">
+					<!-- (0,course.size-1) -->
+					<div class="tm-recommended-place-wrap">
+						<div class="tm-recommended-place">
+							<img src="img/tm-img-06.jpg" alt="Image"
+								class="img-fluid tm-recommended-img">
+							<div class="tm-recommended-description-box">
+								<br>
+								<h3 class="tm-recommended-title"
+									th:text="${course[c].courseName}"></h3>
+								<!-- 코스 -->
+								<br>
+								<p class="tm-text-highlight" th:text="${course[c].region}"
+									style="font-size: 15px;"></p>
+								<p class="tm-text-gray"></p>
+							</div>
+							<!-- <a href="#" class="tm-recommended-price-box"> -->
+							<div class="tm-recommended-price-box">
+								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
+									비용</p>
+								<p class="tm-recommended-price"
+									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+							</div>
+							<!-- </a> -->
+						</div>
+					</div>
+			</div>
+			<!-- End of card2 -->
+
+
+		</div>
+
+		<!-- 더보기, 접기 버튼 -->
+		<div class="row">
+			<div class="col text-center">
+				<button type="button" id="regToggle" class="cardbtn2 cmt-20" style="padding:10px;">더보기</button>
+			</div>
+		</div>
+		<!-- 더보기, 접기 버튼 -->
+		
+	</div>
+</th:block>
+<!-- .main-content -->
+
+<th:block layout:fragment="script">
+	<script>
+		$(function() {
+			var tag = " ";
+
+			$(".tagOn").on("click", function() {
+				var tagId = $(this).text();
+				console.log(tagId);
+				tag += tagId + " ";
+				$(".insertcustomOne").attr("value", tag);
+			});/* tcustom click 이벤트 */
+
+			// Slick Carousel 카드 옆 이미지 변환
+			$('.tm-slideshow').slick({
+				infinite : true,
+				arrows : true,
+				slidesToShow : 1,
+				slidesToScroll : 1
+			});
+
+			// 지역 swiper 버튼
+			var mySwiper = new Swiper('.swiper-container', {
+				slidesPerView : 7,
+				slidesPerGroup : 7,
+				observer : true,
+				observeParents : true,
+				spaceBetween : 24,
+				navigation : {
+					nextEl : '.swiper-button-next',
+					prevEl : '.swiper-button-prev',
+				},
+				breakpoints : {
+					1280 : {
+						slidesPerView : 3,
+						slidesPerGroup : 3,
+					},
+					720 : {
+						slidesPerView : 1,
+						slidesPerGroup : 1,
+					}
+				}
+			}); /* swiper 끝 */
+			
+			$(".region").on("click",function(){
+				let address = $(this).text();
+				let regionBtn = $(this);
+				$.ajax({
+					url:"/" + address,
+					method:"get",
+					success:function(data){
+						let dropdownItem = $('<list />'); /* 임시 */
+						let list = '';
+						console.log(data)
+						for(row of data){
+							list = $("<a />")
+								.addClass("dropdown-item addressSec")
+								/* .css("z-index", "9999") */
+								.text(row.addressSec);
+							console.log(list)
+							$(dropdownItem).append(list);
+						}
+						$(regionBtn).next().html(dropdownItem);
+						// <a class="dropdown-item adressSec" href="#"></a> 
+						console.log($(regionBtn).next());
+						console.log(data);
+					}
+					
+				}); /* region ajax */
+				
+			}); /* onclick */
+			
+			// 숨겨진 카테고리들
+			let moreCourse = $(".moreCourse");
+			$(moreCourse).hide();
+
+			// 지역 더보기, 접기
+			$("#regToggle").click(function () {
+				$(moreCourse).slideToggle(500);
+				if ($(this).text() == '더보기') {
+					$(this).text('접기');
+				} else {
+					$(this).text('더보기');
+				}
+			});
+
+		});/* script function 끝! */
+	</script>
+</th:block>
+</html>

@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hs.meetme.coursecreate.domain.PlaceVO;
-import com.hs.meetme.coursecreate.domain.TagVO;
+import com.hs.meetme.coursecreate.domain.TagVO2;
 
 @Mapper
 public interface PlaceMapper {
@@ -14,9 +14,9 @@ public interface PlaceMapper {
 	
 	PlaceVO getPlace(String placeName);
 	
-	List<TagVO> getTagList();
+	List<TagVO2> getTagList();
 	
-	List<TagVO> getTagsSelected(int placeId); // 정한 장소의 태그들
+	List<TagVO2> getTagsSelected(int placeId); // 정한 장소의 태그들
 	
 	List<PlaceVO> getListBySearched(String[] keywords); // 검색 결과
 	
