@@ -14,5 +14,8 @@ public interface CoupleInfoMapper {
 	public CoupleInfoVO read(CoupleInfoVO vo); //커플정보상세보기
 	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo); //내여친정보
 	public int insertImage(CoupleInfoVO vo); //사진테이블에 사진등록
+	public int userCoupleStatusUpdate(CoupleInfoVO vo); //커플상태 업데이트
 	
+	public CoupleInfoVO userCoupleStatusRead(CoupleInfoVO vo); //유저 커플상태확인
+	public int deleteCoupleInfo(CoupleInfoVO vo); //커플정보 삭제
 }

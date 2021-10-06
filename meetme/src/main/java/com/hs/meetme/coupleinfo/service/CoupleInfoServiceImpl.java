@@ -49,8 +49,18 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 	}
 
 	@Override
-	public int insertImage(CoupleInfoVO vo) { //이미지테이블에 이미지 등록
-		return map.insertImage(vo); //imgUrl만 필요합니다.
+	public int userCoupleStatusUpdate(CoupleInfoVO vo) {
+		return map.userCoupleStatusUpdate(vo);
+	}
+
+	@Override
+	public CoupleInfoVO userCoupleStatusRead(CoupleInfoVO vo) {
+		return map.userCoupleStatusRead(vo);
+	}
+
+	@Override
+	public int deleteCoupleInfo(CoupleInfoVO vo) {
+		return map.deleteCoupleInfo(vo);
 	}
 
 }

@@ -14,17 +14,45 @@
 				#{subTerm},
 				#{merchantUid})
 	</insert>
-<select id="readPayInfo" resultType="PaymentVO">
+	<!-- 결제정보 등록 -->
+<select id="latestpaid" resultType="PaymentVO">
 	SELECT 	ROWNUM,
 			PAY_DATE,
 			PAY_COST,
 			SUB_TERM,
-			MERCHANT_UID
+			MERCHANT_UID,
+			USER_ID
 	FROM PAYMENT
 	WHERE USER_ID=#{userId}
 	AND ROWNUM =1
 	ORDER BY PAY_DATE DESC
-	
+	<!-- 가장 최근 결제정보 -->
+</select>
+<insert id="insertRefundInfo">
+	INSERT INTO REFUND (USER_NAME,
+                        USER_ID,
+                        EMAIL,
+                        CANCEL_DATE,
+                        CANCEL_AMOUNT,
+                        MERCHANT_UID)
+	VALUES(#{userName},
+			#{userId},
+			#{email},
+			SYSDATE,
+			#{cancelAmount},
+			#{merchantUid})
+</insert>
+<select id="readPayment" resultType="PaymentVO"> 
+	SELECT *
+	FROM PAYMENT
+	WHERE USER_ID =#{userId}
+<!-- 결제정보 전체 조회 -->
 </select>
 
+<select id="readRefund" resultType="PaymentVO">
+	SELECT *
+	FROM REFUND
+	WHERE USER_ID =#{userId}
+	<!-- 환불정보 전체 조회 -->
+</select>
 </mapper>
