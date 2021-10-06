@@ -96,32 +96,40 @@
 </th:block>
 
 <th:block layout:fragment="content">
+	
 	<div class="tm-page-wrap mx-auto">
-		
-		<div class="tm-container-outer swiper-container" id="tm-section-3"
-			style="background: #69c6ba; padding-top: 17px; overflow: visible;">
-			<ul class="swiper-wrapper" style="padding-bottom: 15px;">
-				<li class="tm-tab-link-li tm-tab-link swiper-slide"
-					th:each="p:${address}">
-					<!-- <a href="" class="tm-tab-link">  -->
-					<div class="dropdown">
-						<button th:text="${p.address}" class="region dropdown-toggle"
-							data-toggle="dropdown"></button>
-						<!-- </a> -->
-						<div class="dropdown-menu"></div>
-					</div>
-				</li>
-			</ul>
+	  
+	<form id ="actionForm" action="" method="get">
+	  <select name = "type">
+	    <option value=""  th:selected="${#strings.isEmpty(pageMaker.cri.type)}">선택</option>
+	    <option value="T" th:selected="${#strings.equals(pageMaker.cri.type, 'T')}">제목</option>
+	    <option value="C" th:selected="${#strings.equals(pageMaker.cri.type, 'C')}">내용</option>
+	    <option value="TC" th:selected="${#strings.equals(pageMaker.cri.type,'TC')}">제목 또는 내용</option>	  
+	  </select>
+	  <input name="keyword" th:value="${pageMaker.cri.keyword}">
+	  <button class="btn btn-default" onclick="$('[name=pageNum]').val(1)">검색</button>
+	  <input type="hidden" name="pageNum" th:value="${pageMaker.cri.pageNum}">
+	  <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+	</form>
 
-			<div class="swiper-pagination"></div>
-			<!-- navigation buttons -->
-			<div class="swiper-button-prev"></div>
-			<div class="swiper-button-next"></div>
-
-
-		</div>
-		<!-- END OF tm-container-outer  -->
-
+	<div class ="pull-right">
+	  <ul class ="pagination">  
+	    <li th:if="${pageMaker.prev }" class="paginate_button previous">
+	    	<a th:href="${pageMaker.startPage-1}" th:text="'이전'"></a>
+	    </li>
+	    
+	    <th:block th:each="num: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" >
+	      <li class="paginate_button">
+	      <a th:href="${num}" th:text="${num}"></a>
+	      </li>
+	    </th:block>
+	    
+	    <li th:if="${pageMaker.next }" class="paginate_button previous">
+	    	<a th:href="${pageMaker.endPage+1}" th:text="'다음'"></a>
+	    </li>
+	  </ul>
+	</div>
+	  	
 
 		<!-- Tab 4 -->
 		<div class="tab-pane fade show active">
@@ -137,10 +145,10 @@
 							<div class="tm-recommended-description-box">
 								<br>
 								<h3 class="tm-recommended-title"
-									th:text="${course[c].courseName}"></h3>
+									th:text="${list[c].courseName}"></h3>
 								<!-- 코스 -->
 								<br>
-								<p class="tm-text-highlight" th:text="${course[c].region}"
+								<p class="tm-text-highlight" th:text="${list[c].region}"
 									style="font-size: 15px;"></p>
 								<p class="tm-text-gray"></p>
 							</div>
@@ -149,7 +157,7 @@
 								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
 									비용</p>
 								<p class="tm-recommended-price"
-									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+									th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
 							</div>
 							<!-- </a> -->
 						</div>
@@ -161,7 +169,7 @@
 						More Places</a> -->
 			<!-- 카드2 -->
 			<div class="moreCourse">
-				<th:block th:each="c: ${#numbers.sequence(5,course.size-1)}">
+				<th:block th:each="c: ${#numbers.sequence(5,list.size-1)}">
 					<!-- (0,course.size-1) -->
 					<div class="tm-recommended-place-wrap">
 						<div class="tm-recommended-place">
@@ -170,10 +178,10 @@
 							<div class="tm-recommended-description-box">
 								<br>
 								<h3 class="tm-recommended-title"
-									th:text="${course[c].courseName}"></h3>
+									th:text="${list[c].courseName}"></h3>
 								<!-- 코스 -->
 								<br>
-								<p class="tm-text-highlight" th:text="${course[c].region}"
+								<p class="tm-text-highlight" th:text="${list[c].region}"
 									style="font-size: 15px;"></p>
 								<p class="tm-text-gray"></p>
 							</div>
@@ -182,7 +190,7 @@
 								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
 									비용</p>
 								<p class="tm-recommended-price"
-									th:text="'₩ '+${course[c].avgCost}" style="font-size: 20px;"></p>
+									th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
 							</div>
 							<!-- </a> -->
 						</div>
@@ -208,88 +216,26 @@
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-			var tag = " ";
-
-			$(".tagOn").on("click", function() {
-				var tagId = $(this).text();
-				console.log(tagId);
-				tag += tagId + " ";
-				$(".insertcustomOne").attr("value", tag);
-			});/* tcustom click 이벤트 */
-
-			// Slick Carousel 카드 옆 이미지 변환
-			$('.tm-slideshow').slick({
-				infinite : true,
-				arrows : true,
-				slidesToShow : 1,
-				slidesToScroll : 1
-			});
-
-			// 지역 swiper 버튼
-			var mySwiper = new Swiper('.swiper-container', {
-				slidesPerView : 7,
-				slidesPerGroup : 7,
-				observer : true,
-				observeParents : true,
-				spaceBetween : 24,
-				navigation : {
-					nextEl : '.swiper-button-next',
-					prevEl : '.swiper-button-prev',
-				},
-				breakpoints : {
-					1280 : {
-						slidesPerView : 3,
-						slidesPerGroup : 3,
-					},
-					720 : {
-						slidesPerView : 1,
-						slidesPerGroup : 1,
-					}
-				}
-			}); /* swiper 끝 */
+		
+		      var actionForm = $("#actionForm")
+		      
+			  //상세보기
+		/*      $(".move").on("click", function(e){
+		        e.preventDefault();
+		        var bno= $(this).attr("href")
+		        actionForm.append('<input type="hidden" name="bno" value="'+bno+'">')
+		        actionForm.attr("action","get")
+		        actionForm.submit();
+		      }) */
+		      
+		      //페이징 클릭
+		      $(".pull-right a").on("click", function(e){
+		        e.preventDefault(); //a,submit 기본기능 막기
+		    	var p = $(this).attr("href");
+		    	$('[name="pageNum"]').val(p);
+		    	actionForm.submit();
+		      });	
 			
-			$(".region").on("click",function(){
-				let address = $(this).text();
-				let regionBtn = $(this);
-				$.ajax({
-					url:"/" + address,
-					method:"get",
-					success:function(data){
-						let dropdownItem = $('<list />'); /* 임시 */
-						let list = '';
-						console.log(data)
-						for(row of data){
-							list = $("<a />")
-								.addClass("dropdown-item addressSec")
-								/* .css("z-index", "9999") */
-								.text(row.addressSec);
-							console.log(list)
-							$(dropdownItem).append(list);
-						}
-						$(regionBtn).next().html(dropdownItem);
-						// <a class="dropdown-item adressSec" href="#"></a> 
-						console.log($(regionBtn).next());
-						console.log(data);
-					}
-					
-				}); /* region ajax */
-				
-			}); /* onclick */
-			
-			// 숨겨진 카테고리들
-			let moreCourse = $(".moreCourse");
-			$(moreCourse).hide();
-
-			// 지역 더보기, 접기
-			$("#regToggle").click(function () {
-				$(moreCourse).slideToggle(500);
-				if ($(this).text() == '더보기') {
-					$(this).text('접기');
-				} else {
-					$(this).text('더보기');
-				}
-			});
-
 		});/* script function 끝! */
 	</script>
 </th:block>

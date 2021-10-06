@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.Criteria2;
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.mapper.MypageMapper;
@@ -15,6 +17,8 @@ import com.hs.meetme.mypage.mapper.MypageMapper;
 public class MypageServiceImpl implements MypageService {
     
 	@Autowired MypageMapper mypageMapper;
+	
+	
 	
 	//마이페이지 나의 게시글 관련
 	@Override
@@ -28,7 +32,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int getTotalCount(Criteria cri, long userId) {
+	public int getTotalPostCount(Criteria cri, long userId) {
 		return mypageMapper.getTotalPostCount(cri, userId);
 	}
 
@@ -78,4 +82,16 @@ public class MypageServiceImpl implements MypageService {
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO) {
 		return mypageMapper.userUpdateNickName(myPageUserInfoVO);
 	}
+	
+	//마이페이지 나의 코스 관련
+	@Override
+	public List<MyPageCourseVO> getCourseList(Criteria2 cri, long userId) {
+		return mypageMapper.getCourseList(cri, userId);
+	}
+
+	@Override
+	public int getTotalCourseCount(Criteria2 cri, long userId) {
+		return mypageMapper.getTotalCourseCount(cri, userId);
+	}
+    
 }
