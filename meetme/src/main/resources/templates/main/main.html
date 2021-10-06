@@ -497,7 +497,7 @@
 				address = $(this).text();
 				let regionBtn = $(this);
 				$.ajax({
-					url:"/" + address,
+					url:"/search/" + address,
 					method:"get",
 					success:function(data){
 						let dropdownItem = $('<list />'); /* 임시 */
@@ -541,7 +541,7 @@
 			address= $(this).closest(".dropdown-menu").prev().text();
 			let detailAddr = $(this).text();
 		    $.ajax({
-		    	url:"/" + address +"/" + detailAddr,
+		    	url:"/search/" + address +"/" + detailAddr,
 		    	method:"get",
 		    	success:function(data){
 		    		console.log(data);
