@@ -48,6 +48,7 @@ import lombok.extern.java.Log;
 @RequestMapping("/post")
 @Log
 public class PostController {
+
    @Autowired PostService pService;
    
    File fileDir = new File("c:/Temp/");

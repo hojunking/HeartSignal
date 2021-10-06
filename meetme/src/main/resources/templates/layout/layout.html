@@ -36,15 +36,26 @@
     <script th:src="@{/slick/slick.min.js}"></script> <!-- http://kenwheeler.github.io/slick/ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
     <!-- <script type="text/javascript" src ="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
-    <script th:inline="javascript"> 
+    <script th:inline="javascript">
         let userSession;
-        
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajaxSetup({
+
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader(header, token);           
+            }
+
+        });
+
         $(function () {
             /*<![CDATA[*/
-                userSession = /*[[${session.userSession}]]*/'';
-            	console.log(userSession);
+            userSession = /*[[${session.userSession}]]*/ '';
+            console.log(userSession);
             /*]]>*/
-            
+
             $(window).on("scroll", function () {
                 if ($(window).scrollTop() > 100) {
                     $(".tm-top-bar").addClass("active");
