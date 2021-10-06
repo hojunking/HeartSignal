@@ -210,7 +210,7 @@ public class PostController {
 					
 				}
 		
-	@RequestMapping(value="/ckImgSubmit") 
+	@RequestMapping(value="/ckImgSubmit", method=RequestMethod.GET) 
 	public void ckSubmit(@RequestParam(value="uid") String uid , @RequestParam(value="fileName") String fileName , HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{ 
 		//서버에 저장된 이미지 경로 
