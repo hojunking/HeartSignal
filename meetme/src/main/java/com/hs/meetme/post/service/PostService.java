@@ -2,8 +2,12 @@ package com.hs.meetme.post.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.Criteria2;
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 
 public interface PostService {
@@ -29,5 +33,10 @@ public interface PostService {
    
    public int commentDelete(long commentId); // 댓글 삭제
    public int commentUpdate(CommentVO vo);//댓글 수정
-
+   
+   public List<MyPageCourseVO> getCourseList(MyPageCourseVO vo);// 내 코스 조회
+	/*
+	 * public int getTotalCourseCount(@Param("cri") Criteria2 cri, @Param("userId")
+	 * long userId); //내 코스 페이징 위한 갯수
+	 */
 }
