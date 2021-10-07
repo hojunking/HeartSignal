@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.post.service.PostService;
@@ -168,6 +169,20 @@ public class PostController {
       return pService.postLike(postId, userId);
       /*return "redirect:/post/get_community/{postId}";*/
    }
+   
+   
+   //내 코스 모달에 불러오기
+   @ResponseBody
+   @GetMapping("/getMyCourse")
+   public List<MyPageCourseVO> getMyCourse(@ModelAttribute MyPageCourseVO vo) {
+	   
+		/* model.addAttribute("course", pService.getCourseList(vo)); */
+	   List<MyPageCourseVO> list = pService.getCourseList(vo);
+	   System.out.println(vo);
+	   return list;
+   }
+   
+   
    
    @RequestMapping(value="/ckeditor/fileUpload", method = RequestMethod.POST) 
    public void imageUpload(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile , @RequestParam MultipartFile upload)
