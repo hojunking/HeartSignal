@@ -15,4 +15,5 @@ public class CoupleLogVO {
 	private int coupleId; //커플 id 가져와야하남?
 	private int logLoc; //데이트 한 장소
 	private Date logDate; //데이트 한 날짜
+	private String imgUrl;
 }
