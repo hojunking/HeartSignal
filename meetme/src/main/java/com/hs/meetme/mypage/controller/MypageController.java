@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
-import com.hs.meetme.mypage.domain.PageVO2;
 import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
@@ -27,17 +25,18 @@ public class MypageController {
 	// 나의 코스 리스트 보기
 	@GetMapping("/myinfo_my_course_list")
 	public String myinfo_my_course_list(Model model,
-                                        @ModelAttribute("cri") Criteria2 cri,
+                                        @ModelAttribute("cri") Criteria cri,
                                         HttpServletRequest request) {
 		//세션 쓰는법
 				HttpSession session = request.getSession();
 				AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 				long userId = Long.parseLong(accountVO.getUserId());
 				
+				cri.setUserId(userId);
+
 				int total = mypageService.getTotalCourseCount(cri, userId);
-				
 				model.addAttribute("list", mypageService.getCourseList(cri, userId));
-				model.addAttribute("pageMaker", new PageVO2(cri, total));
+				model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "mypage/myinfo_my_course_list";
 	}

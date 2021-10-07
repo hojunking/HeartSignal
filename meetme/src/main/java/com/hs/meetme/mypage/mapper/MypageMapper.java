@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
@@ -16,9 +15,9 @@ import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 public interface MypageMapper {
     
 	//내 코스 조회
-	public List<MyPageCourseVO> getCourseList(@Param("cri") Criteria2 cri, @Param("userId") long userId);
+	public List<MyPageCourseVO> getCourseList(@Param("cri") Criteria cri, @Param("userId") long userId);
 	//내 코스 페이징 위한 갯수
-	public int getTotalCourseCount(@Param("cri") Criteria2 cri, @Param("userId") long userId);
+	public int getTotalCourseCount(@Param("cri") Criteria cri, @Param("userId") long userId);
 	
 	//내 게시글 전체 갯수
 	public int getPostCount(@Param("userId") long userId);

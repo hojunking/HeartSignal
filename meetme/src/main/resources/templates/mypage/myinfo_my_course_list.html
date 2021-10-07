@@ -96,11 +96,22 @@
 </th:block>
 
 <th:block layout:fragment="content">
-	
-	<div class="tm-page-wrap mx-auto">
+			<div class="tm-page-wrap mx-auto">
+			<section class="p-5 tm-container-outer tm-bg-white">
+				<div class="container">
+					<div class="row">
+	  
+
+	  
+	  
 	  
 	<form id ="actionForm" action="" method="get">
-	  <select name = "type">
+	  <select name="category" class="custom-select">
+	    <option value="A" th:selected="${#strings.equals(pageMaker.cri.category,'A')}">전체보기</option>
+	    <option value="B" th:selected="${#strings.equals(pageMaker.cri.category,'B')}">내가만든</option>
+	    <option value="C" th:selected="${#strings.equals(pageMaker.cri.category,'C')}">넘이만든</option>
+	  </select>
+	  <select name = "type" class="custom-select">
 	    <option value=""  th:selected="${#strings.isEmpty(pageMaker.cri.type)}">선택</option>
 	    <option value="T" th:selected="${#strings.equals(pageMaker.cri.type, 'T')}">제목</option>
 	    <option value="C" th:selected="${#strings.equals(pageMaker.cri.type, 'C')}">내용</option>
@@ -114,18 +125,18 @@
 
 	<div class ="pull-right">
 	  <ul class ="pagination">  
-	    <li th:if="${pageMaker.prev }" class="paginate_button previous">
-	    	<a th:href="${pageMaker.startPage-1}" th:text="'이전'"></a>
+	    <li th:if="${pageMaker.prev }" class="page-item">
+	    	<a class="page-link" th:href="${pageMaker.startPage-1}" th:text="'이전'"></a>
 	    </li>
 	    
 	    <th:block th:each="num: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" >
-	      <li class="paginate_button">
-	      <a th:href="${num}" th:text="${num}"></a>
+	      <li class="page-item">
+	      <a class="page-link" th:href="${num}" th:text="${num}"></a>
 	      </li>
 	    </th:block>
 	    
-	    <li th:if="${pageMaker.next }" class="paginate_button previous">
-	    	<a th:href="${pageMaker.endPage+1}" th:text="'다음'"></a>
+	    <li th:if="${pageMaker.next }" class="page-item">
+	    	<a class="page-link" th:href="${pageMaker.endPage+1}" th:text="'다음'"></a>
 	    </li>
 	  </ul>
 	</div>
@@ -135,7 +146,7 @@
 		<div class="tab-pane fade show active">
 			<!-- 카드1 -->
 			<div>
-				<th:block th:each="c: ${#numbers.sequence(0, 4)}">
+				<th:block th:each="c: ${#numbers.sequence(0,list.size-1)}">
 					<!-- (0,course.size-1) -->
 					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
 					<div class="tm-recommended-place-wrap">
@@ -146,6 +157,9 @@
 								<br>
 								<h3 class="tm-recommended-title"
 									th:text="${list[c].courseName}"></h3>
+									
+									<span th:if="${list[c].userId==session.userSession.userId }" class="badge rounded-pill bg-info text-warning">나의코스</span>
+									<span th:if="${list[c].userId!=session.userSession.userId }" class="badge rounded-pill bg-info text-danger">스크랩</span>
 								<!-- 코스 -->
 								<br>
 								<p class="tm-text-highlight" th:text="${list[c].region}"
@@ -154,69 +168,52 @@
 							</div>
 							<!-- <a href="#" class="tm-recommended-price-box"> -->
 							<div class="tm-recommended-price-box">
-								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
-									비용</p>
-								<p class="tm-recommended-price"
-									th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
+								<p class="tm-recommended-price-link" style="font-size: 15px;">평균비용</p>
+								<p class="tm-recommended-price" th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
 							</div>
 							<!-- </a> -->
 						</div>
 					</div>
 			</div>
-			<!-- 카드1  -->
-			<!-- 	<a href="#"
-						class="text-uppercase btn-primary tm-btn mx-auto tm-d-table">Show
-						More Places</a> -->
-			<!-- 카드2 -->
-			<div class="moreCourse">
-				<th:block th:each="c: ${#numbers.sequence(5,list.size-1)}">
-					<!-- (0,course.size-1) -->
-					<div class="tm-recommended-place-wrap">
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-06.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<br>
-								<h3 class="tm-recommended-title"
-									th:text="${list[c].courseName}"></h3>
-								<!-- 코스 -->
-								<br>
-								<p class="tm-text-highlight" th:text="${list[c].region}"
-									style="font-size: 15px;"></p>
-								<p class="tm-text-gray"></p>
-							</div>
-							<!-- <a href="#" class="tm-recommended-price-box"> -->
-							<div class="tm-recommended-price-box">
-								<p class="tm-recommended-price-link" style="font-size: 15px;">평균
-									비용</p>
-								<p class="tm-recommended-price"
-									th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
-							</div>
-							<!-- </a> -->
-						</div>
+
+		</div>
+
 					</div>
-			</div>
-			<!-- End of card2 -->
-
-
+				</div>
+			</section>
 		</div>
-
-		<!-- 더보기, 접기 버튼 -->
-		<div class="row">
-			<div class="col text-center">
-				<button type="button" id="regToggle" class="cardbtn2 cmt-20" style="padding:10px;">더보기</button>
-			</div>
-		</div>
-		<!-- 더보기, 접기 버튼 -->
 		
-	</div>
+
 </th:block>
 <!-- .main-content -->
 
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-		
+			//세션 아이디 쓰기
+			let userId = userSession == null ? "" : userSession.userId;
+			
+    		$.ajax({
+    			url: "",
+    			method : "post",
+    			data : JSON.stringify({ userId: userId,
+    			                     }),
+    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+    			dataType : "json",
+    			contentType : "application/json;charset=UTF-8",
+    			success: function(data){
+    				
+    				$("#nickName").val(data.nickName);
+    				$("#nick1").val("");
+    				alert("닉네임 수정완료");
+    		    	$("#u_nickName").css("display","none");
+    		    	$("#nickNameUpdateBtn").css("display","block");
+    				
+    			},
+    			error : function(){
+    				
+    			}
+    		})
 		      var actionForm = $("#actionForm")
 		      
 			  //상세보기
@@ -234,8 +231,14 @@
 		    	var p = $(this).attr("href");
 		    	$('[name="pageNum"]').val(p);
 		    	actionForm.submit();
-		      });	
-			
+		      });
+		      
+		      //분류 검색
+		      $("select[name=category]").on("change", function(){
+			    actionForm.submit(); 
+		      });
+
+		     
 		});/* script function 끝! */
 	</script>
 </th:block>

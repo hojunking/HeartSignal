@@ -9,6 +9,8 @@ public class Criteria {
   
   private String type;
   private String keyword;
+  private String category;
+  private long userId;
   
   public Criteria( ){
 	  this(1, 10);

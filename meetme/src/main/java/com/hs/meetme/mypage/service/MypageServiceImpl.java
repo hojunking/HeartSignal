@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
@@ -85,12 +84,12 @@ public class MypageServiceImpl implements MypageService {
 	
 	//마이페이지 나의 코스 관련
 	@Override
-	public List<MyPageCourseVO> getCourseList(Criteria2 cri, long userId) {
+	public List<MyPageCourseVO> getCourseList(Criteria cri, long userId) {
 		return mypageMapper.getCourseList(cri, userId);
 	}
 
 	@Override
-	public int getTotalCourseCount(Criteria2 cri, long userId) {
+	public int getTotalCourseCount(Criteria cri, long userId) {
 		return mypageMapper.getTotalCourseCount(cri, userId);
 	}
     
