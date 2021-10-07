@@ -36,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/member").hasAuthority("USER")
-                .antMatchers("/admin").hasAuthority("ADMIN")
+//        		.antMatchers("/createCourse").authenticated()
                 .antMatchers("/**").permitAll()
                 ;
 
@@ -55,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        재호가 함
         http.csrf()
         	.ignoringAntMatchers("/post/ckeditor/fileUpload")
+        	.ignoringAntMatchers("/vue/**")
+        	.ignoringAntMatchers("/api/course/register")
 //        http.csrf().disable()
         ;
     }

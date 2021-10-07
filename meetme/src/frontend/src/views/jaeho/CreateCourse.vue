@@ -614,6 +614,7 @@ export default defineComponent ({
             formData.append("courseName", sendTitleText);
             formData.append("list", JSON.stringify(sendList))
             fetch('api/course/register', {
+                credentials: 'include',
                 method: 'POST',
                 body: formData
             })
