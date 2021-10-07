@@ -13,7 +13,7 @@ public class PaymentVO {
 	
 	private Date payDate;
 	private int payCost;
-	private long subTerm;
+	private int subTerm;
 	private String token;
 	//공동
 	private long merchantUid;

@@ -1,5 +1,8 @@
 package com.hs.meetme.payment.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -26,7 +29,7 @@ public class RestPaymentController {
 		
 		payService.paymentInsert(vo); //결제정보 DB입력/
 		System.out.println("결제정보 :"+vo);
-		CoupleInfoVO oc = new CoupleInfoVO();
+		CoupleInfoVO oc = new CoupleInfoVO(); //커플정보 들고오기
 		String result="";
 		
 		int coupleId =vo.getCoupleId();
@@ -48,8 +51,21 @@ public class RestPaymentController {
 				coupleService.userCoupleStatusUpdate(oc); //유저테이블의 coupleStatus 둘 다 y변경
 				result="기존커플갱신되었습니다.";
 									//커플테이블의 상태가 n일 때 기존커플테이블 갱신
+			
+			}else if(oc.getCoupleStatus().equals("y")){ //커플 연장하기
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(oc.getStartDate());
+				cal.add(Calendar.MONTH, oc.getSubTerm());
+				Date endDate= cal.getTime();
+				
+				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
+				oc.setStartDate(endDate); //startDate를 endDate로 초기화
+				coupleService.coupleInfoUpdate(oc); //커플테이블 최신화
+				
+			
+				result="기존커플 연장되었습니다."; //기존 커플의 연장 성공
 			}else {
-				result="비정상적인 접근입니다."; //커플테이블의 상태가 y이거나 null인 경우의 접근(비정상)
+				result="비정상적인 접근입니다.";
 			}
 		
 		}else {
@@ -103,9 +119,10 @@ public class RestPaymentController {
              System.out.println("변환에 실패");
              e.printStackTrace();
         }
-        
         payService.insertRefundInfo(pvo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
         
+        
+        //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
         cvo.setUserId(vo.getUserId());
         coupleService.userCoupleStatusRead(cvo); 
@@ -118,7 +135,7 @@ public class RestPaymentController {
 	        	message="커플매칭 실패 후 환불";
 	        }else{  //구독 중 커플의 환불
 	        	cvo.setSubTerm(0); //구독기간 초기화
-	        	cvo.setCoupleStatus("m"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
+	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	message="커플구독 중 환불";
 	        }

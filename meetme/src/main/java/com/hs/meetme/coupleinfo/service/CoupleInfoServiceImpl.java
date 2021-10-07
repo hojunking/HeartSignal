@@ -34,8 +34,8 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 	}
 
 	@Override
-	public int couplePhotoDefault(CoupleInfoVO vo) {
-		return map.couplePhotoDefault(vo);
+	public int couplePhotoDefault(int coupleId) {
+		return map.couplePhotoDefault(coupleId);
 	}
 
 	@Override

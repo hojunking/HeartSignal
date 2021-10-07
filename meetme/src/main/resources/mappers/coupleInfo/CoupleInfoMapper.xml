@@ -79,7 +79,14 @@
 </update>
 <update id="coupleInfoUpdate"> <!-- 기존 커플 갱신 -->
 	UPDATE COUPLE_INFO SET SUB_TERM=#{subTerm},
-							START_DATE=SYSDATE,
+							<choose>
+								<when test='startDate != null'>
+										START_DATE=#{startDate},
+								</when>
+							<otherwise>
+								START_DATE=SYSDATE,
+							</otherwise>
+						</choose>
 							COUPLE_STATUS=#{coupleStatus}
 	WHERE COUPLE_ID=#{coupleId}
 </update>
@@ -109,7 +116,7 @@
 	FROM USER_INFO
 	WHERE USER_ID =#{userId}
 </select>
-<delete id="deleteCoupleInfo">
+<delete id="deleteCoupleInfo"> <!-- 매칭 전 환불 시 테이블 삭제 -->
 	DELETE FROM COUPLE_INFO
 	WHERE USER_REQUEST = #{userId}
 </delete>
