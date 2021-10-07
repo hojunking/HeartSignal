@@ -14,7 +14,7 @@
 			#{courseId},
 			#{courseName},
 			<!-- userId -->
-			4
+			#{userId}
 		)
 	</insert>
 	
