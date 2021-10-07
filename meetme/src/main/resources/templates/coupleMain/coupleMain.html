@@ -32,7 +32,7 @@
   color: black;
   cursor: pointer;}
 .upload_btn a{ background:#ccc;}
-#resetPhoto,#complete {float:right; padding: 10px 20px;}
+#resetPhoto,#complete,#defaultImage {float:right; padding: 10px 20px;}
 .photo_them{position:relative;width:100%;height:420px;background:#eee;margin :10px 0;}
 
 .them_img, .result_box{position:absolute;top:0;left:0;width:100%;height:100%;}
@@ -125,7 +125,9 @@
 							<div class="upload">
 								<label for="photoBtn"><input type="file" name="photoBtn"
 									accept="image/jpeg, image/png" id="photoBtn">사진 첨부하기</label>
+									
 							</div>
+							<button type="button" class="btn-primary " id="defaultImage">기본이미지로 변경</button>
 							<button type="button" class="btn-primary " id="resetPhoto">다시 올리기</button>
 						</div>
 						<div class="photo_them">
@@ -152,18 +154,60 @@
 	<script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script>
 
 	<script>
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-		$(function() {
+	$(function() {
 			coupleInfo();
 			myloveInfo();
+			expirationValidation();
 			// ${session.userSession.userId}  session의 아이디값 여기 넣기
 
 			//let userId= '[[  ]';
 			/*<![CDATA[*/
 			/*]]*/
 			//console.log('유저아이디:'+userId);
+			
+			
+		//커플로그 만료기간 검증
+		function expirationValidation() {
+		$.ajax({
+			url : "validation",
+			method : "post",
+			dataType : "json",
+			data : {
+				userId : 1,
+				coupleId : 1,
+				name : "송호준"
+			},
+			success : function(datas) {
+			console.log(datas);
+			 if(datas.subTerm==0){
+			 let message= datas.name+"님의 커플로그 만료일은 "
+			 +datas.endDate+" 입니다.\n"
+			 +"제결제 하시겠습니까?";
+			   
+			 if (!confirm(message)) {
+				 	location="/";
+			    } else {
+			        location="coupleMain?coupleStatus="+datas.coupleStatus;
+			        // 확인(예) 버튼 클릭 시 이벤트
+			    }
+			 } //if절 끝
+			 
+			 else if(datas.endDate!=null){ //만료 3일 전 알림
+				 let message= datas.name+"님의 커플로그 만료일은 "
+					 +datas.endDate+" 입니다.\n"
+					 +datas.subTerm+"개월권 제결제 하시겠습니까?";
+			 if (!confirm(message)) {
+				 return;
+			 	} else {
+			        location="coupleMain?coupleStatus="+datas.coupleStatus;
+			        // 확인(예) 버튼 클릭 시 이벤트
+			    }
+			 }
+			 
+			} //callback 끝
+		});//ajax 끝
+		}; 
+			//내정보와 커플정보 들고오기
 			function coupleInfo() {
 				$.ajax({
 					url : "coupleInfo/" + 1,
@@ -180,9 +224,8 @@
 
 					}
 				});
-			}
-			; //ajax 끝
-
+			}; //ajax 끝
+			//내 커플의 정보를 들고옵니다.
 			function myloveInfo() {
 				$.ajax({
 					url : "myloveInfo",
@@ -198,14 +241,32 @@
 						$('#birthDate2').text(datas.birthDay);
 						console.log(datas);
 					}
-				});
-			}
-			; //ajax 끝
+				});//ajax 끝
+			}; 
+			
+			//디폴트이미지로 업뎃
+			$('#defaultImage').on('click', function() {
+				$.ajax({
+					url : "defaultImage",
+					data : {
+						coupleId : 1,
+					},
+					method : "GET",
+					success : function(datas) {
+						console.log(datas);
+						alert(datas);
+						$('.bd-example-modal-lg').hide();
+						location.href = location.href;
+						
+					}
+				});//ajax 끝
+			});
 
 			var cropper;
 			// 사진 업로드하기 버튼 cropper 수정
 			$('#photoBtn').on('change', function() {
 				$('.them_img').empty().append('<img id="image" src="">');
+				$('#defaultImage').css("display","none");
 				$('#resetPhoto').css("display","block");
 				var image = $('#image');
 				var imgFile = $('#photoBtn').val();
@@ -216,7 +277,6 @@
 					var reader = new FileReader();
 					reader.onload = function(event) {
 					image.attr("src", event.target.result);
-					
 					image.css("display","block");
 					
 					cropper = image.cropper({
@@ -281,6 +341,7 @@
 				console.log(result);
 				console.log(canvas);
 				console.log(blob);
+				
 				if ($('input[type="date"]').val() != ""){
 				formData.append('coupleDate',$('input[type="date"]').val());
 				$.ajax({

@@ -161,9 +161,7 @@
 		src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script th:src="@{/js/main.js}"></script>
 	<script th:inline='javascript'>
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+
 		$(function() {
 			console.log();
 			let subTerm; //정기권 기간
@@ -197,12 +195,12 @@
 			function requestPay(subTerm, subPrice) {
 				var IMP = window.IMP; // 생략가능
 				IMP.init("imp61283402");
-				let userId = 5; //session의 아이디값 여기 넣기 //${session.userSession.userId}
+				let userId = 1; //session의 아이디값 여기 넣기 //${session.userSession.userId}
 				let buyerName = "송호준"; //이름 필요합니다.
 				const merchantUid = Math.floor(Math.random() * 1000000) + 1; //난수설정
 				console.log(merchantUid);
 				let passName = subTerm + '개월 커플로그 이용권'; //결제시 정기권 이름
-				let coupleId =0;
+				let coupleId =1;
 				
 				IMP.request_pay({ // param
 					pg : "html5_inicis",
