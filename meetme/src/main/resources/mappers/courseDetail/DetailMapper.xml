@@ -24,6 +24,6 @@
 		ON(C.COURSE_ID = CO.COURSE_ID)
 		JOIN PLACE P
 		ON(P.PLACE_ID = CO.PLACE_ID)
-		WHERE C.COURSE_ID = #{courseId};
+		WHERE C.COURSE_ID = #{courseId}
 	</select>
 </mapper>
