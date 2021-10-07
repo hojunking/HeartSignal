@@ -3,7 +3,11 @@ package com.hs.meetme.coursecreate.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +23,7 @@ import com.hs.meetme.coursecreate.domain.PlaceVO;
 import com.hs.meetme.coursecreate.domain.TagVO2;
 import com.hs.meetme.coursecreate.service.CourseCreateService;
 import com.hs.meetme.coursecreate.service.PlaceService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -100,10 +105,19 @@ public class RestCourseController {
 	
 	// 코스 등록
 	@PostMapping("/register")
-	public String registerCourse(String courseName, String list) throws JsonProcessingException {
+	@Transactional
+	public String registerCourse(String courseName, String list, HttpServletRequest request) throws JsonProcessingException {
 		System.out.println(list);
+		HttpSession session = request.getSession();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		
+		if(user == null) {
+			return "error";
+		}
+		
 		CourseCreateVO vo = new CourseCreateVO();
 		vo.setCourseName(courseName);
+		vo.setUserId(user.getUserId());
 		
 		courseCreateService.createCourse(vo);
 		System.out.println(vo.getCourseId());
