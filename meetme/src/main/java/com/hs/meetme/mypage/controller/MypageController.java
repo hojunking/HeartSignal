@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
+import com.hs.meetme.mypage.domain.PageVO2;
 import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
@@ -22,16 +24,39 @@ public class MypageController {
 
 	@Autowired MypageService mypageService;
 	
+	// 나의 코스 리스트 보기
+	@GetMapping("/myinfo_my_course_list")
+	public String myinfo_my_course_list(Model model,
+                                        @ModelAttribute("cri") Criteria2 cri,
+                                        HttpServletRequest request) {
+		//세션 쓰는법
+				HttpSession session = request.getSession();
+				AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+				long userId = Long.parseLong(accountVO.getUserId());
+				
+				int total = mypageService.getTotalCourseCount(cri, userId);
+				
+				model.addAttribute("list", mypageService.getCourseList(cri, userId));
+				model.addAttribute("pageMaker", new PageVO2(cri, total));
+		
+		return "mypage/myinfo_my_course_list";
+	}
+	
 	// 내 글 리스트 보기
 	@GetMapping("/myinfo_my_write_list")
 	public String myinfo_my_write_list(Model model, 
-			                           @ModelAttribute("cri") Criteria cri) {
+			                           @ModelAttribute("cri") Criteria cri,
+			                           HttpServletRequest request) {
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		long userId = Long.parseLong(accountVO.getUserId());
 		
-		int total = mypageService.getTotalCount(cri, 1);
+		int total = mypageService.getTotalPostCount(cri, userId);
 		
-		model.addAttribute("count",mypageService.getPostCount(1));
+		model.addAttribute("count",mypageService.getPostCount(userId));
 		
-		model.addAttribute("list", mypageService.getPostList(cri, 1));
+		model.addAttribute("list", mypageService.getPostList(cri, userId));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "mypage/myinfo_my_write_list";
@@ -40,13 +65,18 @@ public class MypageController {
 	// 내 댓글 리스트 보기
 	@GetMapping("/myinfo_my_comment_list")
 	public String myinfo_my_comment_list(Model model, 
-			                             @ModelAttribute("cri") Criteria cri) {
+			                             @ModelAttribute("cri") Criteria cri,
+			                             HttpServletRequest request) {
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		long userId = Long.parseLong(accountVO.getUserId());
 		
-		int total = mypageService.getTotalCommentCount(cri, 1);
+		int total = mypageService.getTotalCommentCount(cri, userId);
 		
-		model.addAttribute("count",mypageService.getCommentCount(1));
+		model.addAttribute("count",mypageService.getCommentCount(userId));
 		
-		model.addAttribute("list", mypageService.getCommentList(cri, 1));
+		model.addAttribute("list", mypageService.getCommentList(cri, userId));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "mypage/myinfo_my_comment_list";
@@ -58,9 +88,10 @@ public class MypageController {
 		
 		//세션 쓰는법
 		HttpSession session = request.getSession();
-		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		String userId = accountVO.getUserId();
 		
-		myPageUserInfoVO.setUserId("1");
+		myPageUserInfoVO.setUserId(userId);
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		return "mypage/myinfo";

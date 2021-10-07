@@ -1,7 +1,9 @@
 <template>
   <Header />
   <!-- router를 통해 보여주는 곳 -->
-  <router-view></router-view>
+  <router-link to="/hello">Home</router-link>
+  <router-link to="/createCourse">createCourse</router-link>
+  <router-view />
   <Footer />
 </template>
 

@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 import com.hs.meetme.image.domain.ImageVO;
 
 import lombok.AllArgsConstructor;
@@ -26,13 +25,15 @@ public class CoupleInfoVO extends ImageVO{
 	private Date startDate; //결제날(시작날)
 	private String coupleImg; //커플이미지 url
 	
+	//공동으로 사용함
+	private String coupleStatus; //솔로=n ,커플연결중=y, 구독기간만료=m, 커플매칭대기중 w 
+	// couple 테이블의 coupleStatus 활성화 y,비활성화 n
 	//유저 정보에 필요한 vo
 	private int userId;
 	private String name;
 	private String nickName;
 	private String birthDay;  
 	private String userImg; //유저이미지 url
-	private String coupleStatus; //솔로=n ,커플연결중=y, 구독기간만료=m, 커플매칭대기중 w 
 }
 
 

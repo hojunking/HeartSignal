@@ -17,12 +17,7 @@ import './others/slick/slick-theme.css'
 // search tag
 import '@mayank1513/vue-tag-input/dist/TagInput.css'
 
-import VueEasyLightbox from 'vue-easy-lightbox'
-
 const app = createApp(App)
 app.use(store)
 app.use(router)
-app.use(VueEasyLightbox)
 app.mount('#app')
-
-app.config.productionTip = false
