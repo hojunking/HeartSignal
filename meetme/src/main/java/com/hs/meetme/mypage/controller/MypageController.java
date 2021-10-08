@@ -6,11 +6,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.service.MypageService;
@@ -26,17 +28,21 @@ public class MypageController {
 	@GetMapping("/myinfo_my_course_list")
 	public String myinfo_my_course_list(Model model,
                                         @ModelAttribute("cri") Criteria cri,
+                                        MyPageUserInfoVO vo,
                                         HttpServletRequest request) {
 		//세션 쓰는법
 				HttpSession session = request.getSession();
 				AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
-				long userId = Long.parseLong(accountVO.getUserId());
+				String userId = accountVO.getUserId();
 				
 				cri.setUserId(userId);
+				vo.setUserId(userId);
 
 				int total = mypageService.getTotalCourseCount(cri, userId);
 				model.addAttribute("list", mypageService.getCourseList(cri, userId));
 				model.addAttribute("pageMaker", new PageVO(cri, total));
+				
+				model.addAttribute("detail",mypageService.getCourseDetailList(vo));
 		
 		return "mypage/myinfo_my_course_list";
 	}
@@ -49,7 +55,7 @@ public class MypageController {
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
-		long userId = Long.parseLong(accountVO.getUserId());
+		String userId = accountVO.getUserId();
 		
 		int total = mypageService.getTotalPostCount(cri, userId);
 		
@@ -69,7 +75,7 @@ public class MypageController {
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
-		long userId = Long.parseLong(accountVO.getUserId());
+		String userId = accountVO.getUserId();
 		
 		int total = mypageService.getTotalCommentCount(cri, userId);
 		

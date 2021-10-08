@@ -2,12 +2,14 @@ package com.hs.meetme.mypage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.service.MypageService;
 
@@ -17,6 +19,14 @@ public class MypageRestController {
 
 	@Autowired MypageService mypageService;
 	@Autowired private PasswordEncoder encoder;
+	
+	@DeleteMapping("/deleteCourse")
+	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO) {
+		
+		int r =mypageService.deleteCourseLike(myPageCourseVO);
+		
+		return r == 1 ? true : false;
+	}
 	
 	//현재 비밀번호 확인
 	@PostMapping("/passwordRead")

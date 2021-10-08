@@ -16,38 +16,37 @@ import com.hs.meetme.mypage.mapper.MypageMapper;
 public class MypageServiceImpl implements MypageService {
     
 	@Autowired MypageMapper mypageMapper;
-	
-	
+		
 	
 	//마이페이지 나의 게시글 관련
 	@Override
-	public int getPostCount(long userId) {
+	public int getPostCount(String userId) {
 		return mypageMapper.getPostCount(userId);
 	}
 
 	@Override
-	public List<PostVO> getPostList(Criteria cri, long userId) {
+	public List<PostVO> getPostList(Criteria cri, String userId) {
 		return mypageMapper.getPostList(cri, userId);
 	}
 
 	@Override
-	public int getTotalPostCount(Criteria cri, long userId) {
+	public int getTotalPostCount(Criteria cri, String userId) {
 		return mypageMapper.getTotalPostCount(cri, userId);
 	}
 
 	//마이페이지 나의 댓글 관련
 	@Override
-	public int getCommentCount(long userId) {
+	public int getCommentCount(String userId) {
 		return mypageMapper.getCommentCount(userId);
 	}
 
 	@Override
-	public List<CommentVO> getCommentList(Criteria cri, long userId) {
+	public List<CommentVO> getCommentList(Criteria cri, String userId) {
 		return mypageMapper.getCommentList(cri, userId);
 	}
 
 	@Override
-	public int getTotalCommentCount(Criteria cri, long userId) {
+	public int getTotalCommentCount(Criteria cri, String userId) {
 		return mypageMapper.getTotalCommentCount(cri, userId);
 	}
     
@@ -84,13 +83,23 @@ public class MypageServiceImpl implements MypageService {
 	
 	//마이페이지 나의 코스 관련
 	@Override
-	public List<MyPageCourseVO> getCourseList(Criteria cri, long userId) {
+	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId) {
 		return mypageMapper.getCourseList(cri, userId);
 	}
 
 	@Override
-	public int getTotalCourseCount(Criteria cri, long userId) {
+	public int getTotalCourseCount(Criteria cri, String userId) {
 		return mypageMapper.getTotalCourseCount(cri, userId);
+	}
+
+	@Override
+	public List<MyPageCourseVO> getCourseDetailList(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.getCourseDetailList(myPageUserInfoVO);
+	}
+
+	@Override
+	public int deleteCourseLike(MyPageCourseVO myPageCourseVO) {
+		return mypageMapper.deleteCourseLike(myPageCourseVO);
 	}
     
 }
