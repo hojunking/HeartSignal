@@ -3,11 +3,9 @@ package com.hs.meetme.post.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 
