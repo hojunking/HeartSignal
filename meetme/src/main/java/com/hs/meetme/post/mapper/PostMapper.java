@@ -3,11 +3,9 @@ package com.hs.meetme.post.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.Criteria2;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 
@@ -30,15 +28,13 @@ public interface PostMapper {
    public long countHit(long postId); //조회수 up
    public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
    public int insertCMComment(CommentVO vo); // 커뮤니티 댓글 입력
-   
+                    
    public int commentDelete(long commentId); // 댓글 삭제
    public int commentUpdate(CommentVO vo);//댓글 수정
    
  
-   public List<MyPageCourseVO> getCourseList(MyPageCourseVO vo);// 내 코스 조회// 내 코스 조회
-	/*
-	 * public int getTotalCourseCount(@Param("cri") Criteria2 cri, @Param("userId")
-	 * long userId); //내 코스 페이징 위한 갯수
-	 */   
+   public List<MyPageCourseVO> getCourseList(MyPageCourseVO vo);// 내 코스 조회
+   public List<MyPageCourseVO> getCourse(String courseId);// 코스 하나 들고오기 
+
    
 }
