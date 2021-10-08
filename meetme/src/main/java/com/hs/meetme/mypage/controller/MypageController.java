@@ -1,5 +1,7 @@
 package com.hs.meetme.mypage.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.service.MypageService;
+import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
 @Controller
@@ -21,7 +26,7 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 public class MypageController {
 
 	@Autowired MypageService mypageService;
-	
+	@Autowired NoticeService noticeService;
 	// 나의 코스 리스트 보기
 	@GetMapping("/myinfo_my_course_list")
 	public String myinfo_my_course_list(Model model,
@@ -96,4 +101,24 @@ public class MypageController {
 		return "mypage/myinfo";
 	}
 	
+	//메인 유저정보 
+	@GetMapping("/mainMyinfo")
+	public String mainMyinfo(Model model, MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		String userId = accountVO.getUserId();
+		
+		myPageUserInfoVO.setUserId(userId);
+		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
+		return "mypage/myinfo_main";
+	}
+	
+	@GetMapping("/getNoticeList")
+	@ResponseBody
+	public List<NoticeVO> getMynotice(NoticeVO vo){
+		System.out.println("여기 왔니 ?"+vo.getUserId());
+		System.out.println(noticeService.getNoticeList(vo));
+		return noticeService.getNoticeList(vo);
+	}
 }
