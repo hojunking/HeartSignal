@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
+import com.hs.meetme.mypage.domain.Criteria2;
+import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.post.mapper.PostMapper;
 
@@ -106,5 +108,12 @@ public class PostServiceImpl implements PostService{
 		return pMapper.getCMList(cri);
 	}
 
+	@Override
+	public List<MyPageCourseVO> getCourseList(MyPageCourseVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.getCourseList(vo);
+	}
+
+	
 
 }

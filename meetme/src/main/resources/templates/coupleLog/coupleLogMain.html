@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{layout/layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
 
-    <th:block layout:fragment="css">
-		<style>
+<th:block layout:fragment="css">
+<style>
+.cardImgCus{
+	width: 80%;
+    margin-top:20px;
+     margin-bottom:20px;
+    
+}
+.cardCus{
+	text-align:center;
+}
 
-		</style>
-	</th:block>
-	
-	<th:block layout:fragment="content">
+</style>
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="container">
+		<div class="row">
+		<h1>커플로그</h1>
+		<button class="btn btn-primary"
+		onclick="location.href='./coupleLogRecord'">새로운 추억 기록하기</button>
+		<div class="card-columns">
+			<th:block th:each="c: ${#numbers.sequence(0, 8)}">
+				<div class="cardCus">
+				<img th:src="@{/img/phoebe.jpg}"
+					alt="Image" class="img-fluid tm-recommended-img cardImgCus">
+				<br>피비
+				</div>
+			</th:block>
+		</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="script">
+	<script>
 		
-	
-
-	</th:block>
-
-	<th:block layout:fragment="script">
-		<script>
-
-		</script>
-	</th:block>
+	</script>
+</th:block>
 </html>
