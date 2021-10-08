@@ -2,13 +2,15 @@ package com.hs.meetme.chat.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Data 어노테이션은 getter, setter를 자동 생성합니다.
 @Data
 
 // AllArgsConstructor 어노테이션은 생성자를 자동 생성합니다.
 @AllArgsConstructor
-public class SocketVO {
+@NoArgsConstructor
+public class SocketChatVO {
     // 유저의 이름을 저장하기 위한 변수
     private String userName;
 

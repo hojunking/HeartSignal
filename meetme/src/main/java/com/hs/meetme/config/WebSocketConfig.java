@@ -9,16 +9,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
+	
     @Override
     // 클라이언트가 메시지를 구독할 endpoint를 정의합니다.
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/send");
+    	config.enableSimpleBroker("/send");
     }
-
+    
+    
     @Override
     // connection을 맺을때 CORS 허용합니다.
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").setAllowedOrigins("http://192.168.0.75:3000").withSockJS();
     }
+    // 빌드 후 setAllowedOrigins : http://192.168.0.*:8000은 여러 컴퓨터에서 접근이 가능했었음.
 }
