@@ -382,33 +382,37 @@
     	})
     	//주소 수정 하기 버튼 클릭
     	$("#address_reg").on('click',function(){
+    		if($("#addr1").val()==null || $("#addr1").val()==""){
+    			alert("주소를 검색해주세요")
+    		}else if($("#addr3").val()==null || $("#addr3").val()==""){
+    			alert("상세주소를 입력해주세요")
+    		}else{
+    			$.ajax({
+        			url: "addressUpdate",
+        			method : "put",
+        			data : JSON.stringify({ userId: userId,
+        			 	                   address1:$("#addr1").val(),
+        			 	                   address2:$("#addr2").val(),
+        			 	                   address3:$("#addr3").val()
+        			                     }),
+        			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+        			dataType : "json",
+        			contentType : "application/json;charset=UTF-8",
+        			success: function(data){
+        				$("#address1").val(data.address1);
+        				$("#address2").val(data.address2);
+        				$("#address3").val(data.address3);
+        				alert("주소 수정 완료")
+			    		$("#u_address").css("display","none");
+			    		$("#addrUpdateBtn").css("display","block");
+			    		$("#u_address").find("input").val("");
+        			},
+        			error : function(){
+        				
+        			}
+        		});	
+    		}
     		
-    		$.ajax({
-    			url: "../addressUpdate",
-    			method : "put",
-    			data : JSON.stringify({ userId: userId,
-    			 	                   address1:$("#addr1").val(),
-    			 	                   address2:$("#addr2").val(),
-    			 	                   address3:$("#addr3").val()
-    			                     }),
-    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
-    			dataType : "json",
-    			contentType : "application/json;charset=UTF-8",
-    			success: function(data){
-    				$("#address1").val(data.address1);
-    				$("#address2").val(data.address2);
-    				$("#address3").val(data.address3);
-    				alert("주소 수정 완료")
-    			},
-    			error : function(){
-    				
-    			}
-    		})
-    		
-    		$("#u_address").css("display","none");
-    		$("#addrUpdateBtn").css("display","block");
-    		$("#u_address").find("input").val("");
-    		alert("주소 수정 완료");
     	})
     	
         //비밀번호 수정 버튼 클릭
@@ -429,7 +433,7 @@
     			alert("새로운 비밀번호를 확인해주세요")
     		}else{
 	    		$.ajax({
-	    			url: "../passwordUpdate",
+	    			url: "passwordUpdate",
 	    			method : "put",
 	    			data : JSON.stringify({ userId: userId,
 	    				                    password: $("#pass3").val()			 	          
@@ -461,7 +465,7 @@
       //현재 비밀번호 확인
       $("#pass1").on('keyup',function(){
     	  $.ajax({
-    		  url:"../passwordRead",
+    		  url:"/mypage/passwordRead",
     		  method : "post",
     		  data : JSON.stringify({ userId: userId,
                                       password: $("#pass1").val()			 	          
@@ -557,7 +561,7 @@
     			alert("닉네임을 확인해주세요")
     		}else{
 	    		$.ajax({
-	    			url: "../nickNameUpdate",
+	    			url: "nickNameUpdate",
 	    			method : "put",
 	    			data : JSON.stringify({ userId: userId,
 	    				                    nickName: $("#nick1").val()			 	          
@@ -604,7 +608,7 @@
     	  }else{
     		  
     	  $.ajax({
-    		  url:"../nickNameRead",
+    		  url:"nickNameRead",
     		  method : "post",
     		  data : JSON.stringify({ userId: userId,
                                       nickName: $("#nick1").val()			 	          

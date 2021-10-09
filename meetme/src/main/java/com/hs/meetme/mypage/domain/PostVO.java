@@ -22,7 +22,6 @@ public class PostVO extends AccountVO{
 	private String hit;
 	private String postDistinct;//커뮤니티 c, 추천 r
 	
-	  
 	//다른 테이블 꺼
 	private String postLikeCount; //게시글 추천수
   

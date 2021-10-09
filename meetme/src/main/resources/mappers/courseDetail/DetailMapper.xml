@@ -16,8 +16,9 @@
 		</select> -->
 
 	<!-- 코스 상세보기 누르면 나오는 것 -->
-	<select id="getCourse" resultType="DetailVO">
+	<select id="getCourse" parameterType="int" resultType="DetailVO">
 		SELECT DISTINCT
+		c.course_name,
 		SUBSTR(P.ADDRESS,'1',INSTR(P.ADDRESS,' ',1,1)-1) ADDRESS,
 		P.PLACE_NAME, P.AVG_COST, P.THUMBNAIL_HREF, CO.COURSE_ORDER
 		FROM COURSE C JOIN COURSE_ORDER CO
@@ -26,4 +27,5 @@
 		ON(P.PLACE_ID = CO.PLACE_ID)
 		WHERE C.COURSE_ID = #{courseId}
 	</select>
+	
 </mapper>

@@ -13,13 +13,12 @@ import com.hs.meetme.coursedetail.service.DetailService;
 @Controller
 @RequestMapping("/*")
 public class DetailController {
-	@Autowired DetailMapper mapper;
 	@Autowired DetailService service;
 	
-	@GetMapping("/CourseDetail")
-	public String CourseDetail(Model model, DetailVO vo) {
-		model.addAttribute("detail",service.getCourse());
-		/* model.addAttribute("courseOne",service.courseOne(vo)); */
+	@GetMapping("/courseDetail")
+	public String CourseDetail(Model model, int courseId) {
+		model.addAttribute("detail",service.getCourse(courseId));
+		System.out.println(service.getCourse(courseId).toString());
 		return "main/courseDetail";
 	}
 	

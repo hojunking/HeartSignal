@@ -18,10 +18,10 @@ public class MainController {
 	MainService service;
 
 	// sample(원본 템플릿)
-	@GetMapping("/index")
-	public String index() {
-		return "index";
-	}
+//	@GetMapping("/test")
+//	public String index() {
+//		return "templateTest";
+//	}
 
 	@GetMapping("/")
 	public String home(Model model) {

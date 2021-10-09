@@ -41,7 +41,7 @@
 						<!-- 지도 -->
 					</div>
 					<br>
-					<div class="CourseExp" th:value="${detail.courseOrder}"></div>
+					<!-- <div class="CourseExp" th:value="${detail.courseOrder}"></div> -->
 				</div>
 			</div>
 		</section>
@@ -49,8 +49,10 @@
 		<section class="p-5 tm-container-outer">
 			<div class="container">
 			<!-- th:value="${detail.courseName}" -->
-			<h3 class="regionFont" >경주 식도락</h3>
-			<h6 class="regionFont" >위치 : 경상북도, 경주시</h6>
+			
+			<h3 class="regionFont" th:text="${detail[0].courseName}">not working</h3>
+			
+			<!-- <h6 class="regionFont" >위치 : 경상북도, 경주시</h6> -->
 				<div class="row tm-banner-row detailCard">
 					<!-- tab-pane -->
 					<div class="tab-pane fade show active">
@@ -66,7 +68,7 @@
 											th:text="${detail[c].placeName}"></h3>
 										<!-- 코스 -->
 										<br>
-										<p class="tm-text-highlight" th:text="${detail[c].address}"
+										<p class="tm-text-highlight" th:text="${detail[c].region}"
 											style="font-size: 15px;"></p>
 										<p class="tm-text-gray"></p>
 									</div>

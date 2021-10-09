@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
+  <!-- 저장된 코스 삭제 -->
+  <delete id="deleteCourseLike" parameterType="MypageCourseVO">
+    DELETE
+    FROM
+      course_like
+    WHERE
+      course_id = #{course_id}
+  </delete>
+  <update id="updateCourse" parameterType="MypageCourseVO">
+    UPDATE course
+    SET course_open = "n"
+    WHERE course_id = #{course_id}
+  </update>
+  <delete id="deleteCourse" parameterType="MypageCourseVO">
+    DELETE
+    FROM course_like
+    WHERE course_id = #{course_id}
+  </delete>
+
   <!-- 저장된 코스 보기 -->
   	<!-- 코스 검색기능 -->
     <sql id = "courseSearch">
@@ -93,6 +112,48 @@
          </where> )
       WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 	</select>
+	<!-- 나의 코스 리스트 상세정보들 SELECT -->
+    <select id="getCourseDetailList" resultType="MyPageCourseVO">
+		SELECT
+		  a.user_id,
+		  a.course_id,
+		  a.course_name,
+		  a.course_state,
+		  a.course_open,
+		  a.region,
+		  b.course_order,
+		  b.place_id,
+		  c.place_name,
+		  c.address,
+		  c.place_phone,
+		  c.avg_cost,
+		  c.description,
+		  c.region,
+		  c.thumbnail_href
+		FROM course a, course_order b, place c
+		WHERE a.course_id IN (SELECT course_id FROM course_like WHERE user_id = #{userId}) AND a.course_id=b.course_id AND b.place_id =c.place_id
+		UNION ALL
+		SELECT
+		  a.user_id,
+		  a.course_id,
+		  a.course_name,
+		  a.course_state,
+		  a.course_open,
+		  a.region,
+		  b.course_order,
+		  b.place_id,
+		  c.place_name,
+		  c.address,
+		  c.place_phone,
+		  c.avg_cost,
+		  c.description,
+		  c.region,
+		  c.thumbnail_href
+		FROM course a, course_order b, place c
+		WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND b.place_id =c.place_id
+		ORDER BY course_id
+	</select>
+	
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->	
 	<!-- 게시글 검색기능 -->
     <sql id = "postSearch">

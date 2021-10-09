@@ -9,29 +9,35 @@ import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 @Mapper
 public interface MypageMapper {
     
-	//내 코스 조회
-	public List<MyPageCourseVO> getCourseList(@Param("cri") Criteria cri, @Param("userId") long userId);
+	//내 코스 리스트 조회
+	public List<MyPageCourseVO> getCourseList(@Param("cri") Criteria cri, @Param("userId") String userId);
 	//내 코스 페이징 위한 갯수
-	public int getTotalCourseCount(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public int getTotalCourseCount(@Param("cri") Criteria cri, @Param("userId") String userId);
+	//내 코스 상세 리스트 조회
+	public List<MyPageCourseVO> getCourseDetailList(MyPageUserInfoVO myPageUserInfoVO);
+	//내 코스 삭제
+	public int deleteCourseLike(MyPageCourseVO myPageCourseVO);
+	//내 코스
 	
 	//내 게시글 전체 갯수
-	public int getPostCount(@Param("userId") long userId);
+	public int getPostCount(@Param("userId") String userId);
 	//내 게시글 조회
-	public List<PostVO> getPostList(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public List<PostVO> getPostList(@Param("cri") Criteria cri, @Param("userId") String userId);
 	//내 게시글 페이징 위한 갯수
-	public int getTotalPostCount(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public int getTotalPostCount(@Param("cri") Criteria cri, @Param("userId") String userId);
 	
 	//내 댓글 전체 갯수
-	public int getCommentCount(@Param("userId") long userId);
+	public int getCommentCount(@Param("userId") String userId);
 	//내 댓글 조회
-	public List<CommentVO> getCommentList(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public List<CommentVO> getCommentList(@Param("cri") Criteria cri, @Param("userId") String userId);
 	//내 댓글 페이징 위한 갯수
-	public int getTotalCommentCount(@Param("cri") Criteria cri, @Param("userId") long userId);
+	public int getTotalCommentCount(@Param("cri") Criteria cri, @Param("userId") String userId);
 	
 	//회원정보 불러오기
 	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageUserInfoVO);
@@ -45,4 +51,9 @@ public interface MypageMapper {
 	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(닉네임)
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
+	
+	
+	
+	
+	
 }

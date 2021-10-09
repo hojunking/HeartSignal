@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+
+<th:block layout:fragment="css">
+	<style>
+.cardImgCus {
+	width: 80%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.cardCus {
+	text-align: center;
+}
+
+.btn {
+	float: right;
+}
+</style>
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="container">
+		<br>
+		<h1>커플로그 수정하기</h1>
+		<br>
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-lg-6">
+						<!-- th:value="경주여행" -->
+						제목 <input class="form-control" placeholder="경주 여행"> 날짜 <input
+							type="date" class="form-control">
+					</div>
+					<div class="col-lg-6">
+						<!-- th:value="2021-09-17" -->
+						위치 <input class="form-control" placeholder="경주"> 설명 <input
+							class="form-control" placeholder="내용을 입력해주세요">
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="row">
+
+					<div class="col-lg-7">
+						사진 선택 <input class="form-control" placeholder="내용을 입력해주세요"><br>
+						사진 캡션 <input class="form-control" placeholder="내용을 입력해주세요">
+					</div>
+					<div>
+						<button style="margin: 23px; margin-left: 0px;">선택</button>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-group">
+			<div class="col-md-12">
+
+				<h4>미리보기</h4>
+				<br>
+				<br>
+				<div class="card-columns">
+					<th:block th:each="c: ${#numbers.sequence(0, 2)}">
+						<div>
+							<img th:src="@{/img/phoebe.jpg}" alt="Image"
+								class="img-fluid tm-recommended-img cardImgCus"
+								style="width: 150px; height: 150px; margin-left: 0px;">
+						</div>
+					</th:block>
+				</div>
+
+
+			</div>
+		</div>
+		
+		
+		<div style="float:right;">
+			<button type="button">수정완료</button>
+			<button type="button">삭제하기</button>
+			<button type="button">취소하기</button>
+		</div>
+		<br><br>
+		
+	</div>
+
+</th:block>
+<th:block layout:fragment="script">
+	<script>
+		
+	</script>
+</th:block>
+</html>
