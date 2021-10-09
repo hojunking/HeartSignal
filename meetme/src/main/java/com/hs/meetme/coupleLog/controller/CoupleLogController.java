@@ -14,25 +14,31 @@ import com.hs.meetme.coupleLog.service.CoupleLogService;
 @Controller
 @RequestMapping("/coupleLog/*")
 public class CoupleLogController {
-	@Autowired CoupleLogService service;
-	
+	@Autowired
+	CoupleLogService service;
+
 	@GetMapping("/logList")
-	public String getLogList(Model model){
-		model.addAttribute("logList",service.getLogList());
+	public String getLogList(Model model) {
+		model.addAttribute("logList", service.getLogList());
 		return "coupleLog/coupleLogMain";
 	}
-	
+
 	@GetMapping("/coupleLogRecord")
-	public String coupleLogRecord1(Model model){
-		model.addAttribute("logList",service.getLogList());
+	public String coupleLogRecord1(Model model) {
+		model.addAttribute("logList", service.getLogList());
 		return "coupleLog/coupleLogRecord";
 	}
-	
+
 	@PostMapping("/coupleLogRecord")
-	public String coupleLogRecord(CoupleLogVO vo, RedirectAttributes rttr){
-		
+	public String coupleLogRecord(CoupleLogVO vo, RedirectAttributes rttr) {
+
 		return "coupleLog/coupleLogRecord";
 	}
-	
-	
+
+	@GetMapping("/coupleLogUpdate")
+	public String copleLogUpdate() {
+
+		return "coupleLog/coupleLogUpdate";
+	}
+
 }
