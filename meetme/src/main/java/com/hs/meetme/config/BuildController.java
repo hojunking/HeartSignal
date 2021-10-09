@@ -14,4 +14,8 @@ public class BuildController {
 	public String createCourse() {
 		return "/index";
 	}
+	@GetMapping("/coupleCreateCourse")
+	public String coupleCreateCourse() {
+		return "/index";
+	}
 }
