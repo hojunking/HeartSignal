@@ -158,24 +158,29 @@
 								<h3 class="tm-recommended-title"
 									th:text="${list[c].courseName}"></h3>
 									
-									<span th:if="${list[c].userId==session.userSession.userId }" class="badge rounded-pill bg-info text-warning">나의코스</span>
-									<span th:if="${list[c].userId!=session.userSession.userId }" class="badge rounded-pill bg-info text-danger">스크랩</span>
+								<span th:if="${list[c].userId==session.userSession.userId }" class="badge rounded-pill bg-info text-warning">나의코스</span>
+								<span th:if="${list[c].userId!=session.userSession.userId }" class="badge rounded-pill bg-info text-danger">스크랩</span>
 								<!-- 코스 -->
 								<br>
-								<p class="tm-text-highlight" th:text="${list[c].region}"
-									style="font-size: 15px;"></p>
+								<p class="tm-text-highlight" th:text="${list[c].region}" style="font-size: 15px;"></p>
 								<p class="tm-text-gray"></p>
+								<th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
+								  <i th:if="${list[c].courseId==detail[d].courseId}" th:text="${detail[d].placeName}"></i>
+								</th:block>
 							</div>
 							<!-- <a href="#" class="tm-recommended-price-box"> -->
 							<div class="tm-recommended-price-box">
 								<p class="tm-recommended-price-link" style="font-size: 15px;">평균비용</p>
 								<p class="tm-recommended-price" th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
+								<p><button th:data-courseId="${list[c].courseId}"
+								           th:data-userId="${list[c].userId}"
+								           onclick="">삭제</button></p>
 							</div>
 							<!-- </a> -->
 						</div>
 					</div>
+			</th:block>
 			</div>
-
 		</div>
 
 					</div>
@@ -184,36 +189,64 @@
 		</div>
 		
 
-</th:block>
+
 <!-- .main-content -->
 
 <th:block layout:fragment="script">
 	<script>
+	//세션 아이디 쓰기
+	let userSessionId = userSession == null ? "" : userSession.userId;
+	
+	//삭제 함수
+	function courseDelFunc(obj){
+      let userId =$(obj).attr('data-userId');
+      let courseId =$(obj).attr('data-courseId');
+	  let result = confirm("삭제하시겠습니까?");
+	  
+	  if(result) {
+		  $.ajax({
+			  url: "deleteCourse",
+			  type:'DELETE',
+			  data : JSON.stringify({ userId: userId,
+                                      courseId:courseId }),
+			  dataType:'json',
+			  success:function(e){
+				  if(e==true){
+					  
+				  }
+				  
+			  }
+		  })//ajax end==
+	  }
+	  
+	}
 		$(function() {
 			//세션 아이디 쓰기
-			let userId = userSession == null ? "" : userSession.userId;
+			let userSessionId = userSession == null ? "" : userSession.userId;
 			
-    		$.ajax({
-    			url: "",
-    			method : "post",
-    			data : JSON.stringify({ userId: userId,
-    			                     }),
-    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
-    			dataType : "json",
-    			contentType : "application/json;charset=UTF-8",
-    			success: function(data){
-    				
-    				$("#nickName").val(data.nickName);
-    				$("#nick1").val("");
-    				alert("닉네임 수정완료");
-    		    	$("#u_nickName").css("display","none");
-    		    	$("#nickNameUpdateBtn").css("display","block");
-    				
-    			},
-    			error : function(){
-    				
-    			}
-    		})
+
+		   		$.ajax({
+	    			url: "",
+	    			method : "post",
+	    			data : JSON.stringify({ userId: userSessionId,
+	    			                     }),
+	    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+	    			dataType : "json",
+	    			contentType : "application/json;charset=UTF-8",
+	    			success: function(datas){
+	    				let placeTag = "";
+	    				for(data of datas){
+	    					placeTag ="<i>"+data.placeName+"</i>"
+	    					$("#"+data.courseId).append(placeTag)
+	    				}
+	    			},
+	    			error : function(){
+	    				
+	    			}
+	    		})
+
+			
+ 
 		      var actionForm = $("#actionForm")
 		      
 			  //상세보기

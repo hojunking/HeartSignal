@@ -13,14 +13,14 @@ public class DetailServiceImpl implements DetailService {
 
 	@Autowired DetailMapper detailMapper;
 	@Override
-	public List<DetailVO> getCourse() {
+	public List<DetailVO> getCourse(int courseId) {
 		
-		return detailMapper.getCourse();
+		return detailMapper.getCourse(courseId);
 	}
-	@Override
-	public DetailVO courseOne(DetailVO vo) {
-		
-		return detailMapper.courseOne(vo);
-	}
+//	@Override
+//	public DetailVO courseOne(DetailVO vo) {
+//		
+//		return detailMapper.courseOne(vo);
+//	}
 
 }

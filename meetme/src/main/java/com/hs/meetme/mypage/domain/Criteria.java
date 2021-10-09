@@ -10,7 +10,7 @@ public class Criteria {
   private String type;
   private String keyword;
   private String category;
-  private long userId;
+  private String userId;
   
   public Criteria( ){
 	  this(1, 10);
