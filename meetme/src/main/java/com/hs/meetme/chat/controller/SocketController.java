@@ -6,21 +6,45 @@ import org.springframework.stereotype.Controller;
 
 import com.hs.meetme.chat.domain.SocketChatVO;
 import com.hs.meetme.chat.domain.SocketClickVO;
+import com.hs.meetme.chat.domain.SocketInsertCourseVO;
+import com.hs.meetme.chat.domain.SocketSearchByTagVO;
+import com.hs.meetme.chat.domain.SocketTagVO;
 
 @Controller
 public class SocketController {
 	
-	@MessageMapping("/clickReceive")
+	// 태그를 기준 검색 클릭
+	@MessageMapping("/insertCourseReceive")
     @SendTo("/send")
-    public SocketClickVO SocketClickHandler(SocketClickVO socketClickVO) {
-        String clickContent = socketClickVO.getClickContent();
+    public SocketInsertCourseVO SocketInsertCourseHandler(SocketInsertCourseVO vo) {
+        String InsertCourse = vo.getInsertCourse();
 
-        SocketClickVO result = new SocketClickVO(clickContent);
+        SocketInsertCourseVO result = new SocketInsertCourseVO(InsertCourse);
+        return result;
+    }
+	
+	// 태그를 기준 검색 클릭
+	@MessageMapping("/searchByTagReceive")
+    @SendTo("/send")
+    public SocketSearchByTagVO SocketClickHandler(SocketSearchByTagVO vo) {
+        String searchByTag = vo.getSearchByTag();
+
+        SocketSearchByTagVO result = new SocketSearchByTagVO(searchByTag);
+        return result;
+    }
+	
+	// 태그 클릭
+	@MessageMapping("/tagReceive")
+    @SendTo("/send")
+    public SocketTagVO SocketClickHandler(SocketTagVO vo) {
+        String tagId = vo.getTagId();
+
+        SocketTagVO result = new SocketTagVO(tagId);
         return result;
     }
 	
     // /receive를 메시지를 받을 endpoint로 설정합니다.
-    @MessageMapping("/receive")
+    @MessageMapping("/chatReceive")
     
     // /send로 메시지를 반환합니다.
     @SendTo("/send")
