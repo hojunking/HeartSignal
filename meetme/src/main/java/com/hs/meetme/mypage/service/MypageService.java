@@ -13,23 +13,27 @@ import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 public interface MypageService {
 	
 	//내 코스 조회
-	public List<MyPageCourseVO> getCourseList(Criteria cri, long userId);
+	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId);
 	//내 코스 페이징 위한 갯수
-	public int getTotalCourseCount(Criteria cri, long userId);
+	public int getTotalCourseCount(Criteria cri, String userId);
+	//내 코스 상세 리스트 조회
+	public List<MyPageCourseVO> getCourseDetailList(MyPageUserInfoVO myPageUserInfoVO);
+	//내 코스 삭제
+	public int deleteCourseLike(MyPageCourseVO myPageCourseVO);
 	
 	//내 게시글 전체 갯수
-	public int getPostCount(long userId);
+	public int getPostCount(String userId);
 	//내 게시글 조회
-	public List<PostVO> getPostList(Criteria cri, long userId);
+	public List<PostVO> getPostList(Criteria cri, String userId);
 	//내 게시글 페이징 위한 갯수
-	public int getTotalPostCount(Criteria cri, long userId);
+	public int getTotalPostCount(Criteria cri, String userId);
 	
 	//내 게시글 전체 갯수
-	public int getCommentCount(long userId);
+	public int getCommentCount(String userId);
 	//내 게시글 조회
-	public List<CommentVO> getCommentList(Criteria cri, long userId);
+	public List<CommentVO> getCommentList(Criteria cri, String userId);
 	//내 게시글 페이징 위한 갯수
-	public int getTotalCommentCount(Criteria cri, long userId);
+	public int getTotalCommentCount(Criteria cri, String userId);
 	
 	//회원정보 불러오기
 	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageuserInfoVO);
