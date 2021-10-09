@@ -71,11 +71,18 @@ public class PostController {
    
    //커뮤니티 글 상세보기
    @GetMapping("/get_community/{postId}")
-   public String get_community(@PathVariable long postId, PostVO vo, Model model) {
+   public String get_community(@PathVariable long postId, Model model) {
+      PostVO post = pService.getPost(postId);
+      String courseId =  post.getCourseId();
+      model.addAttribute("list", pService.getPost(postId));
+      model.addAttribute("cmt", pService.commentCM(postId));
+//      if(cVo.getCourseId() != null) {
+//    	 ;
+//    	  System.out.println(pService.getCourse(cVo));
+//      }
+      model.addAttribute("course", pService.getCourse(courseId));
       pService.countHit(postId);
       
-      model.addAttribute("list",pService.getPost(postId));
-      model.addAttribute("cmt", pService.commentCM(postId));
       return "post/community_get";
       /*
        * if(idx==null) { //올바르지 않은 접근 return "post/community_lis"; }

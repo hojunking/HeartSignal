@@ -74,12 +74,22 @@
       from
       post a join user_info b on a.user_id = b.user_id where post_id=#{postId}
    </select>
+   
+   <select id="getCourse" resultType="com.hs.meetme.mypage.domain.MyPageCourseVO">
+   		select a.course_id, a.course_name, b.avg_cost,c.place_name
+		from course a join course_order b 
+		on a.course_id = b.course_id
+        join place c
+        on c.place_id = b.place_id
+		where course_open ='y' and a.course_id=#{courseId}
+		order by a.course_id, b.course_order
+   </select>
 
    <!-- 커뮤니티 게시판 입력하기 -->
    <!-- userId 뒤에 courseId 넣어주기-->
    <insert id="CMInsert">
       insert into post
-      values(SEQ_POST.nextval,#{postTitle},#{postContent},sysdate,sysdate,#{userId},null,0,'c')
+      values(SEQ_POST.nextval,#{postTitle},#{postContent},sysdate,sysdate,#{userId},#{courseId},0,'c')
    </insert>
 
    <!-- 조회수 up -->

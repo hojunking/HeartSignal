@@ -113,6 +113,12 @@ public class PostServiceImpl implements PostService{
 		return pMapper.getCourseList(vo);
 	}
 
+	@Override
+	public List<MyPageCourseVO> getCourse(String courseId) {
+		// TODO Auto-generated method stub
+		return pMapper.getCourse(courseId);
+	}                                                                              
+
 	
 
 }
