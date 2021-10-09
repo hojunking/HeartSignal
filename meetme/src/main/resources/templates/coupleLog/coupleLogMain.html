@@ -4,35 +4,55 @@
 	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-<style>
-.cardImgCus{
-	width: 80%;
-    margin-top:20px;
-     margin-bottom:20px;
-    
-}
-.cardCus{
-	text-align:center;
+	<style>
+.cardImgCus {
+	width: 150px;
+	height: 150px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
+.cardCus {
+	text-align: center;
+}
 </style>
 </th:block>
 
 <th:block layout:fragment="content">
-	<div class="container">
-		<div class="row">
-		<h1>커플로그</h1>
-		<button class="btn btn-primary"
+
+<br><br><br><br><br> <!-- 임시로 헤더 밑에가게 -->
+
+	<div style="text-align:right; padding-right:20px;"> 
+	<button class="btn btn-primary" style="font-size:12px"
 		onclick="location.href='./coupleLogRecord'">새로운 추억 기록하기</button>
-		<div class="card-columns">
-			<th:block th:each="c: ${#numbers.sequence(0, 8)}">
-				<div class="cardCus">
-				<img th:src="@{/img/phoebe.jpg}"
-					alt="Image" class="img-fluid tm-recommended-img cardImgCus">
-				<br>피비
+	</div>
+	<br>
+	
+	
+	
+	<div class="container-fluid px-0 position-relative z-index-1">
+		<div id="projects" data-isotope='{"layoutMode": "masonry"}'
+			class="row g-0">
+			<th:block th:each="c: ${logList}">
+				<div class="col-md-6 col-xl-3 development grid-item">
+					<a href="#!"
+						class="card-over card-split-hover d-block card-hover overflow-hidden">
+						<img th:src="@{/img/phoebe.jpg}" alt="phoebe"
+						class="img-fluid img-zoom">
+						<div class="card-overlay p-4 p-lg-5 d-flex align-items-end text-white">
+							<ul class="list-unstyled overlay-items">
+								<li>
+									<h5 class="mb-2 fs-4 splitting-up" data-splitting th:text="${c.logTitle}">
+									<a href="./coupleLogOne?logTitle=${c.logTitle }"></a></h5>
+								</li>
+								<!-- <li><span class="splitting-up" data-splitting>Awesome
+										Subtitle</span>
+								</li> -->
+							</ul>
+						</div>
+					</a>
 				</div>
 			</th:block>
-		</div>
 		</div>
 	</div>
 </th:block>
