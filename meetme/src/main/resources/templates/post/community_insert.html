@@ -15,7 +15,7 @@
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
 	<div class="container">
 		<br>
-		<div>
+		<div> 	
 			<h2>커뮤니티 글쓰기</h2>
 		</div>
 		<br>
@@ -35,8 +35,10 @@
 					<label for="inp-type-5" class="col-sm-2 control-label">코스 가져오기</label>
 
 					<div class="col-sm-10">
-						<button type="button" id="courseBtn" class="courseBtn btn btn-primary" data-toggle="modal"
-							data-target="#myCourseModal">내 코스 가져오기</button>
+					
+					 <a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
+						<!-- <button type="button" id="courseBtn" class="courseBtn btn btn-primary" data-toggle="modal"
+							data-target="#modalBasic">내 코스 가져오기</button> -->
 					</div>
 					<div class="courseShow">
 
@@ -67,7 +69,33 @@
 
 
 			<!-- 코스 가져오기 모달 -->
-			<div class="modal fade " id="myCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			<!--Modal basic-->
+                <div class="modal fade " id="modalBasic" tabindex="-1" aria-labelledby="modalBasicLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content border-0">
+                            <div class="modal-header border-0 bg-light">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="bi bi-x fs-5 lh-1"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body py-5 border-0" id="modalBody">
+                                
+                            </div>
+                            <div class="modal-footer bg-light border-0">
+                                <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">닫기</button>
+                                <button type="submit" class="btn btn-primary btn-sm" id="courseInsertBtn">입력하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			
+			
+			
+			
+			
+			<!-- <div class="modal fade " id="myCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -76,7 +104,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 									aria-hidden="true">×</span></button>
 						</div>
-						<div class="modal-body" id="modalBody">
+						<div class="modal-body" >
 
 						</div>
 						<div class="modal-footer">
@@ -85,7 +113,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 	</div>
@@ -186,7 +214,7 @@
 				let courseImg = $('<div />').addClass("d-flex justify-content-between courseImg col-3");
 				let img =$('<img />').addClass("courseImg")
 									.attr({
-										src: i.imgId,
+										src: i.thumbnailHref,
 										alt:"코스 이미지",
 										id:"courseImg"
 									})
@@ -198,6 +226,9 @@
 											.text(i.courseName)
 				let courseAvg = $('<div />').addClass('courseAvg')
 											.text(i.avgCost)
+				let courseRegion = $('<div />').addClass('courseRegion')
+												.text(i.region)
+											
 				let cBtn = $('<button />').addClass('cBtn btn btn-primary btn-sm')
 										.attr("data-id", i.courseId)
 				$(courseContent).append(courseName,courseAvg);
@@ -211,7 +242,7 @@
 
 		//click하면 모달 없어지고 버튼 아래에 선택한 코스 제목 들어감.
 		function showTitle(){
-			$('#myCourseModal').modal("hide");
+			$('#modalBasic').modal("hide");
 			let showTitle = $('<div />').addClass('showTitle').text($(this).attr('data-name'));
 			let hideId = $('<input />').attr({type:"hidden", name: 'courseId'}).val($(this).attr('data-id'))
 			$('.courseShow').append(showTitle, hideId);

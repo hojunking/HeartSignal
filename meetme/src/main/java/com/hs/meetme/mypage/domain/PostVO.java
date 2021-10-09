@@ -9,7 +9,7 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 import lombok.Data;
 
 @Data
-public class PostVO extends AccountVO{
+public class PostVO{
   
 	private String postId; //게시물 번호 시퀀스
 	private String postTitle; 
@@ -24,7 +24,7 @@ public class PostVO extends AccountVO{
 	
 	//다른 테이블 꺼
 	private String postLikeCount; //게시글 추천수
-  
+	private String nickname;
 	private String postCount;      //게시글 갯수
   
 }

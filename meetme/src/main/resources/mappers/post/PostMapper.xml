@@ -67,16 +67,24 @@
          </trim>
     </sql>
 
-   <select id="getPost" resultType="PostVO">
-      select
-      a.*,
-      b.nickname
-      from
-      post a join user_info b on a.user_id = b.user_id where post_id=#{postId}
+   <select id="getPost" parameterType="long" resultType="PostVO">
+      <!-- select
+	  a.*,
+	  b.nickname
+	  from
+	  post a join user_info b on a.user_id = b.user_id where post_id=#{postId} -->
+	  
+	  select * from post where post_id = #{postId}
+	  
+	  <!-- select
+	  a.post_id,a.post_title "post_title", a.post_content, a.post_created, a.user_id, a.course_id "course_id", a.hit, a.post_distinct,
+	  b.nickname
+	  from
+	  post a join user_info b on a.user_id = b.user_id where post_id=#{postId} -->
    </select>
    
    <select id="getCourse" resultType="com.hs.meetme.mypage.domain.MyPageCourseVO">
-   		select a.course_id, a.course_name, b.avg_cost,c.place_name
+   		select a.course_id, a.course_name, b.avg_cost,c.place_name, c.thumbnail_href, c.region
 		from course a join course_order b 
 		on a.course_id = b.course_id
         join place c
