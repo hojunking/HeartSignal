@@ -9,6 +9,7 @@ import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 @Mapper
@@ -50,4 +51,9 @@ public interface MypageMapper {
 	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(닉네임)
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
+	
+	
+	
+	
+	
 }

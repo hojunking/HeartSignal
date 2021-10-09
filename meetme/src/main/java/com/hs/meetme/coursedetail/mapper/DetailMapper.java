@@ -9,7 +9,7 @@ import com.hs.meetme.coursedetail.domain.DetailVO;
 
 @Mapper
 public interface DetailMapper {
-	public List<DetailVO> getCourse();
+	public List<DetailVO> getCourse(int courseId); // 코스 상세보기
 	
-	public DetailVO courseOne(DetailVO vo); // 지역 선택되면 코스 상세보기
+//	public DetailVO courseOne(DetailVO vo); // 지역 선택되면 코스 상세보기
 }

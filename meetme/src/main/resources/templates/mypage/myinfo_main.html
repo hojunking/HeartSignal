@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout}">
+<!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
+    <th:block layout:fragment="css">
+				<style>
+
+				</style>
+		</th:block>
+		<th:block layout:fragment="content">
+		    <!-- 여기에 body에 들어갈 내용을 적어주세요 -->
+		    [[${userInfo.email}]]
+		    <h1 th:text="${userInfo.email}"></h1>
+		    <table border="1" id="list">
+		    	<tr>
+		    		<td>noticeId</td>
+		    		<td>userSent</td>
+		    		<td>userReceived</td>
+		    		<td>noticeContent</td>
+		    		<td>noticeDate</td>
+		    		<td>noticeConfirmed</td>
+		    	</tr>
+		    </table>
+		</th:block>
+		<th:block layout:fragment="script">
+			<script th:inline='javascript'>
+			$(function() {
+				noticeList();
+				function noticeList() {
+				$.ajax({
+					url:'getNoticeList',
+					type:'GET',
+					//contentType:'application/json;charset=utf-8',
+					data:{userId:2},
+					dataType:'json',
+					error:function(xhr,status,msg){
+						alert("상태값 :" + status + " Http에러메시지 :"+msg);
+					},
+					success:function(datas){
+						console.log(datas);
+						$.each(datas,function(idx,item){
+						$("<tr onclick='readnotice("+item.noticeId+")'>")
+						.append($('<td>').html(item.noticeId))
+						.append($('<td>').html(item.userSent))
+						.append($('<td>').html(item.userReceived))
+						.append($('<td>').html(item.noticeContent))
+						.append($('<td>').html(item.noticeDate))
+						.append($('<td>').html(item.noticeConfirmed))
+						.appendTo($("#list"));
+					});
+				}
+			});//userList
+				
+			}//ajax 끝
+			
+			
+			
+		});
+		function readnotice(noticeId){
+			console.log(noticeId);
+			
+		}
+			</script>
+		</th:block>
+</html>

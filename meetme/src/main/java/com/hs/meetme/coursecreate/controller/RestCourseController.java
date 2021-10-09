@@ -152,7 +152,8 @@ public class RestCourseController {
 		if(resultNum == 0) {
 			result = "error";
 		} else {
-			result = "success";
+//			result = "success";
+			result = vo.getCourseId();
 		}
 		
 		return result;

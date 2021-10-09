@@ -2,7 +2,9 @@ package com.hs.meetme.mypage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,4 +80,8 @@ public class MypageRestController {
 		
 		return myPageUserInfoVO;
 	}
+	
+	//마이페이지 내정보 뿌링클
+	
+	
 }

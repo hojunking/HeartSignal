@@ -631,7 +631,7 @@ export default defineComponent ({
             .then(text => {
                 // set the response data
                 console.log(text)
-                registerConfirm.value = text;
+                registerConfirm.value = text * 1;
             })
             .catch(err => {
                 registerCourseError.value = err;
@@ -644,12 +644,15 @@ export default defineComponent ({
                 }
             })
             .then(() => {
-                if (registerConfirm.value == 'success') {
-                    alert('코스 업로드에 성공했습니다.')
-                } else if (registerConfirm.value == 'error') {
-                    alert('등록이 되지 않았습니다.')
-                } else {
-                    alert('자바스크립트에서 문제가 발생 하였습니다.')
+                if ((registerConfirm.value) && (registerConfirm.value != "error")) {
+                    alert('등록이 되었습니다.');
+                    location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                }
+                else if(registerConfirm.value == "error"){
+                    alert('등록에 실패하였습니다.');
+                }
+                else {
+                    alert('알 수 없는 문제가 발생 하였습니다.');
                 }
             });
         }

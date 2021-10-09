@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "watch" : "vue-cli-service build --watch"
+    "watch": "vue-cli-service build --watch"
   },
   "dependencies": {
     "@mayank1513/vue-tag-input": "0.0.4",
@@ -16,10 +16,12 @@
     "core-js": "^3.6.5",
     "gitart-vue-dialog": "^1.0.3",
     "jquery": "^3.6.0",
+    "sockjs-client": "^1.5.2",
     "vue": "^3.0.0",
     "vue-draggable-next": "^2.0.1",
     "vue-router": "^4.0.11",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

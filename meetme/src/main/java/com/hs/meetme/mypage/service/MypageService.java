@@ -7,6 +7,7 @@ import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 public interface MypageService {
@@ -46,4 +47,5 @@ public interface MypageService {
 	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(닉네임)
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
-}
+	
+	}
