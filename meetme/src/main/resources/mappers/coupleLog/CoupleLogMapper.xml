@@ -15,15 +15,28 @@
 		a.couple_id = 1 and rownum=1
 	</select>
 
-
 	<!-- <select id="getLog" resultType="CoupleLogVO"> select a.log_title, a.log_created, 
 		a.log_date, a.log_content, b.caption 캡션, b.img_id, c.img_url from couple_log 
 		a inner join couple_log_img b on a.log_id = b.log_id inner join img c on 
 		b.img_id = c.img_id where a.couple_id = 1 </select> -->
 
-	<!-- 등록하기 -->
-	<!-- <insert id="logInsert" parameterType="CoupleLㄹgVO"> INSERT INTO COUPLE_LOG 
+	<!-- 등록하기 (파일업로드 -> 쿼리 수정) -->
+		<insert id="logInsert" parameterType="CoupleLogVO"> 
+		INSERT INTO COUPLE_LOG 
 		(LOG_ID,LOG_CREATED, LOG_UPDATED , LOG_TITLE,LOG_CONTENT, LOG_STATE,COUPLE_ID,LOG_LOC,LOG_DATE) 
 		VALUES(SEQ_COUPLELOG.nextval,sysdate,sysdate,'제목테스트','내용테서터','n',1,1,sysdate); 
-		</insert> -->
+		</insert>
+		
+	<!-- 수정하기 (파일업로드 -> 쿼리 수정)-->	
+		<update id="logUpdate" parameterType="CoupleLogVO">
+		UPDATE couple_log SET 
+                          LOG_UPDATED=sysdate
+                          ,LOG_TITLE='제목 test'
+                          ,LOG_CONTENT='내용 test'
+                          ,LOG_STATE='t'
+                          ,LOG_LOC='2'
+                          ,LOG_DATE=sysdate
+                         WHERE LOG_ID='5';
+       </update>
+       
 </mapper>
