@@ -11,7 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hs.meetme.coupleLog.domain.CoupleLogVO;
 import com.hs.meetme.coupleLog.service.CoupleLogService;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
+
 @Controller
+@Log4j2
 @RequestMapping("/coupleLog/*")
 public class CoupleLogController {
 	@Autowired
@@ -37,7 +41,15 @@ public class CoupleLogController {
 
 	@PostMapping("/coupleLogRecord")
 	public String coupleLogRecord(CoupleLogVO vo, RedirectAttributes rttr) {
+		System.out.println(vo);
+		service.logInsertImg(vo);
+		System.out.println(vo);
 		service.logInsert(vo);
+		System.out.println(vo);
+		/*
+		 * service.logInsertImg(vo); service.logInsertLogImg(vo);
+		 */
+		
 		return "redirect:/coupleLog/logList";
 	}
 

@@ -33,6 +33,17 @@ public class CoupleLogServiceImpl implements CoupleLogService {
 	}
 
 	@Override
+	public int logInsertImg(CoupleLogVO vo) {
+		// TODO Auto-generated method stub
+		return coupleMapper.logInsertImg(vo);
+	}
+	
+	@Override
+	public int logInsertLogImg(CoupleLogVO vo) {
+		// TODO Auto-generated method stub
+		return coupleMapper.logInsertLogImg(vo);
+	}
+	@Override
 	public int logDelete(CoupleLogVO vo) {
 		// TODO Auto-generated method stub
 		return coupleMapper.logDelete(vo);
@@ -43,6 +54,7 @@ public class CoupleLogServiceImpl implements CoupleLogService {
 		// TODO Auto-generated method stub
 		return coupleMapper.logUpdate(vo);
 	}
+
 
 
 

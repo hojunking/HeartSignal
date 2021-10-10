@@ -13,7 +13,14 @@ public class CoupleLogVO {
 	private String logContent;
 	private String logState;
 	private int coupleId; //커플 id 가져와야하남?
-	private int logLoc; //데이트 한 장소
+	private String logLoc; //데이트 한 장소
 	private Date logDate; //데이트 한 날짜
-	private String imgUrl;
+	
+	
+	private int imgId;
+	private String imgUrl; 
+	private Date imgDate;
+	private String imgUsage;
+	
+	
 }
