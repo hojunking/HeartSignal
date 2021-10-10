@@ -9,6 +9,8 @@
     <!-- default header name is X-CSRF-TOKEN -->
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 
+    <title>우리 오늘 뭐해?</title>
+    <!-- 공통으로 쓰이는 css파일 -->
     <link th:href="@{/assets/fonts/iconsmind/iconsmind.css}" rel="stylesheet">
     <link th:href="@{/assets/fonts/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
     <!--Google fonts-->
@@ -19,9 +21,12 @@
         rel="stylesheet">
     <!-- Main CSS -->
     <link th:href="@{/assets/css/theme-pink.min.css}" rel="stylesheet">
+    <style>
+        .swal-button:hover{
+            background-color: #d23559 !important;
+        }
+    </style>
 
-    <title>우리 오늘 뭐해?</title>
-    <!-- 공통으로 쓰이는 css파일 -->
     <!-- load stylesheets -->
     <!-- <link rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}"> Font Awesome -->
     <!-- <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"> -->
@@ -66,6 +71,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script> -->
     <!-- scripts -->
     <script th:src="@{/assets/js/theme.bundle.js}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script th:inline="javascript">
 
         let userSession; // 세션정보 저장
