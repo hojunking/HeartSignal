@@ -4,10 +4,6 @@
 	layout:decorator="~{layout/layout}">
 <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
 <th:block layout:fragment="css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway"
-		rel="stylesheet">
-	<link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/icomoon.css}">
 
 	<style>
 </style>
@@ -15,151 +11,474 @@
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
 	<div class="tm-page-wrap mx-auto">
-		<br> <br>
-		<section class="probootstrap-cover probootstrap-scene-0">
-			<div class="container">
-				<div
-					class="row probootstrap-vh-100 align-items-center  text-md-left text-sm-center text-center">
+		<!-- section 1 -->
+		<section class="position-relative bg-light">
+                <div class="container position-relative py-7 py-lg-12">
+                    <div class="row align-items-center justify-content-around">
+                        <div class="col-lg-6 mb-5 mb-lg-0">
+                            <img th:src="@{/img/coupleImage6.jpg}" alt="" class="img-fluid rounded-xl shadow-lg">
+                        </div>
+                        
+                        
+                        <div class="col-lg-6 col-xl-5">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h2 class="mb-5 display-4 ms-lg-n15 position-relative" data-aos="zoom-in-up" data-aos-delay="150">
+                                너와 나,<br> <span class="text-warning text-underline-warning fw-lighter"
+                                    data-typed='{"strings": ["영원히", "하루하루", "추억의", "각별한","우리의"]}'></span>
+                                커플로그
+                            </h2>
+                            <p class="mb-5 lead w-lg-80">
+                                &ldquo;함께 그려가는 아름다운 기억&rdquo;
+                            </p>
+                            <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                            <span>커플로그시작하기</span></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+		
+		<!-- section 2 -->
+		<section class="position-relative overflow-hidden">
+                <div class="container position-relative py-7 py-lg-12">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6 col-sm-8 mx-auto mx-md-0 mb-5 mb-md-0 order-md-last position-relative">
 
-					<div class="col-md-6 order-md-1 order-2">
-						<div class="probootstrap-text">
-							<h1
-								class="probootstrap-heading probootstrap-stagger text-black mb-2">
-								너와 나<br> 우리 함께
-							</h1>
-							<p class="mb-5 probootstrap-stagger lead">&ldquo;함께 그려가는 아름다운 기억&rdquo;</p>
-							<p class="probootstrap-stagger">
-								<button type="button" class="btn btn-primary mr-2 mb-2"
-									data-toggle="modal" data-target=".bd-example-modal-lg">커플로그시작하기</button>
+                            <div class="position-relative">
+                                <div class="row g-3 position-relative">
+                                    <div class="col-6 position-relative">
+                                        <img data-aos="fade-right" th:src="@{/img/coupleImage4.jpg}" alt=""
+                                            class="img-fluid rounded-xl shadow-lg mb-4">
+                                        <img data-aos="fade-left" th:src="@{/img/coupleImage7.jpg}" alt=""
+                                            class="img-fluid rounded-xl shadow-lg">
+                                    </div>
+                                    <div class="col-6 position-relative">
+                                        <img data-aos="fade-right" th:src="@{/img/coupleImage2.jpg}" alt=""
+                                            class="img-fluid rounded-xl mb-4 mt-5 shadow-lg">
+                                        <img data-aos="fade-left" th:src="@{/img/coupleImage3.jpg}" alt=""
+                                            class="img-fluid rounded-xl shadow-lg">
+                                    </div>
 
-								<a th:href="@{/coupleMain2}"
-									class="btn btn-primary btn-outline-black mb-2">Visit
-									uiCookies uiCookies</a>
-							</p>
-						</div>
-					</div>
-					<div class="col-md-6 order-md-2 order-1">
-						<img th:src="@{/img/device_vertical_1.png}"
-							class="img-fluid probootstrap-device-vertical-1">
-					</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4 order-md-1" data-aos="fade-right">
+                            <h2 class="mb-4 display-6">특별한 기억을<br>
+                            함께 간직해요</h2>
+                            <p class="mb-5 w-lg-65 text-muted">
+                                뜨거웠던 우리의 데이트를 영원히 기억해요
+                            </p>
+                            <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                            <span>커플로그시작하기</span></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+		
+		<!-- section 3 -->
+		<section class="position-relative">
+                <div class="container pt-7 pt-lg-12 position-relative">
+                    <div class="row mb-5 align-items-end">
+                        <div class="col-lg-8">
+                            <h2 class="mb-3 display-5" data-aos="fade-right">함께 데이트 코스를 만들어요</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="container position-relative pb-7 pb-lg-12">
+                    <div class="row">
+                        <div class="col-sm-6 mb-5 mb-sm-0" data-aos="">
+                            <!--Card-->
+                            <a href="#!" class="d-block overflow-hidden position-relative card-hover">
+                                <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
+                                    <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid img-zoom">
+                                </div>
+                                        <span class="text-muted small">데이트코스 만들기</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-6" data-aos="">
+                            <!--Card-->
+                            <a href="#!" class="d-block overflow-hidden position-relative card-hover">
+                                <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
+                                    <img th:src="@{/img/coupleImage5.jpg}" alt="" class="img-fluid img-zoom">
+                                </div>
+                                        <span class="text-muted small">우리들만의 이야기</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mx-auto text-center pt-7 pt-lg-9">
 
-				</div>
-			</div>
-		</section>
-		<br> <br>
-		<!--		<section class="probootstrap-section probootstrap-scene-1 probootstrap-bg-dark">
-      <div class="container ">
-        <div class="row mb-5 justify-content-center text-center">
-          <div class="col-lg-8">
-            <h2 class="probootstrap-heading">Be Creative</h2>
-            <p class="mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-            <p><a href="https://uicookies.com/" class="btn btn-primary mr-2 mb-2"><span class="icon-ipad"></span>Download For Free</a></p>
-          </div>  
-        </div>
-      </div>
-       <div class="container-fluid mb-5">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="probootstrap-devices">
-              <img th:src="@{/img/device_1.png}" class="probootstrap-device-left img-fluid" >
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>  -->
-		<div class="modal fade bd-example-modal-lg" tabindex="-1" 
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">커플로그 시작하기</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<section class="probootstrap-section probootstrap-bg-dark"
-							>
-							<div class="container">
-								<div class="row mb-5 justify-content-center text-center">
-									<div class="col-lg-8">
-										<h2 class="probootstrap-heading">지금 시작하세요.</h2>
-									</div>
-								</div>
-								<div class="row">
-									<!------------------------------------------------------------------------------- -->
-									<div class="col-md">
-										<div class="media d-block mb-4 text-center">
-											<img th:src="@{/img/008.jpg}" alt="" class="img-fluid mb-3 rounded w-100">
-											<div class="media-body p-3" id="one">
-												<p class="mb-5">&ldquo;Far far away, behind the word
-													mountains, far from the countries Vokalia and Consonantia,
-													there live the blind texts.&rdquo;</p>
-												<h5 class="mt-0">1개월</h5>
-												<p>2,000원</p>
-											</div>
-										</div>
-									</div>
-									<!------------------------------------------------------------------------------- -->
-									<div class="col-md">
-										<div class="media d-block mb-4 text-center">
-											<img th:src="@{/img/008.jpg}" alt="" class="img-fluid mb-3 w-100">
-											<div class="media-body p-3" id="three">
-												<p class="mb-5">&ldquo;Far far away, behind the word
-													mountains, far from the countries Vokalia and Consonantia,
-													there live the blind texts.&ldquo;</p>
-												<h5 class="mt-0">3개월</h5>
-												<p>Google</p>
-											</div>
-										</div>
-									</div>
-									<!------------------------------------------------------------------------------- -->
-									<div class="col-md">
-										<div class="media d-block mb-4 text-center">
-											<img th:src="@{/img/008.jpg}" alt="" class="img-fluid mb-3 e w-100">
-											<div class="media-body p-3" id="six">
-												<p class="mb-5">&ldquo;Far far away, behind the word
-													mountains, far from the countries Vokalia and Consonantia,
-													there live the blind texts.&ldquo;</p>
-												<h5 class="mt-0">6개월</h5>
-												<p>Twitter</p>
-											</div>
-										</div>
-									</div>
-									<!------------------------------------------------------------------------------- -->
-									<div class="col-md">
-										<div class="media d-block mb-4 text-center">
-											<img th:src="@{/img/008.jpg}" alt="" class="img-fluid mb-3  w-100">
-											<div class="media-body p-3" id="forever">
-												<p class="mb-5">&ldquo;Far far away, behind the word
-													mountains, far from the countries Vokalia and Consonantia,
-													there live the blind texts.&ldquo;</p>
-												<h5 class="mt-0">평생권</h5>
-												<p>Twitter</p>
-											</div>
-										</div>
-									</div>
+                       <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                            <span>커플로그시작하기</span></a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- section 4 -->
+            <section id="features" class="position-relative overflow-hidden">
+                <div class="container py-7 py-lg-12 position-relative">
+                    <div class="row justify-content-center">
+                        <!--Feature column-->
+                        <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="150">
+                            <div class="center-both mx-auto size-60 rounded-circle bg-primary text-white lh-1 mb-4">
+                                <i class="fs-3 bi bi-brush"></i>
+                            </div>
+                            <h5 class="mb-3">연인과속닥속닥</h5>
 
-								</div>
-							</div>
-						</section>
-					</div>
-				</div>
-			</div>
+                            <p class="mb-0 w-lg-85 mx-auto">
+                               데이트코스를 함께 만들면서 채팅을 할 수 있어요
+                            </p>
+                        </div>
+
+                        <!--Feature column-->
+                        <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+                            <div class="center-both mx-auto size-60 rounded-circle bg-danger text-white mb-4">
+                                <i class="fs-3 bi bi-app-indicator"></i>
+                            </div>
+                            <h5 class="mb-3">우리들만의코스</h5>
+                            <p class="mb-0 w-lg-85 mx-auto">
+                                AI가 추천한 코스 뿐만 아니라 다른 커플의 데이트코스를 추천받아 우리들의 데이트로 만들 수 있어요
+                            </p>
+                        </div>
+
+                        <!--Feature column-->
+                        <div class="col-12 col-lg-4 text-center" data-aos="fade-up" data-aos-delay="250">
+                            <div class="center-both mx-auto size-60 rounded-circle bg-info text-white lh-1 mb-4">
+                                <i class="fs-3 bi bi-images"></i>
+                            </div>
+                            <h5 class="mb-3">장소사진저장</h5>
+                            <p class="mb-0 w-lg-85 mx-auto">
+                                데이트 코스로 방문했던 장소들의 사진을 저장하고 블로그처럼 꾸밀 수 있어요
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- section 5 -->
+             <section class="position-relative bg-white">
+                <!--Half background-->
+                <div class="position-absolute start-0 top-0 w-100 h-50 bg-dark rounded-top-start-block" id="start">
+                </div>
+
+                <!--Vector sign-->
+                <div class="container position-relative py-7 py-lg-12">
+                    <div class="row mb-3 mb-md-5 align-items-end text-white">
+                        <div class="col-md-7 mb-4 mb-md-0 position-relative">
+                            <p class="mb-2">커플로그 이용권</p>
+                            <h2 class="display-5 mb-0">커플로그시작하기</h2>
+                        </div>
+                        <div class="col-md-5">
+                            <!-- Plans-Switch -->
+                            <div class="d-flex justify-content-start justify-content-md-end align-items-center">
+                                <div class="price-monthly">
+                                    <strong>달</strong>
+                                </div>
+                                <!-- Switch -->
+                                <div class="form-check form-switch ms-2 me-1">
+                                    <input class="form-check-input border-0 me-0" type="checkbox" id="planSwitch"
+                                        data-as-toggle="price" data-as-target=".price">
+                                    <label class="form-check-label" for="planSwitch"></label>
+                                </div>
+                                <div class="price-monthly">
+                                    <strong>전체</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.row-->
+
+                    <div class="position-relative">
+                        <div class="row justify-content-center position-relative z-index-1">
+                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up">
+                                <div
+                                    class="card shadow-sm card-body p-4 rounded-xl border-0 d-flex flex-column overflow-hidden h-100">
+                                    <div class="position-relative overflow-hidden">
+                                        <h6>1개월권</h6>
+                                        <div class="d-flex align-items-end mb-4">
+                                            <sup class="d-inline-block">₩</sup>
+                                            <div class="price display-4" data-as-annual="4500" data-as-monthly="4500">4,500</div>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>1개월 이용</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>1
+                                            Email account</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>15
+                                            GB storage</li>
+                                        <li class="pb-1 mb-2 d-table"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>50K
+                                            files</li>
+                                    </ul>
+                                    <div class="d-grid d-md-flex">
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" id="one" data-bs-toggle="modal"><span>자세히보기</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.col-->
+                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
+                                data-aos-delay="100">
+                                <div
+                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                    <span
+                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                        인기</span>
+                                    <div class="position-relative overflow-hidden">
+                                        <h6>3개월권</h6>
+                                        <div class="d-flex align-items-end mb-4">
+                                            <sup class="d-inline-block">₩</sup>
+                                            <div class="price display-4" data-as-annual="4000" data-as-monthly="12000">4,000
+                                            </div>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Free
+                                            domain</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>2
+                                            email accounts</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>25
+                                            GB storage</li>
+                                        <li class="pb-1 mb-2 d-table"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>100K
+                                            files</li>
+                                    </ul>
+                                    <div class="d-grid d-md-flex">
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" data-bs-toggle="modal" id="three"><span>자세히보기</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.col-->
+                            <div class="col-lg-3 aos-init aos-animate" data-aos="fade-up" data-aos-delay="150">
+                                <div class="card shadow-sm card-body p-4 rounded-xl border-0 overflow-hidden h-100">
+
+                                    <div class="position-relative overflow-hidden">
+                                        <h6>6개월권</h6>
+                                        <div class="d-flex align-items-end mb-4">
+                                            <sup class="d-inline-block">₩</sup>
+                                            <div class="price display-4" data-as-annual="3000" data-as-monthly="18000">3,000
+                                            </div>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Free
+                                            domain</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>5
+                                            Sub domains</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Unlimited
+                                            storage</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Unlimited
+                                            files</li>
+                                    </ul>
+                                    <div class="d-grid d-md-flex">
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" data-bs-toggle="modal" id="six"><span>자세히보기</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.col-->
+                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
+                                data-aos-delay="100">
+                                <div
+                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                    <span
+                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                        이벤트</span>
+                                    <div class="position-relative overflow-hidden">
+                                        <h6>평생이용권</h6>
+                                        <div class="d-flex align-items-end mb-4">
+                                            <sup class="d-inline-block">₩</sup>
+                                            <div class="price display-4" data-as-annual="20000" data-as-monthly="20000">20,000
+                                            </div>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Free
+                                            domain</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>2
+                                            email accounts</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>25
+                                            GB storage</li>
+                                        <li class="pb-1 mb-2 d-table"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>100K
+                                            files</li>
+                                    </ul>
+                                    <div class="d-grid d-md-flex">
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift"  data-bs-toggle="modal" id="forever"><span>자세히보기</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!--/.pricing row-->
+                    </div>
+                    <!--/.Plans-container-->
+                </div>
+                <!--/.content-->
+            </section>
+
 		</div>
-		</div>
+		
+		
+		<!-- Modal창 -->
+		
+		<!--Modal newsletter-->
+                <div class="modal fade" id="paymentInfo" tabindex="-1" aria-labelledby="paymentInfo"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                    
+                        <div class="modal-content border-0">
+                            <div class="modal-body p-0 border-0">
+                                <button type="button"
+                                    class="btn-close position-absolute end-0 top-0 mt-2 me-2 me-md-n3 mt-md-n3 size-40 p-0 center-both rounded-circle bg-tint-primary z-index-1"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="bi bi-x fs-5"></i>
+                                </button>
+                                <div class="d-md-flex row">
+                                   
+                                   <!-- 왼쪽 사진 -->
+                                    <div class="col-md-6">
+                                        <img th:src="@{/img/coupleImage8.jpg}" alt=""
+                                            class="d-block rounded-top d-md-none img-fluid">
+                                        <div
+                                            class="d-none d-md-flex overflow-hidden bg-shade-primary rounded-3 rounded-end-0 h-md-100 position-relative">
+                                            <img th:src="@{/img/coupleImage8.jpg}" alt="" class="bg-image">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 오른쪽 -->
+                                    <div class="col-md-6 h-100">
+                                        <div class="h-100 py-5 px-4 position-relative">
+                                            
+                                            <h2 class="display-6 mb-2">
+                                            이용권결제
+                                            </h2>
+                                            <p>결제정보</p>
+                                            <div class="position-relative">
+                                            	<div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
+                                data-aos-delay="100">
+                                <div
+                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                    <span
+                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                        이벤트</span>
+                                    <div class="position-relative overflow-hidden">
+                                        <h6 id="subterm"></h6>
+                                        <div class="price display-4" id="subprice">
+                                            </div>
+                                        <span ></span>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>Free
+                                            domain</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>2
+                                            email accounts</li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>25
+                                            GB storage</li>
+                                        <li class="pb-1 mb-2 d-table"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>100K
+                                            files</li>
+                                    </ul>
+                                </div>
+                            </div>
+             
+             <section class="position-relative bg-light">
+                <div class="container">
+                    <div class="row">
+                            <!--Collapse item-->
+                            <div class="border-bottom py-3 fw-semibold text-dark fs-5 d-block">
+                                주문 상품의 구매 조건을 확인하였으며,<br> 결제 진행에 동의함&nbsp;<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            </div>
+                            <!--Collapse item-->
+                            <div class="border-bottom py-3">
+                                <a class="fw-semibold text-dark fs-5 d-block" data-bs-toggle="collapse" href="#faq2"
+                                    role="button" aria-expanded="false" aria-controls="faq2">
+                                    개인정보 제3자 제공 동의
+                                </a>
+                                <div class="collapse" id="faq2">
+                                    <p class="pt-3">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua.
+                                        eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
+                                        cras sed
+                                        felis. Justo eget magna neque vitae tempus
+                                        quam
+                                        pellentesque nec. Urna molestie at elementum eu facilisis sed. Congue mauris
+                                        rhoncus
+                                        aenean vel. Lobortis mattis aliquam faucibus purus. Rutrum quisque non tellus
+                                        orci ac
+                                        auctor augue.
+                                    </p>
+                                        <br>
+                                        <b>동의함</b>&nbsp;<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                </div>
+                            </div>
+
+                            <!--Collapse item-->
+                            <div class="py-3">
+                                <a class="fw-semibold text-dark fs-5 d-block" data-bs-toggle="collapse" href="#faq3"
+                                    role="button" aria-expanded="false" aria-controls="faq3">
+                                    개인정보 수집 이용 동의
+                                </a>
+                                <div class="collapse" id="faq3">
+                                    <p class="pt-3">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. 
+                                        eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
+                                        cras sed
+                                        felis. Justo eget magna neque vitae tempus
+                                        quam
+                                        pellentesque nec. Urna molestie at elementum eu facilisis sed. Congue mauris
+                                        rhoncus
+                                        aenean vel. Lobortis mattis aliquam faucibus purus. Rutrum quisque non tellus
+                                        orci ac
+                                        auctor augue.
+                                    </p>
+                                        <br>
+                                        <b>동의함</b>&nbsp;<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                </div>
+                            </div>
+                        </div>
+                	</div>
+            </section>
+            <br>
+                                            </div>
+			                            <div class="d-grid">
+			                               	<button class="btn btn-primary" type="button" id="payment">결제하기</button>
+			                   			</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </th:block>
 
 <th:block layout:fragment="script">
-
-	<script th:src="@{/js/TweenMax.min.js}"></script>
-	<script th:src="@{/js/ScrollMagic.min.js}"></script>
-	<script th:src="@{/js/debug.addIndicators.min.js}"></script>
-	<script th:src="@{/js/animation.gsap.min.js}"></script>
-	<script type="text/javascript"
+ <script type="text/javascript"
 		src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-	<script th:src="@{/js/main.js}"></script>
 	<script th:inline='javascript'>
 
 		$(function() {
@@ -169,27 +488,49 @@
 
 			$("#one").on('click', function() {
 				let subTerm = 1;
-				let subPrice = 100;
-				requestPay(subTerm, subPrice);
+				let subPrice = 4500;
+				$("#subterm").text(subTerm+"개월권");
+				$("#subprice").text(subPrice+" ₩");
+				
+				$("#payment").on('click',function(){
+					requestPay(subTerm, subPrice);
+				});
 			});
 
 			$("#three").on('click', function() {
 				let subTerm = 3;
-				let subPrice = 200;
-				requestPay(subTerm, subPrice);
+				let subPrice = 12000;
+				$("#subterm").text(subTerm+"개월권");
+				$("#subprice").text(subPrice+" ₩");
+				
+				$("#payment").on('click',function(){
+					requestPay(subTerm, subPrice);
+				});
 			});
 
 			$("#six").on('click', function() {
 				let subTerm = 6;
-				let subPrice = 300;
-				requestPay(subTerm, subPrice);
+				let subPrice = 18000;
+				$("#subterm").text(subTerm+"개월권");
+				$("#subprice").text(subPrice+" ₩");
+				
+				$("#payment").on('click',function(){
+					requestPay(subTerm, subPrice);
+				});
 			});
 
 			$("#forever").on('click', function() {
 				let subTerm = 1000;
-				let subPrice = 500;
-				requestPay(subTerm, subPrice);
+				let subPrice = 20000;
+				$("#subterm").text("평생이용권");
+				$("#subprice").text(subPrice+" ₩");
+				
+				$("#payment").on('click',function(){
+					requestPay(subTerm, subPrice);
+				});
 			});
+			
+			
 
 			//결제실행
 			function requestPay(subTerm, subPrice) {
