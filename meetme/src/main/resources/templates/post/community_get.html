@@ -44,21 +44,22 @@
       <br>
       <hr>
       <div style="text-align: right ;">
-         <h7 th:text="|작성자:  ${list.nickname}|"></h7>
-         <h7 th:text="|조회수: ${list.hit}|"></h7>
+         <h6 th:text="|작성자:  ${list.nickname}|"></h6>
+         <h6 th:text="|조회수: ${list.hit}|"></h6>
       </div>
       <br>
       <div class="form-group">
          <div class="col-sm-10">
             <!--코스 여기-->
+            <th:block th:if='${course} != null'>
             <div th:utext="${course[0].courseName}"> </div>
             <div>
                <div th:each="c : ${course}" class="d-flex justify-content-between">
                   <div th:text="${c.placeName}"></div>
                   <div th:text="${c.avgCost}"></div>
                </div>
-
             </div>
+            </th:block>
             <!-- 글 내용 here-->
             <th:block th:utext="${list.postContent}"></th:block>
             <!-- <textarea name="postContent" class="form-control" id="ckcontents" th:text="${list.postContent}" disabled></textarea> -->
