@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
       
       // confilct 났었습니다!!
 
-      // registry.addEndpoint("/ws").setAllowedOrigins("http://localhost:3000").withSockJS();
+       registry.addEndpoint("/ws").setAllowedOrigins("http://localhost:3000").withSockJS();
 
       // registry.addEndpoint("/ws").setAllowedOrigins("http://192.168.*.*:8000").withSockJS();
 
