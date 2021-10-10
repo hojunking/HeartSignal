@@ -18,7 +18,7 @@
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- Main CSS -->
-    <link th:href="@{/assets/css/theme-purple.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/theme-pink.min.css}" rel="stylesheet">
 
     <title>우리 오늘 뭐해?</title>
     <!-- 공통으로 쓰이는 css파일 -->
@@ -46,12 +46,13 @@
         </div>
         <span class="small d-block ms-2">Loading...</span>
     </div>
+    <!--Preloader Spinner-->
 
     <th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-    <main>
-        <th:block layout:fragment="content"></th:block>
-    </main>
+    
+    <th:block layout:fragment="content"></th:block>
+    
     
     <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
@@ -66,19 +67,32 @@
     <!-- scripts -->
     <script th:src="@{/assets/js/theme.bundle.js}"></script>
     <script th:inline="javascript">
-        let userSession;
 
+        let userSession; // 세션정보 저장
+
+        // ajax csrf 설정
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
 
         $.ajaxSetup({
-
             beforeSend: function (xhr, settings) {
                 xhr.setRequestHeader(header, token);
             }
-
         });
+        // ajax csrf 설정
 
+        // header 커플로그 이벤트
+        function goCoupleMain(user){
+            if(user == null){
+                alert('로그인이 필요한 서비스 입니다');
+                location.href = '/login';
+            } else{
+                location.href = '/coupleMain';
+            }
+        };
+        // header 커플로그
+
+        // 페이지 로드 종료
         $(function () {
             /*<![CDATA[*/
             userSession = /*[[${session.userSession}]]*/ '';
@@ -93,7 +107,8 @@
                 }
             });
             $('.tm-current-year').text(new Date().getFullYear()); // Update year in copyright  
-        })
+        });
+        // 페이지 로드 종료
     </script>
 
     <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
