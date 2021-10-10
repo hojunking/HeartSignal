@@ -74,12 +74,12 @@ public class PostController {
    public String get_community(@PathVariable long postId, Model model) {
       PostVO post = pService.getPost(postId);
       String courseId =  post.getCourseId();
-
       model.addAttribute("list", pService.getPost(postId));
       model.addAttribute("cmt", pService.commentCM(postId));
       if(courseId != null) {
     	  model.addAttribute("course", pService.getCourse(courseId));
       }
+
       pService.countHit(postId);
       
       return "post/community_get";
