@@ -29,6 +29,12 @@ public class MypageController {
 
 	@Autowired MypageService mypageService;
 	@Autowired NoticeService noticeService;
+	
+	@GetMapping("/main")
+	public String main() {
+		return "mypage/main";
+	}
+	
 	// 나의 코스 리스트 보기
 	@GetMapping("/myinfo_my_course_list")
 	public String myinfo_my_course_list(Model model,

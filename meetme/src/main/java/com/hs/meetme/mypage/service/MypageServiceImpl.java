@@ -9,6 +9,7 @@ import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.mapper.MypageMapper;
 
@@ -100,6 +101,20 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int deleteCourseLike(MyPageCourseVO myPageCourseVO) {
 		return mypageMapper.deleteCourseLike(myPageCourseVO);
+	}
+
+	@Override
+	public int deleteCourse(MyPageCourseVO myPageCourseVO) {
+		return mypageMapper.deleteCourse(myPageCourseVO);
+	}
+	@Override
+	public int deleteCourseLike2(MyPageCourseVO myPageCourseVO) {
+		return mypageMapper.deleteCourseLike2(myPageCourseVO);
+	}
+    //마이페이지 나의 취향 관련
+	@Override
+	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO) {
+		return mypageMapper.getUserTags(userTagsVO);
 	}
     
 }

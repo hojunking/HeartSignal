@@ -7,10 +7,14 @@ import com.hs.meetme.mypage.domain.CommentVO;
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 public interface MypageService {
+	
+	//내 취향 조회하기
+	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	
 	//내 코스 조회
 	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId);
@@ -18,8 +22,12 @@ public interface MypageService {
 	public int getTotalCourseCount(Criteria cri, String userId);
 	//내 코스 상세 리스트 조회
 	public List<MyPageCourseVO> getCourseDetailList(MyPageUserInfoVO myPageUserInfoVO);
-	//내 코스 삭제
+	//코스 스크랩 한거 삭제
 	public int deleteCourseLike(MyPageCourseVO myPageCourseVO);
+	//내가 만든 코스 삭제
+	public int deleteCourse(MyPageCourseVO myPageCourseVO);
+	public int deleteCourseLike2(MyPageCourseVO myPageCourseVO);
+	
 	
 	//내 게시글 전체 갯수
 	public int getPostCount(String userId);

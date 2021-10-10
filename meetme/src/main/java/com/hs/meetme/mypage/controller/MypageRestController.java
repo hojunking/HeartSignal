@@ -1,5 +1,8 @@
 package com.hs.meetme.mypage.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.service.MypageService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 @RestController
 @RequestMapping("/mypage/*")
@@ -23,10 +27,22 @@ public class MypageRestController {
 	@Autowired private PasswordEncoder encoder;
 	
 	@DeleteMapping("/deleteCourse")
-	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO) {
+	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO, HttpServletRequest request) {
 		
-		int r =mypageService.deleteCourseLike(myPageCourseVO);
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		String userId = accountVO.getUserId();
+		String courseUserId = myPageCourseVO.getUserId();
 		
+		int r = 0;
+		if(userId.equals(courseUserId)) {
+	      r = mypageService.deleteCourse(myPageCourseVO);
+	      r = mypageService.deleteCourseLike2(myPageCourseVO);
+		}else {
+	      myPageCourseVO.setUserId(userId);
+		  r =mypageService.deleteCourseLike(myPageCourseVO);
+		}
 		return r == 1 ? true : false;
 	}
 	

@@ -2,97 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorator="~{layout/layout}">
+
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
-	<style>
-/* 태그 */
-.tcustom {
-	width: 50px;
-	height: 30px;
-	line-height: 28px;
-	background-color: #69c6ba;
-	border: 0px;
-}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+  <style>
 
-.placeTag {
-	padding: 8px;
-	border-radius: 5px;
-	width: 50px;
-	height: 30px;
-	line-height: 28px;
-	background-color: #69c6ba;
-	color: white;
-	font-size: x-small;
-	font-weight: bold;
-}
-
-.placeTag2 {
-	background-color: #FF8E99;
-}
-/* 입력 칸 */
-.insertcustom, .insertcustomOne {
-	border: 2px;
-	border-style: solid;
-	border-color: #69c6ba;
-}
-
-.select {
-	margin-left: 100px;
-}
-/* 검색 버튼 */
-.tagButton {
-	width: 50px;
-	height: 33.5px;
-	font-size: small;
-	border-radius: 0px;
-}
-/* 자세히 보기 버튼  */
-.cusButton {
-	border-radius: 5px;
-	font-size: x-small;
-}
-
-/* 코스 카드  */
-.customCard {
-	border: 0px;
-	background-color: transparent;
-}
-
-.region {
-	color: white;
-	border: 0px;
-	background-color: transparent;
-}
-
-/* 카드 이미지 사이즈*/
-.cardImg {
-	margin: 30px 30px;
-	width: 80px;
-	height: 80px;
-}
-
-.cardbtn, .cardbtn2 {
-	text-align: center;
-	font-size: 12px;
-	border: 0px;
-	margin-right: auto;
-}
-
-.cardbtn2:hover, .cardbtn2:focus, .cardbtn2:active {
-	background: #69c6ba;
-	color: white;
-}
-
-.selectCard {
-	background-color: rgba(255, 255, 255, 0.7);
-	color: grey;
-	border-radius: 10px;
-}
-
-.cource {
-	padding: 10px;
-}
-</style>
+  </style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -174,7 +89,7 @@
 								<p class="tm-recommended-price" th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
 								<p><button th:data-courseId="${list[c].courseId}"
 								           th:data-userId="${list[c].userId}"
-								           onclick="">삭제</button></p>
+								           onclick="courseDelFunc(this)">삭제</button></p>
 							</div>
 							<!-- </a> -->
 						</div>
@@ -187,22 +102,21 @@
 				</div>
 			</section>
 		</div>
-		
+		</th:block>
 
 
 <!-- .main-content -->
 
 <th:block layout:fragment="script">
 	<script>
-	//세션 아이디 쓰기
-	let userSessionId = userSession == null ? "" : userSession.userId;
 	
 	//삭제 함수
 	function courseDelFunc(obj){
       let userId =$(obj).attr('data-userId');
       let courseId =$(obj).attr('data-courseId');
 	  let result = confirm("삭제하시겠습니까?");
-	  
+	  console.log(userId);
+	  console.log(courseId);
 	  if(result) {
 		  $.ajax({
 			  url: "deleteCourse",
@@ -210,22 +124,26 @@
 			  data : JSON.stringify({ userId: userId,
                                       courseId:courseId }),
 			  dataType:'json',
-			  success:function(e){
-				  if(e==true){
-					  
-				  }
-				  
+			  contentType:'application/json;charset="UTF-8"',
+			  success:function(result){
+				  if(result==true){
+					  alert("코스가 삭제 되었습니다.")
+					  actionForm.submit();
+				  }    
+			  },
+			  error:function(){
 			  }
 		  })//ajax end==
-	  }
-	  
+	  }  
 	}
+	
 		$(function() {
 			//세션 아이디 쓰기
 			let userSessionId = userSession == null ? "" : userSession.userId;
 			
-
-		   		$.ajax({
+			var actionForm = $("#actionForm")
+			
+/* 		   		$.ajax({
 	    			url: "",
 	    			method : "post",
 	    			data : JSON.stringify({ userId: userSessionId,
@@ -243,12 +161,9 @@
 	    			error : function(){
 	    				
 	    			}
-	    		})
-
-			
- 
-		      var actionForm = $("#actionForm")
-		      
+	    		}) */
+	    	  
+		           
 			  //상세보기
 		/*      $(".move").on("click", function(e){
 		        e.preventDefault();
@@ -268,7 +183,7 @@
 		      
 		      //분류 검색
 		      $("select[name=category]").on("change", function(){
-			    actionForm.submit(); 
+			    actionForm.submit();
 		      });
 
 		     
