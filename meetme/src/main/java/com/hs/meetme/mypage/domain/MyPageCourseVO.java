@@ -21,4 +21,6 @@ public class MyPageCourseVO {
 	private String thumbnailHref;
 	private String avgCost; //평균비용(인영)
 	private String courseComment; //코스 comment(인영) 
+	private String longtitude; //위도 (인영)
+	private String latitude; //경도 (인영)
 }

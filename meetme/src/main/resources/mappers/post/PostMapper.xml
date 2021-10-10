@@ -79,7 +79,7 @@
    </select>
    
    <select id="getCourse" resultType="com.hs.meetme.mypage.domain.MyPageCourseVO">
-   		select a.course_id, a.course_name, b.avg_cost,c.place_name, c.thumbnail_href, c.region
+   		select a.course_id, a.course_name, b.avg_cost,c.place_name, c.thumbnail_href, c.region, c.longtitude, c.latitude
 		from course a join course_order b 
 		on a.course_id = b.course_id
         join place c
