@@ -20,27 +20,31 @@ public class CoupleLogServiceImpl implements CoupleLogService {
 	}
 
 	@Override
-	public List<CoupleLogVO> getLog() {
+	public CoupleLogVO getLog(CoupleLogVO vo) {
 		// TODO Auto-generated method stub
-		return coupleMapper.getLog();
+		return coupleMapper.getLog(vo);
+	}
+	
+
+	@Override
+	public int logInsert(CoupleLogVO vo) {
+		// TODO Auto-generated method stub
+		return coupleMapper.logInsert(vo);
 	}
 
 	@Override
-	public int logInsert() {
+	public int logDelete(CoupleLogVO vo) {
 		// TODO Auto-generated method stub
-		return coupleMapper.logInsert();
+		return coupleMapper.logDelete(vo);
 	}
 
 	@Override
-	public int logDelete() {
+	public int logUpdate(CoupleLogVO vo) {
 		// TODO Auto-generated method stub
-		return coupleMapper.logDelete();
+		return coupleMapper.logUpdate(vo);
 	}
 
-	@Override
-	public int logUpdate() {
-		// TODO Auto-generated method stub
-		return coupleMapper.logUpdate();
-	}
+
+
 
 }

@@ -22,17 +22,23 @@ public class CoupleLogController {
 		model.addAttribute("logList", service.getLogList());
 		return "coupleLog/coupleLogMain";
 	}
+	
+	@GetMapping("/logOne")
+	public String getLogOne(Model model,CoupleLogVO vo) {
+		model.addAttribute("logOne", service.getLog(vo));
+		return "coupleLog/coupleLogOne";
+	}
+	
 
 	@GetMapping("/coupleLogRecord")
-	public String coupleLogRecord1(Model model) {
-		model.addAttribute("logList", service.getLogList());
-		return "coupleLog/coupleLogRecord";
+	public void coupleLogRecord() {
+		
 	}
 
 	@PostMapping("/coupleLogRecord")
 	public String coupleLogRecord(CoupleLogVO vo, RedirectAttributes rttr) {
-
-		return "coupleLog/coupleLogRecord";
+		service.logInsert(vo);
+		return "redirect:/coupleLog/logList";
 	}
 
 	@GetMapping("/coupleLogUpdate")
