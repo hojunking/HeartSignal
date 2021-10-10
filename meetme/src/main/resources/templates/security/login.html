@@ -30,7 +30,7 @@
                                         </span>
                                         <!-- /icon -->
 
-                                        <input type="email" class="form-control" name="username" autofocus placeholder="Email">
+                                        <input type="email" class="form-control" name="username" autofocus required placeholder="이메일">
                                     </div>
                                     <!-- /email input -->
 
@@ -45,12 +45,12 @@
                                         </span>
                                         <!-- /icon -->
 
-                                        <input type="password" name="password" class="form-control" placeholder="Password">
+                                        <input type="password" name="password" class="form-control" required placeholder="비밀번호">
                                     </div>
                                     <!-- /password input -->
 
                                     <!-- 비밀번호 찾기 -->
-                                    <label class="mb-3 text-end d-block small mb-0">
+                                    <label class="mb-3 d-block small mb-0">
                                         <a href="#" class="text-muted link-underline">
                                             비밀번호를 잊어버리셨나요?
                                         </a>
@@ -68,7 +68,7 @@
                                 <!-- /로그인 form -->
 
                                 <!-- 회원가입 하러가기 -->
-                                <label class="text-end d-block small mb-0">
+                                <label class="d-block small mb-0">
                                     <a th:href="@{/signUp}" class="text-muted link-underline">
                                         아직 계정이 없으신가요?
                                     </a>

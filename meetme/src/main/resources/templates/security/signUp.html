@@ -9,81 +9,167 @@
 </th:block>
 
 <th:block layout:fragment="content">
-    <div class="tm-page-wrap mx-auto">
-        <section class="p-5 tm-container-outer tm-bg-white">
-            <div class="container">
-                <div class="card bg-light">
-                    <article class="card-body mx-auto" style="max-width: 400px;">
-                        <h4 class="card-title mt-3 text-center">Create Account</h4>
-                        <p class="text-center">Get started with your free account</p>
+    <main>
+        <section class="bg-white position-relative">
 
-                        <form>
-                            <div class="form-group input-group">
-                                <!-- <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                                </div> -->
-                                <input name="" class="form-control" placeholder="Full name" type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+            <div class="container py-9 pt-lg-12 position-relative z-index-1">
+                <div class="row align-items-center justify-content-center">
+                    <div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
+
+                        <h2 class="mb-1 display-6">
+                            환영합니다!
+                        </h2>
+                        <br>
+
+                        <div class="position-relative">
+                            <div>
+                                <form action="/signUp" method="post" enctype="multipart/form-data">
+                                    <!-- csrf 처리 -->
+                                    <input th:name="${_csrf.parameterName}" type="hidden" th:value="${_csrf.token}">
+                                    <!-- /csrf 처리 -->
+
+                                    <!-- -->
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="email" required autofocus placeholder="이메일">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="password" required placeholder="비밀번호">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="name" required placeholder="이름">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="nickname" required placeholder="닉네임">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="phoneNum" required readonly placeholder="전화번호">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="address" required readonly placeholder="주소">
+                                    </div>
+
+                                    <div class="input-icon-group mb-3">
+                                        <span class="input-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                            </svg>
+                                        </span>
+                                        <input type="text" class="form-control" name="birthDate" required placeholder="생년월일">
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary mb-3" type="submit" onclick="(function(e){
+                                            e.preventDefault();
+                                            alert('조금만 기다려 주세요!');
+                                        })()">
+                                            회원가입
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                                <!-- 로그인 페이지로 이동 -->
+                                <label class="d-block small mb-0">
+                                    <a th:href="@{/login}" class="text-muted link-underline">
+                                        이미 계정이 있으신가요?
+                                    </a>
+                                </label>
+                                <!-- /로그인 페이지로 이동 -->
+
+                                <!-- Divider -->
+                                <div class="d-flex align-items-center py-3">
+                                    <span class="flex-grow-1 border-bottom pt-1"></span>
+                                    <span
+                                        class="d-inline-flex center-both lh-1 size-30 rounded-circle bg-white text-mono">or</span>
+                                    <span class="flex-grow-1 border-bottom pt-1"></span>
                                 </div>
-                                <input name="" class="form-control" placeholder="Email address" type="email">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                                <!-- /Divider -->
+
+                                <!-- 네이버 로그인 커스텀 버튼 -->
+                                <div class="d-grid">
+                                    <a href="#" id="naverLogin"
+                                        class="d-flex hover-lift btn-outline-secondary mb-2 btn position-relative center-both">
+                                        <!--Main Icon-->
+                                        <div class="position-relative d-flex align-items-center">
+                                            <img th:src="@{/assets/img/brands/btnG_아이콘사각.png}" alt="" class="width-20 me-2">
+                                            <span>네이버로 가입하기</span>
+                                        </div>
+                                    </a>
                                 </div>
-                                <select class="custom-select" style="max-width: 120px;">
-                                    <option selected="">+971</option>
-                                    <option value="1">+972</option>
-                                    <option value="2">+198</option>
-                                    <option value="3">+701</option>
-                                </select>
-                                <input name="" class="form-control" placeholder="Phone number" type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                                </div>
-                                <select class="form-control">
-                                    <option selected=""> Select job type</option>
-                                    <option>Designer</option>
-                                    <option>Manager</option>
-                                    <option>Accaunting</option>
-                                </select>
-                            </div> <!-- form-group end.// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                                </div>
-                                <input class="form-control" placeholder="Create password" type="password">
-                            </div> <!-- form-group// -->
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                                </div>
-                                <input class="form-control" placeholder="Repeat password" type="password">
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
-                            </div> <!-- form-group// -->
-                            <p>
-                                <a href="" class="btn btn-block btn-primary">네이버로 로그인</a>
-                            </p>
-                            <p class="text-center">Have an account? <a href="">Log In</a> </p>
-                        </form>
-                    </article>
-                </div> <!-- card.// -->
+                                <!-- /네이버 로그인 커스텀 버튼 -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-    </div>
+    </main>
 
+    <!-- 네이버 로그인 버튼 -->
+    <div id="naver_id_login" style="display: none;"></div>
+    <!-- /네이버 로그인 버튼 -->
 </th:block>
-<th:block layout:fragment="script">
-    <script>
 
+<th:block layout:fragment="script">
+    <!-- 네이버 로그인 cdn -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            // 네이버 로그인 구현
+            let naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
+            let state = naverIdLogin.getUniqState();
+            naverIdLogin.setButton("white", 2, 40);
+            naverIdLogin.setDomain("http://localhost:8000/login");
+            naverIdLogin.setPopup();
+            naverIdLogin.setState(state);
+            naverIdLogin.init_naver_id_login();
+            // 네이버 로그인 구현
+
+            // 커스텀 로그인 버튼에 naver로그인 연결
+            $('#naverLogin').on('click', function () {
+                $('#naver_id_login').children().eq(0).click()
+            });
+        });
     </script>
+    
 </th:block>
 
 </html>

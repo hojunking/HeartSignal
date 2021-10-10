@@ -98,15 +98,6 @@
             userSession = /*[[${session.userSession}]]*/ '';
             console.log(userSession);
             /*]]>*/
-
-            $(window).on("scroll", function () {
-                if ($(window).scrollTop() > 100) {
-                    $(".tm-top-bar").addClass("active");
-                } else {
-                    $(".tm-top-bar").removeClass("active");
-                }
-            });
-            $('.tm-current-year').text(new Date().getFullYear()); // Update year in copyright  
         });
         // 페이지 로드 종료
     </script>
