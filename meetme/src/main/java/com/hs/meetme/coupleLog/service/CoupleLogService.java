@@ -9,5 +9,5 @@ public interface CoupleLogService {
 	List <CoupleLogVO> getLog();//로그 하나 가져오기
 	public int logInsert(); //로그 insert
 	public int logDelete();
-	public int logUpdate();
+	public int logUpdate(); // 커플로그 수정하기
 }

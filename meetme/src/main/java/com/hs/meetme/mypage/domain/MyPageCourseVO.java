@@ -20,4 +20,5 @@ public class MyPageCourseVO {
 	private String region2;
 	private String thumbnailHref;
 	private String avgCost; //평균비용(인영)
+	private String courseComment; //코스 comment(인영) 
 }
