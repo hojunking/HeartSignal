@@ -9,8 +9,108 @@
 </th:block>
 
 <th:block layout:fragment="content">
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- 임시로 헤더 밑에가게 -->
+
+	<div class="container">
+		<form class="form-horizontal form-view"
+			th:action="@{/coupleLog/coupleLogUpdate}" th:object="${logList}"
+			method="post">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">커플로그 한 건 조회</h1>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-lg-6">
+							제목 <input type="text" class="form-control" name="logTitle"
+								th:value="${logList.logTitle}"
+								placeholder="내용을 입력해주세요"> 
+							설명 <input type="text" name="logContent"
+								th:value="${logList.logContent}"
+								class="form-control" placeholder="내용을 입력해주세요">
+							
+						</div>
+						<div class="col-lg-6">
+							날짜 <input type="date" name="logDate" class="form-control"
+								th:value="${logList.logDate}"
+								placeholder="내용을 입력해주세요"> 
+								<!-- th:value="${#dates.format(logList.logDate,'yyyy.MM.dd)}" -->
+							
+							위치 <input type="text" class="form-control" name="logLoc"
+								th:value="${logList.logLoc}"
+								placeholder="내용을 입력해주세요">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="row">
+
+
+						<div class="col-lg-7">
+							사진 선택 <input class="form-control imgBtn" id="file" 
+									th:value=${logList.imgUrl}
+									type="text" placeholder="내용을 입력해주세요"><br>
+							사진 캡션 <input type="text" name="caption" class="form-control"
+									th:value=${logList.caption}
+								placeholder="내용을 입력해주세요">
+						</div>
+						
+						<input type="hidden" id="imgId" name="imgId">
+
+					</div>
+				</div>
+			</div>
+			<hr>
+
+
+
+			<div class="form-group">
+				<div class="col-md-12">
+
+					<h4>미리보기</h4>
+					<br> <br>
+					<div class="card-columns">
+						<div>
+							<th:block th:each="c: ${#numbers.sequence(0, 7)}">
+								<img th:src="@{/img/phoebe.jpg}" alt="Image"
+									class="img-fluid tm-recommended-img cardImgCus"
+									style="width: 150px; height: 150px; margin-left: 0px;">
+							</th:block>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+			<br>
+
+			<div style="text-align: center;">
+				<button type="button" class="btn btn-primary">취소하기</button>
+				<button type="submit" class="btn btn-primary">수정하기</button>
+			</div>
+
+		</form>
+		<br> <br>
+
+
+
+	</div>
 </th:block>
-	<input th:value="${logOne.logTitle}">
 <th:block layout:fragment="script">
 	<script>
 		

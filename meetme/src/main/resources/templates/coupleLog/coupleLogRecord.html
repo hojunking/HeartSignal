@@ -47,7 +47,7 @@
 							
 						</div>
 						<div class="col-lg-6">
-							날짜 <input type="date" name="logUpdated" class="form-control"
+							날짜 <input type="date" name="logDate" class="form-control"
 								placeholder="내용을 입력해주세요"> 
 							
 								
@@ -64,12 +64,12 @@
 
 
 						<div class="col-lg-7">
-							사진 선택 <input class="form-control" name="imgUrl" type="file" placeholder="내용을 입력해주세요"><br>
+							사진 선택 <input class="form-control imgBtn" id="file" type="file" placeholder="내용을 입력해주세요"><br>
 							사진 캡션 <input type="text" name="caption" class="form-control"
 								placeholder="내용을 입력해주세요">
 						</div>
 						
-
+						<input type="hidden" id="imgId" name="imgId">
 
 					</div>
 				</div>
@@ -115,7 +115,48 @@
 </th:block>
 <th:block layout:fragment="script">
 	<script>
+	$(document).ready(function() {
 		
+		var imgId = "";
+			
+		$('.imgBtn').on('change', function (evt){
+			if (confirm('업로드 하시겠어요?')) {
+				var data = new FormData();
+				console.log($('#file')[0].files[0]);
+				data.append("file", $('#file')[0].files[0]);				
+				console.log(data);
+
+				$.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: "coupleLogImg",
+		            data: data,
+		            processData: false,
+		            contentType: false,
+		            cache: false,
+		            timeout: 600000,
+		            success: function (data) {
+		                /* $(".imgBtn").text(data);
+		                console.log("SUCCESS : ", data); */
+		                console.log(data);
+		                imgId = data.imgId;
+		                console.log(imgId);
+		                $("#imgId").val(imgId);
+		            },
+
+		            error: function (e) {
+		                $(".imgBtn").text(e.responseText);
+		                console.log("ERROR : ", e);
+		            }
+		        });
+			}else{
+				evt.preventDefault();
+				return;
+			}
+    	});
+
+});
+
 	</script>
 </th:block>
 </html>
