@@ -40,7 +40,7 @@
 						<!-- <button type="button" id="courseBtn" class="courseBtn btn btn-primary" data-toggle="modal"
 							data-target="#modalBasic">내 코스 가져오기</button> -->
 					</div>
-					<div class="courseShow">
+					<div class="courseShow d-flex">
 
 					</div>
 
@@ -206,8 +206,11 @@
 			})
 		}
 
+
+		//https://bootstraplovers.com/assan/4.3/demo/src/component-tabbbed-content.html 이거 맨 밑에꺼 써보기~
 		//내 코스 모달에 for문 돌려 넣어주기
 		function getCourseCallback(result) {
+			$('#modalBody').empty();
 			let courseWrap = $("<div />").addClass(" justify-content-between courseWrap");
 			for (let i of result){
 				let courseDiv = $('<div />').addClass("d-flex justify-content-between").attr({'data-name': i.courseName, 'data-id':i.courseId});
@@ -244,8 +247,20 @@
 		function showTitle(){
 			$('#modalBasic').modal("hide");
 			let showTitle = $('<div />').addClass('showTitle').text($(this).attr('data-name'));
+			let closeBtn = $('<button />').addClass("btn-close")
+										  .attr({'type':'button'},{"data-bs-dismiss":"toast"},{"aria-label":"Close"})
+										  .on("click", function(){
+											  deleteCourse();
+										  });
+			let icon = $('<i />').addClass("bi bi-x");
+			closeBtn.append(icon);
 			let hideId = $('<input />').attr({type:"hidden", name: 'courseId'}).val($(this).attr('data-id'))
-			$('.courseShow').append(showTitle, hideId);
+			$('.courseShow').append(showTitle,closeBtn, hideId);
+		}
+
+
+		function deleteCourse(){
+			$('.courseShow').empty();
 		}
 	</script>
 
