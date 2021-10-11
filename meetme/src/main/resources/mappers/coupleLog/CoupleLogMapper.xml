@@ -2,23 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.hs.meetme.coupleLog.mapper.CoupleLogMapper">
-
+	<!-- 커플 로그 페이지 첫 화면 -->
 	<select id="getLogList" resultType="CoupleLogVO">
-	<!-- 	SELECT A.LOG_TITLE,
-		A.LOG_CREATED,
-		A.LOG_DATE,
-		B.IMG_ID,
-		C.IMG_URL
-		FROM COUPLE_LOG A INNER JOIN COUPLE_LOG_IMG B
-		ON A.LOG_ID = B.LOG_ID INNER JOIN IMG C ON
-		B.IMG_ID = C.IMG_ID
-		WHERE
-		A.COUPLE_ID = 1 --> <!-- AND ROWNUM=1 -->
+		<!-- SELECT A.LOG_TITLE, A.LOG_CREATED, A.LOG_DATE, B.IMG_ID, C.IMG_URL 
+			FROM COUPLE_LOG A INNER JOIN COUPLE_LOG_IMG B ON A.LOG_ID = B.LOG_ID INNER 
+			JOIN IMG C ON B.IMG_ID = C.IMG_ID WHERE A.COUPLE_ID = 1 --> <!-- AND ROWNUM=1 -->
+
 		SELECT CL.*, I.IMG_URL
 		FROM COUPLE_LOG CL LEFT OUTER JOIN IMG I
 		ON(CL.IMG_ID = I.IMG_ID)
 		WHERE
-		CL.COUPLE_ID = 1
+		CL.COUPLE_ID = #{coupleId}
 		<!-- 커플 세션 들고와야 함 -->
 	</select>
 
@@ -35,7 +29,7 @@
 		A INNER JOIN COUPLE_LOG_IMG B ON A.LOG_ID = B.LOG_ID INNER JOIN IMG C ON 
 		B.IMG_ID = C.IMG_ID WHERE A.COUPLE_ID = 1 </select> -->
 
-	<!-- 등록하기 (파일업로드 -> 쿼리 조인 수정) -->
+	<!-- 등록하기 -->
 	<insert id="logInsert" parameterType="CoupleLogVO">
 		INSERT INTO COUPLE_LOG
 		(LOG_ID,
@@ -46,19 +40,23 @@
 		COUPLE_ID,
 		LOG_LOC,
 		LOG_DATE,
+		CAPTION,
 		IMG_ID)
 		VALUES(SEQ_COUPLELOG.nextval,
 		sysdate,
 		sysdate,
 		#{logTitle},
 		#{logContent},
-		1,
+		#{coupleId},
 		#{logLoc},
 		sysdate,
-		#{imgId})
+		#{caption},
+		#{imgId}
+		)
 	</insert>
 	<insert id="logInsertLogImg" parameterType="CoupleLogVO">
-		INSERT INTO COUPLE_LOG_IMG
+		INSERT INTO
+		COUPLE_LOG_IMG
 		(LOG_IMG_ID,
 		IMG_ID,
 		LOG_ID,
@@ -69,30 +67,52 @@
 		{logId},
 		{caption})
 	</insert>
+
+	<!-- FOR 이미지 쿼리 -->
 	<insert id="logInsertImg" parameterType="CoupleLogVO">
-		<selectKey order="BEFORE" keyProperty="imgId" resultType="int">
+		<selectKey order="BEFORE" keyProperty="imgId"
+			resultType="int">
 			select SEQ_IMG.nextval from dual
 		</selectKey>
 		INSERT INTO IMG(
-			IMG_ID,
-			IMG_URL
+		IMG_ID,
+		IMG_URL
 		) VALUES (
-			#{imgId},
-			#{imgUrl}
+		#{imgId},
+		#{imgUrl}
 		)
 	</insert>
+	<!-- 단건 눌렀을 때 조회 -->
+	<select id="getLog" resultType="CoupleLogVO">
+		SELECT
+			l.LOG_ID,
+			l.LOG_CREATED,
+			l.LOG_UPDATED,
+			l.LOG_TITLE,
+			l.LOG_CONTENT,
+			l.COUPLE_ID,
+			l.LOG_LOC,
+			l.LOG_DATE,
+			l.IMG_ID,
+			l.CAPTION,
+			g.IMG_URL
+		FROM COUPLE_LOG l LEFT OUTER JOIN IMG g
+		ON l.IMG_ID =  g.IMG_ID
+		WHERE l.LOG_ID=#{logId}
+	</select>
 	<!-- 수정하기 (파일업로드 -> 쿼리 조인 수정) -->
-	<!-- <update id="logUpdate" parameterType="CoupleLogVO">
-		UPDATE couple_log SET
+	<update id="logUpdate" parameterType="CoupleLogVO">
+		UPDATE COUPLE_LOG SET
 		LOG_UPDATED=sysdate
-		,LOG_TITLE='제목 test'
-		,LOG_CONTENT='내용 test'
-		,LOG_STATE='t'
-		,LOG_LOC='2'
+		,LOG_TITLE=#{logTitle}
+		,LOG_CONTENT=#{logContent}
+		,CAPTION=#{caption}
+		,LOG_STATE=#{logState}
+		,LOG_LOC=#{logLoc}
 		,LOG_DATE=sysdate
-		WHERE LOG_ID='5'
+		WHERE LOG_ID=#{logId}
 	</update>
- -->
+
 
 
 </mapper>

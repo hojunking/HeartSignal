@@ -21,6 +21,7 @@ public class CoupleLogVO {
 	private String imgUrl; 
 	private Date imgDate;
 	private String imgUsage;
+	private String caption;
 	
 	
 }

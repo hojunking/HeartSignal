@@ -31,11 +31,11 @@ h5 {
 	<div class="container-fluid px-0 position-relative z-index-1">
 		<div id="projects" data-isotope='{"layoutMode": "masonry"}'
 			class="row g-0">
-			<th:block th:each="c: ${logList}">
-				<div class="col-md-6 col-xl-3 development grid-item">
-					<a href="#!"
+			<th:block th:if="${logList} != null">
+				<div class="col-md-6 col-xl-3 development grid-item" th:each="c: ${logList}">
+					<a th:href="@{|/coupleLog/logOne?logId=${c.logId}|}"
 						class="card-over card-split-hover d-block card-hover overflow-hidden">
-						<img th:attr="src=@{'/img/' + ${c.imgUrl}}, alt=${c.imgUrl}"
+						<img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
 						class="img-fluid img-zoom">
 						<div
 							class="card-overlay p-4 p-lg-5 d-flex align-items-end text-white">
@@ -43,7 +43,6 @@ h5 {
 								<li>
 									<h5 class="mb-2 fs-4 splitting-up" data-splitting
 										th:text="${c.logTitle}">
-										<a href="./coupleLogOne?logTitle=${c.logTitle }"></a>
 									</h5>
 								</li>
 								<!-- <li><span class="splitting-up" data-splitting>Awesome

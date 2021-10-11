@@ -14,9 +14,9 @@ public class CoupleLogServiceImpl implements CoupleLogService {
 	@Autowired CoupleLogMapper coupleMapper;
 	
 	@Override
-	public List<CoupleLogVO> getLogList() {
+	public List<CoupleLogVO> getLogList(String coupleId) {
 		// TODO Auto-generated method stub
-		return coupleMapper.getLogList();
+		return coupleMapper.getLogList(coupleId);
 	}
 
 	@Override
