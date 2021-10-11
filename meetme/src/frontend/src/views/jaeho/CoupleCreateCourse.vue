@@ -14,11 +14,11 @@
                         </div>
                         <div class="col-10 px-4">
                             <div class="form-control" @click="searched = false">
-                                <TagInput :options="options" :allowCustom="true" tagBgColor="#69c6ba" :customDelimiter="customDelimiter" v-model="tags" />
+                                <TagInput :options="options" :allowCustom="true" tagBgColor="#f73e69" :customDelimiter="customDelimiter" v-model="tags" />
                             </div>
                         </div>
                         <div class="col-2 my-auto">
-                            <button class="btn btn-primary btn-lg mt-1" @click="sendSearchByTag" type="button">검색</button>
+                            <button class="btn btn-primary btn-lg mt-1" @click="searchByTag" type="button">검색</button>
                         </div>
                         <div class="col-12">
                             <hr class="m-2">
@@ -33,7 +33,7 @@
                                 </p>
                                 <div v-if="!loading">
                                     <span v-for="post of data" :key="post.id">
-                                        <button class="btn btn-primary m-1" @click="sendTags(post.tagId)">#{{ post.tagId }}</button>
+                                        <button class="btn btn-primary m-1" @click="pushTag(post.tagId)">#{{ post.tagId }}</button>
                                     </span>
                                 </div>
                             </div>
@@ -221,7 +221,7 @@
             <ul class="dropdown-menu fs-6" >
                 <div id="chatDiv" style="overflow:auto; height:15rem;">
                     <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li><span class="dropdown-item-text">내용: {{ item.content }}</span></li>
+                        <li><span class="dropdown-item-text">{{ item.userName }}: {{ item.content }}</span></li>
                     </div>
                 </div>
                 <li><hr class="dropdown-divider"></li>
@@ -250,7 +250,7 @@ export default defineComponent ({
          */
 
         // 채팅
-        const userName = ref("");
+        // const userName = ref("");
         const message = ref("");
         const recvList = ref([]);
 
@@ -264,8 +264,8 @@ export default defineComponent ({
         const send = () => {
             console.log("Send message:" + message.value);
             if (stompClient && stompClient.connected) {
-                const msg = { 
-                    userName: userName.value,
+                const msg = {
+                    userName: "default",
                     content: message.value 
                 };
                 console.log(JSON.stringify(msg))
@@ -331,20 +331,20 @@ export default defineComponent ({
         }
 
         // 클릭한 태그 가져오기
-        // const pushTag = (tagId) => {
-        //     tags.value.push(tagId);
-        // };
+        const pushTag = (tagId) => {
+            tags.value.push(tagId);
+        };
         // 태그 웹소캣 추가하기
-        const sendTags = (tagIdN) => {
-            console.log("Send tags:" + tagIdN);
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    tagId : tagIdN
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/tagReceive", JSON.stringify(msg), {});
-            }
-        }
+        // const sendTags = (tagIdN) => {
+        //     console.log("Send tags:" + tagIdN);
+        //     if (stompClient && stompClient.connected) {
+        //         const msg = { 
+        //             tagId : tagIdN
+        //         };
+        //         console.log(JSON.stringify(msg))
+        //         stompClient.send("/tagReceive", JSON.stringify(msg), {});
+        //     }
+        // }
 
         // 페이지 진입하자마자 실행.
         onMounted(() => {
@@ -589,25 +589,25 @@ export default defineComponent ({
         const searched = ref(null);       
 
         // 검색 웹소캣 보내기
-        const sendSearchByTag = (evt) => {
+        // const sendSearchByTag = (evt) => {
+        //     if(evt) {
+        //         evt.preventDefault()
+        //     }
+        //     console.log("Send searchByTag:" + " 검색");
+        //     if (stompClient && stompClient.connected) {
+        //         const msg = { 
+        //             searchByTag : "검색"
+        //         };
+        //         console.log(JSON.stringify(msg))
+        //         stompClient.send("/searchByTagReceive", JSON.stringify(msg), {});
+        //     }
+        // }
+
+        // 검색 버튼 활성화 -> connect 안으로 보냄
+        const searchByTag = (evt) => {
             if(evt) {
                 evt.preventDefault()
             }
-            console.log("Send searchByTag:" + " 검색");
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    searchByTag : "검색"
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/searchByTagReceive", JSON.stringify(msg), {});
-            }
-        }
-
-        // 검색 버튼 활성화 -> connect 안으로 보냄
-        const searchByTag = () => {
-            // if(evt) {
-            //     evt.preventDefault()
-            // }
             let keywords = "";
             for(let i=0; i<tags.value.length; i++) {
                 keywords += tags.value[i],
@@ -784,12 +784,12 @@ export default defineComponent ({
                             setTimeout(function(){
                                 document.getElementById('chatDiv').scrollTop = document.getElementById('chatDiv').scrollHeight;
                             }, 1);
-                        // 태그 검색어 추가
-                        } else if (JSON.parse(res.body).tagId){
-                            tags.value.push(JSON.parse(res.body).tagId);
-                        // 태그 검색
-                        } else if (JSON.parse(res.body).searchByTag) {
-                            searchByTag();
+                        // // 태그 검색어 추가
+                        // } else if (JSON.parse(res.body).tagId){
+                        //     tags.value.push(JSON.parse(res.body).tagId);
+                        // // 태그 검색
+                        // } else if (JSON.parse(res.body).searchByTag) {
+                        //     searchByTag();
                         // 코스 추가하기
                         } else if (JSON.parse(res.body).insertCourse) {
                             insertCourse(JSON.parse(res.body).insertCourse)
@@ -827,8 +827,8 @@ export default defineComponent ({
             options,
 
             // tag function
-            //pushTag,
-            sendTags,
+            pushTag,
+            //sendTags,
 
             // placeDetail
             detailOfPlace,
@@ -866,7 +866,7 @@ export default defineComponent ({
             loadingSearch,
             searchError,
             // search func
-            sendSearchByTag,
+            // sendSearchByTag,
             searchByTag,
 
             // last.. register course
