@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //        재호가 함
         http.csrf()
-        	.ignoringAntMatchers("/post/ckeditor/fileUpload")
+        	.ignoringAntMatchers("/post/ckeditor/**")
         	.ignoringAntMatchers("/vue/**")
         	.ignoringAntMatchers("/api/course/register")
 //        http.csrf().disable()

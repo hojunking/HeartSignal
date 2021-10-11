@@ -101,7 +101,7 @@ public class RestCoupleInfoController {
 	@PostMapping("/coupleImage")
 	public CoupleInfoVO updateCoupleImage(MultipartFile uploadFile, CoupleInfoVO vo)
 			throws IllegalStateException, IOException {
-		String path = fileDir.getPath() + "/couple/";
+		String path = fileDir.getAbsolutePath() + "/couple/";
 		MultipartFile ufile = uploadFile;
 		if (!ufile.isEmpty() && ufile.getSize() > 0) {
 			String filename = ufile.getOriginalFilename();
