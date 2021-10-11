@@ -102,7 +102,7 @@
                                     </div>
                                     <!-- phoneNum -->
 
-                                    <!-- address -->
+                                    <!-- address zonecode -->
                                     <div class="input-icon-group mb-3">
                                         <!-- icon -->
                                         <span class="input-icon">
@@ -110,10 +110,18 @@
                                         </span>
                                         <!-- icon -->
 
-                                        <input type="text" class="form-control" name="address" required readonly
-                                            placeholder="주소">
+                                        <input type="text" class="form-control d-inline-block" name="zonecode" required readonly placeholder="우편번호" style="width:50%;">
+                                        <button type="button" id="findAddr" class="btn btn-primary" style="float: right;">주소찾기</button>
                                     </div>
-                                    <!-- address -->
+                                    <!-- address zonecode -->
+
+                                    <!-- address fullRoadAddr -->
+                                    <input type="text" class="form-control mb-3" name="fullAddr" required readonly placeholder="도로명주소/지번주소">
+                                    <!-- address fullRoadAddr -->
+
+                                    <!-- address detailAddr -->
+                                    <input type="text" class="form-control mb-3" name="detailAddr" required placeholder="상세주소">
+                                    <!-- address detailAddr -->
 
                                     <!-- birthDate -->
                                     <div class="input-icon-group mb-3">
@@ -535,12 +543,15 @@
 
 
             // ====================== 주소찾기 구현 ======================
-            const signUpAddress = $('[name="address"]');
-            $(signUpAddress).on('click', execPostCode);
+            const findAddr = $('#findAddr');
+            $(findAddr).on('click', execPostCode);
             // ====================== 주소찾기 구현 ======================
 
 
             // ====================== form submit ======================
+            $('#signUpBtn').on('click', ()=>{
+
+            });
             // ====================== form submit ======================
         });
         // ====================== 페이지 로드 ======================
@@ -580,26 +591,22 @@
                     console.log(data.zonecode);
                     console.log(fullRoadAddr);
 
-                    $("[name=addr1]").val(data.zonecode);
+                    $("[name='zonecode']").val(data.zonecode);
 
                     //사용자가 도로명 주소 선택 했을때,
                     if (data.userSelectedType === 'R') {
-                        $("[name=addr2]").val(fullRoadAddr);
+                        $("[name='fullAddr']").val(fullRoadAddr);
                     }
                     //사용자가 지번 주소 선택 했을때,
                     else if (data.userSelectedType === 'J') {
-                        $("[name=addr2]").val(jibunAddr);
+                        $("[name='fullAddr']").val(jibunAddr);
                     }
 
                     //주소 변경 했을때, 상세주소 비우기
-                    $("#addr3").val("");
+                    $("[name='detailAddr']").val("");
 
                     //커서를 상세주소 필드로 이동
-                    document.getElementById("addr3").focus();
-
-                    //document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
-                    //document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
-                    //document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress;
+                    $("[name='detailAddr']").focus();
                 }
             }).open();
         } //function execPostCode() END
