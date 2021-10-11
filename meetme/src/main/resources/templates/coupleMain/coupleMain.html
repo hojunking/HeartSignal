@@ -4,22 +4,12 @@
 	layout:decorator="~{layout/layout}">
 <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
 <th:block layout:fragment="css">
-	
+	<link rel="stylesheet" type="text/css" href="https://fengyuanchen.github.io/cropperjs/css/cropper.css">
 	
 	<style>
-.product-image {
-	width: 100%;
-	height: 640px;
-	overflow: hidden;
-}
-
-.product-image .img-fluid {
-	max-width: 100%;
-}
-.photo_box{margin:0 auto ;max-width:500px;} 
 .upload_btn{overflow:auto;width:100%;}
 
-.upload_btn #photoBtn,#resetPhoto{display:none;} /* 사진 첨부하기 버튼 숨김*/ 
+#resetPhoto{display:none;} /* 사진 첨부하기 버튼 숨김*/ 
 .upload_btn .upload, .upload_btn a{float:left; padding: 6px 20px;
   background:#eee;;
   border-radius: 4px;
@@ -37,10 +27,10 @@
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
 		<BR>
 		<!-- header section -->
-		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3">
+		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3" style="background-image: none;height: 720px;">
                 <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" alt="" class="jarallax-img opacity-80">
-                 <svg class="position-absolute start-0 bottom-0 w-100" preserveAspectRatio="none" width="1200"
-                    height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <svg class="position-absolute start-0 bottom-0 w-100" preserveAspectRatio="none" width="900"
+                    height="50" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
                         fill="white" />
@@ -64,117 +54,111 @@
                     </div>
                 </div>
                 <!--/.content-->
+                
             </section>
-            <br><br><br><br>
+            <br>
             <!-- section 2-->
-            <section id="download" class="position-relative">
-                 <div class="container z-index-1 position-relative">
-                    <div class="py-1 py-lg-4 px-4 px-lg-5 bg-primary shadow-lg text-white rounded-block position-relative overflow-hidden"
-                        data-aos="fade-down">
-                        <div class="row position-relative">
-                            <div class="col-lg-8 offset-lg-1 col-md-9 mb-5 mb-md-0 text-center text-md-start">
-                                <h2 class="display-4 mb-4">사랑한 지 <b id="coupleDate"></b>일 째</h2>
-
-                                <div
-                                    class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start">
-                                    <a href="#!" class="d-inline-block mb-3 mb-sm-0 me-sm-2 hover-lift hover-shadow"
-                                        aria-label="Download the app from apple store">
-                                        <span class="height-50 w-auto">
-                                        <img th:src="@{/img/coupleImage1.jpg}" alt="" class="avatar rounded-circle xl">
-                                        </span></a>
-                                    <a href="#!" class="d-inline-block hover-lift hover-shadow"
-                                        aria-label="Download the app from google store">
-                                        <span class="height-50 w-auto" id="nickName1">
-                                            </span></a>
-                                </div>
-                                <div class="pt-4 pt-lg-5 w-md-80 w-lg-100">
-                                    Or text <strong>ART</strong> to <strong>123</strong> to get a download link on
-                                    your mobile phone.
-                                </div>
-                                
-                            </div>
-                            
+            <section class="position-relative bg-white">
+                <div class="container mx-10 px-12 py-10 py-lg-8 bg-tint-danger shadow-lg text-black rounded-block">
+                    <div class="row mb-7 mb-lg-9 ">
+                        <div class=" mr-2 py-2 py-lg-4 px-4 px-lg-8 position-relative overflow-hidden"
+                        data-aos="fade-down" style="height: 75px;">
+							<div class="row position-relative">
+                                <h4 class="display-4">사랑한 지 <b class="text-warning" id="coupleDate"></b>일 째</h4>
                         </div>
-                        <img th:src="@{/img/coupleImage5.jpg}" alt=""
-                            class="img-fluid border border-5 border-white mx-auto me-md-3 me-lg-12 width-200 d-block mb-n15 position-absolute-md end-0 bottom-0 rounded-xl shadow">
-
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                            <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
+                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid">
+                            </div>
+                            <div>
+                                <h5 class="mb-1" id="nickName1">
+                                </h5>
+                                <p class="d-block text-warning mb-3" id="birthDate1"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                            <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
+                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid">
+                            </div>
+                            <div>
+                                <h5 class="mb-1" id="nickName2">
+                                </h5>
+                                <p class="d-block text-warning mb-3" id="birthDate2"></p>
+                            </div>
+                        </div>
+                        <!--Triangle shape-->
+			                    <svg class="position-absolute start-0 top-0 ms-1 mt-n4 mt-lg-7 ms-lg-12 text-warning" width="48"
+			                        height="48" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+			                        <path d="M8.64453 8.64453L92.2962 31.0589L31.0589 92.2962L8.64453 8.64453Z"
+			                            stroke="currentColor" stroke-width="8"></path>
+			                    </svg>
                     </div>
                 </div>
             </section>
+            <br><br>
+            <section class="bg-dark text-white jarallax" data-jarallax=".3">
+                <!--Parallax image-->
+                <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" class="jarallax-img" alt="">
+                <!--Overlay background-->
+                <div class="position-absolute w-100 h-100 start-0 top-0 flip-x bg-gradient-secondary opacity-60"></div>
+                <!--Divider shape-top-->
+                <svg class="position-absolute start-0 top-0" preserveAspectRatio="none" width="100%" height="48"
+                    viewBox="0 0 983 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M983 60L942 51.5534C901 42.8155 819 25.6311 737 21.5534C655 17.1845 573 25.6311 491 31.4563C410 37.2816 328 40.1942 246 34.3689C164 28.5437 82 14.2718 41 7.28155L0 -2.86102e-06V-2.86102e-06H41C82 -2.86102e-06 164 -2.86102e-06 246 -2.86102e-06C328 -2.86102e-06 410 -2.86102e-06 491 -2.86102e-06C573 -2.86102e-06 655 -2.86102e-06 737 -2.86102e-06C819 -2.86102e-06 901 -2.86102e-06 942 -2.86102e-06H983V60Z"
+                        fill="white" />
+                </svg>
+
+                <!--:Container-->
+                <div class="container py-7 py-lg-12 position-relative">
+                    <div class="row py-4">
+                        <div class="col-md-5 me-lg-auto" data-aos="fade-down" data-aos-duration="400">
+                            <h2 class="display-4 mb-4 mb-md-0">
+                                함께 그리는 <br>
+                                우리의 이야기 <br>
+                                우리 오늘 뭐해?
+                            </h2>
+                        </div>
+                        <div class="col-md-6 ms-md-auto" data-aos="fade-up" data-aos-delay="100"
+                            data-aos-duration="400">
+                            <p class="lead w-lg-85 mb-5">
+                                D+DAY와 커플 대문사진을 수정할 수 있어요!<br>
+                                아래 버튼 누르기
+                            </p>
+                            <a href="#updateCouple" class="btn btn-rise rounded-pill hover-lift btn-outline-white" data-bs-toggle="modal">
+                                <div class="btn-rise-bg bg-white"></div>
+                                <div class="btn-rise-text"><span>설정하기</span></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
 		
-
-		<section class="probootstrap-section probootstrap-bg-dark">
-			<div class="container-fluid mb-5">
-				<div
-					class="row probootstrap-vh-100 mb-5 justify-content-center text-center">
-					<div class="col-lg-8">
-						<h2 class="probootstrap-heading probootstrap-stagger">
-							
-						</h2>
-					</div>
-				</div>
-				<div
-					class="row probootstrap-vh-100  align-items-center  text-md-left text-sm-center text-center">
-					<div class="col-md ">
-						<div class="media d-block mb-4 text-center">
-							<div class="probootstrap-text">
-								<img th:src="@{/img/coupleSample1.jpg}" alt=""
-									class="probootstrap-device-vertical-1 img-fluid rounded-circle w-50">
-								<div class="media-body p-3">
-									<h4 class=" text-black mb-2 probootstrap-heading probootstrap-stagger"
-										></h4>
-									<p class="mb-5 probootstrap-stagger lead" id="birthDate1"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="media d-block mb-4 text-center">
-              <img src="" alt="" class="img-fluid mb-3 rounded-circle w-50">
-              <div class="media-body p-3"><button type="button" class="btn btn-primary mr-2 mb-2"
-									data-toggle="modal" data-target=".bd-example-modal-lg">커플로그시작하기</button>
-                <h5 class="mt-0" id="nickName"></h5>
-               <p class="mb-5 lead"></p>
-              </div>
-            </div>
-
-					<div class="col-md">
-						<div class="media d-block mb-4 text-center">
-							<img th:src="@{/img/008.jpg}" alt=""
-								class="probootstrap-device-vertical-1 img-fluid rounded-circle w-50">
-							<div class="media-body p-3">
-								<h4
-									class="probootstrap-heading probootstrap-stagger text-black mb-2"
-									id="nickName2"></h4>
-								<p class="mb-5 probootstrap-stagger lead" id="birthDate2"></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
 	<!-- 커플 수정 Modal창  -->
-	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal fade" tabindex="-1" role="dialog" id="updateCouple"
+		aria-labelledby="updateCouple" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
+			<div class="modal-content border-0">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">커플사진 업로드</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<h5 class="modal-title">커플사진 업로드</h5>
+					<button type="button" class="btn-close text-reset p-0 m-0 size-40 center-both ms-auto"
+                            data-bs-dismiss="modal" aria-label="Close">
+                           <i class="bi bi-x fs-5"></i>
+                        </button>
 				</div>
 				<div class="modal-body">
 					<div class="photo_box">
 						<div class="upload_btn">
 							<div class="upload">
-								<label for="photoBtn"><input type="file" name="photoBtn"
-									accept="image/jpeg, image/png" id="photoBtn">사진 첨부하기</label>
-									
+								<input type="file" name="photoBtn" class="form-control form-control-sm"
+									accept="image/jpeg, image/png" id="photoBtn">
 							</div>
-							<button type="button" class="btn-primary " id="defaultImage">기본이미지로 변경</button>
-							<button type="button" class="btn-primary " id="resetPhoto">다시 올리기</button>
+							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="defaultImage">기본이미지로 변경</button>
+							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="resetPhoto">다시 올리기</button>
 						</div>
 						<div class="photo_them">
 							<div class="them_img">
@@ -182,7 +166,7 @@
 							</div>
 						</div>
 						D-DAY설정하기&nbsp;<input type="date" required="required">
-						<button type="button"class="btn-primary " id="complete">업데이트</button>
+						<button type="button"class="btn btn-primary btn-hover-arrow btn-sm" id="complete">업데이트</button>
 					</div>
 				</div>
 			</div>
@@ -241,7 +225,7 @@
 </th:block>
 <th:block layout:fragment="script">
 	
-
+	<script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script>
 	<script th:inline='javascript'>
 	
 	
@@ -345,7 +329,12 @@
 					method : "GET",
 					success : function(datas) {
 						console.log(datas);
-						alert(datas);
+						swal(datas, "", "error",{
+							button : {
+								text : "확인",
+								className : "btn btn-primary"
+							}
+						});
 						$('.bd-example-modal-lg').hide();
 						location.href = location.href;
 						
@@ -377,8 +366,8 @@
 					minContainerHeight : 400,
 					minContainerWidth : 400,
 					
-					minCropBoxWidth : 600,
-					minCropBoxHeight:240,
+					minCropBoxWidth : 800,
+					minCropBoxHeight:320,
 					minCanvasWidth : 400,
 					minCanvasHeight:400,
 					responsive : true,
@@ -395,7 +384,12 @@
 					};
 					reader.readAsDataURL(event.target.files[0]);
 				} else {
-					alert("이미지 파일(jpg, png형식의 파일)만 올려주세요");
+					swal("이미지 파일(jpg, png형식의 파일)만 올려주세요", "", "error",{
+						button : {
+							text : "확인",
+							className : "btn btn-primary"
+						}
+					});
 					$('#photoBtn').focus();
 					return;
 				}
@@ -408,7 +402,12 @@
 					$('.btn_wrap a:last-child').removeClass('bg1');
 					$('input[type="file"]').click();
 				} else {
-					alert('업로드된 사진이 없습니다.');
+					swal('업로드된 사진이 없습니다.', "", "error",{
+						button : {
+							text : "확인",
+							className : "btn btn-primary"
+						}
+					});
 				}
 			});
 			// 업로드 버튼
@@ -435,6 +434,7 @@
 				
 				if ($('input[type="date"]').val() != ""){
 				formData.append('coupleDate',$('input[type="date"]').val());
+				
 				$.ajax({
 					url : "coupleImage",
 					method : 'POST',
@@ -442,43 +442,49 @@
 					processData : false,
 					contentType : false,
 					success : function() {
-						$('.bd-example-modal-lg').hide();
-						alert('업데이트 성공!');
+						$('#updateCouple').hide();
+						swal('업데이트 성공!', "", "error",{
+							button : {
+								text : "확인",
+								className : "btn btn-primary"
+							}
+						});
 						location.href = location.href;
 					},
 					error : function() {
-						alert('업로드 실패');
+						swal('업로드 실패', "", "error",{
+							button : {
+								text : "확인",
+								className : "btn btn-primary"
+							}
+						});
 						$('.result_box').remove()
 					},
 				}); 
 				}else {
-					alert('D-day 날짜를 입력해주세요.');
+					swal('D-day 날짜를 입력해주세요.', "", "error",{
+						button : {
+							text : "확인",
+							className : "btn btn-primary"
+						}
+					});
 					$('input[type="date"]').focus();
 					return;
 				}
 				})
 			} else {
-				alert('사진을 업로드 해주세요');
+				swal('사진을 업로드 해주세요', "", "error",{
+					button : {
+						text : "확인",
+						className : "btn btn-primary"
+					}
+				});
 				$('input[type="file"]').focus();
 				return;
 			}
 		});
 
 		}); //function 끝
-		//스크롤 뭐시기
-		 let scrollTop = window.scrollY;
-         let viewportHeight = document.body.clientHeight - window.innerHeight;
-         let scrollPercent = (scrollTop / viewportHeight) * 100;
-         let progressBar = document.querySelector('[data-progress="page"]');
-
-         progressBar.setAttribute('value', scrollPercent);
-
-         window.addEventListener('scroll', function () {
-             scrollTop = window.scrollY;
-             viewportHeight = document.body.clientHeight - window.innerHeight;
-             scrollPercent = (scrollTop / viewportHeight) * 100;
-             progressBar.setAttribute('value', scrollPercent);
-         });
 	</script>
 </th:block>
 </html>
