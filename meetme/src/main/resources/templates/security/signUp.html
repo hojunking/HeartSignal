@@ -21,13 +21,14 @@
 
                         <div class="position-relative">
                             <div>
-                                <form action="/signUp" method="post" enctype="multipart/form-data">
+                                <form id="signUp" action="/signUp" method="post" enctype="multipart/form-data">
                                     <!-- csrf 처리 -->
                                     <input th:name="${_csrf.parameterName}" type="hidden" th:value="${_csrf.token}">
                                     <!-- /csrf 처리 -->
 
-                                    <!-- -->
+                                    <!-- email -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                 class="bi bi-envelope" viewBox="0 0 16 16">
@@ -35,73 +36,108 @@
                                                     d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
                                             </svg>
                                         </span>
-                                        <input type="text" class="form-control" name="email" required autofocus placeholder="이메일">
-                                    </div>
+                                        <!-- icon -->
 
+                                        <input type="email" class="form-control" name="email" required autofocus
+                                            placeholder="이메일">
+                                        <div id="signUpEmailValid"></div>
+                                    </div>
+                                    <!-- email -->
+
+                                    <!-- password -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
-                                                <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                class="bi bi-key" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
                                                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                             </svg>
                                         </span>
-                                        <input type="text" class="form-control" name="password" required placeholder="비밀번호">
-                                    </div>
+                                        <!-- icon -->
 
+                                        <input type="password" class="form-control" name="password" required
+                                            placeholder="비밀번호">
+                                        <div id="signUpPasswordValid"></div>
+                                    </div>
+                                    <!-- password -->
+
+                                    <!-- name -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-                                            </svg>
+                                            <span class="icon-Add-User"></span>
                                         </span>
+                                        <!-- icon -->
+
                                         <input type="text" class="form-control" name="name" required placeholder="이름">
                                     </div>
+                                    <!-- name -->
 
+                                    <!-- nickname -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-                                            </svg>
+                                            <span class="icon-Geek-2"></span>
                                         </span>
-                                        <input type="text" class="form-control" name="nickname" required placeholder="닉네임">
-                                    </div>
+                                        <!-- icon -->
 
+                                        <input type="text" class="form-control" name="nickname" required
+                                            placeholder="닉네임">
+                                        <div id="signUpNicknameValid"></div>
+                                    </div>
+                                    <!-- nickname -->
+
+                                    <!-- phoneNum -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
                                             <span class="icon-Phone-SMS"></span>
                                         </span>
-                                        <input type="text" class="form-control" name="phoneNum" required readonly placeholder="전화번호" style="cursor: pointer;">
-                                    </div>
+                                        <!-- icon -->
 
-                                    <div class="input-icon-group mb-3">
-                                        <span class="input-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-                                            </svg>
-                                        </span>
-                                        <input type="text" class="form-control" name="address" required readonly placeholder="주소">
+                                        <input type="text" class="form-control" name="phoneNum" required readonly
+                                            placeholder="전화번호" style="cursor: pointer;">
                                     </div>
+                                    <!-- phoneNum -->
 
+                                    <!-- address zonecode -->
                                     <div class="input-icon-group mb-3">
+                                        <!-- icon -->
                                         <span class="input-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                class="bi bi-envelope" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-                                            </svg>
+                                            <span class="icon-Home"></span>
                                         </span>
-                                        <input type="text" class="form-control" name="birthDate" required placeholder="생년월일">
+                                        <!-- icon -->
+
+                                        <input type="text" class="form-control d-inline-block" name="zonecode" required readonly placeholder="우편번호" style="width:50%;">
+                                        <button type="button" id="findAddr" class="btn btn-primary" style="float: right;">주소찾기</button>
                                     </div>
+                                    <!-- address zonecode -->
+
+                                    <!-- address fullRoadAddr -->
+                                    <input type="text" class="form-control mb-3" name="fullAddr" required readonly placeholder="도로명주소/지번주소">
+                                    <!-- address fullRoadAddr -->
+
+                                    <!-- address detailAddr -->
+                                    <input type="text" class="form-control mb-3" name="detailAddr" required placeholder="상세주소">
+                                    <!-- address detailAddr -->
+
+                                    <!-- birthDate -->
+                                    <div class="input-icon-group mb-3">
+                                        <!-- icon -->
+                                        <span class="input-icon">
+                                            <span class="icon-Calendar-4"></span>
+                                        </span>
+                                        <!-- icon -->
+
+                                        <input type="text" class="form-control" data-format="date-long" name="birthDate"
+                                            required placeholder="생년월일">
+                                    </div>
+                                    <!-- birthDate -->
 
                                     <div class="d-grid">
-                                        <button class="btn btn-primary mb-3" type="button" onclick="(function(){
-                                            swal('아직 완성하지 못했습니다..ㅜ','조금만 기다려 주세요!', 'warning', {
-                                                button : {
-                                                    text : '확인',
-                                                    className : 'btn btn-primary'
-                                                },
-                                            });
-                                        })()">
+                                        <button type="button" id="signUpBtn" class="btn btn-primary mb-3">
                                             회원가입
                                         </button>
                                     </div>
@@ -176,8 +212,10 @@
                                     <div class="input-icon-group mb-3 d-none">
                                         <span class="input-icon">
                                             <span class="input-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
-                                                    <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    class="bi bi-key" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
                                                     <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                                 </svg>
                                             </span>
@@ -207,14 +245,21 @@
 
 <th:block layout:fragment="script">
     <!-- 네이버 로그인 cdn -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
+    </script>
+    <!-- 카카오 주소 찾기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- template input format -->
     <script th:src="@{/assets/vendor/cleave.js/cleave.min.js}"></script>
     <script th:src="@{/assets/js/custom/cleave.js}"></script>
 
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", ()=>{
+        // ====================== 페이지 로드 ======================
+        document.addEventListener("DOMContentLoaded", () => {
 
-            // 네이버 로그인 구현
+
+            // ====================== 네이버 로그인 구현 ======================
+            // 네이버 로그인 초기화
             let naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
             let state = naverIdLogin.getUniqState();
             naverIdLogin.setButton("white", 2, 40);
@@ -222,52 +267,235 @@
             naverIdLogin.setPopup();
             naverIdLogin.setState(state);
             naverIdLogin.init_naver_id_login();
-            // 네이버 로그인 구현
 
             // 커스텀 로그인 버튼에 naver로그인 연결
             $('#naverLogin').on('click', function () {
                 $('#naver_id_login').children().eq(0).click();
             });
+            // ====================== 네이버 로그인 구현 ======================
 
-            // 전화번호 인증
-            let phoneReg = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
-            let modalOpen = $('[name="phoneNum"]');
-            let modalPhoneNum = $('[name="modalPhoneNum"]');
-            let modalCheckNum = $('[name="modalCheckNum"]');
-            let resultCheckNum = null;
 
-            $(modalOpen).on('click', ()=>{
+            // ====================== email 중복체크 ======================
+            // input icon style
+            const inputIcon = $('.input-icon-group .input-icon');
+            $(inputIcon).css('height', $(inputIcon).next().css('height'));
+
+            // email variables
+            const emailReg =
+                /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i; // 이메일 확인 정규식
+            const signUpEmail = $('[name="email"]'); // 회원가입 안의 이메일 input
+            const signUpEmailValid = $('#signUpEmailValid'); // 이메일 input 유효성 검사 결과 태그
+
+            // email 유효성 초기화 function
+            function emailValidInit() {
+                $(signUpEmail).removeClass('is-valid is-invalid');
+                $(signUpEmailValid).removeClass('invalid-feedback valid-feedback');
+                $(signUpEmailValid).empty();
+            }
+
+            // email 중복체크
+            // input값 실시간 감지 이벤트("propertychange change keyup paste input")
+            $(signUpEmail).on("propertychange change keyup paste input", (e) => {
+                let realTimeVal = $(e.target).val(); // 실시간으로 감지하는 input값, $(signUpEmail).val()과 같다
+
+                // 입력한 값이 없을때
+                if (realTimeVal == null || realTimeVal == "") {
+                    emailValidInit();
+                    return;
+                }
+
+                // 입력한 값이 email 형식이 아닐때
+                if (!emailReg.test(realTimeVal)) {
+                    emailValidInit();
+                    $(signUpEmail).addClass('is-invalid');
+                    $(signUpEmailValid).addClass('invalid-feedback');
+                    $(signUpEmailValid).text('이메일 형식이 아닙니다');
+                    return;
+                }
+
+                // email 중복 체크 ajax
+                $.ajax({
+                    url: '/certificate/emailCheck',
+                    method: 'post',
+                    data: {
+                        email: realTimeVal
+                    },
+                    success: (result) => {
+                        if (result == 0) {
+                            emailValidInit();
+                            $(signUpEmail).addClass('is-valid');
+                            $(signUpEmailValid).addClass('valid-feedback');
+                            $(signUpEmailValid).text('사용가능한 이메일입니다');
+                        } else {
+                            emailValidInit();
+                            $(signUpEmail).addClass('is-invalid');
+                            $(signUpEmailValid).addClass('invalid-feedback');
+                            $(signUpEmailValid).text('이미 존재하는 이메일입니다');
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                })
+            });
+            // ====================== email 중복체크 ======================
+
+
+            // ====================== password 형식체크 ======================
+            // password variables
+            const passwordReg =
+                /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/; // 비밀번호 정규식
+            const signUpPassword = $('[name="password"]'); // 회원가입 안의 비밀번호 input
+            const signUpPasswordValid = $('#signUpPasswordValid'); // 비밀번호 input 유효성 검사 결과 태그
+
+            // password 유효성 초기화 function
+            function passwordValidInit() {
+                $(signUpPassword).removeClass('is-valid is-invalid');
+                $(signUpPasswordValid).removeClass('invalid-feedback valid-feedback');
+                $(signUpPasswordValid).empty();
+            }
+
+            // password 형식 체크
+            $(signUpPassword).on("propertychange change keyup paste input", (e) => {
+                let realTimeVal = $(e.target).val(); // 실시간으로 감지하는 input값, $(signUpPassword).val()과 같다
+
+                // 입력한 값이 없을때
+                if (realTimeVal == null || realTimeVal == "") {
+                    passwordValidInit();
+                    return;
+                }
+
+                if (passwordReg.test(realTimeVal)) {
+                    passwordValidInit();
+                    $(signUpPassword).addClass('is-valid');
+                    $(signUpPasswordValid).addClass('valid-feedback');
+                    $(signUpPasswordValid).text('사용가능한 비밀번호입니다');
+                    return;
+                } else {
+                    passwordValidInit();
+                    $(signUpPassword).addClass('is-invalid');
+                    $(signUpPasswordValid).addClass('invalid-feedback');
+                    $(signUpPasswordValid).text('8~16이자 이내 영어 대소문자, 숫자, 특수문자를 하나 이상 포함해주세요');
+                    return;
+                }
+            });
+            // ====================== password 형식체크 ======================
+
+
+            // ====================== nickname 중복체크 ======================
+            // nickname variables
+            const signUpNickname = $('[name="nickname"]'); // 회원가입 안의 닉네임 input
+            const signUpNicknameValid = $('#signUpNicknameValid'); // 닉네임 input 유효성 검사 결과 태그
+
+            // nickname 유효성 초기화 function
+            function nicknameValidInit() {
+                $(signUpNickname).removeClass('is-valid is-invalid');
+                $(signUpNicknameValid).removeClass('invalid-feedback valid-feedback');
+                $(signUpNicknameValid).empty();
+            }
+
+            // nickname 중복 체크
+            $(signUpNickname).on("propertychange change keyup paste input", (e) => {
+                let realTimeVal = $(e.target).val(); // 실시간으로 감지하는 input값, $(signUpNickname).val()과 같다
+
+                console.log(realTimeVal);
+
+                // 입력한 값이 없을때
+                if (realTimeVal == null || realTimeVal == "") {
+                    nicknameValidInit();
+                    return;
+                }
+
+                // 닉네임에 공복이나 특수문자가 포함된 경우
+                let blankReg = /[\s]/g; // 공백 확인 정규식
+                let specialReg = /[`~!@#$%^&*|\\\'\";:\/?]/gi; // 특수문자 확인 정규식
+                if (blankReg.test(realTimeVal) || specialReg.test(realTimeVal)) {
+                    nicknameValidInit();
+                    $(signUpNickname).addClass('is-invalid');
+                    $(signUpNicknameValid).addClass('invalid-feedback');
+                    $(signUpNicknameValid).text('공백 또는 특수문자를 사용할 수 없습니다');
+                    return;
+                }
+
+                // nick 중복 체크 ajax
+                $.ajax({
+                    url: '/certificate/nicknameCheck',
+                    method: 'post',
+                    data: {
+                        nickname: realTimeVal
+                    },
+                    success: (result) => {
+                        if (result == 0) {
+                            nicknameValidInit();
+                            $(signUpNickname).addClass('is-valid');
+                            $(signUpNicknameValid).addClass('valid-feedback');
+                            $(signUpNicknameValid).text('사용가능한 닉네임입니다');
+                        } else {
+                            nicknameValidInit();
+                            $(signUpNickname).addClass('is-invalid');
+                            $(signUpNicknameValid).addClass('invalid-feedback');
+                            $(signUpNicknameValid).text('이미 존재하는 닉네임입니다');
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                })
+            });
+            // ====================== nickname 중복체크 ======================
+
+
+            // ====================== 전화번호 인증 구현 ======================
+            // phone variables
+            let phoneReg = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/; // 전화번호 정규식
+            let signUpPhoneNum = $('[name="phoneNum"]'); // 회원가입 안에 전화번호 input
+            let modalPhoneNum = $('[name="modalPhoneNum"]'); // modal 안의 전화번호 input
+            let modalCheckNum = $('[name="modalCheckNum"]'); // modal 안의 인증번호 input
+            let resultCheckNum = null; // 발송된 인증번호
+
+            // modal 여는 이벤트
+            $(signUpPhoneNum).on('click', () => {
                 $('#modalForm').modal('show');
             });
 
-            // 모달 꺼졌을때 이벤트
-            $('#modalForm').on('hidden.bs.modal', ()=>{
-                // 실행 할 내용
+            // modal이 꺼질때 실행하는 function
+            $('#modalForm').on('hidden.bs.modal', () => {
+                // modal안의 요소들 초기화
                 $(modalPhoneNum).val('');
                 $(modalCheckNum).val('');
                 resultCheckNum = null;
+                $(modalBtn).text('인증요청');
                 $(modalCheckNum).parent().addClass('d-none');
             });
 
-            $('[name="modalCheckBtn"]').on('click', (e)=>{
-                let modalBtn = e.target;
-                // console.log($(modalBtn).text().trim());
+            // 전화번호 인증
+            $('[name="modalCheckBtn"]').on('click', (e) => {
+                let modalBtn = e.target; // modal 안의 인증버튼
 
+                // 1. 인증버튼(modalBtn)의 text가 '인증요청'이라고 되어있을 경우
+                //  1-1) 입력한 전화번호의 형식이 알맞은지 확인한다
+                //    false => alert창을 띄우고 function을 종료한다
+                //    true => 아래 과정을 실행한다 
+                //  1-2) 인증번호를 입력하는 input태그(modalCheckNum)를 보이게 한다
+                //  1-3) 인증버튼(modalBtn)의 text를 '인증완료'로 변경한다
+                //  1-4) ajax통신으로 생성된 인증번호를 resultCheckNum에 저장한다
+
+                // 1.
                 if ($(modalBtn).text().trim() == "인증요청") {
+                    // 1-1) false
                     if (!phoneReg.test($(modalPhoneNum).val())) {
                         swal('전화번호를 확인해주세요', '', 'error');
                         $(modalPhoneNum).focus();
                         return;
                     }
-
+                    // 1-2)
                     $(modalCheckNum).parent().removeClass('d-none');
+                    // 1-3)
                     $(modalBtn).text('인증완료');
-
-                    // console.log(modalBtn);
-
+                    // 1-4)
                     // 자꾸하면 돈 나간다?!?!
                     // $.ajax({
-                    //     url: '/api/certify',
+                    //     url: '/certificate/phoneNumCheck',
                     //     method: 'post',
                     //     data: JSON.stringify({
                     //         to: $(modalPhoneNum).val().replaceAll('-',''),
@@ -284,22 +512,104 @@
                     //     }
                     // });
 
+                    // 2. 인증버튼(modalBtn)의 text가 '인증완료'라고 되어있을 경우
+                    //  2-1) 발송된 인증번호(resultCheckNum)와 입력한 인증번호(modalCheckNum)를 비교한다
+                    //    true => a. 인증완료 alert()를 띄운다
+                    //            b. 회원가입 안의 전화번호(signUpPhoneNum)에 
+                    //               modal에서 입력받은 전화번호(modalPhoneNum)를 저장한다
+                    //            c. (signUpPhoneNum)에 걸린 modal을 여는 이벤트를 삭제한다.
+                    //            d. modal창을 닫는다.
+                    //    false => 인증실패 alert()를 띄운다
+
+                    // 2.
                 } else {
-                    $(modalBtn).text('인증요청');
-                    if(resultCheckNum == $(modalCheckNum).val()){
-                        swal('인증이 완료되었습니다!', '' , 'success');
-                        $(modalOpen).val($(modalPhoneNum).val());
-                        $(modalOpen).off('click');
+                    // 2-1) true
+                    if (resultCheckNum == $(modalCheckNum).val()) {
+                        // a.
+                        swal('인증이 완료되었습니다!', '', 'success');
+                        // b.
+                        $(signUpPhoneNum).val($(modalPhoneNum).val());
+                        // c.
+                        $(signUpPhoneNum).off('click');
+                        // d.
                         $('#modalForm').modal('hide');
-                    } else{
-                        swal('인증에 실패했습니다..!', '' , 'error');
-                        $(modalCheckNum).val('');
-                        $('#modalForm').modal('hide');
+                        // 2-1) false
+                    } else {
+                        swal('인증에 실패했습니다..!', '', 'error');
                     }
                 }
+            });
+            // ====================== 전화번호 인증 구현 ======================
+
+
+            // ====================== 주소찾기 구현 ======================
+            const findAddr = $('#findAddr');
+            $(findAddr).on('click', execPostCode);
+            // ====================== 주소찾기 구현 ======================
+
+
+            // ====================== form submit ======================
+            $('#signUpBtn').on('click', ()=>{
 
             });
+            // ====================== form submit ======================
         });
+        // ====================== 페이지 로드 ======================
+
+        //카카오 주소 찾기 메서드
+        function execPostCode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                    var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+                    var jibunAddr = data.jibunAddress; //지번 주소 변수
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data
+                            .buildingName);
+                    }
+                    // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraRoadAddr !== '') {
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
+                    // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                    if (fullRoadAddr !== '') {
+                        fullRoadAddr += extraRoadAddr;
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    console.log(data.zonecode);
+                    console.log(fullRoadAddr);
+
+                    $("[name='zonecode']").val(data.zonecode);
+
+                    //사용자가 도로명 주소 선택 했을때,
+                    if (data.userSelectedType === 'R') {
+                        $("[name='fullAddr']").val(fullRoadAddr);
+                    }
+                    //사용자가 지번 주소 선택 했을때,
+                    else if (data.userSelectedType === 'J') {
+                        $("[name='fullAddr']").val(jibunAddr);
+                    }
+
+                    //주소 변경 했을때, 상세주소 비우기
+                    $("[name='detailAddr']").val("");
+
+                    //커서를 상세주소 필드로 이동
+                    $("[name='detailAddr']").focus();
+                }
+            }).open();
+        } //function execPostCode() END
     </script>
 
 </th:block>

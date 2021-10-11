@@ -30,6 +30,15 @@
 			email = #{email}
 	</select>
 	
+	<select id="nicknameCheck" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user_info
+		WHERE
+			nickname = #{nickname}
+	</select>
+	
 	<insert id="signUp">
 		INSERT INTO
 			user_info
