@@ -27,7 +27,6 @@ public class CoupleInfoController {
 		return path;
 	}
 	
-	
 	@GetMapping("/coupleMain2")
 	public String CoupleMain() {
 		return "coupleMain/coupleMain";
