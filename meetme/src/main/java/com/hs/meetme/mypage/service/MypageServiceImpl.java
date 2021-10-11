@@ -18,7 +18,6 @@ public class MypageServiceImpl implements MypageService {
     
 	@Autowired MypageMapper mypageMapper;
 		
-	
 	//마이페이지 나의 게시글 관련
 	@Override
 	public int getPostCount(String userId) {
@@ -115,6 +114,12 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO) {
 		return mypageMapper.getUserTags(userTagsVO);
+	}
+	@Override
+	public int UpdateUserTags(UserTagsVO userTagsVO) {
+		int r = mypageMapper.deleteUserTags(userTagsVO);
+		    r = mypageMapper.insertUserTags(userTagsVO);
+		return r;
 	}
     
 }

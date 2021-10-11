@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.service.MypageService;
+import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
 @RestController
@@ -24,7 +26,16 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 public class MypageRestController {
 
 	@Autowired MypageService mypageService;
+	@Autowired NoticeService noticeService;
 	@Autowired private PasswordEncoder encoder;
+	
+	@DeleteMapping("/deleteNotice")
+	public boolean deleteNotice(NoticeVO noticeVO) {
+		
+		int r = noticeService.deleteNotice(noticeVO);
+		
+		return r ==1 ? true : false;
+	}
 	
 	@DeleteMapping("/deleteCourse")
 	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO, HttpServletRequest request) {

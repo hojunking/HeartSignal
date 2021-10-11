@@ -18,8 +18,10 @@ import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
+import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.mapper.NoticeMapper;
 import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
@@ -30,8 +32,23 @@ public class MypageController {
 	@Autowired MypageService mypageService;
 	@Autowired NoticeService noticeService;
 	
+	//나의 페이지 메인 -> 나의 취향 보기 / 알림내역 보기
 	@GetMapping("/main")
-	public String main() {
+	public String main(Model model, MyPageUserInfoVO myPageUserInfoVO, UserTagsVO userTagVO, NoticeVO noticeVO, HttpServletRequest request) {
+		
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		String userId = accountVO.getUserId();
+		
+		myPageUserInfoVO.setUserId(userId);
+		userTagVO.setUserId(userId);
+		noticeVO.setUserReceived(userId);
+		
+		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
+		model.addAttribute("userTag", mypageService.getUserTags(userTagVO));
+		model.addAttribute("userNotice", noticeService.getNoticeList(noticeVO));
+		
 		return "mypage/main";
 	}
 	

@@ -17,6 +17,8 @@ public class NoticeVO {
 	private Date noticeDate;
 	private String noticeConfirmed;
 	
+	private String postId;
+	
 	private String userId;
 	
 }

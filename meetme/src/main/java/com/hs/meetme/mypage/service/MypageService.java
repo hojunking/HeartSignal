@@ -15,6 +15,8 @@ public interface MypageService {
 	
 	//내 취향 조회하기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
+	//나의 취향 업데이트
+	public int UpdateUserTags(UserTagsVO userTagsVO);
 	
 	//내 코스 조회
 	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId);
