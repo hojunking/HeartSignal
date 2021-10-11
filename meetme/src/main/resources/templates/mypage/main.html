@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
+
+<th:block layout:fragment="css">
+  <style>
+
+  </style>
+</th:block>
+
+<th:block layout:fragment="content">
+ 
+        <!--Main content-->
+
+        <main class="main-content" id="main-content">
+            <section class="position-relative bg-white">
+                <div class="container position-relative pt-3 pb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nav class="d-md-flex" aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="#!">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Profile
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--/.row-->
+
+                </div>
+            </section>
+            <section class="position-relative">
+                <div class="container position-relative">
+                    <div class="overflow-hidden">
+
+                        <!--Profile info header-->
+                        <div class="position-relative pb-7 pb-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3 mb-5 mb-lg-0">
+                                    <div class="h-lg-100">
+                                        <div class="card bg-gradient-light h-lg-100 p-3">
+                                            <div>
+                                                <!--profile image-->
+                                                <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+                                                    style="background-image: url(/assets/img/avatar/4.jpg);">
+                                                </div>
+                                                <h4 class="mb-2">Emily Doe</h4>
+                                                <small class="d-block mb-3">Senior Software developer</small>
+                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
+                                                        <span class="small">Barcelona, Spain</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-globe me-2 align-middle text-muted"></i>
+                                                        <a href="#!"
+                                                            class="small link-hover-decoration">https://emilydoe.com/</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i
+                                                            class="bi bi-check fs-5 lh-1 text-success me-2 align-middle"></i>
+                                                        <span class="small">Available for hire</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-twitter me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">@emily.dev</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-linkedin me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">emilyatin</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-instagram me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">emily93</a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                    <li class="d-flex justify-content-between align-items-center mb-2">
+                                                        <span class="small">Followers</span>
+                                                        <span class="fs-5">134</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-2">
+                                                        <span class="small">Following</span>
+                                                        <span class="fs-5">23</span>
+                                                    </li>
+                                                </ul>
+                                                <div class="d-grid">
+                                                    <button class="btn btn-light border shadow-sm mb-2 py-1"
+                                                        type="button"><i
+                                                            class="bi bi-person-plus fs-6 align-middle lh-1"></i>
+                                                        Follow</button>
+                                                    <button class="btn btn-primary shadow-sm py-1" type="button"><i
+                                                            class="bi bi-envelope fs-6 align-middle lh-1"></i>
+                                                        Message</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="d-flex flex-column h-100">
+                                        <nav class="nav mb-5 nav-pills">
+                                            <a href="main" class="nav-link active"> <i
+                                                    class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="page-profile-dashboard.html" class="nav-link">
+                                                <i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
+                                            <a href="#" class="nav-link"><i
+                                                    class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                            <a href="#" class="nav-link"><i
+                                                    class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                            <a href="#" class="nav-link"><i
+                                                    class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="myinfo" class="nav-link"><i
+                                                    class="bi bi-gear me-2 align-middle"></i>나의 정보 수정</a>
+                                        </nav>
+
+                                        <div class="card shadow-sm p-3 h-100">
+                                            <div class="row align-items-center">
+            <section class="position-relative">
+                <div class="container py-6 py-lg-12">
+                    <div class="d-flex align-items-center mb-5 mb-lg-9">
+                        <div class="flex-grow-1 border-bottom"></div>
+                        <h5 class="mb-0 flex-grow-0 px-3">알림내역</h5>
+                        <div class="flex-grow-1 border-bottom"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <ul class="step mx-3 mx-sm-0 list-unstyled mb-0">
+                                <li class="step-item">
+                                    <div class="step-row">
+                                        <span class="step-icon bg-tint-primary text-primary">
+                                            <!--ICON-DOT-->
+                                            <i class="bi bi-gear text-primary align-middle lh-1"></i>
+                                        </span>
+
+                                        <div class="step-content">
+                                            <div class="alert alert-primary d-flex mb-0" role="alert">
+                                                <i class="bi bi-exclamation mt-1 me-4 fs-4"></i>
+                                                <div class="">
+                                                    <h6 class="alert-heading">Scheduled Maintenance!</h6>
+                                                    <hr class="my-2">
+                                                    <p class="text-body mb-0">We're currently updating an issue that's
+                                                        preventing Forms, Meetings and Ads from being modified. All
+                                                        existing forms on websites continue working and accepting
+                                                        submissions.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <!--/.step-item-->
+                                <li class="step-item">
+                                    <div class="step-row">
+                                        <span class="step-icon bg-tint-primary text-primary">
+                                            <!--ICON-DOT-->
+                                            <i class="bi bi-bootstrap text-primary align-middle lh-1"></i>
+                                        </span>
+
+                                        <div class="step-content">
+                                            <h6 class="mb-1">Updated to bootstrap 5</h6>
+                                            <small class="d-block mb-2 text-muted">June 14, 12:24PM EST</small>
+                                            <p class="mb-0">
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.
+                                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                                make a type specimen book.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <!--/.step-item-->
+                                <li class="step-item">
+                                    <div class="step-row">
+                                        <span class="step-icon bg-tint-primary text-primary">
+                                            <!--ICON-DOT-->
+                                            <i class="bi bi-calendar3 text-primary align-middle lh-1 fs-6"></i>
+                                        </span>
+
+                                        <div class="step-content">
+                                            <h6 class="mb-1">Minor bug fixes</h6>
+                                            <small class="d-block mb-2 text-muted">June 02, 11:24 AM EST</small>
+                                            <p class="mb-0">
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.
+                                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                                make a type specimen book.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <!--/.step-item-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--/.container-end-->
+            </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+</th:block>
+
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+
+  </script>
+</th:block>
+</html>

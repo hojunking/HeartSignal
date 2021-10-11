@@ -2,8 +2,6 @@ package com.hs.meetme.mypage.domain;
 
 import java.util.Date;
 
-import com.hs.meetme.useraccess.domain.AccountVO;
-
 import lombok.Data;
 
 @Data

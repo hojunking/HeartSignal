@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
+  <!-- 유저 태그 조회해서 가져오기 -->
+  <select id="getUserTags" resultType="UserTagsVO">
+    SELECT user_id, tag_id
+    FROM user_tags
+    WHERE user_id = #{userId}
+  </select>
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
   <!-- 저장된 코스 삭제 -->
   <delete id="deleteCourseLike" parameterType="MypageCourseVO">
     DELETE
     FROM
       course_like
     WHERE
-      course_id = #{course_id}
+      course_id = #{courseId} AND user_id = #{userId}
   </delete>
-  <update id="updateCourse" parameterType="MypageCourseVO">
+  
+  <update id="deleteCourse" parameterType="MypageCourseVO">
     UPDATE course
-    SET course_open = "n"
-    WHERE course_id = #{course_id}
+    SET course_open = 'n'
+    WHERE course_id = #{courseId}
   </update>
-  <delete id="deleteCourse" parameterType="MypageCourseVO">
+  <delete id="deleteCourseLike2" parameterType="MypageCourseVO">
     DELETE
     FROM course_like
-    WHERE course_id = #{course_id}
+    WHERE course_id = #{courseId}
   </delete>
 
   <!-- 저장된 코스 보기 -->
@@ -63,7 +71,7 @@
 		       a.course_id,
 		       a.course_name
 		FROM course a, course_order b
-		WHERE a.user_id=#{userId} AND a.course_id=b.course_id)		
+		WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND a.course_open='y')		
 	  WHERE 
 	    <include refid="courseSearch"></include>
 	  course_id >0
@@ -103,7 +111,7 @@
 			  a.region,
 			  (SELECT sum_cost FROM (SELECT course_id, SUM(avg_cost) sum_cost FROM course_order GROUP BY course_id) c WHERE c.course_id = b.course_id) sum_cost
 			FROM course a, course_order b
-			WHERE a.user_id=#{userId} AND a.course_id=b.course_id) x
+			WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND a.course_open='y') x
          <where>
             <include refid="courseSearch"></include>
          
@@ -150,7 +158,7 @@
 		  c.region,
 		  c.thumbnail_href
 		FROM course a, course_order b, place c
-		WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND b.place_id =c.place_id
+		WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND b.place_id =c.place_id AND a.course_open='y'
 		ORDER BY course_id
 	</select>
 	
