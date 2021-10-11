@@ -52,13 +52,15 @@
          <div class="col-sm-10">
             <!--코스 여기-->
             <th:block th:if='${course} != null'>
-            <div th:utext="${course[0].courseName}"> </div>
+            <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+            <img src="${course[0].thumbnailHref}" alt="코스 사진">
             <div>
                <div th:each="c : ${course}" class="d-flex justify-content-between">
                   <div th:text="${c.placeName}"></div>
                   <div th:text="${c.avgCost}"></div>
                </div>
             </div>
+            <div id="map" style="width:100%;height:400px;"></div>
             </th:block>
             <!-- 글 내용 here-->
             <th:block th:utext="${list.postContent}"></th:block>
@@ -211,13 +213,68 @@
 </th:block>
 <th:block layout:fragment="script">
   <!--  <script src="/js/ckeditor/ckeditor.js"></script> -->
-   <script type="text/javascript" th:inline="javascript">
- 
+	  <!-- 네이버 지도 -->
+	  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
+ 	
+ 	<!-- js here --> 
+    <script type="text/javascript" th:inline="javascript">
+   
+   
 
       // ============ 페이지 로드 ==============
       $(function () {
+    	  
+    	  const course = [[${course}]];
+			
+    	  console.log(course);
+			
+    	  let locations = [];
+    	  let centerLat = 0;
+    	  let centerLng = 0;
+    	  
+    	  for(let item of course){
+  			  let info = {
+  					  place: item.placeName,
+  					  lat : item.latitude,
+  					  lng : item.longtitude
+  			  }
+  			  locations.push(info);
+  			  centerLat += parseFloat(item.latitude);
+  			  centerLng += parseFloat(item.longtitude);
+  		  }
+    	  console.log(centerLat, centerLng);
+    	  centerLat = centerLat/course.length;
+    	  centerLng = centerLng/course.length;
+    	  console.log(locations);
+    	  console.log(centerLat, centerLng);
+          
+    	 
 
+          var map = new naver.maps.Map('map', {
+              center: new naver.maps.LatLng(centerLat, centerLng),
+              zoom: 10
+          });
 
+          for (var i = 0; i < locations.length; i++) {
+              var marker = new naver.maps.Marker({
+                  map: map,
+                  title: locations[i].place,
+                  position: new naver.maps.LatLng(locations[i].lat, locations[i].lng),
+              });
+          }
+		
+    /* 	  //naver map
+    	 	var mapOptions = {
+		    center: new naver.maps.LatLng(37.3595704, 127.105399),
+		    zoom: 12
+				};
+	
+			var map = new naver.maps.Map('map', mapOptions);
+			
+			 */
+			/* //마커 정보 담기
+			initMap();
+ */
          /* // ============ CKeditor 적용 =================
          CKEDITOR.replace('ckcontents', {
             filebrowserUploadUrl: '/post/ckeditor/fileUpload',
@@ -422,6 +479,18 @@
          $(commentWrap).append(profileImg, nickname, comContent, btnWrap);
          $("#commentsBody").append(commentWrap);
       }
+      
+      //마커의 지역 담기
+  /*     function initMap(){
+    	  var areaArr = new Array(); //지역 담을 배열
+    	  areaArr.push(
+    		 for(let loc of '${course}'){
+    			 {location: "${loc.region}", lat : "${loc.latitude}", lng : "${loc.longtitude}"} 
+    		 }
+    	  );
+      }
+       */
+      
    </script>
 
 
