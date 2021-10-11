@@ -33,4 +33,7 @@ public class MyPageUserInfoVO{
 	private Date imgDate;
 	private String imgUsage;
 	
+	private String myAddress;
+	private String mybirthDay;
+	
 }

@@ -7,6 +7,20 @@
     FROM user_tags
     WHERE user_id = #{userId}
   </select>
+  <!-- 유저 태그 수정하기 딜리트한 뒤 다시 인서트 -->
+  <delete id="deleteUserTags">
+    DELETE
+    FROM user_tags
+    WHERE user_id = #{userId}
+  </delete>
+  <insert id="insertUserTags">
+    INSERT INTO
+    user_tags(
+               user_id, tag_id)
+    VALUES(
+               #{userId},#{tagId})
+  </insert>
+  
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
   <!-- 저장된 코스 삭제 -->
   <delete id="deleteCourseLike" parameterType="MypageCourseVO">
