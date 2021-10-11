@@ -1,11 +1,14 @@
 package com.hs.meetme.chat.controller;
 
+import java.util.List;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import com.hs.meetme.chat.domain.PlaceOfCourseVO;
+import com.hs.meetme.chat.domain.SocketChangedListVO;
 import com.hs.meetme.chat.domain.SocketChatVO;
-import com.hs.meetme.chat.domain.SocketClickVO;
 import com.hs.meetme.chat.domain.SocketInsertCourseVO;
 import com.hs.meetme.chat.domain.SocketSearchByTagVO;
 import com.hs.meetme.chat.domain.SocketTagVO;
@@ -13,12 +16,22 @@ import com.hs.meetme.chat.domain.SocketTagVO;
 @Controller
 public class SocketController {
 	
+	// 수정한 코스 보내기
+	@MessageMapping("/changeListReceive")
+    @SendTo("/send")
+    public SocketChangedListVO SocketChangedListHandler(SocketChangedListVO vo) {
+        List<PlaceOfCourseVO> changedList = vo.getChangedList();
+ 
+        SocketChangedListVO result = new SocketChangedListVO(changedList);
+        return result;
+    }
+	
 	// 태그를 기준 검색 클릭
 	@MessageMapping("/insertCourseReceive")
     @SendTo("/send")
     public SocketInsertCourseVO SocketInsertCourseHandler(SocketInsertCourseVO vo) {
         String InsertCourse = vo.getInsertCourse();
-
+ 
         SocketInsertCourseVO result = new SocketInsertCourseVO(InsertCourse);
         return result;
     }
