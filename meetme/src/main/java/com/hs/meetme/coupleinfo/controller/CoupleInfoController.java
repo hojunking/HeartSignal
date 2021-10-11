@@ -33,4 +33,9 @@ public class CoupleInfoController {
 		return "coupleMain/coupleMain";
 	}
 	
+	@GetMapping("/coupleMain3")
+	public String CouplePass() {
+		return "coupleMain/notCouple";
+	}
+	
 }

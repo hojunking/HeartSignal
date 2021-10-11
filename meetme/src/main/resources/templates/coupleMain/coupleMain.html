@@ -4,13 +4,7 @@
 	layout:decorator="~{layout/layout}">
 <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
 <th:block layout:fragment="css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway"
-		rel="stylesheet">
-	<link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/icomoon.css}">
-	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="https://fengyuanchen.github.io/cropperjs/css/cropper.css">
-	<!-- js -->
+	
 	
 	<style>
 .product-image {
@@ -41,20 +35,73 @@
 </th:block>
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
-	<div class="tm-page-wrap mx-auto">
 		<BR>
-		<section class="probootstrap-cover probootstrap-bg"
-			>
-			<div class="container-fluid mb-5">
-				<div class="row">
-					<div class="probootstrap-devices product-image" id="coupleUrl"
-					style="background-image: url(../img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg); background-size: cover; background-position: center;">
-						<!-- <img th:src="@{/img/coupleSample2.jpg}"
-							class="probootstrap-device-left img-fluid"> -->
-					</div>
-				</div>
-			</div>
-		</section>
+		<!-- header section -->
+		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3">
+                <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" alt="" class="jarallax-img opacity-80">
+                 <svg class="position-absolute start-0 bottom-0 w-100" preserveAspectRatio="none" width="1200"
+                    height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
+                        fill="white" />
+                </svg>
+                <div class="container col-xl-10 col-xxl-8 py-9 py-lg-12">
+                    <div class="row pb-7 align-items-center">
+                        <div class="col-lg-8 col-xl-7 mx-auto text-center">
+                            
+                            <br><br><br><br><br><br><br><br><br><br><br>
+                            <h1 class="mb-4 display-2">우리는<br>
+                                <span class="d-inline-block"
+                                    data-typed='{"strings": ["귀염둥이", "방구쟁이", "songhojun", "Agencies", "Creatives"]}'></span>
+                            </h1>
+                            <!--offcanvas-btn-trigger-->
+                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasEnd" role="button"
+                                aria-controls="offcanvasEnd">
+                                시작하기<i class="bi bi-chevron-right align-middle lh-1 ms-1"></i>
+                            </a>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <!--/.content-->
+            </section>
+            <br><br><br><br>
+            <!-- section 2-->
+            <section id="download" class="position-relative">
+                 <div class="container z-index-1 position-relative">
+                    <div class="py-1 py-lg-4 px-4 px-lg-5 bg-primary shadow-lg text-white rounded-block position-relative overflow-hidden"
+                        data-aos="fade-down">
+                        <div class="row position-relative">
+                            <div class="col-lg-8 offset-lg-1 col-md-9 mb-5 mb-md-0 text-center text-md-start">
+                                <h2 class="display-4 mb-4">사랑한 지 <b id="coupleDate"></b>일 째</h2>
+
+                                <div
+                                    class="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start">
+                                    <a href="#!" class="d-inline-block mb-3 mb-sm-0 me-sm-2 hover-lift hover-shadow"
+                                        aria-label="Download the app from apple store">
+                                        <span class="height-50 w-auto">
+                                        <img th:src="@{/img/coupleImage1.jpg}" alt="" class="avatar rounded-circle xl">
+                                        </span></a>
+                                    <a href="#!" class="d-inline-block hover-lift hover-shadow"
+                                        aria-label="Download the app from google store">
+                                        <span class="height-50 w-auto" id="nickName1">
+                                            </span></a>
+                                </div>
+                                <div class="pt-4 pt-lg-5 w-md-80 w-lg-100">
+                                    Or text <strong>ART</strong> to <strong>123</strong> to get a download link on
+                                    your mobile phone.
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        <img th:src="@{/img/coupleImage5.jpg}" alt=""
+                            class="img-fluid border border-5 border-white mx-auto me-md-3 me-lg-12 width-200 d-block mb-n15 position-absolute-md end-0 bottom-0 rounded-xl shadow">
+
+                    </div>
+                </div>
+            </section>
+		
 
 		<section class="probootstrap-section probootstrap-bg-dark">
 			<div class="container-fluid mb-5">
@@ -62,7 +109,7 @@
 					class="row probootstrap-vh-100 mb-5 justify-content-center text-center">
 					<div class="col-lg-8">
 						<h2 class="probootstrap-heading probootstrap-stagger">
-							사랑한 지 <b id="coupleDate"></b>일 째
+							
 						</h2>
 					</div>
 				</div>
@@ -75,7 +122,7 @@
 									class="probootstrap-device-vertical-1 img-fluid rounded-circle w-50">
 								<div class="media-body p-3">
 									<h4 class=" text-black mb-2 probootstrap-heading probootstrap-stagger"
-										id="nickName1"></h4>
+										></h4>
 									<p class="mb-5 probootstrap-stagger lead" id="birthDate1"></p>
 								</div>
 							</div>
@@ -106,7 +153,6 @@
 				</div>
 			</div>
 		</section>
-	</div>
 	<!-- 커플 수정 Modal창  -->
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 		aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -143,17 +189,62 @@
 		</div>
 	</div>
 
+
+<!--Offcanvas end white-->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd"
+                    aria-labelledby="offcanvasEndLabel">
+                    <div class="border-bottom offcanvas-header bg-gradient-tint">
+                        <button type="button" class="btn-close text-reset p-0 m-0 size-40 center-both ms-auto"
+                            data-bs-dismiss="offcanvas" aria-label="Close">
+                           X
+                        </button>
+                    </div>
+                    <div class="offcanvas-body p-3 px-xl-4">
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a href="#" class="nav-link fs-3">메인</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link fs-3">커플로그</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link fs-3">코스만들기</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link fs-3">chat</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link fs-3">설정</a></li>
+                        </ul>
+                    </div>
+                    <div class="offcanvas-footer p-3 px-xl-4 border-top bg-gradient-tint">
+                        <ul class="list-unstyled mb-0">
+                            <li class="pb-4">
+                                <small class="text-muted d-block">Email us:</small>
+                                <a href="mailto:company@domain.com"
+                                    class="text-dark link-underline fs-5">company@domain.com</a>
+                            </li>
+                            <li>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item me-3">
+                                        <a href="#" class="fs-5 text-muted"><i class="bi bi-facebook"></i></a>
+                                    </li>
+                                    <li class="list-inline-item me-3">
+                                        <a href="#" class="fs-5 text-muted"><i class="bi bi-twitter"></i></a>
+                                    </li>
+                                    <li class="list-inline-item me-3">
+                                        <a href="#" class="fs-5 text-muted"><i class="bi bi-linkedin"></i></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#" class="fs-5 text-muted"><i class="bi bi-instagram"></i></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+<div class="position-fixed z-index-fixed top-0 start-0 height-20 w-100 bg-transparent rounded-0 border-0 progress-page">
+            <progress data-progress="page" value="" max="100"></progress>
+        </div>
 </th:block>
 <th:block layout:fragment="script">
-	<script th:src="@{/js/TweenMax.min.js}"></script>
-	<script th:src="@{/js/ScrollMagic.min.js}"></script>
-	<script th:src="@{/js/debug.addIndicators.min.js}"></script>
-	<script th:src="@{/js/animation.gsap.min.js}"></script>
+	
 
-	<script th:src="@{/js/main.js}"></script>
-	<script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script>
-
-	<script>
+	<script th:inline='javascript'>
+	
+	
 	$(function() {
 			coupleInfo();
 			myloveInfo();
@@ -374,6 +465,20 @@
 		});
 
 		}); //function 끝
+		//스크롤 뭐시기
+		 let scrollTop = window.scrollY;
+         let viewportHeight = document.body.clientHeight - window.innerHeight;
+         let scrollPercent = (scrollTop / viewportHeight) * 100;
+         let progressBar = document.querySelector('[data-progress="page"]');
+
+         progressBar.setAttribute('value', scrollPercent);
+
+         window.addEventListener('scroll', function () {
+             scrollTop = window.scrollY;
+             viewportHeight = document.body.clientHeight - window.innerHeight;
+             scrollPercent = (scrollTop / viewportHeight) * 100;
+             progressBar.setAttribute('value', scrollPercent);
+         });
 	</script>
 </th:block>
 </html>
