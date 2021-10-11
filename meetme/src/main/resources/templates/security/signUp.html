@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorator="~{layout/layout}">
 
-<th:block layout:fragment="style">
-    <style>
+<th:block layout:fragment="css">
 
-    </style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -94,7 +92,12 @@
 
                                     <div class="d-grid">
                                         <button class="btn btn-primary mb-3" type="button" onclick="(function(){
-                                            alert('조금만 기다려 주세요!');
+                                            swal('아직 완성하지 못했습니다..ㅜ','조금만 기다려 주세요!', 'warning', {
+                                                button : {
+                                                    text : '확인',
+                                                    className : 'btn btn-primary'
+                                                },
+                                            });
                                         })()">
                                             회원가입
                                         </button>
