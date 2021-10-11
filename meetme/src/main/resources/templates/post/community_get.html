@@ -26,7 +26,7 @@
       <div>
          <h2 th:text="${list.postTitle}"></h2>
       </div>
-   
+
       <div id="userCheck" class="row mt-3 d-flex justify-content-end">
          <div class="col-auto d-flex justify-content-end">
             <form action="/post/updateCommunity" method="get" class="mr-1">
@@ -39,8 +39,8 @@
             </button>
          </div>
       </div>
-    
-      
+
+
       <br>
       <hr>
       <div style="text-align: right ;">
@@ -52,15 +52,15 @@
          <div class="col-sm-10">
             <!--코스 여기-->
             <th:block th:if='${course} != null'>
-            <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
-            <img src="${course[0].thumbnailHref}" alt="코스 사진">
-            <div>
-               <div th:each="c : ${course}" class="d-flex justify-content-between">
-                  <div th:text="${c.placeName}"></div>
-                  <div th:text="${c.avgCost}"></div>
+               <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+               <img src="${course[0].thumbnailHref}" alt="코스 사진">
+               <div>
+                  <div th:each="c : ${course}" class="d-flex justify-content-between">
+                     <div th:text="${c.placeName}"></div>
+                     <div th:text="${c.avgCost}"></div>
+                  </div>
                </div>
-            </div>
-            <div id="map" style="width:100%;height:400px;"></div>
+               <div id="map" style="width:100%;height:400px;"></div>
             </th:block>
             <!-- 글 내용 here-->
             <th:block th:utext="${list.postContent}"></th:block>
@@ -91,8 +91,7 @@
                            data-toggle="modal" data-target="#comUpdateModal">
                            <i class="far fa-edit"></i>수정하기</button>
                         <!--삭제시 alert-->
-                        <button type="button" class="cmtDelBtn btn btn-danger btn-sm"
-                           th:data-cId="${list.commentId}">
+                        <button type="button" class="cmtDelBtn btn btn-danger btn-sm" th:data-cId="${list.commentId}">
                            <i class="far fa-trash-alt"></i>삭제하기</button>
                      </div>
                   </div>
@@ -134,32 +133,34 @@
       <li sec:authorize="isAuthenticated()">
          <div class="row mt-3 d-flex justify-content-center">
             <div class="col-auto">
-               <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary" data-toggle="modal" data-target="#likeModal">좋아요</button>
+               <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary" data-toggle="modal"
+                  data-target="#likeModal">좋아요</button>
             </div>
          </div>
       </li>
       <br>
    </div>
    <!-- 좋아요(스크랩)모달 -->
-      <div class="modal fade " id="likeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   <div class="modal fade " id="likeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">스크랩 성공!</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            </div> 
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                     aria-hidden="true">×</span></button>
+            </div>
             <div class="modal-body">
                <h6>좋아요 눌렀어요!</h6>
                <h6>마이페이지 나의 스크랩에서 확인 할 수 있어요</h6>
             </div>
             <div class="modal-footer">
-             <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+               <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 
             </div>
          </div>
       </div>
-      </div>
+   </div>
 
 
    <!-- 글 삭제 확인 Modal -->
@@ -212,58 +213,113 @@
 
 </th:block>
 <th:block layout:fragment="script">
-  <!--  <script src="/js/ckeditor/ckeditor.js"></script> -->
-	  <!-- 네이버 지도 -->
-	  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
- 	
- 	<!-- js here --> 
-    <script type="text/javascript" th:inline="javascript">
-   
-   
+   <!--  <script src="/js/ckeditor/ckeditor.js"></script> -->
+   <!-- 네이버 지도 -->
+   <script type="text/javascript"
+      src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
+
+   <!-- js here -->
+   <script type="text/javascript" th:inline="javascript">
+
+
 
       // ============ 페이지 로드 ==============
       $(function () {
-    	  
-    	  const course = [[${course}]];
-			
-    	  console.log(course);
-			
-    	  let locations = [];
-    	  let centerLat = 0;
-    	  let centerLng = 0;
-    	  
-    	  for(let item of course){
-  			  let info = {
-  					  place: item.placeName,
-  					  lat : item.latitude,
-  					  lng : item.longtitude
-  			  }
-  			  locations.push(info);
-  			  centerLat += parseFloat(item.latitude);
-  			  centerLng += parseFloat(item.longtitude);
-  		  }
-    	  console.log(centerLat, centerLng);
-    	  centerLat = centerLat/course.length;
-    	  centerLng = centerLng/course.length;
-    	  console.log(locations);
-    	  console.log(centerLat, centerLng);
-          
-    	 
 
-          var map = new naver.maps.Map('map', {
-              center: new naver.maps.LatLng(centerLat, centerLng),
-              zoom: 10
-          });
+         const course = [[${ course }]];
 
-          for (var i = 0; i < locations.length; i++) {
-              var marker = new naver.maps.Marker({
+         console.log(course);
+
+         let locations = [];
+         let centerLat = 0;
+         let centerLng = 0;
+         let markers = new Array();// 마커 담는 배열 
+         let infoWindows = new Array();//정보창을 담는 배열
+
+         //코스 있으면 네이버지도에서 해주기!
+         if (course != null) {
+            for (let item of course) {
+               let info = {
+                  place: item.placeName,
+                  lat: item.latitude,
+                  lng: item.longtitude
+               }
+               locations.push(info);
+               centerLat += parseFloat(item.latitude);
+               centerLng += parseFloat(item.longtitude);
+            }
+            console.log(centerLat, centerLng);
+            centerLat = centerLat / course.length;
+            centerLng = centerLng / course.length;
+            console.log(locations);
+            console.log(centerLat, centerLng);
+
+            var map = new naver.maps.Map('map', {
+               center: new naver.maps.LatLng(centerLat, centerLng),
+               zoom: 10
+            });
+
+
+            var markerOptions = {
+               map: map,
+               icon: {
+                  url:"https://img.icons8.com/plasticine/100/000000/marker.png",
+                  size: new naver.maps.Size(50, 52),
+                  origin: new naver.maps.Point(0, 0),
+                  anchor: new naver.maps.Point(25, 26)
+               }
+            };
+
+            for (var i = 0; i < locations.length; i++) {
+               console.log();
+               var marker = new naver.maps.Marker({
                   map: map,
                   title: locations[i].place,
                   position: new naver.maps.LatLng(locations[i].lat, locations[i].lng),
-              });
-          }
-		
-    /* 	  //naver map
+                  icon: {
+                     url: "https://img.icons8.com/officel/32/000000/place-marker--v2.png",
+                     size: new naver.maps.Size(50, 52),
+                     origin: new naver.maps.Point(0, 0),
+                     anchor: new naver.maps.Point(25, 26)
+               }
+               });
+
+
+
+               //정보창
+               var infoWindow = new naver.maps.InfoWindow({
+                  content: '<div style="width:200px; text-align:cneter;padding:10px"><b>' + locations[i].place + '</b></div>'
+               });
+
+               markers.push(marker); //생성한 마커를 담는다
+               infoWindows.push(infoWindow); //생성한 정보창을 담는다. 
+            }
+
+            function getClickHandler(seq) {
+
+               return function (e) { //마커를 클릭하는 부분
+                  var marker = markers[seq],
+                     infoWindow = infoWindows[seq];
+
+                  if (infoWindow.getMap()) {
+                     infoWindow.close();
+                  } else {
+                     infoWindow.open(map, marker); //표출
+                  }
+
+               }
+            }
+
+            for (var i = 0, ii = markers.length; i < ii; i++) {
+               naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+            }
+
+
+         }
+
+
+         /* 	  //naver map
+     
     	 	var mapOptions = {
 		    center: new naver.maps.LatLng(37.3595704, 127.105399),
 		    zoom: 12
@@ -291,7 +347,7 @@
          let postId = null; // 게시글 sequenceId
          let userId = userSession == null ? "" : userSession.userId;
          /*<![CDATA[*/
-         let postUserId = [[${list.userId}]];
+         let postUserId = [[${ list.userId }]];
          /*]]*/
          console.log(postUserId);
          let comContent = null; // 댓글 내용
@@ -300,15 +356,15 @@
          const cmtUpdBtn = $('.cmtUpdBtn'); // 댓글 수정 버튼(여러 개가 선택)
          const comUpdateBtn = $('#comUpdateBtn'); //모달안에 수정버튼
          const cmtInsBtn = $('.cmtInsBtn'); // 댓글 입력 버튼
-         const likeBtn =$('#likeBtn');//좋아요 버튼
+         const likeBtn = $('#likeBtn');//좋아요 버튼
 
          const userCheck = $('#userCheck'); // 작성자와 로그인 유저가 같을
-         
+
          // userId != postUserId => $('#userCheck').hide()
          console.log(userCheck);
-         if(userId != postUserId || userId == ""){
-             $(userCheck).removeClass('d-flex');
-             $(userCheck).addClass('d-none');
+         if (userId != postUserId || userId == "") {
+            $(userCheck).removeClass('d-flex');
+            $(userCheck).addClass('d-none');
          }
 
          const modalCmtContent = $('#modalCmtContent');
@@ -352,9 +408,9 @@
          })
 
          //좋아요
-         $(likeBtn).on('click', function(){
+         $(likeBtn).on('click', function () {
             postId = $('#postId').val();
-            data={
+            data = {
                postId: postId,
                userId: userId
             }
@@ -366,7 +422,7 @@
       });
 
       //좋아요 하기
-      function likePost(postId, userId){
+      function likePost(postId, userId) {
          $.ajax({
             url: "/post/postLike",
             method: "post",
@@ -479,18 +535,18 @@
          $(commentWrap).append(profileImg, nickname, comContent, btnWrap);
          $("#commentsBody").append(commentWrap);
       }
-      
+
       //마커의 지역 담기
-  /*     function initMap(){
-    	  var areaArr = new Array(); //지역 담을 배열
-    	  areaArr.push(
-    		 for(let loc of '${course}'){
-    			 {location: "${loc.region}", lat : "${loc.latitude}", lng : "${loc.longtitude}"} 
-    		 }
-    	  );
-      }
-       */
-      
+      /*     function initMap(){
+              var areaArr = new Array(); //지역 담을 배열
+              areaArr.push(
+                  for(let loc of '${course}'){
+                      {location: "${loc.region}", lat : "${loc.latitude}", lng : "${loc.longtitude}"}
+                  }
+              );
+          }
+           */
+
    </script>
 
 
