@@ -29,6 +29,11 @@ public class CertificationController {
 		return accountService.emailCheck(email);
 	}
 	
+	@PostMapping("/nicknameCheck")
+	public int nicknameCheck(@RequestParam String nickname) {
+		return accountService.nicknameCheck(nickname);
+	}
+	
 	@PostMapping("/phoneNumCheck")
 	public String phoneNumCheck(Model model, 
 					@RequestBody Map<String, String> certiInfo) { 

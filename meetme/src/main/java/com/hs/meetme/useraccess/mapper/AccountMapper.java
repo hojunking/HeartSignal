@@ -8,5 +8,6 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 public interface AccountMapper {
 	public AccountVO findByEmail(String email);
 	public int emailCheck(String email);
+	public int nicknameCheck(String nickname);
 	public void signUp(AccountVO vo);
 }

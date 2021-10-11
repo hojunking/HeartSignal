@@ -36,4 +36,9 @@ public class AccountServiceImpl implements AccountService{
 		return accountMapper.emailCheck(email);
 	}
 
+	@Override
+	public int nicknameCheck(String nickname) {
+		return accountMapper.nicknameCheck(nickname);
+	}
+
 }
