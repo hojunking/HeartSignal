@@ -4,21 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hs.meetme.useraccess.service.AccountService;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RestController
+@RequestMapping("/certificate/*")
 public class CertificationController {
 	
-	@PostMapping("/api/certify")
-	public String certificate(Model model, 
+	@Autowired AccountService accountService;
+	
+	@PostMapping("/emailCheck")
+	public int emailCheck(@RequestParam String email) {
+		return accountService.emailCheck(email);
+	}
+	
+	@PostMapping("/phoneNumCheck")
+	public String phoneNumCheck(Model model, 
 					@RequestBody Map<String, String> certiInfo) { 
 		String to = certiInfo.get("to");
 		String from = certiInfo.get("from");
