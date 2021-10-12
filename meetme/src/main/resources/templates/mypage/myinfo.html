@@ -59,15 +59,21 @@
                                         </nav>
                                         <div class="card border-light p-3 mb-3">
                                           <h5 class="mb-4">Edit profile</h5>
-                                          <form class="needs-validation" id="frm" name="frm" novalidate>
                                             <div class="row align-items-center">
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-4">
-                                                            <input type="file" class="size-190" id="update_profile" accept="image/png, image/jpeg, image/gif">
+												    <div class="row pb-3 mb-3">
+														<label for="profileImage" class="col-sm-2 col-form-label">ProfileImage</label>
+														<div class="col-sm-10">
+														  <form method="POST" enctype="multipart/form-data" id="excelForm">
+                                                            <input type="file" class="size-190" name="excelFile" id="excelFile" accept="image/png, image/jpeg, image/gif">
+                                                          </form>
+                                                        <div class="col-sm-7" style="display: block;">
+                                                            <button class="btn btn-primary btn-sm" type="button" id="imageUpdateBtn">수정</button>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                          <form class="needs-validation" id="frm" name="frm" novalidate>
 					<div class="row pb-3 mb-3 border-bottom">
 						<label for="email" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-10">
@@ -289,7 +295,6 @@
 			</div> <!-- col-sm-9 end -->
 		  </div> <!-- row pb-3 mb-3 end -->
 	    </div> <!-- container end -->
-    				
 			</section>
 		</div>
 </th:block>
@@ -302,48 +307,11 @@
         <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
         <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+       
         <script th:inline="javascript">
-            FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFilePoster);
+        
 
-// Select the file input and use 
-// create() to turn it into a pond
-FilePond.create(
-  document.querySelector('#update_profile'),
-  {
-    labelIdle: `Drag & Drop picture or Browse`,
-    imagePreviewHeight: 160,
-    allowMultiple:false,
-    allowFilePoster:true,
-    filePosterHeight:160,
-    stylePanelLayout: 'compact circle',
-    styleLoadIndicatorPosition: 'center bottom',
-    styleProgressIndicatorPosition: 'right bottom',
-    styleButtonRemoveItemPosition: 'left bottom',
-    styleButtonProcessItemPosition: 'right bottom',
-    files: [
-        {
-            source: '12345',
-            options: {
-                type: 'local',
-                file: {
-                    name: 'Profile',
-                    size: false,
-                    type: 'image/jpg'
-                },
-
-                // pass poster property
-                metadata: {
-                    poster: '/assets/img/avatar/4.jpg'
-                }
-            }
-        }
-    ]
-  }
-);
-
-            </script>
+        </script>
   <!-- 카카오 주소찾기 API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script th:inline="javascript">
@@ -679,8 +647,84 @@ FilePond.create(
     	  })
     	  }  
       })
+    
+               //==============================================프로필 이미지
+            FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginFilePoster);
+
+			// Select the file input and use 
+			// create() to turn it into a pond
+			FilePond.create(
+			  document.querySelector('#excelFile'),
+			  {
+			    labelIdle: `Drag & Drop picture or Browse`,
+			    imagePreviewHeight: 160,
+			    allowMultiple:false,
+			    allowFilePoster:true,
+			    filePosterHeight:160,
+			    stylePanelLayout: 'compact circle',
+			    styleLoadIndicatorPosition: 'center bottom',
+			    styleProgressIndicatorPosition: 'right bottom',
+			    styleButtonRemoveItemPosition: 'left bottom',
+			    styleButtonProcessItemPosition: 'right bottom',
+			    storeAsFile: true,
+			    files: [
+			        {
+			            source: '12345',
+			            options: {
+			                type: 'local',
+			                file: {
+			                    name: 'Profile',
+			                    size: false,
+			                    type: 'image/jpg'
+			        },
+			
+			                // pass poster property
+			                metadata: {
+			                    poster: '/assets/img/avatar/4.jpg'
+			                }
+			            }
+			        }
+			    ]
+			  }
+			);
+	     //==============================================프로필 이미지 끝
       
-    })
+  	$('#imageUpdateBtn').on('click', function() {
+/*   	    var file_data = $('#update_profile').find('input').eq(1);   
+  	    var form_data = new FormData();                  
+  	    form_data.append('filepond', file_data);
+  	    
+  	    console.log(file_data);
+  	    console.log(form_data); */                      
+
+	  	  var form = $('#excelForm')[0];
+	  	  console.log(form);
+  	      // 코드로 동적으로 데이터 추가 가능.
+  	      var formData = new FormData(form);
+	      formData.append("userId", userId);
+	
+	      $.ajax({
+	          type: "POST",
+	          enctype: 'multipart/form-data',
+	          url: "imgUpdate",
+	          data: formData,
+	          processData: false,
+	          contentType: false,
+	          cache: false,
+	          timeout: 600000,
+	          success: function (data) {
+	              console.log("SUCCESS : ", data);
+	          },
+	          error: function (e) {
+	              console.log("ERROR : ", e);
+	          }
+	      });
+  	    
+  	    }); //#imageUpdateBtn 끝
+      
+    }) //$(function(){ 끝
   </script>
 
 </th:block>

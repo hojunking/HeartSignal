@@ -81,6 +81,12 @@ public class MypageServiceImpl implements MypageService {
 		return mypageMapper.userUpdateNickName(myPageUserInfoVO);
 	}
 	
+	@Override
+	public int userUpdateImage(MyPageUserInfoVO myPageUserInfoVO) {
+		// TODO Auto-generated method stub
+		return mypageMapper.userUpdateImage(myPageUserInfoVO);
+	}
+	
 	//마이페이지 나의 코스 관련
 	@Override
 	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId) {
@@ -121,5 +127,6 @@ public class MypageServiceImpl implements MypageService {
 		    r = mypageMapper.insertUserTags(userTagsVO);
 		return r;
 	}
+
     
 }

@@ -325,6 +325,12 @@
       ON a.img_id = b.img_id
       WHERE user_id = #{userId}
 	</select>
+	
+	<update id="userUpdateImage" parameterType="MypageUserInfoVO">
+	  UPDATE user_info
+	  SET img_id=#{imgId}
+	  WHERE user_id=#{userId}
+	</update>
 		
 	<!-- 회원정보 비밀번호 확인 -->
 	<select id="userSelectPassword" resultType="MypageUserInfoVO">
