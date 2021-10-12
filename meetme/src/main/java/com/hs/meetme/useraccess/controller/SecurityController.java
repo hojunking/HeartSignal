@@ -1,6 +1,7 @@
 package com.hs.meetme.useraccess.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,14 +28,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hs.meetme.image.domain.ImageVO;
+import com.hs.meetme.image.service.ImageService;
 import com.hs.meetme.useraccess.domain.AccountVO;
-import com.hs.meetme.useraccess.service.AccountServiceImpl;
+import com.hs.meetme.useraccess.service.AccountService;
 
 @Controller
 public class SecurityController {
 
 	@Autowired
-	AccountServiceImpl accountService;
+	AccountService accountService;
+	@Autowired
+	ImageService imageService;
+	
+	File fileDir = new File("src/main/resources/static/img/");
 
 	@GetMapping("/signUp")
 	public String signUp() {
@@ -40,10 +49,27 @@ public class SecurityController {
 	}
 
 	@PostMapping("/signUp")
-	public String signUpPro(Model model, MultipartFile uploadFile, AccountVO vo) {
+	@Transactional
+	public String signUpPro(Model model, MultipartFile uploadFile, AccountVO vo, ImageVO imgvo) {
 		System.out.println(uploadFile);
 		System.out.println(vo);
 		try {
+			String path = fileDir.getAbsolutePath() + "/user/";
+			MultipartFile file = uploadFile;
+			if (!file.isEmpty() && file.getSize() > 0) {
+				String filename = file.getOriginalFilename();
+				UUID uuid = UUID.randomUUID();
+				String imgUrl = uuid + filename;
+				File uufile = new File(path, imgUrl);
+				System.out.println(uufile.getPath());
+				
+				imgvo.setImgUrl(imgUrl);
+				imageService.insertImage(imgvo);
+				
+				file.transferTo(uufile); //파일 옮기기
+				
+				vo.setImgId(String.valueOf(imgvo.getImgId()));
+			}
 			accountService.signUp(vo);
 			model.addAttribute("signUp", true);
 		} catch(Exception e) {
