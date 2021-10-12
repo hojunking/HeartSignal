@@ -50,12 +50,12 @@ public class SecurityController {
 
 	@PostMapping("/signUp")
 	@Transactional
-	public String signUpPro(Model model, MultipartFile uploadFile, AccountVO vo, ImageVO imgvo) {
-		System.out.println(uploadFile);
+	public String signUpPro(Model model, MultipartFile filepond, AccountVO vo, ImageVO imgvo) {
+		System.out.println(filepond);
 		System.out.println(vo);
 		try {
 			String path = fileDir.getAbsolutePath() + "/user/";
-			MultipartFile file = uploadFile;
+			MultipartFile file = filepond;
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
 				UUID uuid = UUID.randomUUID();

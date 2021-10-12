@@ -3,7 +3,11 @@
     layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-
+    <!--File uploader-->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -27,7 +31,8 @@
                                     <!-- /csrf 처리 -->
 
                                     <!-- profile img -->
-                                    <input type="file" class="form-control" name="uploadFile" required>
+                                    <input type="file" class="form-control size-190" id="profileImg"
+                                        required accept="image/png, image/jpeg, image/gif">
                                     <!-- profile img -->
 
                                     <!-- email -->
@@ -114,17 +119,21 @@
                                         </span>
                                         <!-- icon -->
 
-                                        <input type="text" class="form-control d-inline-block" name="addrzonecode" required readonly placeholder="우편번호" style="width:50%;">
-                                        <button type="button" id="findAddr" class="btn btn-primary" style="float: right;">주소찾기</button>
+                                        <input type="text" class="form-control d-inline-block" name="addrzonecode"
+                                            required readonly placeholder="우편번호" style="width:50%;">
+                                        <button type="button" id="findAddr" class="btn btn-primary"
+                                            style="float: right;">주소찾기</button>
                                     </div>
                                     <!-- address addrzonecode -->
 
                                     <!-- address addrfull -->
-                                    <input type="text" class="form-control mb-3" name="addrfull" required readonly placeholder="도로명주소/지번주소">
+                                    <input type="text" class="form-control mb-3" name="addrfull" required readonly
+                                        placeholder="도로명주소/지번주소">
                                     <!-- address addrfull -->
 
                                     <!-- address addrdetail -->
-                                    <input type="text" class="form-control mb-3 d-none" name="addrdetail" required placeholder="상세주소">
+                                    <input type="text" class="form-control mb-3 d-none" name="addrdetail" required
+                                        placeholder="상세주소">
                                     <!-- address addrdetail -->
 
                                     <!-- birthDate -->
@@ -257,6 +266,10 @@
     <script th:src="@{/assets/vendor/cleave.js/cleave.min.js}"></script>
     <script th:src="@{/assets/js/custom/cleave.js}"></script>
 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
     <script type="text/javascript">
         // ====================== 페이지 로드 ======================
         document.addEventListener("DOMContentLoaded", () => {
@@ -277,6 +290,48 @@
                 $('#naver_id_login').children().eq(0).click();
             });
             // ====================== 네이버 로그인 구현 ======================
+
+            // ====================== profile img ======================
+            FilePond.registerPlugin(
+                FilePondPluginImagePreview,
+                FilePondPluginFilePoster
+            );
+
+            // Select the file input and use 
+            // create() to turn it into a pond
+            FilePond.create(
+                document.querySelector('#profileImg'), {
+                    labelIdle: `Drag & Drop picture or Browse`,
+                    imagePreviewHeight: 160,
+                    allowMultiple: false,
+                    allowFilePoster: true,
+                    filePosterHeight: 160,
+                    stylePanelLayout: 'compact circle',
+                    styleLoadIndicatorPosition: 'center bottom',
+                    styleProgressIndicatorPosition: 'right bottom',
+                    styleButtonRemoveItemPosition: 'left bottom',
+                    styleButtonProcessItemPosition: 'right bottom',
+                    storeAsFile: true,
+                    files: [{
+                        source: '12345',
+                        options: {
+                            type: 'local',
+                            file: {
+                                name: 'Profile',
+                                size: false,
+                                type: 'image/jpg'
+                            },
+
+                            // pass poster property
+                            metadata: {
+                                poster: './assets/img/avatar/4.jpg'
+                            }
+                        }
+                    }]
+                }
+            );
+
+            // ====================== profile img ======================
 
 
             // ====================== email 중복체크 ======================
@@ -459,6 +514,7 @@
 
             // modal 여는 이벤트
             $(signUpPhoneNum).on('click', () => {
+                console.log($('#profileImg').find('input').eq(1));
                 $('#modalForm').modal('show');
             });
 
@@ -468,7 +524,7 @@
                 $(modalPhoneNum).val('');
                 $(modalCheckNum).val('');
                 resultCheckNum = null;
-                $(modalBtn).text('인증요청');
+                $('[name="modalCheckBtn"]').text('인증요청');
                 $(modalCheckNum).parent().addClass('d-none');
             });
 
@@ -502,7 +558,7 @@
                         url: '/certificate/phoneNumCheck',
                         method: 'post',
                         data: JSON.stringify({
-                            to: $(modalPhoneNum).val().replaceAll('-',''),
+                            to: $(modalPhoneNum).val().replaceAll('-', ''),
                             from: '01096400615',
                         }),
                         dataType: 'json',
@@ -555,7 +611,7 @@
             // ====================== form submit ======================
             const signUpBirthDate = $('[name="birthDate"]');
 
-            $('#signUpBtn').on('click', ()=>{
+            $('#signUpBtn').on('click', () => {
                 let checkEmail = $(signUpEmail).hasClass('is-valid');
                 let checkPassword = $(signUpPassword).hasClass('is-valid');
                 let checkNickname = $(signUpNickname).hasClass('is-valid');
@@ -563,34 +619,34 @@
 
                 let indexOfHyphen = $(signUpBirthDate).val().indexOf('/');
                 let birthYear = $(signUpBirthDate).val().substring(0, indexOfHyphen);
-                let birthDay = $(signUpBirthDate).val().substr(indexOfHyphen+1, 5).replace('/', '-');
+                let birthDay = $(signUpBirthDate).val().substr(indexOfHyphen + 1, 5).replace('/', '-');
 
-                if(!checkEmail){
+                if (!checkEmail) {
                     $(signUpEmail).focus();
                     return;
                 }
-                if(!checkPassword){
+                if (!checkPassword) {
                     $(signUpPassword).focus();
                     return;
                 }
-                if(!checkNickname){
+                if (!checkNickname) {
                     $(signUpNickname).focus();
                     return;
                 }
-                if(!checkBirthDate){
+                if (!checkBirthDate) {
                     $(signUpBirthDate).focus();
                     return;
                 }
 
                 let signUpBirthYear = $('<input />').attr({
-                            type: 'hidden',
-                            name: 'birthYear'
-                        }).val(birthYear);
-                
+                    type: 'hidden',
+                    name: 'birthYear'
+                }).val(birthYear);
+
                 let signUpBirthDay = $('<input />').attr({
-                            type: 'hidden',
-                            name: 'birthDay'
-                        }).val(birthDay);
+                    type: 'hidden',
+                    name: 'birthDay'
+                }).val(birthDay);
 
                 $('#signUp').append(signUpBirthYear, signUpBirthDay);
 
