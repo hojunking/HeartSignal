@@ -21,9 +21,9 @@ public class MyPageUserInfoVO{
 	private Date updated;
 	private String birthYear;
 	private String birthDay;
-	private String address1;
-	private String address2;
-	private String address3;
+	private String addrzonecode;
+	private String addrfull;
+	private String addrdetail;
 	private String coupleStatus;
 	private String imgId;
 	
@@ -32,8 +32,5 @@ public class MyPageUserInfoVO{
 	private String imgSize;
 	private Date imgDate;
 	private String imgUsage;
-	
-	private String myAddress;
-	private String mybirthDay;
-	
+		
 }

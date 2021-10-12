@@ -1,21 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="~{layout/layout}">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
 
-</head>
-<body>	
-	<th:block layout:fragment="content">
-		<div class="tm-page-wrap mx-auto">
-			<section class="p-5 tm-container-outer tm-bg-white">
-				<div class="container">
-					<div class="row">
+<th:block layout:fragment="css">
+
+  <style>
+
+  </style>
+</th:block>
+
+<th:block layout:fragment="content">
+<!--Main content-->
+<main class="main-content" id="main-content">
+    <section class="position-relative bg-white">
+        <div class="container position-relative pt-3 pb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <nav class="d-md-flex" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="#!">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Profile
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <!--/.row-->
+
+        </div>
+    </section>
+    <section class="position-relative">
+                <div class="container position-relative">
+                
+                    <div class="overflow-hidden">
+                        <!--Profile info header-->
+                        <div class="position-relative pb-7 pb-lg-12">
+                            <div class="row">
+                            
+                                <div class="col-lg-9 mx-auto">
+                                    <div class="pt-5 d-flex flex-column h-100">
+                                        <nav class="nav mb-5 nav-pills">
+                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                            <a href="myinfo_my_comment_list" class="nav-link active"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="myinfo_my_payment_list" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
+                                        </nav>
+                                    <div class="card border-light p-3 mb-3">
+                                      <section class="position-relative">
+                                      
+						                <div class="container py-3">
+						                    <div class="row">
 	<div class="col-lg-12">
-		<h5 class="page-header" th:with="var1='내가 쓴글 리스트(총' +${count}+ '건)'"  th:text="${var1}"></h5>
+		<h5 class="page-header" th:with="var1='내가 쓴 댓글 리스트(총' +${count}+ '건)'"  th:text="${var1}"></h5>
 	</div>
 	<!-- /.col-lg-12 -->
 						<div class="col-xs-12 mx-auto tm-about-text-wrap text-center">
+	<form id ="actionForm" action="" method="get">
+	  <select name = "type">
+	    <option value=""  th:selected="${#strings.isEmpty(pageMaker.cri.type)}">선택</option>
+	    <option value="D" th:selected="${#strings.equals(pageMaker.cri.type, 'D')}">분류</option>
+	    <option value="C" th:selected="${#strings.equals(pageMaker.cri.type, 'C')}">내용</option>
+	  </select>
+	  <input name="keyword" th:value="${pageMaker.cri.keyword}">
+	  <button class="btn btn-default" onclick="$('[name=pageNum]').val(1)">검색</button>
+	  <input type="hidden" name="pageNum" th:value="${pageMaker.cri.pageNum}">
+	  <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+	</form>
 						  
 	<table class="table" id="board">
 		<thead>
@@ -37,43 +91,65 @@
 		</tbody>
 	</table>
 	
-	<form id ="actionForm" action="" method="get">
-	  <select name = "type">
-	    <option value=""  th:selected="${#strings.isEmpty(pageMaker.cri.type)}">선택</option>
-	    <option value="D" th:selected="${#strings.equals(pageMaker.cri.type, 'D')}">분류</option>
-	    <option value="C" th:selected="${#strings.equals(pageMaker.cri.type, 'C')}">내용</option>
-	  </select>
-	  <input name="keyword" th:value="${pageMaker.cri.keyword}">
-	  <button class="btn btn-default" onclick="$('[name=pageNum]').val(1)">검색</button>
-	  <input type="hidden" name="pageNum" th:value="${pageMaker.cri.pageNum}">
-	  <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-	</form>
-
-	<div class ="pull-right">
-	  <ul class ="pagination">  
-	    <li th:if="${pageMaker.prev }" class="paginate_button previous">
-	    	<a th:href="${pageMaker.startPage-1}" th:text="'이전'"></a>
-	    </li>
-	    
-	    <th:block th:each="num: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" >
-	      <li class="paginate_button">
-	      <a th:href="${num}" th:text="${num}"></a>
-	      </li>
-	    </th:block>
-	    
-	    <li th:if="${pageMaker.next }" class="paginate_button previous">
-	    	<a th:href="${pageMaker.endPage+1}" th:text="'다음'"></a>
-	    </li>
-	  </ul>
-	</div>
+<div class="row pt-3 justify-content-end">
+                                <div class="col-auto">
+                                    
+                                    <nav class="mb-0" aria-label="Page navigation example">
+                                        <ul class="pagination mb-0">
+                                            <li class="page-item" th:classappend="!${pageMaker.prev} ? disabled">
+                                                <a class="page-link" th:href="${pageMaker.startPage-1}" aria-label="Previous">
+                                                    <svg class="bi bi-chevron-left" width="1em" height="1em"
+                                                        viewBox="0 0 16 16" fill="currentColor"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                            </li>
+									        <th:block th:each="num: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" >
+										      <li class="page-item">
+										        <a class="page-link" th:href="${num}" th:text="${num}"></a>
+										      </li>
+										    </th:block>
+                                            <li class="page-item" th:classappend="!${pageMaker.next} ? disabled">
+                                                <a class="page-link" th:href="${pageMaker.endPage+1}" aria-label="Next">
+                                                    <svg class="bi bi-chevron-right" width="1em" height="1em"
+                                                        viewBox="0 0 16 16" fill="currentColor"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    
+                                </div>
+</div>
 							
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</th:block>
-</body>
+						</div>						                            
+						                        
+						
+						                    </div>
+						                    <!--/.blog-row-->
+						                </div>
+						              </section>
+						              
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </section>                                          
+</main>
+		
+</th:block>
+
 <th:block layout:fragment="script">
   <script>
   $(function(){
@@ -89,7 +165,7 @@
         actionForm.submit();
       }) */
       
-      $(".pull-right a").on("click", function(e){
+      $(".page-item a").on("click", function(e){
         e.preventDefault(); //a,submit 기본기능 막기
     	var p = $(this).attr("href");
     	$('[name="pageNum"]').val(p);

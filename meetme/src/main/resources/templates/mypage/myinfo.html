@@ -51,11 +51,11 @@
                                     <div class="pt-5 d-flex flex-column h-100">
                                         <nav class="nav mb-5 nav-pills">
                                             <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="#" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
                                             <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
                                             <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
                                             <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>나의 정보 수정</a>
+                                            <a href="myinfo_my_payment_list" class="nav-link active"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
                                         </nav>
                                         <div class="card border-light p-3 mb-3">
                                           <h5 class="mb-4">Edit profile</h5>
@@ -138,9 +138,9 @@
 					 <div class="row pb-3 mb-3">
 						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
 					    <div class="col-sm-10">
-					        <input type="text" style="width:100px;" class="form-control pb-3 mb-3" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
+					        <input type="text" style="width:100px;" class="form-control pb-3 mb-3" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
+					        <input type="text" class="form-control pb-3 mb-3" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
+					        <input type="text" class="form-control pb-3 mb-3" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
 					      
 					    <div class="" id="u_address" style="display: none;"> 
 					        <input class="form-control pb-3 mb-3" style="width:100px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
@@ -254,13 +254,13 @@
 						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
 					    <div class="col-sm-7">
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
+					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
 					      </div>
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
+					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
 					      </div>
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
+					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
 					      </div>
 					      
 					    <div class="" id="u_address" style="display: none;"> 
@@ -436,17 +436,17 @@ FilePond.create(
         			url: "addressUpdate",
         			method : "put",
         			data : JSON.stringify({ userId: userId,
-        			 	                   address1:$("#addr1").val(),
-        			 	                   address2:$("#addr2").val(),
-        			 	                   address3:$("#addr3").val()
+        				                    addrzonecode:$("#addr1").val(),
+        				                    addrfull:$("#addr2").val(),
+        				                    addrdetail:$("#addr3").val()
         			                     }),
         			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
         			dataType : "json",
         			contentType : "application/json;charset=UTF-8",
         			success: function(data){
-        				$("#address1").val(data.address1);
-        				$("#address2").val(data.address2);
-        				$("#address3").val(data.address3);
+        				$("#address1").val(data.addrzonecode);
+        				$("#address2").val(data.addrfull);
+        				$("#address3").val(data.addrdetail);
         				alert("주소 수정 완료")
 			    		$("#u_address").css("display","none");
 			    		$("#addrUpdateBtn").css("display","block");

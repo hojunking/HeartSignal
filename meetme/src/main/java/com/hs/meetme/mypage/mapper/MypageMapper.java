@@ -16,6 +16,8 @@ import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 @Mapper
 public interface MypageMapper {
     
+	//태그 다 가져오기
+	public List<UserTagsVO> getTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 가져 오기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 삭제

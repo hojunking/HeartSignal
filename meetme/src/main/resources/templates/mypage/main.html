@@ -35,7 +35,7 @@
             <section class="position-relative">
                 <div class="container position-relative">
                     <div class="overflow-hidden">
-
+                        
                         <!--Profile info header-->
                         <div class="position-relative pb-7 pb-lg-12">
                             <div class="row">
@@ -47,12 +47,12 @@
                                                 <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
                                                     style="background-image: url(/assets/img/avatar/4.jpg);">
                                                 </div>
-                                                <h4 class="mb-2">Emily Doe</h4>
-                                                <small class="d-block mb-3">Senior Software developer</small>
+                                                <h4 class="mb-2">[[${userInfo.name}]]</h4>
+                                                <small class="d-block mb-3">[[${userInfo.nickName}]]</small>
                                                 <ul class="list-unstyled border-bottom pb-3 mb-3">
                                                     <li class="d-flex align-items-stretch mb-2">
                                                         <i class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
-                                                        <span class="small">Barcelona, Spain</span>
+                                                        <span class="small">[[${myAddress}]]</span>
                                                     </li>
                                                     <li class="d-flex align-items-stretch mb-2">
                                                         <i class="bi bi-globe me-2 align-middle text-muted"></i>
@@ -107,15 +107,29 @@
                                             <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
                                             <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
                                             <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="myinfo_my_payment_list" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
                                             <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
-                                            <a href="#" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
                                         </nav>
 
                                         <div class="card shadow-sm p-3 h-100">
                                             <div class="row align-items-center">
             <section class="position-relative">
-                <div class="container py-6 py-lg-12">
-                    <div class="d-flex align-items-center mb-5 mb-lg-9">
+                <div class="container py-3">
+                    <div class="d-flex align-items-center mb-3 mb-lg-3">
+                        <div class="flex-grow-1 border-bottom"></div>
+                        <h5 class="mb-0 flex-grow-0 px-3">나의취향</h5>
+                        <div class="flex-grow-1 border-bottom"></div>
+                    </div>
+                          <div class="pb-5">
+                                <h5 class="title mb-3">Tags</h5>
+                                <th:block th:each="userTag : ${userTag}">
+	                                <a href="#!" class="badge bg-primary badge-pill mb-1">
+	                                    [[${userTag.TagId}]]
+	                                </a>
+ 								</th:block>
+                            </div>
+                            
+                    <div class="d-flex align-items-center mb-3 mb-lg-3">
                         <div class="flex-grow-1 border-bottom"></div>
                         <h5 class="mb-0 flex-grow-0 px-3">알림내역</h5>
                         <div class="flex-grow-1 border-bottom"></div>
@@ -124,7 +138,7 @@
                         <div class="col-lg-10 mx-auto">
                             <ul class="step mx-3 mx-sm-0 list-unstyled mb-0">
                                 <th:block th:each="notice : ${userNotice}">
-	                                <li class="step-item">
+	                                <li class="step-item" data-aos="fade-left">
 	                                    <div class="step-row">
 	                                        <span class="step-icon bg-tint-primary text-primary">
 	                                            <!--ICON-DOT-->
@@ -134,7 +148,7 @@
 	                                        <div class="step-content">
 		                                            <small class="mb-2 text-muted">[[${#dates.format(notice.noticeDate,'MM월 dd일, yyyy aaHH:mm')}]]</small>
 		                                            <button type="button" class="btn-close" th:data-noticeId="${notice.noticeId}" onclick="noticeDelFunc(this)">
-	                                                  <i class="bi bi-x"></i>
+	                                                  <i class="bi bi-x text-danger"></i>
 	                                                </button>
 	                                            <p class="mb-0">
 	                                              [[${notice.noticeContent}]]
