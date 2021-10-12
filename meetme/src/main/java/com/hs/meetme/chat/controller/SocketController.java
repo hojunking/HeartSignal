@@ -13,12 +13,24 @@ import com.hs.meetme.chat.domain.PlaceOfCourseVO;
 import com.hs.meetme.chat.domain.SocketChangedListVO;
 import com.hs.meetme.chat.domain.SocketChatVO;
 import com.hs.meetme.chat.domain.SocketInsertCourseVO;
+import com.hs.meetme.chat.domain.SocketRegisterVO;
 import com.hs.meetme.chat.domain.SocketSearchByTagVO;
 import com.hs.meetme.chat.domain.SocketTagVO;
+import com.hs.meetme.config.WSHandshakeInterceptor;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
 @Controller
 public class SocketController {
+	
+	// 커플 코스 만들기 끝내기
+	@MessageMapping("/registerReceive")
+    @SendTo("/send")
+    public SocketRegisterVO SocketChangedListHandler(SocketRegisterVO vo) {
+		String registerConfirmValue = vo.getRegisterConfirmValue();
+ 
+        SocketRegisterVO result = new SocketRegisterVO(registerConfirmValue);
+        return result;
+    }
 	
 	// 수정한 코스 보내기
 	@MessageMapping("/changeListReceive")
@@ -30,7 +42,7 @@ public class SocketController {
         return result;
     }
 	
-	// 태그를 기준 검색 클릭
+	// 코스에 장소 추가
 	@MessageMapping("/insertCourseReceive")
     @SendTo("/send")
     public SocketInsertCourseVO SocketInsertCourseHandler(SocketInsertCourseVO vo) {
@@ -74,10 +86,11 @@ public class SocketController {
 //    	socketVO.setUserName(currUserName);
         String userName = socketVO.getUserName();
         // vo에서 getter로 content를 가져옵니다.
+        String sendUserName = WSHandshakeInterceptor.map.get(userName);
         String content = socketVO.getContent();
 
         // 생성자로 반환값을 생성합니다.
-        SocketChatVO result = new SocketChatVO(userName, content);
+        SocketChatVO result = new SocketChatVO(sendUserName, content);
         // 반환
         return result;
     }
