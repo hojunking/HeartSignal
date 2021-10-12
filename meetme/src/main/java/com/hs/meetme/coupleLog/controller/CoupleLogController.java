@@ -35,7 +35,11 @@ public class CoupleLogController {
 	
 	@GetMapping("/logOne")
 	public String getLogOne(Model model,CoupleLogVO vo) {
-		model.addAttribute("logList", service.getLog(vo));
+		CoupleLogVO log = service.getLog(vo);
+		model.addAttribute("log", log);
+		if(log.getImgId() > 0) {
+			model.addAttribute("img", service.getImg(vo));
+		}
 		return "coupleLog/coupleLogOne";
 	}
 	
@@ -73,7 +77,8 @@ public class CoupleLogController {
 	@PostMapping("/coupleLogDelete")
 	public String delete(CoupleLogVO vo, RedirectAttributes rttr) {
 		int result = service.logDelete(vo);
-		if (result == 1) {
+		int resultImg = service.imgDelete(vo);
+		if (result ==1  && resultImg == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
 

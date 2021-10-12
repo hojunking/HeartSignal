@@ -55,6 +55,18 @@ public class CoupleLogServiceImpl implements CoupleLogService {
 		return coupleMapper.logUpdate(vo);
 	}
 
+	@Override
+	public int imgDelete(CoupleLogVO vo) {
+		// TODO Auto-generated method stub
+		return coupleMapper.imgDelete(vo);
+	}
+
+	@Override
+	public CoupleLogVO getImg(CoupleLogVO vo) {
+		// TODO Auto-generated method stub
+		return coupleMapper.getImg(vo);
+	}
+
 
 
 
