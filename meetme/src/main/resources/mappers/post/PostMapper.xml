@@ -163,6 +163,12 @@
       insert into post_like values(#{postId}, #{userId})
    </insert>
    
+   
+   <!-- 코스 스크랩하기 -->
+   <insert id="scrapCourse">
+   		insert into course_like values(#{courseId},#{userId})
+   </insert>
+   
    <!-- 나의 코스 리스트 -->
   <!--  코스아이디, 코스 이름," 첫번째" 장소 이름, 장소 별 가격, 장소별 이미지  가져옴. 	-->
     <select id="getCourseList" resultType="MyPageCourseVO">
@@ -182,5 +188,24 @@
 	</select>
 	
 	
+	<!-- 코스 스크랩 가져오기 -->
+	<select id="getCourseScrap" parameterType="PostVO" resultType="int" >
+		select count(*) from course_like where user_id=#{userId} and course_id=#{courseId}
+	</select>
+	
+	<!-- 게시글 스크랩 가져오기 -->
+	<select id="getPostLike" parameterType="PostVO" resultType="int">
+		select count(*) from post_like where user_id=#{userId} and post_id=#{postId}
+	</select>
+	
+	<!-- 게시글 스크랩 취소하기 -->
+	<delete id="postLikeCancle">
+		delete from post_like where post_id=#{postId} and user_id=#{userId}
+	</delete>
+	
+	<!-- 코스 스크랩 취소하기 -->
+	<delete id="scrapCancel">
+		delete from course_like where course_id=#{courseId} and user_id=#{userId}
+	</delete>
    
 </mapper>

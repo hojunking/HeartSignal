@@ -24,6 +24,7 @@ public interface PostMapper {
    public int postUpdate(PostVO vo);
    public int postDelete(PostVO vo);
    public int postLike(long postId,long userId); // 글 좋아요
+   public int scrapCourse(long courseId, long userId); //코스 스크랩하기
    
    public long countHit(long postId); //조회수 up
    public List<CommentVO> commentCM(long postId);//커뮤니티 댓글 가져오기
@@ -35,6 +36,9 @@ public interface PostMapper {
  
    public List<MyPageCourseVO> getCourseList(MyPageCourseVO vo);// 내 코스 조회
    public List<MyPageCourseVO> getCourse(String courseId);// 코스 하나 들고오기 
-
+   public int getCourseScrap(PostVO vo);//코스 스크랩한거 들고오기
+   public int getPostLike(PostVO vo);//게시글 좋아요 들고오기
+   public int postLikeCancle(long postId,long userId);//좋아요 취소하기
+   public int scrapCancel(long courseId, long userId);//코스 스크랩 취소
    
 }

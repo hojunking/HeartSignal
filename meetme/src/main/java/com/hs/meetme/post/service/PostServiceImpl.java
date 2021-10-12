@@ -117,6 +117,36 @@ public class PostServiceImpl implements PostService{
 	public List<MyPageCourseVO> getCourse(String courseId) {
 		// TODO Auto-generated method stub
 		return pMapper.getCourse(courseId);
+	}
+
+	@Override
+	public int scrapCourse(long courseId, long userId) {
+		// TODO Auto-generated method stub
+		return pMapper.scrapCourse(courseId, userId);
+	}
+
+	@Override
+	public int getCourseScrap(PostVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.getCourseScrap(vo);
+	}
+
+	@Override
+	public int getPostLike(PostVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.getPostLike(vo);
+	}
+
+	@Override
+	public int postLikeCancle(long postId,long userId) {
+		// TODO Auto-generated method stub
+		return pMapper.postLikeCancle( postId, userId);
+	}
+
+	@Override
+	public int scrapCancel(long courseId, long userId) {
+		// TODO Auto-generated method stub
+		return pMapper.scrapCancel(courseId,userId);
 	}                                                                              
 
 	
