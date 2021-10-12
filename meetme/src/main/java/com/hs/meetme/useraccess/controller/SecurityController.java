@@ -78,6 +78,11 @@ public class SecurityController {
 		}
 		return "security/login";
 	}
+	
+	@GetMapping("/findPwd")
+	public String findPwd() {
+		return "security/findPwd";
+	}
 
 	@GetMapping("/login")
 	public String login() {
