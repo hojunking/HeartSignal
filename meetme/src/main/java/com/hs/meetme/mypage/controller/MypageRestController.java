@@ -1,19 +1,26 @@
 package com.hs.meetme.mypage.controller;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.hs.meetme.image.domain.ImageVO;
+import com.hs.meetme.image.service.ImageService;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.service.MypageService;
@@ -28,6 +35,44 @@ public class MypageRestController {
 	@Autowired MypageService mypageService;
 	@Autowired NoticeService noticeService;
 	@Autowired private PasswordEncoder encoder;
+	@Autowired ImageService imageService;
+	
+	File fileDir = new File("src/main/resources/static/img/");
+    
+	//수정하기 (이미지)
+	@PostMapping("/imgUpdate")
+	@Transactional
+	public boolean imgUpdate(Model model, MultipartFile excelFile, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo) {
+		
+		int r = 0;
+		try {
+			String path = fileDir.getAbsolutePath() + "/user/";
+			MultipartFile file = excelFile;
+			if (!file.isEmpty() && file.getSize() > 0) {
+				String filename = file.getOriginalFilename();
+				UUID uuid = UUID.randomUUID();
+				String imgUrl = uuid + "_"+ filename;
+				File uufile = new File(path, imgUrl);
+				System.out.println(uufile.getPath());
+				
+				imgvo.setImgUrl(imgUrl);
+				r = imageService.insertImage(imgvo);
+				
+				file.transferTo(uufile); //파일 옮기기
+				
+				mypageUserInfoVO.setImgId(String.valueOf(imgvo.getImgId()));
+			}
+			r += mypageService.userUpdateImage(mypageUserInfoVO);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			r= 0;
+		}
+		
+		return r==2 ? true : false;
+	}
+	
+	
 	
 	@DeleteMapping("/deleteNotice")
 	public boolean deleteNotice(NoticeVO noticeVO) {

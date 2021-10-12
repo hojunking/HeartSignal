@@ -59,7 +59,7 @@ public class SecurityController {
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
 				UUID uuid = UUID.randomUUID();
-				String imgUrl = uuid + filename;
+				String imgUrl = uuid + "_"+ filename;
 				File uufile = new File(path, imgUrl);
 				System.out.println(uufile.getPath());
 				
