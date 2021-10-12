@@ -12,6 +12,7 @@ public interface CoupleInfoService {
 	public CoupleInfoVO read(CoupleInfoVO vo); //커플정보상세보기
 	public CoupleInfoVO myLoverInfo(CoupleInfoVO vo); //내여친정보
 	public int userCoupleStatusUpdate(CoupleInfoVO vo); //커플상태 업데이트
+	public CoupleInfoVO findLove(CoupleInfoVO vo); //내 커플찾기
 	
 	public CoupleInfoVO userCoupleStatusRead(CoupleInfoVO vo); //유저 커플상태확인
 	public int deleteCoupleInfo(CoupleInfoVO vo); //커플정보 삭제

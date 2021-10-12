@@ -120,4 +120,14 @@
 	DELETE FROM COUPLE_INFO
 	WHERE USER_REQUEST = #{userId}
 </delete>
+
+<select id="findLove" resultType="CoupleInfoVO">
+	SELECT U.EMAIL,
+			U.NICKNAME,
+			I.IMG_URL AS userImg
+	FROM USER_INFO U
+	JOIN IMG I
+	ON U.IMG_ID = I.IMG_ID
+	WHERE U.EMAIL = #{email}
+</select>
 </mapper>
