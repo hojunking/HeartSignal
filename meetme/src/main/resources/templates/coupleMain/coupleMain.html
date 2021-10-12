@@ -21,6 +21,10 @@
 
 .them_img, .result_box{position:absolute;top:0;left:0;width:100%;height:100%;}
 .them_img img, .result_box img{display:block;margin:0 auto;height:100%;}
+
+.btn-circle-ripple::after, .btn-circle-ripple::before{
+	z-index: 1;
+}
 </style>
 </th:block>
 <th:block layout:fragment="content">
@@ -54,51 +58,59 @@
                     </div>
                 </div>
                 <!--/.content-->
-                
             </section>
-            <br>
+            
             <!-- section 2-->
             <section class="position-relative bg-white">
-                <div class="container mx-10 px-12 py-10 py-lg-8 bg-tint-danger shadow-lg text-black rounded-block">
-                    <div class="row mb-7 mb-lg-9 ">
-                        <div class=" mr-2 py-2 py-lg-4 px-4 px-lg-8 position-relative overflow-hidden"
-                        data-aos="fade-down" style="height: 75px;">
-							<div class="row position-relative">
-                                <h4 class="display-4">사랑한 지 <b class="text-warning" id="coupleDate"></b>일 째</h4>
+                <div class="container py-2 py-lg-6">
+                        <div class="col-lg-7 mb-4 mx-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
+                            <h2 class="display-2">D+<b class="text-warning" id="coupleDate"></b></h2><br>
+                            <h6 class="display-6">우리 사랑한지</h6>
                         </div>
-                    </div>
-                    </div>
                     <div class="row">
-                        <div class="col-lg-6 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                        <div class="col-lg-5 my-5 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                             <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
-                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid">
+                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid" id="user1Img"> 
                             </div>
                             <div>
                                 <h5 class="mb-1" id="nickName1">
                                 </h5>
-                                <p class="d-block text-warning mb-3" id="birthDate1"></p>
-                            </div>
+                                <p class="d-block text-primary mb-3" id="birthDate1"></p>
+                                </div>
                         </div>
-                        <div class="col-lg-6 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
-                            <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
-                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid">
+                        
+                        <div class="col-lg-2 my-6 text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                        	<div class="position-relative my-8">
+                        	
+                        	<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
+                        	<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
+							<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
+							<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
+                            
+                            <a href="#findLove"data-bs-toggle="modal" id="heart"
+                                class="btn btn-danger btn-circle-ripple p-0 size-70 rounded-pill fs-3 lh-1 center-both  mb-3">
+                                <i class="icon-Heart  align-middle"></i>
+                            </a>
+							
                             </div>
-                            <div>
-                                <h5 class="mb-1" id="nickName2">
+                        		
+                        </div>
+                        	
+                        <div class="col-lg-5 my-5 text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                            <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle" id="loveInfo">
+                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid" id="user2Img">
+                            </div>
+                            	<div>
+                                <h5 class="mb-1"  id="nickName2">
                                 </h5>
-                                <p class="d-block text-warning mb-3" id="birthDate2"></p>
-                            </div>
+                                <p class="d-block text-primary mb-3" id="birthDate2"></p>
+                                </div>
                         </div>
-                        <!--Triangle shape-->
-			                    <svg class="position-absolute start-0 top-0 ms-1 mt-n4 mt-lg-7 ms-lg-12 text-warning" width="48"
-			                        height="48" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-			                        <path d="M8.64453 8.64453L92.2962 31.0589L31.0589 92.2962L8.64453 8.64453Z"
-			                            stroke="currentColor" stroke-width="8"></path>
-			                    </svg>
                     </div>
                 </div>
             </section>
-            <br><br>
+            
+                        
             <section class="bg-dark text-white jarallax" data-jarallax=".3">
                 <!--Parallax image-->
                 <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" class="jarallax-img" alt="">
@@ -140,7 +152,7 @@
 		
 	<!-- 커플 수정 Modal창  -->
 	<div class="modal fade" tabindex="-1" role="dialog" id="updateCouple"
-		aria-labelledby="updateCouple" aria-hidden="true">
+		aria-labelledby="updateCouple" aria-hidden="true" data-bs-backdrop="static">
 		<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
 			<div class="modal-content border-0">
 				<div class="modal-header">
@@ -157,8 +169,8 @@
 								<input type="file" name="photoBtn" class="form-control form-control-sm"
 									accept="image/jpeg, image/png" id="photoBtn">
 							</div>
-							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="defaultImage">기본이미지로 변경</button>
-							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="resetPhoto">다시 올리기</button>
+							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="defaultImage"><span>기본이미지로 변경</span></button>
+							<button type="button" class="btn btn-primary btn-hover-arrow btn-sm" id="resetPhoto"><span>다시 올리기</span></button>
 						</div>
 						<div class="photo_them">
 							<div class="them_img">
@@ -166,12 +178,59 @@
 							</div>
 						</div>
 						D-DAY설정하기&nbsp;<input type="date" required="required">
-						<button type="button"class="btn btn-primary btn-hover-arrow btn-sm" id="complete">업데이트</button>
+						<button type="button"class="btn btn-primary btn-hover-arrow btn-sm" id="complete"><span>업데이트</span></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+<!-- 커플 찾기 모달창 -->
+<div class="modal fade" id="findLove" tabindex="-1" aria-labelledby="findLove" aria-hidden="true" style="display: none;"
+ data-bs-backdrop="static">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content border-0">
+             <div class="modal-header border-0 bg-light">
+                 <h5 class="modal-title">내커플찾기</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                     <i class="bi bi-x fs-5 lh-1"></i>
+                 </button>
+             </div>
+             <div class="modal-body"style="padding: 0px;">
+                 <div class="position-relative  bg-white shadow-lg overflow-hidden">
+                     <div class="position-relative bg-white overflow-hidden">
+						<!--Get started image-->
+                         <div class="position-relative my-4 overflow-hidden size-180 mx-auto rounded-circle" id="findLoveInfo"
+                         style="display:none;">
+                                <img src="/img/coupleImage1.jpg" alt="" class="img-fluid">
+                            </div>
+                     </div>
+                     <div class="px-4 bg-white position-relative pt-4">
+                         <h4 class="mb-4 text-center" id="nickFind">커플이메일을 입력해주세요</h4>
+                         
+                             <div class="mb-3">
+                                 <input type="email" name="email" placeholder="Email address" class="form-control rounded-pill px-4">
+                             		<small class="d-block text-danger my-2" id="noFind"></small>
+                             		
+                             </div>
+                             <div class="d-grid">
+                                 <button type="button" class="btn btn-primary rounded-pill hover-shadow btn-hover-arrow hover-lift"
+                                 id="search">
+                                 <span>검색</span></button>
+                             </div>
+                             <br> 
+                     </div>
+                 </div>
+             </div>
+             <div class="modal-footer bg-light border-0">
+                 <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">취소</button>
+                 <button type="button" class="btn btn-primary btn-sm">커플신청하기</button>
+             </div>
+         </div>
+     </div>
+ </div>
+
 
 
 <!--Offcanvas end white-->
@@ -196,6 +255,7 @@
                         <ul class="list-unstyled mb-0">
                             <li class="pb-4">
                                 <small class="text-muted d-block">Email us:</small>
+                                
                                 <a href="mailto:company@domain.com"
                                     class="text-dark link-underline fs-5">company@domain.com</a>
                             </li>
@@ -234,7 +294,8 @@
 			myloveInfo();
 			expirationValidation();
 			// ${session.userSession.userId}  session의 아이디값 여기 넣기
-
+			// ${session.userSession.coupleStatus}  session의 커플상태 여기 넣기
+			// ${session.userSession.coupleId}  session의 커플아이디 여기 넣기
 			//let userId= '[[  ]';
 			/*<![CDATA[*/
 			/*]]*/
@@ -282,6 +343,7 @@
 			} //callback 끝
 		});//ajax 끝
 		}; 
+		
 			//내정보와 커플정보 들고오기
 			function coupleInfo() {
 				$.ajax({
@@ -302,6 +364,16 @@
 			}; //ajax 끝
 			//내 커플의 정보를 들고옵니다.
 			function myloveInfo() {
+				
+				  /* if(coupleStatus=='w'){
+					$('#user2Img').attr("src","/img/"+imgUrl);
+					$('#nickName2').text("커플정보가 없습니다");
+					$('#birthDate2').text("커플매칭을 해주세요");
+					$('.spinner-grow').css("display","block");
+					$('#heart').css("display","none");
+				}    */  
+				//user 세션에
+				
 				$.ajax({
 					url : "myloveInfo",
 					data : {
@@ -329,19 +401,65 @@
 					method : "GET",
 					success : function(datas) {
 						console.log(datas);
-						swal(datas, "", "error",{
+						swal(datas, "", "success",{
 							button : {
-								text : "확인",
-								className : "btn btn-primary"
+							text : "확인",
+							className : "btn btn-primary"
 							}
 						});
-						$('.bd-example-modal-lg').hide();
+						$('#updateCouple').hide();
 						location.href = location.href;
-						
 					}
 				});//ajax 끝
 			});
-
+			
+			
+			//상대방 이메일 찾기
+			$("#search").on('click',function(){
+				if ($('input[type="email"]').val() =="") {
+					$('#noFind').text("이메일을 입력해주세요.");			
+					$('input[type="email"]').focus();
+					return;
+				}
+				
+				let email = $("input[type=email]").val();
+				console.log(email);
+				
+				$.ajax({
+					url : "findLove",
+					data : {email : email},
+					method : "GET",
+					dataType : "json",
+					success : function(datas) {
+						console.log(datas);
+						if(datas==null){
+							$('#noFind').text("사용자가 없습니다. 다시입력해주세요.");
+							$('input[type="email"]').focus();
+						}else{
+							$('#noFind').remove();
+							$('#nickFind').text(datas.nickName);
+							$('#findLoveInfo').css("display","block");
+						}
+					},
+					error : function() {
+						$('#noFind').text("사용자가 없습니다. 다시입력해주세요.");
+						$('input[type="email"]').focus();
+					},
+				});//ajax 끝
+			})
+			
+			
+			//커플찾기 모달창 초기화
+		 $('#findLove').on('hidden.bs.modal', function () {
+               // 실행 할 내용
+             $('#noFind').text("");
+             $('input[type="email"]').val("");
+             $('#findLoveInfo').css("display","none");
+             $('#nickFind').text("커플이메일을 입력해주세요");
+               console.log("응애!");
+           });
+			
+			
 			var cropper;
 			// 사진 업로드하기 버튼 cropper 수정
 			$('#photoBtn').on('change', function() {
@@ -404,8 +522,8 @@
 				} else {
 					swal('업로드된 사진이 없습니다.', "", "error",{
 						button : {
-							text : "확인",
-							className : "btn btn-primary"
+						text : "확인",
+						className : "btn btn-primary"
 						}
 					});
 				}
@@ -443,19 +561,21 @@
 					contentType : false,
 					success : function() {
 						$('#updateCouple').hide();
-						swal('업데이트 성공!', "", "error",{
+						swal('업데이트 성공!', "", "success",{
 							button : {
-								text : "확인",
-								className : "btn btn-primary"
+							text : "확인",
+							className : "btn btn-primary"
 							}
 						});
+						$('#updateCouple').hide();
 						location.href = location.href;
+						
 					},
 					error : function() {
 						swal('업로드 실패', "", "error",{
 							button : {
-								text : "확인",
-								className : "btn btn-primary"
+							text : "확인",
+							className : "btn btn-primary"
 							}
 						});
 						$('.result_box').remove()
@@ -464,8 +584,8 @@
 				}else {
 					swal('D-day 날짜를 입력해주세요.', "", "error",{
 						button : {
-							text : "확인",
-							className : "btn btn-primary"
+						text : "확인",
+						className : "btn btn-primary"
 						}
 					});
 					$('input[type="date"]').focus();
@@ -475,8 +595,8 @@
 			} else {
 				swal('사진을 업로드 해주세요', "", "error",{
 					button : {
-						text : "확인",
-						className : "btn btn-primary"
+					text : "확인",
+					className : "btn btn-primary"
 					}
 				});
 				$('input[type="file"]').focus();

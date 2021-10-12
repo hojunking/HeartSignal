@@ -333,12 +333,8 @@
 		
 		
 		<!-- Modal창 -->
-		
-		
-		
-		<!--Modal newsletter-->
                 <div class="modal fade" id="paymentInfo" tabindex="-1" aria-labelledby="paymentInfo"
-                    aria-hidden="true">
+                    aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
                     
                         <div class="modal-content border-0">
@@ -485,9 +481,10 @@
 				$("#subterm").text(subTerm+"개월권");
 				$("#subprice").text(subPrice+" ₩");
 				
-				$("#use").append("1개월이용");
-				$("#off").append("한달무료이용");
-				$("#store").append("사진저장 및 코스저장");
+				
+				$("#use").append($('<span/>').text("1개월이용"));
+				$("#off").append($('<span/>').text("한달무료이용"));
+				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
 				
 				$("#payment").on('click',function(){
 					requestPay(subTerm, subPrice);
@@ -500,10 +497,9 @@
 				$("#subterm").text(subTerm+"개월권");
 				$("#subprice").text(subPrice+" ₩");
 				
-				$("#use").append("3개월이용");
-				$("#off").append("12%off");
-				$("#store").append("사진저장 및 코스저장");
-				
+				$("#use").append($('<span/>').text("3개월이용"));
+				$("#off").append($('<span/>').text("12%off"));
+				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
 				$("#payment").on('click',function(){
 					requestPay(subTerm, subPrice);
 				});
@@ -515,10 +511,9 @@
 				$("#subterm").text(subTerm+"개월권");
 				$("#subprice").text(subPrice+" ₩");
 				
-				$("#use").append("6개월이용");
-				$("#off").append("33%off");
-				$("#store").append("사진저장 및 코스저장");
-				
+				$("#use").append($('<span/>').text("6개월이용"));
+				$("#off").append($('<span/>').text("33%off"));
+				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
 				$("#payment").on('click',function(){
 					requestPay(subTerm, subPrice);
 				});
@@ -530,9 +525,9 @@
 				$("#subterm").text("평생이용권");
 				$("#subprice").text(subPrice+" ₩");
 				
-				$("#use").append("무제한이용");
-				$("#off").append("100%off");
-				$("#store").append("사진저장 및 코스저장");
+				$("#use").append($('<span/>').text("무제한이용"));
+				$("#off").append($('<span/>').text("100%off"));
+				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
 				$("#payment").on('click',function(){
 					
 					if(!$('#invalidCheck').is(':checked')){
@@ -554,6 +549,9 @@
 			//모달창 초기화하기
 			 $('#paymentInfo').on('hidden.bs.modal', function () {
 	                // 실행 할 내용
+	                $("#use").find('span').remove();
+	                $("#off").find('span').remove();
+	                $("#store").find('span').remove();
 	                console.log("응애!");
 	            });
 			
@@ -586,7 +584,7 @@
 				}, function(rsp) { // callback
 					console.log(rsp);
 					if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-						swal("결제 성공하셨습니다!","", "error",{
+						swal("결제 성공하셨습니다!","", "success",{
 							button : {
 								text : "확인",
 								className : "btn btn-primary"
@@ -606,7 +604,7 @@
 							},
 							success : function(result) {
 								console.log(result);
-								swal(result,"", "error",{
+								swal(result,"", "success",{
 									button : {
 										text : "확인",
 										className : "btn btn-primary"
