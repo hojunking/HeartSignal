@@ -15,7 +15,15 @@
 		CL.COUPLE_ID = #{coupleId}
 		<!-- 커플 세션 들고와야 함 -->
 	</select>
-
+	
+	<!-- 글 눌렀을때 이미지가 나오도록  -->
+	<select id="getImg" resultType="CoupleLogVO">
+		SELECT
+			 g.IMG_URL
+		FROM COUPLE_LOG cl JOIN IMG g
+		ON cl.IMG_ID = g.IMG_ID
+		WHERE LOG_ID=#{logId}
+	</select>
 
 	<!-- 대문사진은 첫 한 장만 -->
 	<!-- <select id="getLog" resultType="CoupleLogVO"> SELECT A.LOG_TITLE, A.LOG_CREATED, 
@@ -107,12 +115,21 @@
 		,LOG_TITLE=#{logTitle}
 		,LOG_CONTENT=#{logContent}
 		,CAPTION=#{caption}
-		,LOG_STATE=#{logState}
 		,LOG_LOC=#{logLoc}
 		,LOG_DATE=sysdate
 		WHERE LOG_ID=#{logId}
 	</update>
-
+	
+	<!-- 글 지우고 안에 이미지도 지우기 -->
+	<delete id="logDelete" parameterType="CoupleLogVO">
+		DELETE FROM COUPLE_LOG
+		WHERE LOG_ID=#{logId}
+	</delete>
+	
+	<delete id="imgDelete" parameterType="CoupleLogVO">
+		DELETE FROM IMG
+		WHERE IMG_ID=#{imgId}
+	</delete>
 
 
 </mapper>

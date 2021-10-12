@@ -30,14 +30,13 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/coupleLog/*")
 public class RestCoupleLogController {
-	@Autowired CoupleLogService service;
-	
+	@Autowired
+	CoupleLogService service;
+
 	File fileDir = new File("src/main/resources/static/img/");
-	
-	
+
 	@PostMapping("/coupleLogImg")
-	public CoupleLogVO updateCoupleImage(MultipartFile file, CoupleLogVO vo)
-			throws IllegalStateException, IOException {
+	public CoupleLogVO updateCoupleImage(MultipartFile file, CoupleLogVO vo) throws IllegalStateException, IOException {
 		String path = fileDir.getAbsolutePath() + "/coupleLog/";
 		System.out.println(path);
 		MultipartFile ufile = file;
@@ -47,16 +46,27 @@ public class RestCoupleLogController {
 			String imgUrl = uuid + filename;
 			File uufile = new File(path, imgUrl);
 			System.out.println(uufile.getPath());
-			ufile.transferTo(uufile); //파일 옮기기
+			ufile.transferTo(uufile); // 파일 옮기기
 			vo.setImgUrl(imgUrl);
 			System.out.println("이미지URL=" + vo.getImgUrl());
 			service.logInsertImg(vo);
 			System.out.println(vo.toString());
-			
+
 		}
 
 		return vo;
 	}
+
+	/*
+	 * private boolean checkImageType(File file) { String contentType; try {
+	 * contentType = Files.probeContentType(file.toPath()); return
+	 * contentType.startsWith("image"); } catch (IOException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * return false; }
+	 */
+	
+	
 	/*
 	 * @GetMapping("/readImage") public ResponseEntity<byte[]>
 	 * readImage(@PathVariable("imagename") String imagename) throws IOException {
@@ -65,5 +75,5 @@ public class RestCoupleLogController {
 	 * IOUtils.toByteArray(imageStream); imageStream.close(); return new
 	 * ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK); }
 	 */
-	
+
 }
