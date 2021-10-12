@@ -17,13 +17,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hs.meetme.useraccess.domain.AccountVO;
 import com.hs.meetme.useraccess.service.AccountServiceImpl;
@@ -40,8 +40,16 @@ public class SecurityController {
 	}
 
 	@PostMapping("/signUp")
-	public String signUpPro(@ModelAttribute("account") AccountVO vo) {
-		accountService.signUp(vo);
+	public String signUpPro(Model model, MultipartFile uploadFile, AccountVO vo) {
+		System.out.println(uploadFile);
+		System.out.println(vo);
+		try {
+			accountService.signUp(vo);
+			model.addAttribute("signUp", true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("signUp", false);
+		}
 		return "security/login";
 	}
 
