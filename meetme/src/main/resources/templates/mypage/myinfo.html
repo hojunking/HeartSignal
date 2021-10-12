@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-        <!--Flatpickr-->
-        <link rel="stylesheet" href="/assets/vendor/flatpickr/flatpickr.min.css">
-        <!-- Quill editor stylesheet -->
-        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-        <!--File uploader-->
-        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"/>
-        <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
-        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
-  <style>
-    .btn-space {
-      margin-right: 5px;
-    }
-  </style>
+	  <!--Flatpickr-->
+	  <link rel="stylesheet" href="/assets/vendor/flatpickr/flatpickr.min.css">
+	  <!-- Quill editor stylesheet -->
+	  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	
+	  <!--File uploader-->
+	  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"/>
+	  <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+	  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+	  
+	  <style>
+	    .btn-space {
+	                margin-right: 5px;}
+	  </style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -50,13 +50,12 @@
                                 <div class="col-lg-9 mx-auto">
                                     <div class="pt-5 d-flex flex-column h-100">
                                         <nav class="nav mb-5 nav-pills">
-                                            <a href="main" class="nav-link"> <i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="page-profile-dashboard.html" class="nav-link">
-                                                <i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
-                                            <a href="myinfo" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>Settings</a>
-                                            <a href="#" class="nav-link disabled"><i class="bi bi-layers me-2 align-middle"></i>Orders</a>
-                                            <a href="#" class="nav-link disabled"><i class="bi bi-credit-card me-2 align-middle"></i>Billing</a>
-                                            <a href="#" class="nav-link disabled"><i class="bi bi-people me-2 align-middle"></i>Followers</a>
+                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="#" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
+                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="myinfo" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>나의 정보 수정</a>
                                         </nav>
                                         <div class="card border-light p-3 mb-3">
                                           <h5 class="mb-4">Edit profile</h5>

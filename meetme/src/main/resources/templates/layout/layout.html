@@ -90,10 +90,9 @@
         // header 커플로그 이벤트
         function goCoupleMain(user){
             if(user == null){
-                alert('로그인이 필요한 서비스 입니다');
-                location.href = '/login';
+                location.href = '/coupleMain?coupleStatus=n';
             } else{
-                location.href = '/coupleMain';
+                location.href = '/coupleMain?coupleStatus='+user.coupleStatus;
             }
         };
         // header 커플로그

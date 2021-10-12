@@ -103,18 +103,12 @@
                                 <div class="col-lg-9">
                                     <div class="d-flex flex-column h-100">
                                         <nav class="nav mb-5 nav-pills">
-                                            <a href="main" class="nav-link active"> <i
-                                                    class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="page-profile-dashboard.html" class="nav-link">
-                                                <i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
-                                            <a href="#" class="nav-link"><i
-                                                    class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
-                                            <a href="#" class="nav-link"><i
-                                                    class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
-                                            <a href="#" class="nav-link"><i
-                                                    class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo" class="nav-link"><i
-                                                    class="bi bi-gear me-2 align-middle"></i>나의 정보 수정</a>
+                                            <a href="main" class="nav-link active"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
+                                            <a href="#" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
                                         </nav>
 
                                         <div class="card shadow-sm p-3 h-100">
@@ -129,6 +123,49 @@
                     <div class="row">
                         <div class="col-lg-10 mx-auto">
                             <ul class="step mx-3 mx-sm-0 list-unstyled mb-0">
+                                <th:block th:each="notice : ${userNotice}">
+	                                <li class="step-item">
+	                                    <div class="step-row">
+	                                        <span class="step-icon bg-tint-primary text-primary">
+	                                            <!--ICON-DOT-->
+	                                            <i th:if="${notice.postId}!=null" class="bi bi-reply-fill text-primary align-middle lh-1"></i>
+	                                            <i th:if="${notice.postId}==null" class="bi bi-heart-fill text-primary align-middle lh-1"></i>
+	                                        </span>
+	                                        <div class="step-content">
+		                                            <small class="mb-2 text-muted">[[${#dates.format(notice.noticeDate,'MM월 dd일, yyyy aaHH:mm')}]]</small>
+		                                            <button type="button" class="btn-close" th:data-noticeId="${notice.noticeId}" onclick="noticeDelFunc(this)">
+	                                                  <i class="bi bi-x"></i>
+	                                                </button>
+	                                            <p class="mb-0">
+	                                              [[${notice.noticeContent}]]
+	                                            </p>
+	                                        </div>
+	                                    </div>
+	                                </li>
+                                </th:block>
+                                <!--/.step-item-->
+                                <li class="step-item">
+                                    <div class="step-row">
+                                        <span class="step-icon bg-tint-primary text-primary">
+                                            <!--ICON-DOT-->
+                                            <i class="bi bi-calendar3 text-primary align-middle lh-1 fs-6"></i>
+                                        </span>
+
+                                        <div class="step-content">
+                                            <h6 class="mb-1">Minor bug fixes</h6>
+                                            <small class="d-block mb-2 text-muted">June 02, 11:24 AM EST</small>
+                                            <p class="mb-0">
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.
+                                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                                make a type specimen book.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <!--/.step-item-->
                                 <li class="step-item">
                                     <div class="step-row">
                                         <span class="step-icon bg-tint-primary text-primary">
@@ -148,50 +185,6 @@
                                                         submissions.</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                </li>
-                                <!--/.step-item-->
-                                <li class="step-item">
-                                    <div class="step-row">
-                                        <span class="step-icon bg-tint-primary text-primary">
-                                            <!--ICON-DOT-->
-                                            <i class="bi bi-bootstrap text-primary align-middle lh-1"></i>
-                                        </span>
-
-                                        <div class="step-content">
-                                            <h6 class="mb-1">Updated to bootstrap 5</h6>
-                                            <small class="d-block mb-2 text-muted">June 14, 12:24PM EST</small>
-                                            <p class="mb-0">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry.
-                                                Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                1500s, when an unknown printer took a galley of type and scrambled it to
-                                                make a type specimen book.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </li>
-                                <!--/.step-item-->
-                                <li class="step-item">
-                                    <div class="step-row">
-                                        <span class="step-icon bg-tint-primary text-primary">
-                                            <!--ICON-DOT-->
-                                            <i class="bi bi-calendar3 text-primary align-middle lh-1 fs-6"></i>
-                                        </span>
-
-                                        <div class="step-content">
-                                            <h6 class="mb-1">Minor bug fixes</h6>
-                                            <small class="d-block mb-2 text-muted">June 02, 11:24 AM EST</small>
-                                            <p class="mb-0">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry.
-                                                Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                1500s, when an unknown printer took a galley of type and scrambled it to
-                                                make a type specimen book.
-                                            </p>
                                         </div>
                                     </div>
 
@@ -217,6 +210,31 @@
 </th:block>
 
 <th:block layout:fragment="script">
+  <script>
+	//알림내역함수
+	function noticeDelFunc(obj){
+    let noticeId =$(obj).attr('data-noticeId');
+    let li       =$(obj).closest("li");
+	  let result = confirm("삭제하시겠습니까?");
+	  if(result) {
+		  $.ajax({
+			  url: "deleteNotice",
+			  type:'DELETE',
+			  data : { noticeId:noticeId },
+			  dataType:'json',
+			  //contentType:'application/json;charset="UTF-8"',
+			  success:function(result){
+				  if(result==true){
+					  alert("알림이 삭제 되었습니다.")
+					  $(li).remove();
+				  }    
+			  },
+			  error:function(){
+			  }
+		  })//ajax end==
+	  }  
+	}
+  </script>
   <script th:inline="javascript">
 
   </script>

@@ -14,11 +14,11 @@
                         </div>
                         <div class="col-10 px-4">
                             <div class="form-control" @click="searched = false">
-                                <TagInput :options="options" :allowCustom="true" tagBgColor="#69c6ba" :customDelimiter="customDelimiter" v-model="tags" />
+                                <TagInput :options="options" :allowCustom="true" tagBgColor="#f73e69" :customDelimiter="customDelimiter" v-model="tags" />
                             </div>
                         </div>
                         <div class="col-2 my-auto">
-                            <button class="btn btn-primary btn-lg mt-1" @click="sendSearchByTag" type="button">검색</button>
+                            <button class="btn btn-primary btn-lg mt-1" @click="searchByTag" type="button">검색</button>
                         </div>
                         <div class="col-12">
                             <hr class="m-2">
@@ -33,7 +33,7 @@
                                 </p>
                                 <div v-if="!loading">
                                     <span v-for="post of data" :key="post.id">
-                                        <button class="btn btn-primary m-1" @click="sendTags(post.tagId)">#{{ post.tagId }}</button>
+                                        <button class="btn btn-primary m-1" @click="pushTag(post.tagId)">#{{ post.tagId }}</button>
                                     </span>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             >코스 등록
                             </button>
                         </div>
-                        <draggable class="dragArea list-group w-full" :list="list" @change="log">
+                        <draggable class="dragArea list-group w-full" :list="list" @change="changeChack">
                             <div class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
                                 v-for="element in list"
                                 :key="element.name">
@@ -221,7 +221,7 @@
             <ul class="dropdown-menu fs-6" >
                 <div id="chatDiv" style="overflow:auto; height:15rem;">
                     <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li><span class="dropdown-item-text">내용: {{ item.content }}</span></li>
+                        <li><span class="dropdown-item-text">{{ item.userName }}: {{ item.content }}</span></li>
                     </div>
                 </div>
                 <li><hr class="dropdown-divider"></li>
@@ -250,7 +250,7 @@ export default defineComponent ({
          */
 
         // 채팅
-        const userName = ref("");
+        // const userName = ref("");
         const message = ref("");
         const recvList = ref([]);
 
@@ -264,8 +264,8 @@ export default defineComponent ({
         const send = () => {
             console.log("Send message:" + message.value);
             if (stompClient && stompClient.connected) {
-                const msg = { 
-                    userName: userName.value,
+                const msg = {
+                    userName: "default",
                     content: message.value 
                 };
                 console.log(JSON.stringify(msg))
@@ -331,20 +331,20 @@ export default defineComponent ({
         }
 
         // 클릭한 태그 가져오기
-        // const pushTag = (tagId) => {
-        //     tags.value.push(tagId);
-        // };
+        const pushTag = (tagId) => {
+            tags.value.push(tagId);
+        };
         // 태그 웹소캣 추가하기
-        const sendTags = (tagIdN) => {
-            console.log("Send tags:" + tagIdN);
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    tagId : tagIdN
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/tagReceive", JSON.stringify(msg), {});
-            }
-        }
+        // const sendTags = (tagIdN) => {
+        //     console.log("Send tags:" + tagIdN);
+        //     if (stompClient && stompClient.connected) {
+        //         const msg = { 
+        //             tagId : tagIdN
+        //         };
+        //         console.log(JSON.stringify(msg))
+        //         stompClient.send("/tagReceive", JSON.stringify(msg), {});
+        //     }
+        // }
 
         // 페이지 진입하자마자 실행.
         onMounted(() => {
@@ -532,7 +532,31 @@ export default defineComponent ({
                     list.value.splice(i, 1); 
                 }
             }
+            sendChangeList();
         }
+        
+        // 코스 이동 체크
+        const changeChack = (evt) => {
+            console.log(evt)
+            if(evt.moved) {
+                console.log(evt.moved.element.placeId);
+                console.log(list.value);
+                sendChangeList();
+            }
+        }
+
+        // 코스 수정 웹소캣 보내기
+        const sendChangeList = () => {
+            console.log("Send changedList:" + list.value);
+            if (stompClient && stompClient.connected) {
+                const msg = { 
+                    changedList : list.value
+                };
+                console.log(JSON.stringify(msg))
+                stompClient.send("/changeListReceive", JSON.stringify(msg), {});
+            }
+        }
+
         // 코스 소제목 수정
         const replaceSubtitleOfPlaceId = ref(null);
         const replaceSubtitleText = ref(null);
@@ -552,6 +576,7 @@ export default defineComponent ({
             }
             replaceSubtitleOfPlaceId.value = null;
             replaceSubtitleText.value = null;
+            sendChangeList();
         }
 
 
@@ -564,25 +589,25 @@ export default defineComponent ({
         const searched = ref(null);       
 
         // 검색 웹소캣 보내기
-        const sendSearchByTag = (evt) => {
+        // const sendSearchByTag = (evt) => {
+        //     if(evt) {
+        //         evt.preventDefault()
+        //     }
+        //     console.log("Send searchByTag:" + " 검색");
+        //     if (stompClient && stompClient.connected) {
+        //         const msg = { 
+        //             searchByTag : "검색"
+        //         };
+        //         console.log(JSON.stringify(msg))
+        //         stompClient.send("/searchByTagReceive", JSON.stringify(msg), {});
+        //     }
+        // }
+
+        // 검색 버튼 활성화 -> connect 안으로 보냄
+        const searchByTag = (evt) => {
             if(evt) {
                 evt.preventDefault()
             }
-            console.log("Send searchByTag:" + " 검색");
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    searchByTag : "검색"
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/searchByTagReceive", JSON.stringify(msg), {});
-            }
-        }
-
-        // 검색 버튼 활성화 -> connect 안으로 보냄
-        const searchByTag = () => {
-            // if(evt) {
-            //     evt.preventDefault()
-            // }
             let keywords = "";
             for(let i=0; i<tags.value.length; i++) {
                 keywords += tags.value[i],
@@ -641,7 +666,7 @@ export default defineComponent ({
 
 
         /**
-            코스 등록
+         *   코스 등록
          */
         // 코스 등록 버튼 
         const titleText = ref(null);
@@ -721,12 +746,15 @@ export default defineComponent ({
                 }
             })
             .then(() => {
-                if (registerConfirm.value == 'success') {
-                    alert('코스 업로드에 성공했습니다.')
-                } else if (registerConfirm.value == 'error') {
-                    alert('등록이 되지 않았습니다.')
-                } else {
-                    alert('자바스크립트에서 문제가 발생 하였습니다.')
+                if ((registerConfirm.value) && (registerConfirm.value != "error")) {
+                    alert('등록이 되었습니다.');
+                    location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                }
+                else if(registerConfirm.value == "error"){
+                    alert('등록에 실패하였습니다.');
+                }
+                else {
+                    alert('알 수 없는 문제가 발생 하였습니다.');
                 }
             });
         }
@@ -748,19 +776,28 @@ export default defineComponent ({
                     // 이런형태를 pub sub 구조라고 합니다.
                     stompClient.subscribe("/send", res => {
                         console.log('구독으로 받은 메시지 입니다.', res.body);
-
+                        
                         // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
+                        // 채팅
                         if (JSON.parse(res.body).content) {
                             recvList.value.push(JSON.parse(res.body))
                             setTimeout(function(){
                                 document.getElementById('chatDiv').scrollTop = document.getElementById('chatDiv').scrollHeight;
                             }, 1);
-                        } else if (JSON.parse(res.body).tagId){
-                            tags.value.push(JSON.parse(res.body).tagId);
-                        } else if (JSON.parse(res.body).searchByTag) {
-                            searchByTag();
+                        // // 태그 검색어 추가
+                        // } else if (JSON.parse(res.body).tagId){
+                        //     tags.value.push(JSON.parse(res.body).tagId);
+                        // // 태그 검색
+                        // } else if (JSON.parse(res.body).searchByTag) {
+                        //     searchByTag();
+                        // 코스 추가하기
                         } else if (JSON.parse(res.body).insertCourse) {
                             insertCourse(JSON.parse(res.body).insertCourse)
+                        // 코스가 바뀔때마다 영향주기
+                        } else if (JSON.parse(res.body).changedList) {
+                            list.value = JSON.parse(res.body).changedList;
+                        } else {
+                            console.error(JSON.parse(res.body));
                         }
                     });
                 },
@@ -790,8 +827,8 @@ export default defineComponent ({
             options,
 
             // tag function
-            //pushTag,
-            sendTags,
+            pushTag,
+            //sendTags,
 
             // placeDetail
             detailOfPlace,
@@ -819,13 +856,17 @@ export default defineComponent ({
             replaceSubtitleOfPlaceId,
             changeSubTitle,
 
+            // list move check
+            changeChack,
+            sendChangeList,
+
             // search
             searched,
             searchData,
             loadingSearch,
             searchError,
             // search func
-            sendSearchByTag,
+            // sendSearchByTag,
             searchByTag,
 
             // last.. register course
@@ -843,12 +884,7 @@ export default defineComponent ({
     components: {
         TagInput,
         draggable : VueDraggableNext,
-    },
-    methods: {
-      log(event) {
-        console.log(event)
-      },
-    },
+    }
 })
 
 </script>
