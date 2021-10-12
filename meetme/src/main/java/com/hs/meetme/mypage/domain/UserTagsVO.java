@@ -6,6 +6,6 @@ import lombok.Data;
 public class UserTagsVO {
 
 	private String userId;
-	private String TagId;
+	private String tagId;
 
 }
