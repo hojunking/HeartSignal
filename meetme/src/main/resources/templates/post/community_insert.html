@@ -32,17 +32,14 @@
 
 				<!--코스 가져오기 모달 -> 모달에서 코스 선택하면 버튼 아래에 뜨게 하자! courseVo는 mypage 도메인 패키지 안에 있당. -->
 				<div class="form-group">
-					<label for="inp-type-5" class="col-sm-2 control-label">코스 가져오기</label>
+					<!-- <label for="inp-type-5" class="col-sm-2 control-label">코스 가져오기</label> -->
 
-					<div class="col-sm-10">
-					
-					 <a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
-						<!-- <button type="button" id="courseBtn" class="courseBtn btn btn-primary" data-toggle="modal"
-							data-target="#modalBasic">내 코스 가져오기</button> -->
+					<div class="col-sm-10" id="modalShow">
+						<span>
+							<a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
+						</span>
 					</div>
-					<div class="courseShow d-flex">
-
-					</div>
+					<div class="courseShow d-flex" ></div>
 
 				</div>
 
@@ -75,7 +72,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content border-0">
                             <div class="modal-header border-0 bg-light">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     <i class="bi bi-x fs-5 lh-1"></i>
                                 </button>
@@ -91,29 +88,6 @@
                     </div>
                 </div>
 			
-			
-			
-			
-			
-			<!-- <div class="modal fade " id="myCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">코스 가져오기</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-									aria-hidden="true">×</span></button>
-						</div>
-						<div class="modal-body" >
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary" id="courseInsertBtn">입력하기</button>
-						</div>
-					</div>
-				</div>
-			</div> -->
 
 		</div>
 	</div>
@@ -142,12 +116,56 @@
 			let userId = userSession.userId;
 			const courseBtn = $('#courseBtn');
 			const courseInsertBtn = $('#courseInsertBtn');
+		
+
+			// 버튼 클릭 if문 넣어주기
+			//if "${'.courseShow'} == null"
+		/* 		 		<span>
+							<a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
+						</span>
+
+						<!--show title에 값이 있으면 alert!-->
+			 		<span th:if="${'.courseShow'} != null">
+
+							<a href="#alertModal"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
+						</span>  */
+
+
+		/* 	let modalShow = $('#modalShow');
+			let modalBasicShow = $('<a />').addClass("courseBtn btn btn-primary")
+								.attr({"id":"courseBtn"})
+								.text("내 코스 가져오기")
+
+			let alertModalShow = $('<a />').addClass("courseBtn1 btn btn-primary")
+								.attr({"id":"courseBtn"})
+								.text("내 코스 가져오기")
+			 */
+			//코스 선택된게 없을 때
+		/* 	if($('.courseShow').html()==""){
+				modalShow.append(modalBasicShow)
+			}else{//코스 선택 되었을 때
+				modalShow.append(alertModalShow)
+			}
+ */
 			//모달 띄울 때 쓸 ajax~!
 			$(courseBtn).on('click', function () {
 				data =  userId
 				console.log(data);
 				getCourse(data);
+				
 			})
+			
+		/* 	modalBasicShow.on("click", function(){
+				$('#modalBasic').modal("show");
+				data =  userId
+				getCourse(data);
+			});
+			alertModalShow.on("click", function(){
+				$('#alertModal').modal("show");
+				console.log('열려라!')
+			})
+ */
+
 
 		});
 		// ... 
@@ -191,22 +209,38 @@
 		/*]]>*/
 
 
+
 		function getCourse(data) {
-			$.ajax({
-				url: "/post/getMyCourse?userId="+data,
-				method: "get",
-				// data: data,
-				contentType: 'application/json;charset="utf-8"',
-				success: function (result) {
-					console.log(result);
-					getCourseCallback(result);
-				},
-				error: function (err) {
-					console.log(err);
-				}
-			})
+
+			if($('.courseShow').html()==""){
+				//선택된게 없을 때
+				$.ajax({
+					url: "/post/getMyCourse?userId="+data,
+					method: "get",
+					// data: data,
+					contentType: 'application/json;charset="utf-8"',
+					success: function (result) {
+						console.log(result);
+						getCourseCallback(result);
+					},
+					error: function (err) {
+						console.log(err);
+					}
+				})
+			}else{
+				getAlert();
+			}
+
 		}
 
+
+		//선택되어있을 경우 경고창!
+		function getAlert(){
+			$('#modalBody').empty();
+			let courseWrap = $("<div />").addClass(" justify-content-between courseWrap").html("코스는 한 번에 하나만 입력할 수 있어요! <br> 삭제하고 다시 선택하시겠어요?");
+
+			$('#modalBody').append(courseWrap);
+		}
 
 		//https://bootstraplovers.com/assan/4.3/demo/src/component-tabbbed-content.html 이거 맨 밑에꺼 써보기~
 		//내 코스 모달에 for문 돌려 넣어주기
