@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
+<!-- 스타일 시작 -->
+<th:block layout:fragment="css">
+  <style>
+
+  </style>
+</th:block><!-- 스타일 끝 -->
+
+<th:block layout:fragment="content">
+ 
+        <!--Main content-->
+
+        <main class="main-content" id="main-content">
+            <section class="position-relative bg-white">
+                <div class="container position-relative pt-3 pb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nav class="d-md-flex" aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="#!">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Profile
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--/.row-->
+
+                </div>
+            </section>
+            <section class="position-relative">
+                <div class="container position-relative">
+                    <div class="overflow-hidden">
+                        
+                        <!--Profile info header-->
+                        <div class="position-relative pb-7 pb-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3 mb-5 mb-lg-0">
+                                    <div class="h-lg-100">
+                                        <div class="card bg-gradient-light h-lg-100 p-3">
+                                            <div>
+                                                <!--profile image-->
+                                                <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+                                                    style="background-image: url(/assets/img/avatar/4.jpg);">
+                                                </div>
+                                                <h4 class="mb-2">[[${userInfo.name}]]</h4>
+                                                <small class="d-block mb-3">[[${userInfo.nickName}]]</small>
+                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
+                                                        <span class="small">[[${myAddress}]]</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-globe me-2 align-middle text-muted"></i>
+                                                        <a href="#!"
+                                                            class="small link-hover-decoration">https://emilydoe.com/</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i
+                                                            class="bi bi-check fs-5 lh-1 text-success me-2 align-middle"></i>
+                                                        <span class="small">Available for hire</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-twitter me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">@emily.dev</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-linkedin me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">emilyatin</a>
+                                                    </li>
+                                                    <li class="d-flex align-items-stretch mb-2">
+                                                        <i class="bi bi-instagram me-2 align-middle text-muted"></i>
+                                                        <a href="#!" class="small link-hover-decoration">emily93</a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                    <li class="d-flex justify-content-between align-items-center mb-2">
+                                                        <span class="small">Followers</span>
+                                                        <span class="fs-5">134</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-2">
+                                                        <span class="small">Following</span>
+                                                        <span class="fs-5">23</span>
+                                                    </li>
+                                                </ul>
+                                                <div class="d-grid">
+                                                    <button class="btn btn-light border shadow-sm mb-2 py-1"
+                                                        type="button"><i
+                                                            class="bi bi-person-plus fs-6 align-middle lh-1"></i>
+                                                        Follow</button>
+                                                    <button class="btn btn-primary shadow-sm py-1" type="button"><i
+                                                            class="bi bi-envelope fs-6 align-middle lh-1"></i>
+                                                        Message</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="d-flex flex-column h-100">
+                                        <nav class="nav mb-5 nav-pills">
+                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                            <a href="#" class="nav-link active"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
+                                        </nav>
+
+                                        <div class="card shadow-sm p-3 h-100">
+                                            <div class="row align-items-center">
+            <section class="position-relative">
+                <div class="container py-3">
+                    
+                </div>
+                <!--/.container-end-->
+            </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+</th:block>
+<!-- 스크립트시작 -->
+<th:block layout:fragment="script">
+  <script>
+	
+  </script>
+  <script th:inline="javascript">
+    
+  </script>
+</th:block> <!-- 스크립트끝 -->
+
+</html>

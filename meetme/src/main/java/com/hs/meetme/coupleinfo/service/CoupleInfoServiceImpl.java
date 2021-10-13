@@ -63,4 +63,9 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 		return map.deleteCoupleInfo(vo);
 	}
 
+	@Override
+	public CoupleInfoVO findLove(CoupleInfoVO vo) {
+		return map.findLove(vo);
+	}
+
 }

@@ -1,40 +1,54 @@
 <template>
-    <div class="tm-page-wrap mx-auto">
-        <div class="tm-container-outer p-5" id="tm-section-2">
+    <div class="mx-auto my-5">
+        <div class="container p-5">
             <div class="row">
-                <div class="col-12 px-4 d-flex justify-content-between">
+                <div class="col-12 px-4">
                     <h1 class="display-4">코스 만들기</h1>
-					
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
                         <!-- 검색 창 -->
                         <div class="col-12">
-                            <hr class="m-2">
+                            <hr class="my-2">
                         </div>
                         <div class="col-10 px-4">
                             <div class="form-control" @click="searched = false">
-                                <TagInput :options="options" :allowCustom="true" tagBgColor="#f73e69" :customDelimiter="customDelimiter" v-model="tags" />
+                                <TagInput :allowCustom="true" tagBgColor="#f73e69" :customDelimiter="customDelimiter" v-model="tags" />
                             </div>
                         </div>
                         <div class="col-2 my-auto">
-                            <button class="btn btn-primary btn-lg mt-1" @click="searchByTag" type="button">검색</button>
+                            <button class="btn btn-rise btn-outline-primary m-2" @click="searchByTag()">
+                                <div class="btn-rise-bg bg-primary"></div>
+                                <div class="btn-rise-text">검색</div>
+                            </button>
                         </div>
                         <div class="col-12">
-                            <hr class="m-2">
+                            <hr class="my-2">
                         </div>
                         <!-- 검색 전 -->
                         <div v-if="!searched">
                             <div class="col-12">
-                                <p v-if="loading">
-                                    Still loading..
-                                </p>
+                                <div v-if="loading" class="m-5">
+                                    <div class="text-center m-5">
+                                        <div class="fs-4 text-primary">태그를 로딩중입니다!</div>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                    </div>
+                                </div>
                                 <p v-if="error">
+                                    에러 발생했습니다!
                                 </p>
                                 <div v-if="!loading">
                                     <span v-for="post of data" :key="post.id">
-                                        <button class="btn btn-primary m-1" @click="pushTag(post.tagId)">#{{ post.tagId }}</button>
+                                        <button data-aos="flip-down" data-aos-duration="800" class="shadow-lg btn btn-primary btn-sm m-1" @click="pushTag(post.tagId)">#{{ post.tagId }}</button>
                                     </span>
+                                    <div>
+                                        <h4 class="text-primary text-center my-5">태그를 입력해서 검색 해보세요!</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -42,14 +56,23 @@
                         <!-- 검색 후 -->
                         <div v-if="searched">
                             <div class="col-12">
-                                <p v-if="loadingSearch">
-                                    Still loading..
-                                </p>
+                                <div v-if="loadingSearch" class="m-5">
+                                    <div class="text-center m-5">
+                                        <div class="fs-4 text-primary">결과를 로딩중입니다!</div>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        </span>
+                                    </div>
+                                </div>
                                 <p v-if="searchError">
+                                    에러 발생했습니다!
                                 </p>
                                 <div v-if="!loadingSearch" style="overflow:auto; height:40rem;">
                                     <div v-for="result of searchData" :key="result.id" class="m-2">
-                                        <div class="p-4">
+                                        <div class="shadow-lg p-3 mb-5 bg-body rounded">
                                             <div class="row">
                                                 <!-- 이미지 들어갈곳 -->
                                                 <div class="col-3">
@@ -60,46 +83,47 @@
                                                     <h4>
                                                         {{ result.placeName }}
                                                         <!-- 장소 자세히 보기 -->
-                                                        <button class="btn btn-light btn-sm mx-2 " 
+                                                        <button class="btn btn-rise btn-outline-secondary m-2 btn-sm" 
                                                         @click="detailOfPlace(result.placeName)" data-bs-toggle="modal" data-bs-target="#placeModal">
-                                                            자세히
+                                                            <div class="btn-rise-bg bg-secondary"></div>
+                                                            <div class="btn-rise-text">자세히</div>
                                                         </button>&nbsp;
                                                         <!-- 장소 코스에 추가하기 -->
-                                                        <button class="btn btn-primary btn-sm" 
+                                                        <button class="btn btn-rise btn-outline-primary btn-sm" 
                                                         @click="sendInsertCourse(result.placeName)">
-                                                            추가하기
+                                                            <div class="btn-rise-bg bg-primary"></div>
+                                                            <div class="btn-rise-text">추가하기</div>
                                                         </button>
                                                     </h4>
-                                                    <p v-if="result.address">주소 : {{ result.address }}</p>
-                                                    <p v-if="result.placePhone">전화번호 : {{ result.placePhone }}</p>
-                                                    <p v-if="result.description">설명 : {{ result.description }}</p>
+                                                    <p v-if="result.address">{{ result.address }}</p>
+                                                    <p v-if="result.placePhone">{{ result.placePhone }}</p>
+                                                    <p v-if="result.description">{{ result.description }}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                       
-                                        <hr class="my-2">
+                                    
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- 검색 후 끝 -->
-                        <hr class="m-2">
-
                     </div>
                 </div>
                 <!-- 코스 만들기 -->
                 <div class="col-lg-5">
-                    <div class="m-10">
+                    <div class="m-3">
                         <!-- 디비에 저장된다. -->
                         <div class="d-flex justify-content-between">
-                            <span class="fs-4">나만의 코스</span>
-                            <button class="btn btn-primary m-2 my-auto"
+                            <span class="fs-2 px-4">우리의 코스</span>
+                            <button class="btn btn-rise btn-outline-primary m-2"
                              data-bs-toggle="modal" data-bs-target="#courseTitleModal"   
-                            >코스 등록
+                            >
+                                <div class="btn-rise-bg bg-primary"></div>
+                                <div class="btn-rise-text">코스등록</div>
                             </button>
                         </div>
                         <draggable class="dragArea list-group w-full" :list="list" @change="changeChack">
-                            <div class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
+                            <div data-aos="fade-right" data-aos-duration="800" class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
                                 v-for="element in list"
                                 :key="element.name">
                                 <div class="d-flex justify-content-between">
@@ -119,7 +143,7 @@
                 </div>
                 <!-- 코스 만들기 끝 -->
             </div>
-		</div>
+        </div>
     </div>
     
 
@@ -132,6 +156,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div v-if="modalLoading || modalImagesLoading">
+                        <div class="text-center m-5">
+                            <div class="fs-4 text-primary">결과를 로딩중입니다!</div>
+                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            </span>
+                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            </span>
+                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            </span>
+                        </div>
+                    </div>
                     <div v-if="!(modalLoading && modalImagesLoading) == true">
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -218,14 +253,19 @@
             <button type="button" class="far fa-comments btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 채팅
             </button>
-            <ul class="dropdown-menu fs-6" >
-                <div id="chatDiv" style="overflow:auto; height:15rem;">
+            <ul class="dropdown-menu fs-6">
+                <div id="chatDiv" style="overflow:auto; width:17rem; height:20rem;">
                     <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li><span class="dropdown-item-text">{{ item.userName }}: {{ item.content }}</span></li>
+                        <li>
+                            <small class="dropdown-item-text">
+                                <span class="rounded shadow bg-primary text-white p-1 px-2">
+                                    {{ item.userName }}: {{ item.content }}
+                                </span> 
+                            </small>
+                        </li>
                     </div>
                 </div>
-                <li><hr class="dropdown-divider"></li>
-                <li><input v-model="message" type="text" @keyup="sendMessage"></li>
+                <li><input class="form-control rounded-pill px-4" v-model="message" type="text" @keyup="sendMessage"></li>
             </ul>
         </div>
     </div>
@@ -250,7 +290,7 @@ export default defineComponent ({
          */
 
         // 채팅
-        // const userName = ref("");
+        //const userName = ref("");
         const message = ref("");
         const recvList = ref([]);
 
@@ -265,7 +305,7 @@ export default defineComponent ({
             console.log("Send message:" + message.value);
             if (stompClient && stompClient.connected) {
                 const msg = {
-                    userName: "default",
+                    userName: userEmail,
                     content: message.value 
                 };
                 console.log(JSON.stringify(msg))
@@ -749,6 +789,7 @@ export default defineComponent ({
                 if ((registerConfirm.value) && (registerConfirm.value != "error")) {
                     alert('등록이 되었습니다.');
                     location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                    sendRegisterConfirm(registerConfirm.value);
                 }
                 else if(registerConfirm.value == "error"){
                     alert('등록에 실패하였습니다.');
@@ -759,10 +800,22 @@ export default defineComponent ({
             });
         }
 
+        const sendRegisterConfirm = (regValue) => {
+            console.log("Send sendRegister:" + " 검색");
+            if (stompClient && stompClient.connected) {
+                const msg = { 
+                    registerConfirmValue : regValue
+                };
+                console.log(JSON.stringify(msg))
+                stompClient.send("/registerReceive", JSON.stringify(msg), {});
+            }
+        }
+
         // 스프링 부트 웹소켓 연결
         let stompClient = null;
+        let userEmail = null;
         const connect = () => {
-            const serverURL = "http://localhost:8000/ws"
+            const serverURL = "http://192.168.0.75:8000/ws"
             let socket = new SockJS(serverURL);
             stompClient = Stomp.over(socket);
             console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
@@ -772,6 +825,7 @@ export default defineComponent ({
                 // 소켓 연결 성공
                     stompClient.connected = true;
                     console.log('소켓 연결 성공', frame);
+                    userEmail = frame.headers["user-name"];
                     // 서버의 메시지 전송 endpoint를 구독합니다.
                     // 이런형태를 pub sub 구조라고 합니다.
                     stompClient.subscribe("/send", res => {
@@ -796,6 +850,10 @@ export default defineComponent ({
                         // 코스가 바뀔때마다 영향주기
                         } else if (JSON.parse(res.body).changedList) {
                             list.value = JSON.parse(res.body).changedList;
+                        // 코스 끝나면 보내버리기
+                        } else if (JSON.parse(res.body).registerConfirmValue) {
+                            console.log(JSON.parse(res.body).registerConfirmValue);
+                            location.href = "/courseDetail?courseId=" + JSON.parse(res.body).registerConfirmValue;
                         } else {
                             console.error(JSON.parse(res.body));
                         }

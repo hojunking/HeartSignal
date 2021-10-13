@@ -51,23 +51,29 @@
                                     <div class="pt-5 d-flex flex-column h-100">
                                         <nav class="nav mb-5 nav-pills">
                                             <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="#" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>Dashboard</a>
                                             <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
                                             <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
                                             <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>나의 정보 수정</a>
+                                            <a href="myinfo_my_payment_list" class="nav-link active"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
                                         </nav>
                                         <div class="card border-light p-3 mb-3">
                                           <h5 class="mb-4">Edit profile</h5>
-                                          <form class="needs-validation" id="frm" name="frm" novalidate>
                                             <div class="row align-items-center">
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-4">
-                                                            <input type="file" class="size-190" id="update_profile" accept="image/png, image/jpeg, image/gif">
+												    <div class="row pb-3 mb-3">
+														<label for="profileImage" class="col-sm-2 col-form-label">ProfileImage</label>
+														<div class="col-sm-10">
+														  <form method="POST" enctype="multipart/form-data" id="excelForm">
+                                                            <input type="file" class="size-190" name="excelFile" id="excelFile" accept="image/png, image/jpeg, image/gif">
+                                                          </form>
+                                                        <div class="col-sm-7" style="display: block;">
+                                                            <button class="btn btn-primary btn-sm" type="button" id="imageUpdateBtn">수정</button>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                          <form class="needs-validation" id="frm" name="frm" novalidate>
 					<div class="row pb-3 mb-3 border-bottom">
 						<label for="email" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-10">
@@ -138,9 +144,9 @@
 					 <div class="row pb-3 mb-3">
 						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
 					    <div class="col-sm-10">
-					        <input type="text" style="width:100px;" class="form-control pb-3 mb-3" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
+					        <input type="text" style="width:100px;" class="form-control pb-3 mb-3" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
+					        <input type="text" class="form-control pb-3 mb-3" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
+					        <input type="text" class="form-control pb-3 mb-3" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
 					      
 					    <div class="" id="u_address" style="display: none;"> 
 					        <input class="form-control pb-3 mb-3" style="width:100px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
@@ -254,13 +260,13 @@
 						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
 					    <div class="col-sm-7">
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.address1}">
+					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
 					      </div>
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.address2}">
+					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
 					      </div>
 					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.address3}">
+					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
 					      </div>
 					      
 					    <div class="" id="u_address" style="display: none;"> 
@@ -289,7 +295,6 @@
 			</div> <!-- col-sm-9 end -->
 		  </div> <!-- row pb-3 mb-3 end -->
 	    </div> <!-- container end -->
-    				
 			</section>
 		</div>
 </th:block>
@@ -302,48 +307,11 @@
         <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
         <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+       
         <script th:inline="javascript">
-            FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFilePoster);
+        
 
-// Select the file input and use 
-// create() to turn it into a pond
-FilePond.create(
-  document.querySelector('#update_profile'),
-  {
-    labelIdle: `Drag & Drop picture or Browse`,
-    imagePreviewHeight: 160,
-    allowMultiple:false,
-    allowFilePoster:true,
-    filePosterHeight:160,
-    stylePanelLayout: 'compact circle',
-    styleLoadIndicatorPosition: 'center bottom',
-    styleProgressIndicatorPosition: 'right bottom',
-    styleButtonRemoveItemPosition: 'left bottom',
-    styleButtonProcessItemPosition: 'right bottom',
-    files: [
-        {
-            source: '12345',
-            options: {
-                type: 'local',
-                file: {
-                    name: 'Profile',
-                    size: false,
-                    type: 'image/jpg'
-                },
-
-                // pass poster property
-                metadata: {
-                    poster: '/assets/img/avatar/4.jpg'
-                }
-            }
-        }
-    ]
-  }
-);
-
-            </script>
+        </script>
   <!-- 카카오 주소찾기 API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script th:inline="javascript">
@@ -436,17 +404,17 @@ FilePond.create(
         			url: "addressUpdate",
         			method : "put",
         			data : JSON.stringify({ userId: userId,
-        			 	                   address1:$("#addr1").val(),
-        			 	                   address2:$("#addr2").val(),
-        			 	                   address3:$("#addr3").val()
+        				                    addrzonecode:$("#addr1").val(),
+        				                    addrfull:$("#addr2").val(),
+        				                    addrdetail:$("#addr3").val()
         			                     }),
         			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
         			dataType : "json",
         			contentType : "application/json;charset=UTF-8",
         			success: function(data){
-        				$("#address1").val(data.address1);
-        				$("#address2").val(data.address2);
-        				$("#address3").val(data.address3);
+        				$("#address1").val(data.addrzonecode);
+        				$("#address2").val(data.addrfull);
+        				$("#address3").val(data.addrdetail);
         				alert("주소 수정 완료")
 			    		$("#u_address").css("display","none");
 			    		$("#addrUpdateBtn").css("display","block");
@@ -679,8 +647,84 @@ FilePond.create(
     	  })
     	  }  
       })
+    
+               //==============================================프로필 이미지
+            FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginFilePoster);
+
+			// Select the file input and use 
+			// create() to turn it into a pond
+			FilePond.create(
+			  document.querySelector('#excelFile'),
+			  {
+			    labelIdle: `Drag & Drop picture or Browse`,
+			    imagePreviewHeight: 160,
+			    allowMultiple:false,
+			    allowFilePoster:true,
+			    filePosterHeight:160,
+			    stylePanelLayout: 'compact circle',
+			    styleLoadIndicatorPosition: 'center bottom',
+			    styleProgressIndicatorPosition: 'right bottom',
+			    styleButtonRemoveItemPosition: 'left bottom',
+			    styleButtonProcessItemPosition: 'right bottom',
+			    storeAsFile: true,
+			    files: [
+			        {
+			            source: '12345',
+			            options: {
+			                type: 'local',
+			                file: {
+			                    name: 'Profile',
+			                    size: false,
+			                    type: 'image/jpg'
+			        },
+			
+			                // pass poster property
+			                metadata: {
+			                    poster: '/assets/img/avatar/4.jpg'
+			                }
+			            }
+			        }
+			    ]
+			  }
+			);
+	     //==============================================프로필 이미지 끝
       
-    })
+  	$('#imageUpdateBtn').on('click', function() {
+/*   	    var file_data = $('#update_profile').find('input').eq(1);   
+  	    var form_data = new FormData();                  
+  	    form_data.append('filepond', file_data);
+  	    
+  	    console.log(file_data);
+  	    console.log(form_data); */                      
+
+	  	  var form = $('#excelForm')[0];
+	  	  console.log(form);
+  	      // 코드로 동적으로 데이터 추가 가능.
+  	      var formData = new FormData(form);
+	      formData.append("userId", userId);
+	
+	      $.ajax({
+	          type: "POST",
+	          enctype: 'multipart/form-data',
+	          url: "imgUpdate",
+	          data: formData,
+	          processData: false,
+	          contentType: false,
+	          cache: false,
+	          timeout: 600000,
+	          success: function (data) {
+	              console.log("SUCCESS : ", data);
+	          },
+	          error: function (e) {
+	              console.log("ERROR : ", e);
+	          }
+	      });
+  	    
+  	    }); //#imageUpdateBtn 끝
+      
+    }) //$(function(){ 끝
   </script>
 
 </th:block>

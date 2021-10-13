@@ -97,6 +97,13 @@ public class RestCoupleInfoController {
 		System.out.println(vo);
 		return vo;
 	}
+	@GetMapping("/findLove") //내 여친찾기
+	public CoupleInfoVO findLove(CoupleInfoVO vo) {
+		System.out.println("누굴 찾나요?"+vo);
+		vo=coupleService.findLove(vo);
+		System.out.println("어딧니 내여친 "+vo);
+		return vo;
+	}
 
 	@PostMapping("/coupleImage")
 	public CoupleInfoVO updateCoupleImage(MultipartFile uploadFile, CoupleInfoVO vo)

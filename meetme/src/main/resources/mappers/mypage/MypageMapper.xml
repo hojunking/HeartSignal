@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
-  <!-- 유저 태그 조회해서 가져오기 -->
+  
+  <!-- 태그 조회해서 오기 -->
+  <select id="getTags" resultType="UserTagsVO">
+    SELECT tag_id
+    FROM tags
+  </select>
+  
+  <!-- 나의 유저 태그 조회해서 가져오기 -->
   <select id="getUserTags" resultType="UserTagsVO">
     SELECT user_id, tag_id
     FROM user_tags
     WHERE user_id = #{userId}
   </select>
-  <!-- 유저 태그 수정하기 딜리트한 뒤 다시 인서트 -->
+  
+  <!-- 나의 유저 태그 수정하기 딜리트한 뒤 다시 인서트 -->
   <delete id="deleteUserTags">
     DELETE
     FROM user_tags
@@ -18,7 +26,7 @@
     user_tags(
                user_id, tag_id)
     VALUES(
-               #{userId},#{tagId})
+               #{userId}, #{tagId})
   </insert>
   
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
@@ -306,9 +314,9 @@
 	  a.updated,
 	  a.birth_year,
 	  a.birth_day,
-	  a.address1,
-	  a.address2,
-	  a.address3,
+	  a.addrzonecode,
+	  a.addrfull,
+	  a.addrdetail,
 	  a.couple_status,
 	  a.role,
 	  b.img_url
@@ -317,6 +325,12 @@
       ON a.img_id = b.img_id
       WHERE user_id = #{userId}
 	</select>
+	
+	<update id="userUpdateImage" parameterType="MypageUserInfoVO">
+	  UPDATE user_info
+	  SET img_id=#{imgId}
+	  WHERE user_id=#{userId}
+	</update>
 		
 	<!-- 회원정보 비밀번호 확인 -->
 	<select id="userSelectPassword" resultType="MypageUserInfoVO">
@@ -358,9 +372,9 @@
 	<!-- 회원정보 수정 (주소) -->
 	<update id="updateAddress" parameterType="MypageUserInfoVO">
 		UPDATE user_info
-		SET address1=#{address1},
-		    address2=#{address2},
-		    address3=#{address3},
+		SET addrzonecode=#{addrzonecode},
+		    addrfull=#{addrfull},
+		    addrdetail=#{addrdetail},
 		    updated=sysdate
 		WHERE user_id= #{userId}
 	</update>

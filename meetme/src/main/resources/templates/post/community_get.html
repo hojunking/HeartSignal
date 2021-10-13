@@ -132,31 +132,129 @@
       <!--로그인 한 사람만 좋아요 버튼 넣기~ -->
       <li sec:authorize="isAuthenticated()">
          <div class="row mt-3 d-flex justify-content-center">
-            <div class="col-auto">
-               <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary" data-toggle="modal"
-                  data-target="#likeModal">좋아요</button>
-            </div>
+            
+               <div class="col-auto">
+                  <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary" th:classappend="${like} == 1 ? d-none" data-toggle="modal"
+                     data-target="#likeModal">좋아요</button>
+               </div>
+            
+               <div class="col-auto">
+                  <button type="submit" name="submit" id="likeCancelBtn" class="likeCancelBtn btn btn-primary" th:classappend="${like} == 0 ? d-none" data-toggle="modal"
+                     data-target="#likeCancelModal">좋아요 취소</button>
+               </div>
+             
+            <!-- 로그인되어 있으면서 코스가 있는 경우에만 코스 스크랩하기 버튼 나오게!-->
+            <!-- th:clasappend 이용!-->
+            <th:block th:if="${course} != null">
+               
+               <div class="col-auto">
+                  <button type="submit" name="submit" id="scrapBtn" class="scrapBtn btn btn-primary" th:clasappend="${scrap} == 1 ? d-none" data-toggle="modal"
+                     data-target="#scrapModal">코스 스크랩</button>
+               </div>
+            
+               <div class="col-auto">
+                  <button type="submit" name="submit" id="scrapCancelBtn" class="scrapCancelBtn btn btn-primary"  th:clasappend="${scrap} == 0 ? d-none" data-toggle="modal"
+                     data-target="#scrapCancelModal">코스 스크랩 취소</button>
+               </div>
+         
+           </th:block>
+
          </div>
+
       </li>
       <br>
+
+
    </div>
-   <!-- 좋아요(스크랩)모달 -->
-   <div class="modal fade " id="likeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+
+   <!-- 코스 스크랩하기 모달 -->
+   <div class="modal fade " id="scrapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">스크랩 성공!</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                     aria-hidden="true">×</span></button>
+               <button type="button" class="cCloseBtn" data-bs-dismiss="toast" aria-label="Close">
+                     <i class="bi bi-x"></i>
+               </button>
+            </div>
+            <div class="modal-body">
+               <h6>스크랩 성공!!</h6>
+               <h6>마이페이지 나의 코스에서 확인 할 수 있어요</h6>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary scrapChk" data-dismiss="modal">확인</button>
+
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- 코스 스크랩 취소하기 모달 -->
+   <div class="modal fade " id="scrapCancelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="myModalLabel">스크랩 취소</h4>
+               <button type="button" class="cCloseBtn" data-bs-dismiss="toast" aria-label="Close">
+                     <i class="bi bi-x"></i>
+               </button>
+            </div>
+            <div class="modal-body">
+               <h6>스크랩 취소 성공!!</h6>
+               <h6>스크랩 취소에 성공했습니다. </h6>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary scrapChk" data-dismiss="modal">확인</button>
+
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- 좋아요 모달 -->
+   <div class="modal fade " id="likeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="myModalLabel">좋아요 성공!</h4>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                     <i class="bi bi-x"></i>
+               </button>
+
+       
             </div>
             <div class="modal-body">
                <h6>좋아요 눌렀어요!</h6>
                <h6>마이페이지 나의 스크랩에서 확인 할 수 있어요</h6>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+               <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
+            </div>
+         </div>
+      </div>
+   </div>
 
+   <!-- 좋아요 취소 모달 -->
+   <div class="modal fade " id="likeCancelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="myModalLabel">좋아요 취소 성공!</h4>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                     <i class="bi bi-x"></i>
+               </button>
+
+       
+            </div>
+            <div class="modal-body">
+               <h6>좋아요 취소 되었어요</h6>
+               <h6>:(</h6>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
             </div>
          </div>
       </div>
@@ -226,9 +324,17 @@
       // ============ 페이지 로드 ==============
       $(function () {
 
+         /*<![CDATA[*/
          const course = [[${ course }]];
-
+         /*]]>*/
          console.log(course);
+
+         if(course != null){
+            let courseId= course[0].courseId;
+            console.log(courseId);
+         }
+
+
 
          let locations = [];
          let centerLat = 0;
@@ -356,7 +462,11 @@
          const cmtUpdBtn = $('.cmtUpdBtn'); // 댓글 수정 버튼(여러 개가 선택)
          const comUpdateBtn = $('#comUpdateBtn'); //모달안에 수정버튼
          const cmtInsBtn = $('.cmtInsBtn'); // 댓글 입력 버튼
+
          const likeBtn = $('#likeBtn');//좋아요 버튼
+         const scrapBtn = $('#scrapBtn'); //스크랩 버튼
+         const likeCancelBtn = $('#likeCancelBtn'); //좋아요 취소 버튼
+         const scrapCancelBtn = $('#scrapCancelBtn');  //스크랩 취소 버튼
 
          const userCheck = $('#userCheck'); // 작성자와 로그인 유저가 같을
 
@@ -370,6 +480,35 @@
          const modalCmtContent = $('#modalCmtContent');
          const modalCmtId = $('#modalCmtId');
          console.log(cmtInsBtn);
+
+
+         //좋아요 모달 닫기
+         const closeBtn = $('.btn-close');
+         const closeChk = $('.likeChk');
+         closeBtn.on("click", function(){
+            $('#likeModal').modal("hide");
+            $('#likeCancelModal').modal('hide');
+            $('#comUpdateModal').modal('hide');
+            $('#deleteModal').modal('hide');
+         })
+         closeChk.on("click", function(){
+            $('#likeModal').modal("hide");
+            $('#likeCancelModal').modal('hide');
+            $('#comUpdateModal').modal('hide');
+            $('#deleteModal').modal('hide');
+         })
+
+
+         //스크랩 모달 닫기 
+         const scrapClose = $('.cCloseBtn');
+         const scrapChk = $('.scrapChk');
+         scrapClose.on("click", function(){
+            $('#scrapModal').modal("hide");
+         })
+         scrapChk.on("click", function(){
+            $('#scrapModal').modal("hide");
+         })
+
 
          // 댓글 삭제
          for (let d of cmtDelBtn) {
@@ -416,10 +555,112 @@
             }
             console.log(data);
             likePost(data);
+            //좋아요 했어요 모달로!
+            $('#likeModal').modal('show');
+            //좋아요 취소하기 버튼으로 바꾸기
+            //좋아요 취소하기 버튼 d-none클래스를 remove
+            $('#likeCancelBtn').removeClass("d-none");
+            //좋아요 버튼 d-none클래스를 add
+            $('#likeBtn').addClass("d-none");
+         })
+         
+         //스크랩하기 버튼을 눌렀을 때
+         $(scrapBtn).on('click', function () {
+            let courseId = course[0].courseId;
+            data = {
+               courseId: courseId,
+               userId: userId
+            }
+            console.log(data);
+            scrapCourse(data);
+         })
+
+         //좋아요 취소하기 
+         $(likeCancelBtn).on('click', function(){
+            postId = $('#postId').val();
+            data = {
+               postId: postId,
+               userId: userId
+            }
+            likeCancelPost(data);
+            //좋아요 했어요 모달로!
+            $('#likeCancelModal').modal('show');
+            //좋아요 취소하기 버튼으로 바꾸기
+            //좋아요 취소하기 버튼 d-none클래스를 remove
+            $('#likeBtn').removeClass("d-none");
+            //좋아요 버튼 d-none클래스를 add
+            $('#likeCancelBtn').addClass("d-none");
+         })
+         //스크랩 취소하기
+          $(scrapCancelBtn).on('click', function(){
+            
+            data = {
+               courseId: courseId,
+               userId: userId
+            }
+            scrapCancel(data);
+            // 모달로!
+            $('#scrapCancelModal').modal('show');
+           
+            //좋아요 취소하기 버튼 d-none클래스를 remove
+            $('#scrapBtn').removeClass("d-none");
+            //좋아요 버튼 d-none클래스를 add
+            $('#scrapCancelBtn').addClass("d-none");
          })
 
 
       });
+
+      //스크랩하기 취소하기 
+      function scrapCancel(courseId, userId){
+          $.ajax({
+            url: "/post/scrapCourseCancel",
+            method: "delete",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json;charset="utf-8"',
+            success: function (result) {
+               console.log(result);
+            },
+            error: function (err) {
+               console.log(err);
+            }
+         })
+      }
+
+      //좋아요 취소하기
+      function likeCancelPost(postId, userId){
+         $.ajax({
+            url: "/post/postLikeCancel",
+            method: "delete",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json;charset="utf-8"',
+            success: function (result) {
+               console.log(result);
+            },
+            error: function (err) {
+               console.log(err);
+            }
+         })
+      }
+
+      //스크랩하기
+      function scrapCourse(courseId,userId){
+            $.ajax({
+               url: "/post/scrapCourse",
+               method: "post",
+               data: JSON.stringify(data),
+               dataType: 'json',
+               contentType: 'application/json;charset="utf-8"',
+               success: function (result) {
+                  console.log(result);
+               },
+               error: function (err) {
+                  console.log(err);
+               }
+            })
+      }
 
       //좋아요 하기
       function likePost(postId, userId) {

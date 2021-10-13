@@ -3,7 +3,11 @@
     layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-
+    <!--File uploader-->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -25,6 +29,11 @@
                                     <!-- csrf 처리 -->
                                     <input th:name="${_csrf.parameterName}" type="hidden" th:value="${_csrf.token}">
                                     <!-- /csrf 처리 -->
+
+                                    <!-- profile img -->
+                                    <input type="file" class="form-control size-190" id="profileImg"
+                                        required accept="image/png, image/jpeg, image/gif">
+                                    <!-- profile img -->
 
                                     <!-- email -->
                                     <div class="input-icon-group mb-3">
@@ -98,11 +107,11 @@
                                         <!-- icon -->
 
                                         <input type="text" class="form-control" name="phoneNum" required readonly
-                                            placeholder="전화번호" style="cursor: pointer;">
+                                            placeholder="전화번호" style="cursor: pointer;" value="010-9640-0615">
                                     </div>
                                     <!-- phoneNum -->
 
-                                    <!-- address zonecode -->
+                                    <!-- address addrzonecode -->
                                     <div class="input-icon-group mb-3">
                                         <!-- icon -->
                                         <span class="input-icon">
@@ -110,18 +119,22 @@
                                         </span>
                                         <!-- icon -->
 
-                                        <input type="text" class="form-control d-inline-block" name="zonecode" required readonly placeholder="우편번호" style="width:50%;">
-                                        <button type="button" id="findAddr" class="btn btn-primary" style="float: right;">주소찾기</button>
+                                        <input type="text" class="form-control d-inline-block" name="addrzonecode"
+                                            required readonly placeholder="우편번호" style="width:50%;">
+                                        <button type="button" id="findAddr" class="btn btn-primary"
+                                            style="float: right;">주소찾기</button>
                                     </div>
-                                    <!-- address zonecode -->
+                                    <!-- address addrzonecode -->
 
-                                    <!-- address fullRoadAddr -->
-                                    <input type="text" class="form-control mb-3" name="fullAddr" required readonly placeholder="도로명주소/지번주소">
-                                    <!-- address fullRoadAddr -->
+                                    <!-- address addrfull -->
+                                    <input type="text" class="form-control mb-3" name="addrfull" required readonly
+                                        placeholder="도로명주소/지번주소">
+                                    <!-- address addrfull -->
 
-                                    <!-- address detailAddr -->
-                                    <input type="text" class="form-control mb-3" name="detailAddr" required placeholder="상세주소">
-                                    <!-- address detailAddr -->
+                                    <!-- address addrdetail -->
+                                    <input type="text" class="form-control mb-3 d-none" name="addrdetail" required
+                                        placeholder="상세주소">
+                                    <!-- address addrdetail -->
 
                                     <!-- birthDate -->
                                     <div class="input-icon-group mb-3">
@@ -253,6 +266,10 @@
     <script th:src="@{/assets/vendor/cleave.js/cleave.min.js}"></script>
     <script th:src="@{/assets/js/custom/cleave.js}"></script>
 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
     <script type="text/javascript">
         // ====================== 페이지 로드 ======================
         document.addEventListener("DOMContentLoaded", () => {
@@ -273,6 +290,48 @@
                 $('#naver_id_login').children().eq(0).click();
             });
             // ====================== 네이버 로그인 구현 ======================
+
+            // ====================== profile img ======================
+            FilePond.registerPlugin(
+                FilePondPluginImagePreview,
+                FilePondPluginFilePoster
+            );
+
+            // Select the file input and use 
+            // create() to turn it into a pond
+            FilePond.create(
+                document.querySelector('#profileImg'), {
+                    labelIdle: `Drag & Drop picture or Browse`,
+                    imagePreviewHeight: 160,
+                    allowMultiple: false,
+                    allowFilePoster: true,
+                    filePosterHeight: 160,
+                    stylePanelLayout: 'compact circle',
+                    styleLoadIndicatorPosition: 'center bottom',
+                    styleProgressIndicatorPosition: 'right bottom',
+                    styleButtonRemoveItemPosition: 'left bottom',
+                    styleButtonProcessItemPosition: 'right bottom',
+                    storeAsFile: true,
+                    files: [{
+                        source: '12345',
+                        options: {
+                            type: 'local',
+                            file: {
+                                name: 'Profile',
+                                size: false,
+                                type: 'image/jpg'
+                            },
+
+                            // pass poster property
+                            metadata: {
+                                poster: './assets/img/avatar/4.jpg'
+                            }
+                        }
+                    }]
+                }
+            );
+
+            // ====================== profile img ======================
 
 
             // ====================== email 중복체크 ======================
@@ -455,6 +514,7 @@
 
             // modal 여는 이벤트
             $(signUpPhoneNum).on('click', () => {
+                console.log($('#profileImg').find('input').eq(1));
                 $('#modalForm').modal('show');
             });
 
@@ -464,7 +524,7 @@
                 $(modalPhoneNum).val('');
                 $(modalCheckNum).val('');
                 resultCheckNum = null;
-                $(modalBtn).text('인증요청');
+                $('[name="modalCheckBtn"]').text('인증요청');
                 $(modalCheckNum).parent().addClass('d-none');
             });
 
@@ -494,23 +554,23 @@
                     $(modalBtn).text('인증완료');
                     // 1-4)
                     // 자꾸하면 돈 나간다?!?!
-                    // $.ajax({
-                    //     url: '/certificate/phoneNumCheck',
-                    //     method: 'post',
-                    //     data: JSON.stringify({
-                    //         to: $(modalPhoneNum).val().replaceAll('-',''),
-                    //         from: '01096400615',
-                    //     }),
-                    //     dataType: 'json',
-                    //     contentType: 'application/json;charset="utf-8"',
-                    //     success: (result) => {
-                    //         resultCheckNum = result;
-                    //         // console.log(result);
-                    //     },
-                    //     error: (error) => {
-                    //         console.log(error);
-                    //     }
-                    // });
+                    $.ajax({
+                        url: '/certificate/phoneNumCheck',
+                        method: 'post',
+                        data: JSON.stringify({
+                            to: $(modalPhoneNum).val().replaceAll('-', ''),
+                            from: '01096400615',
+                        }),
+                        dataType: 'json',
+                        contentType: 'application/json;charset="utf-8"',
+                        success: (result) => {
+                            resultCheckNum = result;
+                            // console.log(result);
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
 
                     // 2. 인증버튼(modalBtn)의 text가 '인증완료'라고 되어있을 경우
                     //  2-1) 발송된 인증번호(resultCheckNum)와 입력한 인증번호(modalCheckNum)를 비교한다
@@ -549,8 +609,48 @@
 
 
             // ====================== form submit ======================
-            $('#signUpBtn').on('click', ()=>{
+            const signUpBirthDate = $('[name="birthDate"]');
 
+            $('#signUpBtn').on('click', () => {
+                let checkEmail = $(signUpEmail).hasClass('is-valid');
+                let checkPassword = $(signUpPassword).hasClass('is-valid');
+                let checkNickname = $(signUpNickname).hasClass('is-valid');
+                let checkBirthDate = $(signUpBirthDate).val().length == 10;
+
+                let indexOfHyphen = $(signUpBirthDate).val().indexOf('/');
+                let birthYear = $(signUpBirthDate).val().substring(0, indexOfHyphen);
+                let birthDay = $(signUpBirthDate).val().substr(indexOfHyphen + 1, 5).replace('/', '-');
+
+                if (!checkEmail) {
+                    $(signUpEmail).focus();
+                    return;
+                }
+                if (!checkPassword) {
+                    $(signUpPassword).focus();
+                    return;
+                }
+                if (!checkNickname) {
+                    $(signUpNickname).focus();
+                    return;
+                }
+                if (!checkBirthDate) {
+                    $(signUpBirthDate).focus();
+                    return;
+                }
+
+                let signUpBirthYear = $('<input />').attr({
+                    type: 'hidden',
+                    name: 'birthYear'
+                }).val(birthYear);
+
+                let signUpBirthDay = $('<input />').attr({
+                    type: 'hidden',
+                    name: 'birthDay'
+                }).val(birthDay);
+
+                $('#signUp').append(signUpBirthYear, signUpBirthDay);
+
+                $('#signUp').submit();
             });
             // ====================== form submit ======================
         });
@@ -591,22 +691,25 @@
                     console.log(data.zonecode);
                     console.log(fullRoadAddr);
 
-                    $("[name='zonecode']").val(data.zonecode);
+                    $("[name='addrzonecode']").val(data.zonecode);
 
                     //사용자가 도로명 주소 선택 했을때,
                     if (data.userSelectedType === 'R') {
-                        $("[name='fullAddr']").val(fullRoadAddr);
+                        $("[name='addrfull']").val(fullRoadAddr);
                     }
                     //사용자가 지번 주소 선택 했을때,
                     else if (data.userSelectedType === 'J') {
-                        $("[name='fullAddr']").val(jibunAddr);
+                        $("[name='addrfull']").val(jibunAddr);
                     }
 
-                    //주소 변경 했을때, 상세주소 비우기
-                    $("[name='detailAddr']").val("");
+                    // 주소 변경 했을때, 상세주소 비우기
+                    $("[name='addrdetail']").val("");
 
-                    //커서를 상세주소 필드로 이동
-                    $("[name='detailAddr']").focus();
+                    // 상세주소 입력창 보이게 하기
+                    $("[name='addrdetail']").removeClass('d-none');
+
+                    // 커서를 상세주소 필드로 이동
+                    $("[name='addrdetail']").focus();
                 }
             }).open();
         } //function execPostCode() END

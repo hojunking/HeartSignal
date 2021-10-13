@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -71,14 +72,33 @@ public class PostController {
 
 	// 커뮤니티 글 상세보기
 	@GetMapping("/get_community/{postId}")
-	public String get_community(@PathVariable long postId, Model model) {
+	public String get_community(@PathVariable long postId, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		String userId = null;
+		if(accountVO != null) {
+			userId = accountVO.getUserId();
+		}
+		
 		PostVO post = pService.getPost(postId);
+		post.setUserId(userId);
+		
+		//좋아요 했으면 1 안했으면 0
+		int isLike = pService.getPostLike(post);
+		model.addAttribute("like", isLike);
+		
+		//
+		int isScraped = pService.getCourseScrap(post);
+		model.addAttribute("scrap", isScraped);
+		
 		String courseId = post.getCourseId();
 		model.addAttribute("list", pService.getPost(postId));
 		model.addAttribute("cmt", pService.commentCM(postId));
 		if (courseId != null) {
 			model.addAttribute("course", pService.getCourse(courseId));
 		}
+	
+		
 
 		pService.countHit(postId);
 
@@ -149,7 +169,7 @@ public class PostController {
 		return vo;
 	}
 
-	// 커뮤니티 댓글 수정
+	//커뮤니티 댓글 수정
 	@ResponseBody
 	@PutMapping("/commentUpdate")
 	public CommentVO commentUpdate(@RequestBody CommentVO vo) {
@@ -157,22 +177,52 @@ public class PostController {
 		return vo;
 	}
 
-	// 커뮤니티 댓글 삭제
+	//커뮤니티 댓글 삭제
 	@ResponseBody
 	@DeleteMapping("/delCMComment/{commentId}")
 	public int delCMComment(@PathVariable long commentId) {
 		return pService.commentDelete(commentId);
 	}
 
-	// 글 좋아요(스크랩)
+	//글 좋아요(스크랩)
 	@ResponseBody
 	@PostMapping("/postLike")
-	public int postLike(@RequestBody long postId, long userId) {
+	public int postLike(@RequestBody Map<String, Long> map) {
+		long postId = map.get("postId");
+		long userId = map.get("userId");
 		return pService.postLike(postId, userId);
-		/* return "redirect:/post/get_community/{postId}"; */
+	}
+	
+	
+	//코스 스크랩
+	@ResponseBody
+	@PostMapping("/scrapCourse")
+	public int scrapCourse(@RequestBody Map<String, Long> map) {
+		long courseId = map.get("courseId");
+		long userId = map.get("userId");
+		return pService.scrapCourse(courseId, userId);
+	}
+	
+
+	//글 좋아요 삭제
+	@ResponseBody
+	@DeleteMapping("/postLikeCancel")
+	public int postLikeCancel(@RequestBody Map<String, Long> map) {
+		long postId = map.get("postId");
+		long userId = map.get("userId");
+		return pService.postLikeCancle(postId, userId);
+	}
+	
+	//코스 스크랩 삭제
+	@ResponseBody
+	@DeleteMapping("/scrapCourseCancel")
+	public int scrapCourseCancel(@RequestBody Map<String, Long> map) {
+		long courseId = map.get("courseId");
+		long userId = map.get("userId");
+		return pService.scrapCancel(courseId, userId);
 	}
 
-	// 내 코스 모달에 불러오기
+	//내 코스 모달에 불러오기
 	@ResponseBody
 	@GetMapping("/getMyCourse")
 	public List<MyPageCourseVO> getMyCourse(@ModelAttribute MyPageCourseVO vo) {

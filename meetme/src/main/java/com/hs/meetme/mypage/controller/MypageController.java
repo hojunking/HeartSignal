@@ -45,9 +45,19 @@ public class MypageController {
 		userTagVO.setUserId(userId);
 		noticeVO.setUserReceived(userId);
 		
+		String myAddress=null;
+		if(mypageService.getMyinfo(myPageUserInfoVO).getAddrfull()!=null) {	
+		myAddress = mypageService.getMyinfo(myPageUserInfoVO).getAddrfull();
+		String[ ] array = myAddress.split(" ");
+		myAddress = array[0]+" "+array[1];
+		}
+
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		model.addAttribute("userTag", mypageService.getUserTags(userTagVO));
+		
 		model.addAttribute("userNotice", noticeService.getNoticeList(noticeVO));
+		
+		model.addAttribute("myAddress",myAddress);
 		
 		return "mypage/main";
 	}
@@ -128,6 +138,29 @@ public class MypageController {
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		return "mypage/myinfo";
+	}
+	
+	//결제 내역 보기
+	@GetMapping("/myinfo_my_payment_list")
+	public String myinfo_my_payment_list(Model model,MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+		//세션 쓰는법
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		String userId = accountVO.getUserId();
+		
+		myPageUserInfoVO.setUserId(userId);
+		
+		String myAddress=null;
+		if(mypageService.getMyinfo(myPageUserInfoVO).getAddrfull()!=null) {	
+		myAddress = mypageService.getMyinfo(myPageUserInfoVO).getAddrfull();
+		String[ ] array = myAddress.split(" ");
+		myAddress = array[0]+" "+array[1];
+		}
+
+		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
+		
+		model.addAttribute("myAddress",myAddress);
+		return "mypage/myinfo_my_payment_list";
 	}
 	
 	//메인 유저정보 

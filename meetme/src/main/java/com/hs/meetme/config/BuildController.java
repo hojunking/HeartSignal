@@ -18,4 +18,9 @@ public class BuildController {
 	public String coupleCreateCourse() {
 		return "/index";
 	}
+	
+	@GetMapping("/test")
+	public String vueTest() {
+		return "test";
+	}
 }

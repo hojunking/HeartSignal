@@ -16,6 +16,8 @@ import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 @Mapper
 public interface MypageMapper {
     
+	//태그 다 가져오기
+	public List<UserTagsVO> getTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 가져 오기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 삭제
@@ -51,6 +53,8 @@ public interface MypageMapper {
 	
 	//회원정보 불러오기
 	public MyPageUserInfoVO getMyinfo(MyPageUserInfoVO myPageUserInfoVO);
+	//회원정보 수정(프로필사진)
+	public int userUpdateImage(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(주소)
 	public int updateAddress(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 비밀번호 불러오기
