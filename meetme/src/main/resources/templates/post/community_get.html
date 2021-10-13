@@ -70,35 +70,47 @@
       <br>
       <hr>
       <br>
-      <!--댓글 넣기-->
-      <!-- 댓글조회 -->
-      <div class="card shadow mb-4">
-         <div class="card-header">
-            <i class="fa fa-comment fa"></i> 댓 글 조 회
-         </div>
-         <div class="card-body">
-            <div id="commentsBody">
-               <div th:each="list : ${cmt}" class="d-flex justify-content-between commentWrap">
-                  <img class="d-flex arounded-circle" src="${list.imgId}" alt="프로필 이미지" id="profileImg">
-                  <span class="pl-2" th:text="${list.userId}"></span>
-                  <span class="pl-2" th:id="${list.commentId}" th:text="${list.comContent}"></span>
-                  <!--댓글 작성자만 삭제, 수정 보이게 -->
-                  <div th:if="'${session.userSession.userId}' == '${list.userId}'">
-                     <div>
-                        <!-- <input type="hidden" th:name="commentId" th:value="${list.commentId}"> -->
-                        <button type="button" class="cmtUpdBtn btn btn-primary btn-sm"
-                           th:data-content="${list.comContent}" th:data-commnetId="${list.commentId}"
-                           data-toggle="modal" data-target="#comUpdateModal">
-                           <i class="far fa-edit"></i>수정하기</button>
-                        <!--삭제시 alert-->
-                        <button type="button" class="cmtDelBtn btn btn-danger btn-sm" th:data-cId="${list.commentId}">
-                           <i class="far fa-trash-alt"></i>삭제하기</button>
-                     </div>
-                  </div>
+
+      <!--댓글 템플릿-->
+      <!--댓글 수 조회하는 쿼리만들어서 넣어주기-->
+      <h4 class="mb-5">Comments (2)</h4>
+      <ul class="list-unstyled mb-5 mb-lg-10" id="commentsBody">
+         <li th:each="list : ${cmt}" class="d-flex mb-3 justify-content-between commentWrap">
+            <div class="row d-flex">
+               
+               <div class="me-3 col-lg-2">
+                   <img  src="${list.imgId}" alt="프로필 이미지" id="profileImg" class="size-50 rounded-circle">
+               </div>
+               <div class="px-3 py-4 border rounded border-end col-lg-10">
+                   <div class="d-flex mb-3 justify-content-between">
+                       <div class="d-flex align-items-center">
+                           <h6 class="mb-0 me-3" th:text="${list.nickname}"></h6>
+                           <small class="text-muted">02 June</small>
+                       </div>
+                       <div th:if="${session.userSession.userId} == ${list.userId}">
+                          <div>
+                             <!-- <input type="hidden" th:name="commentId" th:value="${list.commentId}"> -->
+                             <button type="button" class="cmtUpdBtn btn btn-primary btn-sm"
+                                th:data-content="${list.comContent}" th:data-commnetId="${list.commentId}"
+                                data-toggle="modal" data-target="#comUpdateModal">
+                                <i class="far fa-edit"></i>수정하기</button>
+                             <!--삭제시 alert-->
+                             <button type="button" class="cmtDelBtn btn btn-danger btn-sm" th:data-cId="${list.commentId}">
+                                <i class="far fa-trash-alt"></i>삭제하기</button>
+                          </div>
+                       </div>
+                   </div>
+                   <p class="mb-0" th:id="${list.commentId}" th:text="${list.comContent}">
+                   </p>
                </div>
             </div>
-         </div>
-      </div>
+         </li>
+     </ul>
+
+
+      <!--댓글 넣기-->
+      <!-- 댓글조회 -->
+      
       <!-- 댓글 입력 -->
       <div class="card mb-2">
          <div class="card-header bg-light">
@@ -109,7 +121,7 @@
                <li class="list-group-item">
                   <!--로그인시에만 보이기-->
                <li sec:authorize="isAuthenticated()">
-                  <!--src 안에  ${session.userSession.imgUrl} -->
+                  <!--src 안에  ${userSession.imgUrl} -->
                   <img class="rounded-circle" th:src="@{|/img/africa.png|}" style="width: 2.5rem; height:2.5rem;">
                   <span class="pl-3" style="font-size: 1.6rem;" th:text="${session.userSession.nickname}"></span>
                   <p></p>
@@ -132,32 +144,35 @@
       <!--로그인 한 사람만 좋아요 버튼 넣기~ -->
       <li sec:authorize="isAuthenticated()">
          <div class="row mt-3 d-flex justify-content-center">
-            
-               <div class="col-auto">
-                  <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary" th:classappend="${like} == 1 ? d-none" data-toggle="modal"
-                     data-target="#likeModal">좋아요</button>
-               </div>
-            
-               <div class="col-auto">
-                  <button type="submit" name="submit" id="likeCancelBtn" class="likeCancelBtn btn btn-primary" th:classappend="${like} == 0 ? d-none" data-toggle="modal"
-                     data-target="#likeCancelModal">좋아요 취소</button>
-               </div>
-             
+
+            <div class="col-auto">
+               <button type="submit" name="submit" id="likeBtn" class="likeBtn btn btn-primary"
+                  th:classappend="${like} == 1 ? d-none" data-toggle="modal" data-target="#likeModal">좋아요</button>
+            </div>
+
+            <div class="col-auto">
+               <button type="submit" name="submit" id="likeCancelBtn" class="likeCancelBtn btn btn-primary"
+                  th:classappend="${like} == 0 ? d-none" data-toggle="modal" data-target="#likeCancelModal">좋아요
+                  취소</button>
+            </div>
+
             <!-- 로그인되어 있으면서 코스가 있는 경우에만 코스 스크랩하기 버튼 나오게!-->
             <!-- th:clasappend 이용!-->
             <th:block th:if="${course} != null">
-               
+
                <div class="col-auto">
-                  <button type="submit" name="submit" id="scrapBtn" class="scrapBtn btn btn-primary" th:clasappend="${scrap} == 1 ? d-none" data-toggle="modal"
-                     data-target="#scrapModal">코스 스크랩</button>
+                  <button type="submit" name="submit" id="scrapBtn" class="scrapBtn btn btn-primary"
+                     th:classappend="${scrap} == 1 ? d-none" data-toggle="modal" data-target="#scrapModal">코스
+                     스크랩</button>
                </div>
-            
+
                <div class="col-auto">
-                  <button type="submit" name="submit" id="scrapCancelBtn" class="scrapCancelBtn btn btn-primary"  th:clasappend="${scrap} == 0 ? d-none" data-toggle="modal"
-                     data-target="#scrapCancelModal">코스 스크랩 취소</button>
+                  <button type="submit" name="submit" id="scrapCancelBtn" class="scrapCancelBtn btn btn-primary"
+                     th:classappend="${scrap} == 0 ? d-none" data-toggle="modal" data-target="#scrapCancelModal">코스 스크랩
+                     취소</button>
                </div>
-         
-           </th:block>
+
+            </th:block>
 
          </div>
 
@@ -174,8 +189,8 @@
          <div class="modal-content">
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">스크랩 성공!</h4>
-               <button type="button" class="cCloseBtn" data-bs-dismiss="toast" aria-label="Close">
-                     <i class="bi bi-x"></i>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                  <i class="bi bi-x"></i>
                </button>
             </div>
             <div class="modal-body">
@@ -183,7 +198,7 @@
                <h6>마이페이지 나의 코스에서 확인 할 수 있어요</h6>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-primary scrapChk" data-dismiss="modal">확인</button>
+               <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
 
             </div>
          </div>
@@ -196,8 +211,8 @@
          <div class="modal-content">
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">스크랩 취소</h4>
-               <button type="button" class="cCloseBtn" data-bs-dismiss="toast" aria-label="Close">
-                     <i class="bi bi-x"></i>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                  <i class="bi bi-x"></i>
                </button>
             </div>
             <div class="modal-body">
@@ -205,7 +220,7 @@
                <h6>스크랩 취소에 성공했습니다. </h6>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-primary scrapChk" data-dismiss="modal">확인</button>
+               <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
 
             </div>
          </div>
@@ -220,10 +235,10 @@
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">좋아요 성공!</h4>
                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
-                     <i class="bi bi-x"></i>
+                  <i class="bi bi-x"></i>
                </button>
 
-       
+
             </div>
             <div class="modal-body">
                <h6>좋아요 눌렀어요!</h6>
@@ -244,10 +259,10 @@
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">좋아요 취소 성공!</h4>
                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
-                     <i class="bi bi-x"></i>
+                  <i class="bi bi-x"></i>
                </button>
 
-       
+
             </div>
             <div class="modal-body">
                <h6>좋아요 취소 되었어요</h6>
@@ -266,19 +281,21 @@
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
-            <!-- <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div> -->
+            <div class="modal-header">
+               <h4 class="modal-title" id="myModalLabel">게시글 삭제하기</h4>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                  <i class="bi bi-x"></i>
+               </button>
+            </div>
             <div class="modal-body">
                <h6>정말 삭제 하시겠습니까?</h6>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               <form action="/post/postDelete" method="post">
-                  <input type="hidden" name="postId" th:value="${list.postId}">
-                  <button type="submit" class="btn btn-primary">삭제하기</button>
-               </form>
+               <button type="button" class="btn btn-default likeChk" data-dismiss="modal">취소</button>
+            
+                 
+                  <button type="submit" class="btn btn-primary postDeleteBtn">삭제하기</button>
+             
             </div>
          </div>
       </div>
@@ -291,8 +308,9 @@
          <div class="modal-content">
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">댓글 수정하기</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                     aria-hidden="true">×</span></button>
+               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                  <i class="bi bi-x"></i>
+               </button>
             </div>
 
             <div class="modal-body">
@@ -301,7 +319,7 @@
                   th:value="${modalCmtContent}"></textarea>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               <button type="button" class="btn btn-default likeChk" data-dismiss="modal">취소</button>
                <button type="submit" class="btn btn-primary" id="comUpdateBtn">수정하기</button>
             </div>
 
@@ -313,34 +331,59 @@
 <th:block layout:fragment="script">
    <!--  <script src="/js/ckeditor/ckeditor.js"></script> -->
    <!-- 네이버 지도 -->
-   <script type="text/javascript"
-      src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
+   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8">
+   </script>
 
    <!-- js here -->
    <script type="text/javascript" th:inline="javascript">
-
-
-
       // ============ 페이지 로드 ==============
       $(function () {
 
          /*<![CDATA[*/
-         const course = [[${ course }]];
+         const course = [[${course}]];
          /*]]>*/
          console.log(course);
 
-         if(course != null){
-            let courseId= course[0].courseId;
-            console.log(courseId);
+         if (course != null) {
+            let courseId = course[0].courseId;
+            console.log('코스아이디' + courseId);
          }
 
+         //글 삭제 모달 띄우기!
+         $('#btnDelete').on('click', function () {
+            $('#deleteModal').modal('show');
+            console.log("삭제모달나와라")
+         })
 
+         //글 삭제하기!
+         const postDelete = $('.postDeleteBtn');
+         postDelete.on("click", function(){
+            postId = $('#postId').val();
+            postDeletConfirm(postId);
+            $('#deleteModal').modal('hide');
+         });
+
+         function postDeletConfirm(postId){
+            console.log(postId);
+            $.ajax({
+            url: "/post/postDelete",
+            method: "post",
+            data: {postId : postId},
+            success: function (result) {
+               console.log(result);
+               location.href ="/post/community_list"
+            },
+            error: function (err) {
+               console.log(err);
+            }
+         })
+         }
 
          let locations = [];
          let centerLat = 0;
          let centerLng = 0;
-         let markers = new Array();// 마커 담는 배열 
-         let infoWindows = new Array();//정보창을 담는 배열
+         let markers = new Array(); // 마커 담는 배열 
+         let infoWindows = new Array(); //정보창을 담는 배열
 
          //코스 있으면 네이버지도에서 해주기!
          if (course != null) {
@@ -369,7 +412,7 @@
             var markerOptions = {
                map: map,
                icon: {
-                  url:"https://img.icons8.com/plasticine/100/000000/marker.png",
+                  url: "https://img.icons8.com/plasticine/100/000000/marker.png",
                   size: new naver.maps.Size(50, 52),
                   origin: new naver.maps.Point(0, 0),
                   anchor: new naver.maps.Point(25, 26)
@@ -387,14 +430,15 @@
                      size: new naver.maps.Size(50, 52),
                      origin: new naver.maps.Point(0, 0),
                      anchor: new naver.maps.Point(25, 26)
-               }
+                  }
                });
 
 
 
                //정보창
                var infoWindow = new naver.maps.InfoWindow({
-                  content: '<div style="width:200px; text-align:cneter;padding:10px"><b>' + locations[i].place + '</b></div>'
+                  content: '<div style="width:200px; text-align:cneter;padding:10px"><b>' + locations[i]
+                     .place + '</b></div>'
                });
 
                markers.push(marker); //생성한 마커를 담는다
@@ -424,36 +468,14 @@
          }
 
 
-         /* 	  //naver map
-     
-    	 	var mapOptions = {
-		    center: new naver.maps.LatLng(37.3595704, 127.105399),
-		    zoom: 12
-				};
-	
-			var map = new naver.maps.Map('map', mapOptions);
-			
-			 */
-			/* //마커 정보 담기
-			initMap();
- */
-         /* // ============ CKeditor 적용 =================
-         CKEDITOR.replace('ckcontents', {
-            filebrowserUploadUrl: '/post/ckeditor/fileUpload',
-            font_names: "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
-            font_defaultLabel: "맑은 고딕/Malgun Gothic",
-            fontSize_defaultLabel: "12",
-            // skin : "office2013", 
-            language: "ko"
-         });
-         // ============================
- */
+
+
          // ======= 댓글 처리 =========
          let cmtId = null; // 댓글 sequenceId
          let postId = null; // 게시글 sequenceId
          let userId = userSession == null ? "" : userSession.userId;
          /*<![CDATA[*/
-         let postUserId = [[${ list.userId }]];
+         let postUserId = [[${list.userId}]];
          /*]]*/
          console.log(postUserId);
          let comContent = null; // 댓글 내용
@@ -463,10 +485,10 @@
          const comUpdateBtn = $('#comUpdateBtn'); //모달안에 수정버튼
          const cmtInsBtn = $('.cmtInsBtn'); // 댓글 입력 버튼
 
-         const likeBtn = $('#likeBtn');//좋아요 버튼
+         const likeBtn = $('#likeBtn'); //좋아요 버튼
          const scrapBtn = $('#scrapBtn'); //스크랩 버튼
          const likeCancelBtn = $('#likeCancelBtn'); //좋아요 취소 버튼
-         const scrapCancelBtn = $('#scrapCancelBtn');  //스크랩 취소 버튼
+         const scrapCancelBtn = $('#scrapCancelBtn'); //스크랩 취소 버튼
 
          const userCheck = $('#userCheck'); // 작성자와 로그인 유저가 같을
 
@@ -485,15 +507,20 @@
          //좋아요 모달 닫기
          const closeBtn = $('.btn-close');
          const closeChk = $('.likeChk');
-         closeBtn.on("click", function(){
+         closeBtn.on("click", function () {
             $('#likeModal').modal("hide");
             $('#likeCancelModal').modal('hide');
+            $('#scrapModal').modal('hide');
+            $('#scrapCancelModal').modal('hide');
             $('#comUpdateModal').modal('hide');
             $('#deleteModal').modal('hide');
+
          })
-         closeChk.on("click", function(){
+         closeChk.on("click", function () {
             $('#likeModal').modal("hide");
             $('#likeCancelModal').modal('hide');
+            $('#scrapModal').modal('hide');
+            $('#scrapCancelModal').modal('hide');
             $('#comUpdateModal').modal('hide');
             $('#deleteModal').modal('hide');
          })
@@ -502,10 +529,10 @@
          //스크랩 모달 닫기 
          const scrapClose = $('.cCloseBtn');
          const scrapChk = $('.scrapChk');
-         scrapClose.on("click", function(){
+         scrapClose.on("click", function () {
             $('#scrapModal').modal("hide");
          })
-         scrapChk.on("click", function(){
+         scrapChk.on("click", function () {
             $('#scrapModal').modal("hide");
          })
 
@@ -525,9 +552,11 @@
                console.log(comContent);
                $(modalCmtContent).val(comContent);
                $(modalCmtId).val(cmtId);
+               $('#comUpdateModal').modal('show');
 
             })
          }
+
          //모달 안의 수정버튼 클릭 이벤트
          $(comUpdateBtn).on('click', function () {
             confirmUpdate($(modalCmtId).val(), $(modalCmtContent).val());
@@ -563,20 +592,29 @@
             //좋아요 버튼 d-none클래스를 add
             $('#likeBtn').addClass("d-none");
          })
-         
+
          //스크랩하기 버튼을 눌렀을 때
          $(scrapBtn).on('click', function () {
             let courseId = course[0].courseId;
+            console.log("스크랩 코스 아이디" + courseId)
             data = {
                courseId: courseId,
                userId: userId
             }
             console.log(data);
             scrapCourse(data);
+
+
+            $('#scrapModal').modal('show');
+            //좋아요 취소하기 버튼으로 바꾸기
+            //좋아요 취소하기 버튼 d-none클래스를 remove
+            $('#scrapCancelBtn').removeClass("d-none");
+            //좋아요 버튼 d-none클래스를 add
+            $('#scrapBtn').addClass("d-none");
          })
 
          //좋아요 취소하기 
-         $(likeCancelBtn).on('click', function(){
+         $(likeCancelBtn).on('click', function () {
             postId = $('#postId').val();
             data = {
                postId: postId,
@@ -592,19 +630,18 @@
             $('#likeCancelBtn').addClass("d-none");
          })
          //스크랩 취소하기
-          $(scrapCancelBtn).on('click', function(){
-            
+         $(scrapCancelBtn).on('click', function () {
+            let courseId = course[0].courseId;
             data = {
                courseId: courseId,
                userId: userId
             }
             scrapCancel(data);
-            // 모달로!
+            // 모달 띄우기!
             $('#scrapCancelModal').modal('show');
-           
-            //좋아요 취소하기 버튼 d-none클래스를 remove
+            //스크랩하기 버튼 d-none클래스를 remove
             $('#scrapBtn').removeClass("d-none");
-            //좋아요 버튼 d-none클래스를 add
+            //스크랩 취소 버튼 d-none클래스를 add
             $('#scrapCancelBtn').addClass("d-none");
          })
 
@@ -612,8 +649,8 @@
       });
 
       //스크랩하기 취소하기 
-      function scrapCancel(courseId, userId){
-          $.ajax({
+      function scrapCancel(courseId, userId) {
+         $.ajax({
             url: "/post/scrapCourseCancel",
             method: "delete",
             data: JSON.stringify(data),
@@ -629,7 +666,7 @@
       }
 
       //좋아요 취소하기
-      function likeCancelPost(postId, userId){
+      function likeCancelPost(postId, userId) {
          $.ajax({
             url: "/post/postLikeCancel",
             method: "delete",
@@ -646,20 +683,20 @@
       }
 
       //스크랩하기
-      function scrapCourse(courseId,userId){
-            $.ajax({
-               url: "/post/scrapCourse",
-               method: "post",
-               data: JSON.stringify(data),
-               dataType: 'json',
-               contentType: 'application/json;charset="utf-8"',
-               success: function (result) {
-                  console.log(result);
-               },
-               error: function (err) {
-                  console.log(err);
-               }
-            })
+      function scrapCourse(courseId, userId) {
+         $.ajax({
+            url: "/post/scrapCourse",
+            method: "post",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json;charset="utf-8"',
+            success: function (result) {
+               console.log(result);
+            },
+            error: function (err) {
+               console.log(err);
+            }
+         })
       }
 
       //좋아요 하기
@@ -749,23 +786,33 @@
                id: "profileImg"
             });
          let nickname = $("<span />").addClass("pl-2").text(result.nickname);
-         let comContent = $("<span />").addClass("pl-2").text(result.comContent);
+         let comContent = $("<span />").addClass("pl-2").attr("id", result.commentId).text(result.comContent);
 
          let btnWrap = $("<div />")
          let updBtn = $("<button />")
-            .addClass("cmtUpdBtn btn btn-primary btn-sm")
+            .addClass("cmtUpdBtn1 btn btn-primary btn-sm")
             .attr("data-content", result.comContent)
             .attr("data-commentId", result.commentId)
             .attr("data-toggle", "modal")
-            .attr("data-target", "#comUpdateModal");
+            .attr("data-target", "#comUpdateModal")
+            .click(function () {
+               console.log("comContent" + result.comContent);
+               console.log("commentId" + result.commentId);
+               $(modalCmtContent).val(result.comContent);
+               $(modalCmtId).val(result.commentId);
+               $('#comUpdateModal').modal('show');
+            });
 
          let upIcon = $("<i />").addClass("far fa-edit").text("수정하기");
 
          $(updBtn).append(upIcon);
 
          let delBtn = $("<button />")
-            .addClass("cmtDelBtn btn btn-danger btn-sm")
-            .attr("data-cId", result.commentId);
+            .addClass("cmtDelBtn1 btn btn-danger btn-sm")
+            .attr("data-cId", result.commentId)
+            .click(function () {
+               confirmDel(result.commentId);
+            });
 
 
 
@@ -787,7 +834,6 @@
               );
           }
            */
-
    </script>
 
 

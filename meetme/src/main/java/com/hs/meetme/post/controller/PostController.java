@@ -82,7 +82,7 @@ public class PostController {
 		
 		PostVO post = pService.getPost(postId);
 		post.setUserId(userId);
-		
+				
 		//좋아요 했으면 1 안했으면 0
 		int isLike = pService.getPostLike(post);
 		model.addAttribute("like", isLike);
@@ -139,13 +139,16 @@ public class PostController {
 	public String update_community(@ModelAttribute PostVO vo) {
 
 		pService.postUpdate(vo);
-		return "redirect:/post/community_list";
+		int postId = Integer.parseInt(vo.getPostId());
+		String page = "redirect:/post/get_community/"+postId;
+		return page;
 	}
 
 	// 커뮤니티, 추천 모두 삭제가능한데.. redirect페이지가?!
 	@PostMapping("/postDelete")
-	public String postDelete(PostVO vo) {
+	public String postDelete(@ModelAttribute PostVO vo) {
 		pService.postDelete(vo);
+		System.out.println(vo);
 		return "redirect:/post/community_list";
 	}
 

@@ -166,7 +166,7 @@
    
    <!-- 코스 스크랩하기 -->
    <insert id="scrapCourse">
-   		insert into course_like values(#{courseId},#{userId})
+   		insert into course_like values(#{userId},#{courseId})
    </insert>
    
    <!-- 나의 코스 리스트 -->
