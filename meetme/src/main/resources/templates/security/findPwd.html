@@ -20,7 +20,15 @@
                         </p>
                         <div class="position-relative">
                             <div>
-                                <form>
+                                <form action="/updatePwd" method="post">
+                                    <!-- csrf 처리 -->
+                                    <input th:name="${_csrf.parameterName}" type="hidden" th:value="${_csrf.token}">
+                                    <!-- /csrf 처리 -->
+
+                                    <!-- phoneNum -->
+                                    <input type="hidden" name="phoneNum">
+                                    <!-- phoneNum -->
+
                                     <!-- password -->
                                     <div class="input-icon-group mb-3 d-none">
                                         <!-- icon -->
@@ -65,6 +73,13 @@
                                             class="btn btn-primary">본인인증</a>
                                     </div>
                                     <!-- 인증요청 버튼 -->
+
+                                    <!-- 비밀번호 변경 버튼 -->
+                                    <div class="d-grid">
+                                        <button type="button" id="submit" class="btn btn-primary d-none">비밀번호 변경</button>
+                                        <button type="submit" class="btn btn-primary d-none"></button>
+                                    </div>
+                                    <!-- 비밀번호 변경 버튼 -->
                                 </form>
                             </div>
                         </div>
@@ -133,6 +148,9 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    <!-- template input format -->
+    <script th:src="@{/assets/vendor/cleave.js/cleave.min.js}"></script>
+    <script th:src="@{/assets/js/custom/cleave.js}"></script>
     <script>
         $(function(){
             // ====================== 전화번호 인증 구현 ======================
@@ -213,6 +231,9 @@
                     swal('인증이 완료되었습니다!', '', 'success');
                         $(newPassword).closest('div').removeClass('d-none');
                         $(passwordCheck).closest('div').removeClass('d-none');
+                        $('[name="phoneNum"]').val($(modalPhoneNum).val());
+                        $('#submit').removeClass('d-none');
+                        $('[href="#modalForm"]').addClass('d-none');
                         $('#modalForm').modal('hide');
                     // 2-1) true
                     // if (resultCheckNum == $(modalCheckNum).val()) {
@@ -276,6 +297,7 @@
                     $(passwordCheck).addClass('is-valid');
                     $(passwordCheckValid).addClass('valid-feedback');
                     $(passwordCheckValid).text('비밀번호가 같습니다');
+                    
                 } else {
                     passwordCheckValidInit();
                     $(passwordCheck).addClass('is-invalid');
@@ -283,7 +305,35 @@
                     $(passwordCheckValid).text('비밀번호가 다릅니다');
                     return;
                 }
-            })
+            });
+
+            $('#submit').on('click', (e)=>{
+                e.preventDefault();
+                if($(passwordCheck).hasClass('is-valid') && $(newPassword).hasClass('is-valid')){
+                    $.ajax({
+                        url: '/certificate/phoneCheck',
+                        method: 'post',
+                        data: {
+                            phoneNum: $('input[name="phoneNum"]').val()
+                        },
+                        success: (result)=>{
+                            if(result == 0){
+                                swal('가입되지 않은 회원입니다','','error')
+                                .then(()=>{
+                                    location.href = "/login";
+                                });
+                            }
+                            else{
+                                swal('성공적으로 변경 되었습니다!','','success');
+                                $('button[type="submit"]').click();
+                            }
+                        },
+                        error: (err)=>{
+                            console.log(err);
+                        }
+                    })
+                }
+            });
             // ====================== 비밀번호 update ======================
         });
     </script>

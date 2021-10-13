@@ -41,4 +41,15 @@ public class AccountServiceImpl implements AccountService{
 		return accountMapper.nicknameCheck(nickname);
 	}
 
+	@Override
+	public int updatePwd(AccountVO vo) {
+		vo.setPassword(encoder.encode(vo.getPassword()));
+		return accountMapper.updatePwd(vo);
+	}
+
+	@Override
+	public int phoneNumCheck(String phoneNum) {
+		return accountMapper.phoneNumCheck(phoneNum);
+	}
+
 }
