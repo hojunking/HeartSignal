@@ -39,6 +39,15 @@
 			nickname = #{nickname}
 	</select>
 	
+	<select id="phoneNumCheck" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user_info
+		WHERE
+			phone_num = #{phoneNum}
+	</select>
+	
 	<insert id="signUp">
 		INSERT INTO
 			user_info
@@ -70,6 +79,15 @@
 			 #{imgId},
 			 'USER')
 	</insert>
+	
+	<update id="updatePwd">
+		UPDATE
+			user_info
+		SET
+			password = #{password}
+		WHERE
+			phone_num = #{phoneNum}
+	</update>
 	
 <!-- 	<insert id="signUpTag">
 		INSERT INTO

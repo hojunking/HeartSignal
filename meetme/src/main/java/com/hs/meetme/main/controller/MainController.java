@@ -17,12 +17,6 @@ public class MainController {
 	@Autowired
 	MainService service;
 
-	// sample(원본 템플릿)
-//	@GetMapping("/test")
-//	public String index() {
-//		return "templateTest";
-//	}
-
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("tag",service.tagList());

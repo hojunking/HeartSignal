@@ -3,244 +3,538 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
 <th:block layout:fragment="css">
-<!-- 	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
-	<style>
-/* 태그 */
-.tcustom {
-	width: 50px;
-	height: 30px;
-	line-height: 28px;
-	background-color: #69c6ba;
-	border: 0px;
-}
-
-.placeTag {
-	padding: 8px;
-	border-radius: 5px;
-	width: 50px;
-	height: 30px;
-	line-height: 28px;
-	background-color: #69c6ba;
-	color: white;
-	font-size: x-small;
-	font-weight: bold;
-}
-
-.placeTag2 {
-	background-color: #FF8E99;
-}
-/* 입력 칸 */
-.insertcustom, .insertcustomOne {
-	border: 2px;
-	border-style: solid;
-	border-color: #69c6ba;
-}
-
-.select {
-	margin-left: 100px;
-}
-/* 검색 버튼 */
-.tagButton {
-	background-color: #69c6ba;
-	border: 0px;
-	width: 50px;
-	height: 33.5px;
-	font-size: small;
-	border-radius: 0px;
-	color:white;
-}
-/* 자세히 보기 버튼  */
-.cusButton {
-	border-radius: 5px;
-	font-size: x-small;
-}
-
-/* 코스 카드  */
-.customCard {
-	border: 0px;
-	background-color: transparent;
-}
-
-.region {
-	color: white;
-	border: 0px;
-	background-color: transparent;
-}
-
-/* 카드 이미지 사이즈*/
-.cardImg {
-	margin: 30px 30px;
-	width: 80px;
-	height: 80px;
-}
-
-.cardbtn, .cardbtn2 {
-	text-align: center;
-	font-size: 12px;
-	border: 0px;
-	margin-right: auto;
-}
-
-.cardbtn2:hover, .cardbtn2:focus, .cardbtn2:active {
-	background: #69c6ba;
-	color: white;
-}
-
-.selectCard {
-	background-color: rgba(255, 255, 255, 0.7);
-	color: grey;
-	border-radius: 10px;
-}
-
-.cource {
-	padding: 10px;
-}
-
-/* 이미지 크기 고정하기 */
-.customImg {
-	width: 270px;
-	height: 180px;
-	object-fit: cover;
-}
-</style> -->
+	<link rel="stylesheet" href="assets/vendor/masterslider/style/masterslider.css">
+	<link rel="stylesheet" href="assets/vendor/masterslider/skins/black-1/style.css">
 </th:block>
 
 
 <th:block layout:fragment="content">
 <main>
-	<section class="bg-shade-primary text-white">
-	    <div class="container pt-11 pt-lg-15 pb-7">
-	        <h2 class="display-3 mb-0">Theme Purple</h2>
-	    </div>
+	<!--page-hero-master-slider-->
+	<section class="position-relative overflow-hidden">
+
+		<!--Slider divider-->
+		<svg class="position-absolute start-0 bottom-0 z-index-1 text-white" preserveAspectRatio="none"
+			width="100%" height="80" viewBox="0 0 1529 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M1529 -3.57628e-06L1401.58 31.924C1274.17 63.8481 1019.33 140.293 764.5 140.293C509.667 140.293 187.833 47.9916 127.417 31.924C67 15.8564 0 -3.57628e-06 0 -3.57628e-06V180H1529V-3.57628e-06Z"
+				fill="currentColor"></path>
+		</svg>
+		<div class="ms-skin-black-1 master-slider" id="masterslider">
+			<!--slide-1-->
+			<div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
+				<img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
+					data-src="assets/img/backgrounds/bg7.jpg" />
+
+				<!--Layer-->
+				<div class="ms-layer position-absolute start-0 top-0 end-0 bottom-0 w-100 h-100"
+					data-effect="fade" data-duration="1200" data-delay="200" data-hide-effect="fade"
+					data-offset-x="0" data-height="100%" data-width="100%" data-offset-y="0"
+					data-position="left">
+					<svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
+						width="565" height="565" viewBox="0 0 565 565" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<g filter="url(#filter0_layer01)">
+							<circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
+						</g>
+						<defs>
+							<filter id="filter0_layer01" x="0" y="0" width="565" height="565"
+								filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+								<feFlood flood-opacity="0" result="BackgroundImageFix" />
+								<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix"
+									result="shape" />
+								<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
+							</filter>
+						</defs>
+					</svg>
+
+				</div>
+
+				<!--Layer-->
+				<div class="ms-layer ms-title fw-semibold text-white" data-effect="front(800)"
+					data-duration="1200" data-delay="600" data-ease="easeInOutCubic"
+					data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
+					data-position="center" data-masked="false">
+					<div class="text-center">여기에<br>추천코스</div>
+				</div>
+
+				<!--Layer-->
+				<a href="#" class="ms-layer ms-btn" data-effect="front(800)" data-duration="1200"
+					data-delay="800" data-ease="easeInOutCubic" data-hide-effect="top(long,false)"
+					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
+					data-masked="false"><span class="btn btn-lg btn-primary btn-sm">보러가기</span>
+				</a>
+			</div>
+			<!--slide-2-->
+			<div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
+				<!--bg-->
+				<img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
+					data-src="assets/img/backgrounds/bg3.jpg" />
+
+				<!--Layer-->
+				<div class="ms-layer position-absolute w-100 h-100" data-effect="fade" data-duration="1200"
+					data-delay="200" data-hide-effect="fade" data-offset-x="0" data-height="auto"
+					data-width="auto" data-offset-y="0" data-position="center">
+					<svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
+						width="565" height="565" viewBox="0 0 565 565" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<g filter="url(#filter0_layer02)">
+							<circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
+						</g>
+						<defs>
+							<filter id="filter0_layer02" x="0" y="0" width="565" height="565"
+								filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+								<feFlood flood-opacity="0" result="BackgroundImageFix" />
+								<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix"
+									result="shape" />
+								<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
+							</filter>
+						</defs>
+					</svg>
+
+				</div>
+
+				<!--Layer-->
+				<div class="ms-layer ms-title fw-semibold text-center text-white"
+					data-effect="skewbottom(-10,150)" data-duration="1000" data-delay="600"
+					data-ease="easeInOutCubic" data-hide-effect="top(long,false)" data-offset-x="0"
+					data-offset-y="-60" data-origin="mc" data-position="center" data-masked="false">
+					<div>여기에<br>추천코스</div>
+				</div>
+				<!--Layer-->
+				<a href="#" class="ms-layer ms-btn" data-effect="skewbottom(-10,150)" data-duration="1000"
+					data-delay="900" data-ease="easeInOutCubic" data-hide-effect="top(long,false)"
+					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
+					data-masked="false">
+					<span class="btn btn-lg btn-primary btn-sm">보러가기</span>
+				</a>
+			</div>
+			<!--slide-3-->
+			<div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
+				<!--bg-->
+				<img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
+					data-src="assets/img/backgrounds/bg5.jpg" />
+
+				<!--Layer-->
+				<div class="ms-layer position-absolute w-100 h-100" data-effect="fade" data-duration="1200"
+					data-delay="200" data-hide-effect="fade" data-offset-x="0" data-height="auto"
+					data-width="auto" data-offset-y="0" data-position="center">
+					<svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
+						width="565" height="565" viewBox="0 0 565 565" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<g filter="url(#filter0_layer03)">
+							<circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
+						</g>
+						<defs>
+							<filter id="filter0_layer03" x="0" y="0" width="565" height="565"
+								filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+								<feFlood flood-opacity="0" result="BackgroundImageFix" />
+								<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix"
+									result="shape" />
+								<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
+							</filter>
+						</defs>
+					</svg>
+
+				</div>
+
+				<!--Layer-->
+				<!--Layer-->
+				<div class="ms-layer text-center ms-title fw-semibold text-white" data-effect="skewleft(23,500)"
+					data-duration="1000" data-delay="900" data-ease="easeInOutSine"
+					data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
+					data-position="center" data-masked="false">
+					<div>여기에<br>추천코스</div>
+				</div>
+
+				<!--Layer-->
+				<a href="#" class="ms-layer ms-btn" data-effect="skewleft(23,500)" data-duration="1000"
+					data-delay="1200" data-ease="easeInOutSine" data-hide-effect="top(long,false)"
+					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
+					data-masked="false"><span class="btn btn-lg btn-primary btn-sm">보러가기</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="position-relative" id="next">
+		<div class="container pt-7 pt-lg-12">
+			<div class="row mb-5 mb-lg-9 justify-content-between align-items-end">
+				<div class="col-lg-7 mx-auto text-center">
+					<h2 class="display-4 mb-0" data-aos="fade-up">직접 코스를 만들어 보세요!
+					</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="position-relative pb-lg-7 overflow-hidden mt-5">
+		<div class="container pb-7 pt-7 pt-lg-0 z-index-1">
+			<div class="row align-items-center justify-content-between">
+				<div class="order-last order-lg-1 col-lg-5">
+					<h2 class="mb-4 display-4" data-aos="fade-right">Everything you need to build a stunning
+						website
+					</h2>
+					<p class="mb-5" data-aos="fade-up">
+						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
+						industries for previewing layouts and visual mockups.
+					</p>
+					<div class="row">
+						<div class="col-sm-6">
+							<ul class="list-unstyled d-flex flex-column mb-0">
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Mobile friendly
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Latest bootstrap 5
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Modern & elegant
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Reusable components
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6">
+							<ul class="list-unstyled d-flex flex-column mb-0">
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Infinite features
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										beautiful designs
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Well coded
+									</div>
+								</li>
+								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+									<i
+										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
+									<div class="flex-grow-1">
+										Free lifetime updates
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="mt-5" data-aos="fade-up" data-aos-delay="250">
+						<a href="#!" class="btn btn-primary">
+							Learn more <i class="bi bi-arrow-right-short fs-4 align-middle lh-1 ms-1"></i>
+						</a>
+					</div>
+
+				</div>
+				<div class="col-lg-6 col-md-10 ms-lg-auto order-1 order-lg-last mb-6 mb-lg-0">
+					<div class="position-relative position-absolute-lg w-lg-45 end-0 top-0" data-aos="fade-left"
+						data-aos-delay="150">
+						<img src="assets/img/800x732/1.jpg" alt=""
+							class="img-fluid position-relative shadow-lg">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="position-relative text-white overflow-hidden">
+		<div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
+		<div class="container position-relative z-index-1 pt-7 pt-lg-12">
+			<div class="row mb-7 align-items-end">
+				<div class="col-lg-9 mb-5 mb-lg-0">
+					<h2 class="mb-3 display-4" data-aos="fade-right">인기 코스</h2>
+					<p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
+						Our work speaks for itself
+					</p>
+				</div>
+				<div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
+					<a href="#!" class="link-hover-underline h6">
+						View all case studies <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="container pb-7 pb-lg-12">
+			<div class="row">
+				<div class="col-12 position-relative">
+
+					<!--Projects swiper slider-->
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="swiper-wrapper">
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/2.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/3.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/4.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/5.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+
+							<!--Swiper-slide-->
+							<div class="swiper-slide">
+								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+									<img src="assets/img/projects/7.jpg" alt="" class="img-fluid img-zoom">
+									<div class="card-overlay p-4 d-flex align-items-end text-white">
+										<ul class="list-unstyled overlay-items">
+											<li>
+												<h5 class="mb-2">Awesome title</h5>
+											</li>
+											<li><span>Awesome Subtitle</span></li>
+										</ul>
+									</div>
+								</a>
+							</div>
+						</div>
+						<!-- Swiper Navigation buttons (Remove it or Keep it) -->
+						<div class="position-relative d-flex justify-content-end pt-5 align-items-center">
+							<!--Buttons navigation-->
+							<div
+								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-3 me-2 bg-primary text-white">
+							</div>
+							<div
+								class="swiper3-button-next swiper-button-next mt-0 position-static rounded-3 bg-primary text-white">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="position-relative" id="next">
+		<div class="container pt-7 pt-lg-12">
+			<div class="row mb-5 mb-lg-9 justify-content-between align-items-end">
+				<div class="col-lg-7 mx-auto text-center">
+					<h2 class="display-4 mb-0" data-aos="fade-up">커플이신가요?
+					</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="position-relative bg-white overflow-hidden">
+		<!--content-->
+		<div class="container pb-7 pb-lg-12 position-relative">
+			<div class="row align-items-center justify-content-lg-around">
+				<div class="col-lg-6 order-last order-lg-1">
+					<div class="mb-3" data-aos="fade-up">
+						<h6 class="mb-3 text-muted">Focus on whats important</h6>
+					</div>
+					<h1 class="mb-4 display-4" data-aos="fade-up" data-aos-delay="100">Let us handle your
+						business online</h1>
+					<p class="mb-5 w-lg-80" data-aos="fade-up" data-aos-delay="150">
+						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
+						industries for layouts and visual mockups.
+					</p>
+					<div class="position-relative z-index-1">
+						<!--Feature icon card-->
+						<div class="d-flex mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="150">
+							<!--Feature icon-->
+							<div class="me-4">
+								<div
+									class="size-25 text-success bg-tint-success rounded-circle position-relative center-both">
+									<!--Icon-->
+									<i class="bi bi-check position-relative fs-5"></i>
+								</div>
+							</div>
+
+							<!--Feature text-->
+							<div>
+								<h5>
+									500+ Reusable components
+								</h5>
+								<p class="mb-0 w-lg-85">
+									Purus faucibus pulvinar elementum nulla pharetra diam sit
+									amet.
+								</p>
+							</div>
+						</div>
+						<!--Feature icon card-->
+						<div class="d-flex mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="200">
+							<!--Feature icon-->
+							<div class="me-4">
+								<div
+									class="size-25 text-success bg-tint-success rounded-circle position-relative center-both">
+									<!--Icon-->
+									<i class="bi bi-check position-relative fs-5"></i>
+								</div>
+							</div>
+
+							<!--Feature text-->
+							<div>
+								<h5>
+									Beautifully designed layouts
+								</h5>
+								<p class="mb-0 w-lg-85">
+									Viverra accumsan mauris rhoncus aenean vel elit
+									scelerisque mauris.
+								</p>
+							</div>
+						</div>
+						<!--Feature icon card-->
+						<div class="d-flex bg-white" data-aos="fade-up" data-aos-delay="250">
+							<!--Feature icon-->
+							<div class="me-4">
+								<div
+									class="size-25 text-success bg-tint-success rounded-circle position-relative center-both">
+									<!--Icon-->
+									<i class="bi bi-check position-relative fs-5"></i>
+								</div>
+							</div>
+
+							<!--Feature text-->
+							<div>
+								<h5>
+									Clean & well coded
+								</h5>
+								<p class="mb-0 w-lg-85">
+									Leo vel fringilla nulla etiam. Eget lorem dolor
+									sed viverra ipsum.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 order-1 order-lg-last mb-5 mb-lg-0" data-aos="fade-right">
+					<div class="position-relative  pe-4 pb-4">
+						<!--Pattern vector-->
+						<img src="assets/img/vectors/pattern-dots.svg" alt=""
+							class="position-absolute end-0 bottom-0 width-70 h-auto fill-warning"
+							data-inject-svg>
+						<!--Feature image-->
+						<img src="assets/img/900x1000/1.jpg" alt=""
+							class="img-fluid flip-x position-relative shadow-lg">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="position-relative bg-light">
+		<div class="container px-lg-12 pt-9 pb-5 position-relative z-index-1">
+			<div class="mb-5 px-lg-12 text-center" data-aos="fade-up" data-aos-delay="100">
+				<h5 class="mb-0">Hate is always foolish, but Love is always wise.</h5>
+			</div>
+		</div>
 	</section>
 </main>
 </th:block>
 <!-- .main-content -->
 
 <th:block layout:fragment="script">
-	<!-- <script>
-		$(function() {
-
-			var tag = " ";
-			let address;
-
-			$(".tagOn").on("click", function() {
-				var tagId = $(this).text();
-				console.log(tagId);
-				tag += tagId + " ";
-				$(".insertcustomOne").attr("value", tag);
-			});/* tcustom click 이벤트 */
-
-			// Slick Carousel 카드 옆 이미지 변환
-			$('.tm-slideshow').slick({
-				infinite : true,
-				arrows : true,
-				slidesToShow : 1,
-				slidesToScroll : 1
-			});
-
-			// 지역 swiper 버튼
-			var mySwiper = new Swiper('.swiper-container', {
-				slidesPerView : 7,
-				slidesPerGroup : 7,
-				observer : true,
-				observeParents : true,
-				spaceBetween : 24,
-				navigation : {
-					nextEl : '.swiper-button-next',
-					prevEl : '.swiper-button-prev',
-				},
-				breakpoints : {
-					1280 : {
-						slidesPerView : 3,
-						slidesPerGroup : 3,
-					},
-					720 : {
-						slidesPerView : 1,
-						slidesPerGroup : 1,
-					}
-				}
-			}); /* swiper 끝 */
-			
-			$(".region").on("click",function(){
-				address = $(this).text();
-				let regionBtn = $(this);
-				$.ajax({
-					url:"/search/" + address,
-					method:"get",
-					success:function(data){
-						let dropdownItem = $('<list />'); /* 임시 */
-						let list = '';
-						console.log(data)
-						for(row of data){
-							list = $("<a />")
-								.addClass("dropdown-item addressSec")
-								/* .css("z-index", "9999") */
-								.click(findAddrSec)
-								.text(row.addressSec);
-							console.log(list)
-							$(dropdownItem).append(list);
-						}
-						$(regionBtn).next().html(dropdownItem);
-						// <a class="dropdown-item adressSec" href="#"></a> 
-						console.log($(regionBtn).next());
-						console.log(data);
-					}
-					
-				}); /* region ajax */
-				
-			}); /* onclick */
-			
-			// 숨겨진 코스
-			let moreCourse = $(".moreCourse");
-			$(moreCourse).hide();
-
-			// 더보기 , 접기
-			$("#regToggle").click(function () {
-				$(moreCourse).slideToggle(500);
-				if ($(this).text() == '더보기') {
-					$(this).text('접기');
-				} else {
-					$(this).text('더보기');
-				}
-			});
-			
-			var placeList = [26,21,24];
-			var sendList = "";
-			for(let i=0; i<placeList.length; i++) {
-				sendList += placeList[i];
-				sendList += ","
-			}
-			sendList = sendList.substr(0, sendList.length-1);
-			 $.ajax({
-				 url: "/search/?list=" + sendList,
-				 method:"get",
-				 dataType:"json",
-				 success:function(result){
-					 console.log(result)
-				 }
-			 })
-			
-			
-			
-			
-			
-		});/* script function 끝! */
-		
-		function findAddrSec(){
-			address= $(this).closest(".dropdown-menu").prev().text();
-			let detailAddr = $(this).text();
-		    $.ajax({
-		    	url:"/search/" + address +"/" + detailAddr,
-		    	method:"get",
-		    	success:function(data){
-		    		console.log(data);
-		    	}
-		    })/* ajax */
-		};/* findAddrSec */
-		
-		
-	</script> -->
+	<script src="assets/vendor/jquery/jquery.easing.min.js"></script>
+    <script src="assets/vendor/masterslider/masterslider.min.js"></script>
+	<script>
+		var slider = new MasterSlider();
+		slider.setup('masterslider', {
+			width: 1140,
+			height: 660,
+			minHeight: 400,
+			space: 0,
+			start: 1,
+			grabCursor: false,
+			layout: "fullwidth",
+			wheel: false,
+			autoplay: true,
+			instantStartLayers: true,
+			loop: true,
+			view: "basic",
+			instantStartLayers: true,
+		});
+		slider.control('arrows');
+	</script>
 </th:block>
 </html>
