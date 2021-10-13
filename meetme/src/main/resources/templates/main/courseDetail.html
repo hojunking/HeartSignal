@@ -1,130 +1,194 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
 <th:block layout:fragment="css">
-	<style>
-.cusBtn,.btn {
-	font-size: 13px;
-	font-weight: bold;
-	padding: 10px;
-}
 
-.CourseExp {
-	text-align: center;
-	font-size: 15px;
-	color: #69c6ba;
-}
-.btn-primary.focus,.btn-primary:focus {
-    color: #fff;
-    background-color:#69c6ba;
-    border-color:#69c6ba;
-}
-.detailCard{
-	padding-top:20px;
-}
-.regionFont{
-	text-align:center;
-}
-</style>
+
 </th:block>
 <th:block layout:fragment="content">
-	<div class="tm-page-wrap mx-auto">
-		<section class="tm-banner">
-			<div class="tm-container-outer">
-				<div class="container">
-					<br>
-					<h2>코스 상세보기</h2>
-					<div class="row tm-banner-row detailCard" 
-						id="tm-section-search">
-						<img src="img/tm-img-01.jpg" alt="Image">
-						<!-- 지도 -->
-					</div>
-					<br>
-					<!-- <div class="CourseExp" th:value="${detail.courseOrder}"></div> -->
+	<section id="page-header" class="position-relative bg-shade-primary text-white overflow-hidden">
+		<!--blob shape-->
+		<svg class="position-absolute end-0 bottom-0 w-50 w-lg-40 h-auto text-primary" width="616" height="464"
+			viewBox="0 0 616 464" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path fill-rule="evenodd" clip-rule="evenodd"
+				d="M529.02 0.372621C648.093 -8.86796 677.569 156.046 749.056 240.707C795.671 295.913 839.498 347.565 874.249 409.222C915.961 483.231 978.111 552.938 971.515 635.414C964.041 728.876 936.16 850.497 836.419 882.264C730.359 916.045 640.668 790.168 529.02 776.349C443.047 765.708 360.497 838.142 278.401 813.198C186.892 785.395 118.893 715.022 75.5428 638.567C27.1616 553.239 -34.224 443.94 23.1986 363.109C82.8766 279.102 248.222 335.31 335.376 272.811C431.969 203.541 405.102 9.98913 529.02 0.372621Z"
+				fill="currentColor" />
+		</svg>
+		<!--blob shape-->
+		<svg class="position-absolute end-0 bottom-0 w-50 mb-n4 mb-lg-n7 me-n7 h-auto text-white" width="616"
+			height="464" viewBox="0 0 616 464" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path fill-rule="evenodd" clip-rule="evenodd"
+				d="M529.02 0.372621C648.093 -8.86796 677.569 156.046 749.056 240.707C795.671 295.913 839.498 347.565 874.249 409.222C915.961 483.231 978.111 552.938 971.515 635.414C964.041 728.876 936.16 850.497 836.419 882.264C730.359 916.045 640.668 790.168 529.02 776.349C443.047 765.708 360.497 838.142 278.401 813.198C186.892 785.395 118.893 715.022 75.5428 638.567C27.1616 553.239 -34.224 443.94 23.1986 363.109C82.8766 279.102 248.222 335.31 335.376 272.811C431.969 203.541 405.102 9.98913 529.02 0.372621Z"
+				fill="currentColor" />
+		</svg>
+		<div class="container pt-11 pb-9 z-index-1 position-relative">
+			<div class="row pb-lg-12 pb-7 pt-lg-7 justify-content-between align-items-end">
+				<div class="col-lg-10 col-xl-8 mb-4 mb-md-0">
+					<h6 class="mb-3 mb-lg-4 text-primary" th:text=${detail[0].nickname}>Heartsignal
+					</h6>
+					<h1 class="mb-4 display-2" th:text="${detail[0].courseName}">courseName</h1>
 				</div>
 			</div>
-		</section>
-		<br><br>
-		<section class="p-5 tm-container-outer">
-			<div class="container">
-			<!-- th:value="${detail.courseName}" -->
-			
-			<h3 class="regionFont" th:text="${detail[0].courseName}">not working</h3>
-			
-			<!-- <h6 class="regionFont" >위치 : 경상북도, 경주시</h6> -->
-				<div class="row tm-banner-row detailCard">
-					<!-- tab-pane -->
-					<div class="tab-pane fade show active">
-						<th:block th:each="c: ${#numbers.sequence(0, detail.size-1)}">
-							<!-- Current Active Tab WITH "show active" classes in DIV tag -->
-							<div class="tm-recommended-place-wrap">
-								<div class="tm-recommended-place">
-									<img src="img/tm-img-06.jpg" alt="Image"
-										class="img-fluid tm-recommended-img">
-									<div class="tm-recommended-description-box">
-										<br>
-										<h3 class="tm-recommended-title"
-											th:text="${detail[c].placeName}"></h3>
-										<!-- 코스 -->
-										<br>
-										<p class="tm-text-highlight" th:text="${detail[c].region}"
-											style="font-size: 15px;"></p>
-										<p class="tm-text-gray"></p>
-									</div>
-									<!-- <a href="#" class="tm-recommended-price-box"> -->
-									<div class="tm-recommended-price-box">
-										<p class="tm-recommended-price-link" style="font-size: 15px;">평균
-											비용</p>
-										<p class="tm-recommended-price"
-											th:text="'₩ '+${detail[c].avgCost}" style="font-size: 20px;"></p>
-									</div>
-									<!-- </a> -->
-								</div>
-							</div>
+		</div>
+	</section>
+	<!--/.Page-header-->
+
+	<section class="position-relative hr-linear-bottom bg-white">
+		<div class="container pb-7">
+			<div class="row">
+				<div class="col-12">
+					<div class="position-relative">
+						<img src="assets/img/vectors/pattern-dots.svg" data-inject-svg alt=""
+							class="width-60 h-auto position-absolute start-0 bottom-0 fill-primary ms-n4 mb-n4">
+						<!-- <img src="assets/img/projects/case1.jpg" alt=""
+							class="img-fluid mt-lg-n12 mt-n7 position-relative"> -->
+						<div id="map" class="mt-lg-n12 mt-n7 position-relative" style="width:100%; max-width: 1920px; max-height:1080px"></div>
 					</div>
-					<!-- tab-pane -->
 				</div>
-				<div style="text-align:center">
-					<button class="cusBtn btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">스크랩하기</button>
-					<button class="cusBtn btn btn-primary">수정하기</button>
-				</div>
-				<!-- 버튼 끝 -->
-				
-				<!-- The Modal -->
-					<div class="modal" id="myModal">
-						<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-							<div class="modal-content">
-								<!-- Modal Header -->
-								<div class="modal-header">
-									<h4 class="modal-title" style="color:#69c6ba;">스크랩 하시겠어요?</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-								</div>
+			</div>
+		</div>
+	</section>
+	<!--/section-->
 
-								<!-- Modal body -->
-								<div class="modal-body">스크랩한 코스는 '마이페이지 >나의 코스'에서 확인 할 수 있어요</div>
-
-								<!-- Modal footer -->
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary"
-										data-dismiss="modal">확인</button>
-									<button type="button" class="btn btn-primary"
-										data-dismiss="modal">취소</button>
-								</div>
-
-							</div>
+	<section class="position-relative">
+		<div class="container pb-7 pb-lg-12">
+			<div class="row">
+				<div class="col-lg-10 col-xl-9 mx-auto mb-5 mb-md-0">
+					<blockquote
+						class="blockquote ms-3 position-relative ps-5 ps-lg-9 border-start border-3 border-primary mb-7 mb-lg-12"
+						data-aos="fade-up">
+						<div class="d-flex position-absolute start-0 top-0 mt-4 ms-n4">
+							<img src="assets/img/avatar/4.jpg" alt="Image"
+								class="avatar lg shadow-lg rounded-pill p-1 bg-white">
 						</div>
-					</div> <!-- 모달 끝 -->
-				
+						<div class="ms-3">
+							<!--Quote icon-->
+							<img class="fill-primary opacity-20 width-25 h-auto mb-3"
+								src="assets/img/vectors/quote-sign.svg" alt="" data-inject-svg>
+							<p class="mb-4 fs-2 text-secondary lh-sm" th:text="${detail[0].placeName}">
+								placeName
+							</p>
+							<div>
+								<h6 class="mb-0">
+									Gunjan Sharma
+								</h6>
+								<small class="text-muted">Head of Marketing at Creative_DM</small>
+							</div>
+							<img src="assets/img/projects/case3.jpg" alt="Image" class="img-fluid mb-4 position-relative">
+						</div>
+					</blockquote>
+				</div>
 			</div>
-		</section>
-	</div>
-	<!-- 화면 끝 -->
-
+		</div>
+	</section>
 </th:block>
 <th:block layout:fragment="script">
+	 <!-- 네이버 지도 -->
+	 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
 	<script>
-		
+		$(function(){
+			let locations = [];
+			let centerLat = 0;
+			let centerLng = 0;
+			let markers = new Array(); // 마커 담는 배열 
+			let infoWindows = new Array(); //정보창을 담는 배열
+
+			let mapHeight = parseInt($('#map').css('width'))*0.51;
+
+			$('#map').css('height', mapHeight);
+			
+			$(window).resize(()=>{
+				$('#map').css('height', mapHeight);
+			});
+
+			let map = new naver.maps.Map('map', {
+				 center: new naver.maps.LatLng(centerLat, centerLng),
+				 zoom: 10
+			});
+		})
+
+
+
+		//코스 있으면 네이버지도에서 해주기!
+		// if (course != null) {
+		// 	for (let item of course) {
+		// 		let info = {
+		// 			place: item.placeName,
+		// 			lat: item.latitude,
+		// 			lng: item.longtitude
+		// 		}
+		// 		locations.push(info);
+		// 		centerLat += parseFloat(item.latitude);
+		// 		centerLng += parseFloat(item.longtitude);
+		// 	}
+		// 	console.log(centerLat, centerLng);
+		// 	centerLat = centerLat / course.length;
+		// 	centerLng = centerLng / course.length;
+		// 	console.log(locations);
+		// 	console.log(centerLat, centerLng);
+
+		// 	var map = new naver.maps.Map('map', {
+		// 		center: new naver.maps.LatLng(centerLat, centerLng),
+		// 		zoom: 10
+		// 	});
+
+
+		// 	var markerOptions = {
+		// 		map: map,
+		// 		icon: {
+		// 			url: "https://img.icons8.com/plasticine/100/000000/marker.png",
+		// 			size: new naver.maps.Size(50, 52),
+		// 			origin: new naver.maps.Point(0, 0),
+		// 			anchor: new naver.maps.Point(25, 26)
+		// 		}
+		// 	};
+
+		// 	for (var i = 0; i < locations.length; i++) {
+		// 		console.log();
+		// 		var marker = new naver.maps.Marker({
+		// 			map: map,
+		// 			title: locations[i].place,
+		// 			position: new naver.maps.LatLng(locations[i].lat, locations[i].lng),
+		// 			icon: {
+		// 				url: "https://img.icons8.com/officel/32/000000/place-marker--v2.png",
+		// 				size: new naver.maps.Size(50, 52),
+		// 				origin: new naver.maps.Point(0, 0),
+		// 				anchor: new naver.maps.Point(25, 26)
+		// 			}
+		// 		});
+
+
+
+		// 		//정보창
+		// 		var infoWindow = new naver.maps.InfoWindow({
+		// 			content: '<div style="width:200px; text-align:cneter;padding:10px"><b>' + locations[i]
+		// 				.place + '</b></div>'
+		// 		});
+
+		// 		markers.push(marker); //생성한 마커를 담는다
+		// 		infoWindows.push(infoWindow); //생성한 정보창을 담는다. 
+		// 	}
+
+		// 	function getClickHandler(seq) {
+
+		// 		return function (e) { //마커를 클릭하는 부분
+		// 			var marker = markers[seq],
+		// 				infoWindow = infoWindows[seq];
+
+		// 			if (infoWindow.getMap()) {
+		// 				infoWindow.close();
+		// 			} else {
+		// 				infoWindow.open(map, marker); //표출
+		// 			}
+
+		// 		}
+		// 	}
+
+		// 	for (var i = 0, ii = markers.length; i < ii; i++) {
+		// 		naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+		// 	}
+		// }
 	</script>
 </th:block>
+
 </html>

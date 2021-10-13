@@ -11,5 +11,6 @@ public class DetailVO {
 	private String avgCost;
 	private String thumbnailHref;
 	private String courseOrder;
+	private String nickname;
 
 }
