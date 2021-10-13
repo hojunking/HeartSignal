@@ -2,276 +2,76 @@
    layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="content">
-        <div class="mx-auto my-5">
-        <div class="container p-5">
-            <div class="row">
-                <div class="col-12 px-4">
-                    <h1 class="display-4">코스 만들기</h1>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <!-- 검색 창 -->
-                        <div class="col-12">
-                            <hr class="my-2">
-                        </div>
-                        <div class="col-10 px-4">
-                            <div class="form-control" @click="searched = false">
-                                <TagInput :allowCustom="true" tagBgColor="#f73e69" :customDelimiter="customDelimiter" v-model="tags" />
-                            </div>
-                        </div>
-                        <div class="col-2 my-auto">
-                            <button class="btn btn-rise btn-outline-primary m-2" @click="searchByTag()">
-                                <div class="btn-rise-bg bg-primary"></div>
-                                <div class="btn-rise-text">검색</div>
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <hr class="my-2">
-                        </div>
-                        <!-- 검색 전 -->
-                        <div v-if="!searched">
-                            <div class="col-12">
-                                <div v-if="loading" class="m-5">
-                                    <div class="text-center m-5">
-                                        <div class="fs-4 text-danger">태그를 로딩중입니다!</div>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                    </div>
-                                </div>
-                                <p v-if="error">
-                                    에러 발생했습니다!
-                                </p>
-                                <div v-if="!loading">
-                                    <span v-for="post of data" :key="post.id">
-                                        <button data-aos="flip-down" data-aos-duration="800" class="shadow-lg btn btn-primary btn-sm m-1" @click="pushTag(post.tagId)">#{{ post.tagId }}</button>
-                                    </span>
-                                    <div>
-                                        <h4 class="text-primary text-center my-5">태그를 입력해서 검색 해보세요!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+	<div class="container">
+       <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
+           <div class="carousel-inner">
+               <div class="carousel-item active">
+                   <img src="assets/img/800x600/1.jpg" class="img-fluid w-75 w-lg-60" alt="...">
 
-                        <!-- 검색 후 -->
-                        <div v-if="searched">
-                            <div class="col-12">
-                                <div v-if="loadingSearch" class="m-5">
-                                    <div class="text-center m-5">
-                                        <div class="fs-4 text-danger">결과를 로딩중입니다!</div>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                                        </span>
-                                    </div>
-                                </div>
-                                <p v-if="searchError">
-                                    에러 발생했습니다!
-                                </p>
-                                <div v-if="!loadingSearch" style="overflow:auto; height:40rem;">
-                                    <div v-for="result of searchData" :key="result.id" class="m-2">
-                                        <div data-aos="fade-up" data-aos-duration="800" class="shadow-lg p-3 mb-5 bg-body rounded">
-                                            <div class="row">
-                                                <!-- 이미지 들어갈곳 -->
-                                                <div class="col-3">
-                                                    <img :src="result.thumbnailHref" class="img-thumbnail" alt="result.placeName">
-                                                </div>
-                                                <!-- 장소 내용 -->
-                                                <div class="col-9">
-                                                    <h4>
-                                                        {{ result.placeName }}
-                                                        <!-- 장소 자세히 보기 -->
-                                                        <button class="btn btn-rise btn-outline-secondary m-2 btn-sm" 
-                                                        @click="detailOfPlace(result.placeName)" data-bs-toggle="modal" data-bs-target="#placeModal">
-                                                            <div class="btn-rise-bg bg-secondary"></div>
-                                                            <div class="btn-rise-text">자세히</div>
-                                                        </button>&nbsp;
-                                                        <!-- 장소 코스에 추가하기 -->
-                                                        <button class="btn btn-rise btn-outline-primary btn-sm" 
-                                                        @click="sendInsertCourse(result.placeName)">
-                                                            <div class="btn-rise-bg bg-primary"></div>
-                                                            <div class="btn-rise-text">추가하기</div>
-                                                        </button>
-                                                    </h4>
-                                                    <p v-if="result.address">{{ result.address }}</p>
-                                                    <p v-if="result.placePhone">{{ result.placePhone }}</p>
-                                                    <p v-if="result.description">{{ result.description }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 검색 후 끝 -->
-                    </div>
-                </div>
-                <!-- 코스 만들기 -->
-                <div class="col-lg-5">
-                    <div class="m-3">
-                        <!-- 디비에 저장된다. -->
-                        <div class="d-flex justify-content-between">
-                            <span class="fs-2 px-4">우리의 코스</span>
-                            <button class="btn btn-rise btn-outline-primary m-2"
-                             data-bs-toggle="modal" data-bs-target="#courseTitleModal"   
-                            >
-                                <div class="btn-rise-bg bg-primary"></div>
-                                <div class="btn-rise-text">코스등록</div>
-                            </button>
-                        </div>
-                        <draggable class="dragArea list-group w-full" :list="list" @change="changeChack">
-                            <div data-aos="fade-right" data-aos-duration="800" class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
-                                v-for="element in list"
-                                :key="element.name">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fs-5">{{ element.placeName }}</span>
-                                    <button type="button" class="btn-close btn-lg m-2" @click="deletePlaceInCourse(element.placeId)"
-                                    ></button>
-                                </div>
-                                <div>
-                                    <span class="text-muted mx-2">{{element.subTitle}}</span>
-                                    <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
-                                    data-bs-toggle="modal" data-bs-target="#replaceSubtitleModal"></a>
-                                </div>
-                                <img :src="element.thumbnailHref" class="img-thumbnail" :alt="element.placeName">
-                            </div>
-                        </draggable>
-                    </div>
-                </div>
-                <!-- 코스 만들기 끝 -->
-            </div>
-        </div>
-    </div>
-    
+                   <!--Carousel with caption start-->
+                   <div
+                       class="position-absolute start-0 top-0 w-100 h-100 w-lg-75 d-flex align-items-center justify-content-center justify-content-lg-end">
+                       <ul class="text-white list-unstyled carousel-layers mb-0">
+                           <li data-carousel-layer="fade-end">
+                               <h2 class="d-inline-block bg-primary px-2 py-3 lh-1 mb-0 fs-1">Feel the
+                                   difference</h2>
+                           </li>
+                           <li data-carousel-layer="fade-start">
+                               <p class="mb-0 d-inline-block bg-warning text-dark px-2 py-2 lh-1">This is
+                                   the best quality theme</p>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+               <div class="carousel-item">
+                   <img src="assets/img/800x600/2.jpg" class="img-fluid w-75 w-lg-60" alt="...">
 
-    <!-- Modal place Detail-->
-    <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="modalPlaceDetailLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalPlaceDetailLabel">{{ modalTitle }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div v-if="modalLoading || modalImagesLoading">
-                        <div class="text-center m-5">
-                            <div class="fs-4 text-danger">결과를 로딩중입니다!</div>
-                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                            </span>
-                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                            </span>
-                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
-                            </span>
-                        </div>
-                    </div>
-                    <div v-if="!(modalLoading && modalImagesLoading) == true">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img :src="modalData.thumbnailHref" class="d-block w-100" style="width: 32rem; height: 18rem;" alt="..." v-if="modalData != null">
-                                </div>
-                                <div class="carousel-item" v-for="image of modalImagesData" :key="image.id">
-                                    <img :src="image.thumbnail" style="width: 32rem; height: 18rem;" class="d-block w-100" alt="...">
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                        <div v-if="modalData != null">
-                            <span v-if="modalData.placeName">장소 : {{modalData.placeName}}</span><br>
-                            <span v-if="modalData.address">주소 : {{modalData.address}}</span><br>
-                            <span v-if="modalData.avgCost">평균 비용 : {{modalData.avgCost}}</span><br>
-                            <span v-if="modalData.description">설명 : {{modalData.description}}</span><br>
-                            <span v-if="modalData.placePhone">전화번호 : {{modalData.placePhone}}</span><br>
-                        </div>
-                        <!-- 지도 열어보자 -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- replaceSubtitle Modal -->
-    <div class="modal fade" id="replaceSubtitleModal" tabindex="-1" aria-labelledby="replaceSubtitleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="replaceSubtitleModalLabel">소제목 수정하기</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="replaceFormInput" class="form-label">원하시는 소제목을 적어주세요!</label>
-                        <input type="email" class="form-control" id="replaceFormInput" placeholder="저녁 코스 ㅎㅎ" v-model="replaceSubtitleText">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                    @click="changeSubTitle(replaceSubtitleOfPlaceId, replaceSubtitleText)">저장 후 닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Course title register Modal -->
-    <div class="modal fade" id="courseTitleModal" tabindex="-1" aria-labelledby="courseTitleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="courseTitleModalLabel">코스 이름 정하기</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="titleFormInput" class="form-label">마지막으로 코스 이름을 적어주세요!</label>
-                        <input type="email" class="form-control" id="titleFormInput" placeholder="멋진 데이트 코스!" v-model="titleText">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                    @click="registerCourse(titleText)">등록</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="fixed-bottom text-end p-5">   
-        <div class="btn-group dropup">
-            <button type="button" class="far fa-comments btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                채팅
-            </button>
-            <ul data-aos="zoom-in-up" data-aos-duration="800" class="dropdown-menu fs-6 aos-animate aos-init">
-                <div id="chatDiv" style="overflow:auto; width:17rem; height:20rem;">
-                    <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li>
-                            <small class="dropdown-item-text">
-                                <span data-aos="zoom-in-up" data-aos-duration="800" class="rounded shadow bg-primary text-white p-1 px-2">
-                                    {{ item.userName }}: {{ item.content }}
-                                </span> 
-                            </small>
-                        </li>
-                    </div>
-                </div>
-                <li><input class="form-control rounded-pill px-4" v-model="message" type="text" @keyup="sendMessage"></li>
-            </ul>
-        </div>
-    </div>
- 
+                   <!--Carousel with caption start-->
+                   <div
+                       class="position-absolute start-0 top-0 w-100 h-100 w-lg-75 d-flex align-items-center justify-content-center justify-content-lg-end">
+                       <ul class="text-white list-unstyled carousel-layers mb-0">
+                           <li data-carousel-layer="fade-end">
+                               <h2 class="d-inline-block bg-primary px-2 py-3 lh-1 mb-0 fs-1">Feel the
+                                   difference</h2>
+                           </li>
+                           <li data-carousel-layer="fade-start">
+                               <p class="mb-0 d-inline-block bg-warning text-dark px-2 py-2 lh-1">This is
+                                   the best quality theme</p>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+               <div class="carousel-item">
+                   <img src="assets/img/800x600/3.jpg" class="img-fluid w-75 w-lg-60" alt="...">
+                   <!--Carousel with caption start-->
+                   <div
+                       class="position-absolute start-0 top-0 w-100 h-100 w-lg-75 d-flex align-items-center justify-content-center justify-content-lg-end">
+                       <ul class="text-white list-unstyled carousel-layers mb-0">
+                           <li data-carousel-layer="fade-end">
+                               <h2 class="d-inline-block bg-primary px-2 py-3 lh-1 mb-0 fs-1">Feel the
+                                   difference</h2>
+                           </li>
+                           <li data-carousel-layer="fade-start">
+                               <p class="mb-0 d-inline-block bg-warning text-dark px-2 py-2 lh-1">This is
+                                   the best quality theme</p>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <button
+               class="carousel-control-prev size-40 bg-dark text-white rounded-bottom-end-3 top-50 translate-middle-y"
+               type="button" data-bs-target="#carouselExampleCaption" data-bs-slide="prev">
+               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Previous</span>
+           </button>
+           <button
+               class="carousel-control-next size-40 bg-dark text-white rounded-bottom-end-3 top-50 translate-middle-y"
+               type="button" data-bs-target="#carouselExampleCaption" data-bs-slide="next">
+               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Next</span>
+           </button>
+       </div>
+	</div>
 </th:block>
 </html>
