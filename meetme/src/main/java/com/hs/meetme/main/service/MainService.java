@@ -17,4 +17,7 @@ public interface MainService {
 	
 	public List<MainVO> regionCourse(); // 해당 지역 누르면 나오는 코스
 	
+	// ***********************************************
+	public List<MainVO> courseListReco(); // 코스 추천 리스트
+	
 }

@@ -49,4 +49,10 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.regionCourse();
 	}
 
+	@Override
+	public List<MainVO> courseListReco() {
+		// TODO Auto-generated method stub
+		return mainMapper.courseListReco();
+	}
+
 }
