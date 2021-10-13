@@ -13,6 +13,7 @@
 		ON(CL.IMG_ID = I.IMG_ID)
 		WHERE
 		CL.COUPLE_ID = #{coupleId}
+		ORDER BY LOG_UPDATED DESC
 		<!-- 커플 세션 들고와야 함 -->
 	</select>
 	
