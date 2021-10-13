@@ -9,5 +9,7 @@ public interface AccountMapper {
 	public AccountVO findByEmail(String email);
 	public int emailCheck(String email);
 	public int nicknameCheck(String nickname);
+	public int updatePwd(AccountVO vo);
+	public int phoneNumCheck(String phoneNum);
 	public void signUp(AccountVO vo);
 }

@@ -78,6 +78,20 @@ public class SecurityController {
 		}
 		return "security/login";
 	}
+	
+	@GetMapping("/findPwd")
+	public String findPwd() {
+		return "security/findPwd";
+	}
+	
+	@PostMapping("/updatePwd")
+	public String updatePwd(AccountVO vo) {
+		System.out.println("===============");
+		int result = accountService.updatePwd(vo);
+		System.out.println(result);
+		System.out.println("===============");
+		return "redirect:/login";
+	}
 
 	@GetMapping("/login")
 	public String login() {

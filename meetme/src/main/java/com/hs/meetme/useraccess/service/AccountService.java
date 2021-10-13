@@ -8,4 +8,6 @@ public interface AccountService extends UserDetailsService{
 	public void signUp(AccountVO vo);
 	public int emailCheck(String email);
 	public int nicknameCheck(String nickname);
+	public int phoneNumCheck(String phoneNum);
+	public int updatePwd(AccountVO vo);
 }
