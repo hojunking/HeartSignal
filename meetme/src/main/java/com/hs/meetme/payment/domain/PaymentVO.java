@@ -22,6 +22,7 @@ public class PaymentVO {
 	private String email;
 	private String userName;
 	private long cancelAmount;
+	private Date cancelDate;
 	//coupleId 확인
 	private int coupleId;
 	

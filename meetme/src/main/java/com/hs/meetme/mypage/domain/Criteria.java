@@ -9,6 +9,7 @@ public class Criteria {
   
   private String type;
   private String keyword;
+  
   private String category;
   private String userId;
   

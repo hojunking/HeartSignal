@@ -9,9 +9,13 @@ import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.payment.domain.PaymentVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 public interface MypageService {
+	
+	//결제내역 가져오기
+	public List<PaymentVO> readPayment(PaymentVO paymentVO);
 	
 	//내 취향 조회하기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);

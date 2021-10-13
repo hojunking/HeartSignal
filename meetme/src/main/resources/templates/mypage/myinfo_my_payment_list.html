@@ -115,7 +115,32 @@
                                             <div class="row align-items-center">
 									            <section class="position-relative">
 									                <div class="container py-3">
-									                    
+									                    <table class="table" id="payment">
+															<thead>
+													            <tr>
+													                <th>결제번호</th>
+													                <th>구독권</th>
+													                <th>결제금액</th>
+													                <th>환불금액</th>
+													                <th>처리상태</th>
+													                <th>결제일자</th>
+													                <th>환불일자</th>
+													            </tr>
+													        </thead>
+															<tbody>
+													          <th:block th:each="pinfo : ${payInfo}">
+													            <tr>
+													              <td th:text="${pinfo.merchantUid}"></td>
+													              <td th:text="${pinfo.subTerm}+'개월권'"></td>
+													              <td th:text="${pinfo.payCost}"></td>
+													              <td th:if="${pinfo.cancelAmount!=null}" th:text="${pinfo.cancelAmount}"></td>
+								                                  <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}"></td>
+													              <td th:text="${#dates.format(pinfo.payDate,'yyyy.MM.dd')}"></td>
+													              <td th:text="${#dates.format(pinfo.cancelDate,'yyyy.MM.dd')}"></td>
+													            </tr>
+													          </th:block>													          
+															</tbody>
+														</table>
 									                </div>
 									                <!--/.container-end-->
 									            </section>
@@ -140,4 +165,5 @@
     
   </script>
 </th:block>
+
 </html>

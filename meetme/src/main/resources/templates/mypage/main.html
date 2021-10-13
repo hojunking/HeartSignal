@@ -45,7 +45,7 @@
                                             <div>
                                                 <!--profile image-->
                                                 <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
-                                                    style="background-image: url(/assets/img/avatar/4.jpg);">
+                                                    th:style="'background-position: center center; background-image: url(/img/user/'+${userInfo.imgUrl}+');'">
                                                 </div>
                                                 <h4 class="mb-2">[[${userInfo.name}]]</h4>
                                                 <small class="d-block mb-3">[[${userInfo.nickName}]]</small>

@@ -23,6 +23,8 @@ import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.notice.mapper.NoticeMapper;
 import com.hs.meetme.notice.service.NoticeService;
+import com.hs.meetme.payment.domain.PaymentVO;
+import com.hs.meetme.payment.service.PaymentService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
 @Controller
@@ -142,12 +144,13 @@ public class MypageController {
 	
 	//결제 내역 보기
 	@GetMapping("/myinfo_my_payment_list")
-	public String myinfo_my_payment_list(Model model,MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+	public String myinfo_my_payment_list(Model model, MyPageUserInfoVO myPageUserInfoVO, PaymentVO paymentVO, HttpServletRequest request) {
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
 		
+		//유저정보 담기
 		myPageUserInfoVO.setUserId(userId);
 		
 		String myAddress=null;
@@ -157,9 +160,15 @@ public class MypageController {
 		myAddress = array[0]+" "+array[1];
 		}
 
+		//결제내역 담기
+		paymentVO.setUserId(Integer.valueOf(userId));
+		
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		
 		model.addAttribute("myAddress",myAddress);
+		
+		model.addAttribute("payInfo", mypageService.readPayment(paymentVO));
+		System.out.println(mypageService.readPayment(paymentVO));		
 		return "mypage/myinfo_my_payment_list";
 	}
 	

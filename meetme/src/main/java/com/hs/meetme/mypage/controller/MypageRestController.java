@@ -42,12 +42,12 @@ public class MypageRestController {
 	//수정하기 (이미지)
 	@PostMapping("/imgUpdate")
 	@Transactional
-	public boolean imgUpdate(Model model, MultipartFile excelFile, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo) {
+	public boolean imgUpdate(Model model, MultipartFile updateImage, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo) {
 		
 		int r = 0;
 		try {
 			String path = fileDir.getAbsolutePath() + "/user/";
-			MultipartFile file = excelFile;
+			MultipartFile file = updateImage;
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
 				UUID uuid = UUID.randomUUID();

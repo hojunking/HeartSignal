@@ -11,11 +11,15 @@ import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.payment.domain.PaymentVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 
 @Mapper
 public interface MypageMapper {
     
+	//결제 내역 가져오기
+	public List<PaymentVO> readPayment(PaymentVO paymentVO);
+	
 	//태그 다 가져오기
 	public List<UserTagsVO> getTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 가져 오기
