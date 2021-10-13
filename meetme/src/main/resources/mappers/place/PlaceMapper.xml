@@ -40,7 +40,7 @@
 		<foreach collection="keywords" item="arr" open="(" close=")" separator="or">
 			description like '%' || #{arr} || '%'
 		</foreach>
-		ORDER BY place_id
+		ORDER BY DBMS_RANDOM.RANDOM()
 	</select>
 	
 </mapper>

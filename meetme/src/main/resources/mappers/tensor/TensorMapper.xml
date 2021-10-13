@@ -5,7 +5,7 @@
 	<select id="createTensorData" resultType="com.hs.meetme.coursecreate.domain.TensorVO">
 		SELECT
 		    T.TAG_NUM "tagNum",
-		    UI.ADDRESS1 "address",
+		    UI.ADDRZONECODE "address",
 		    UI.BIRTH_YEAR "birthYear",
 		    SUM(CASE WHEN CO.COURSE_ORDER = 1 THEN CO.PLACE_ID END) "place1",
 		    SUM(CASE WHEN CO.COURSE_ORDER = 2 THEN CO.PLACE_ID END) "place2",
@@ -20,7 +20,7 @@
 			ON(UT.TAG_ID = T.TAG_ID)
 		GROUP BY 
 			T.TAG_NUM, 
-			UI.ADDRESS1,
+			UI.ADDRZONECODE,
 		    UI.BIRTH_YEAR, 
 		    C.USER_ID, 
 		    C.COURSE_ID
@@ -29,7 +29,7 @@
 	<select id="createTensorCauseData" resultType="com.hs.meetme.coursecreate.domain.TensorCauseVO">
 		SELECT
 		    T.TAG_NUM "tagNum",
-		    UI.ADDRESS1 "address",
+		    UI.ADDRZONECODE "address",
 		    UI.BIRTH_YEAR "birthYear"
 		FROM COURSE_ORDER CO JOIN COURSE C
 			ON(CO.COURSE_ID = C.COURSE_ID)
@@ -41,7 +41,7 @@
 			ON(UT.TAG_ID = T.TAG_ID)
 		GROUP BY 
 			T.TAG_NUM, 
-			UI.ADDRESS1,
+			UI.ADDRZONECODE,
 		    UI.BIRTH_YEAR, 
 		    C.USER_ID, 
 		    C.COURSE_ID
@@ -62,7 +62,7 @@
 			ON(UT.TAG_ID = T.TAG_ID)
 		GROUP BY 
 			T.TAG_NUM, 
-			UI.ADDRESS1,
+			UI.ADDRZONECODE,
 		    UI.BIRTH_YEAR, 
 		    C.USER_ID, 
 		    C.COURSE_ID
