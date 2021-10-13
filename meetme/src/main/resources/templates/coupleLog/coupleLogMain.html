@@ -45,6 +45,7 @@ img{
 						class="card-hover"> <!-- <img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
 						class="img-fluid img-zoom"> -->
 						<div class="overflow-hidden position-relative mb-4">
+						<!-- 오류시 기본 이미지 -->
 							<img
 								th:attr="src=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}, alt=${c.imgUrl}"
 								class="img-fluid img-zoom cusImg">
@@ -55,7 +56,7 @@ img{
 						<div class="fontCus">
 						<h5 class="mb-1" th:text="${c.logTitle}"></h5> 
 						<span class="text-muted"
-						data-splitting th:text="${c.logDate}"></span>
+						data-splitting th:text="${c.logUpdated}"></span>
 						</div>
 					</a>
 					<!-- A 태그 끝-->
