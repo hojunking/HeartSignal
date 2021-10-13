@@ -1,731 +1,818 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-	  <!--Flatpickr-->
-	  <link rel="stylesheet" href="/assets/vendor/flatpickr/flatpickr.min.css">
-	  <!-- Quill editor stylesheet -->
-	  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-	
-	  <!--File uploader-->
-	  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"/>
-	  <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
-	  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
-	  
-	  <style>
-	    .btn-space {
-	                margin-right: 5px;}
-	  </style>
+	<!--Flatpickr-->
+	<link rel="stylesheet" href="/assets/vendor/flatpickr/flatpickr.min.css">
+	<!-- Quill editor stylesheet -->
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+	<!--File uploader-->
+	<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+	<link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+	<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+		rel="stylesheet">
+
+	<style>
+		.btn-space {
+			margin-right: 5px;
+		}
+	</style>
 </th:block>
 
 <th:block layout:fragment="content">
-<!--Main content-->
-<main class="main-content" id="main-content">
-    <section class="position-relative bg-white">
-        <div class="container position-relative pt-3 pb-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <nav class="d-md-flex" aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item">
-                                <a href="#!">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active">
-                                Profile
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-            <!--/.row-->
+	<!--Main content-->
+	<main class="main-content" id="main-content">
+		<section class="position-relative bg-white">
+			<div class="container position-relative pt-3 pb-4">
+				<div class="row">
+					<div class="col-md-6">
+						<nav class="d-md-flex" aria-label="breadcrumb">
+							<ol class="breadcrumb mb-0">
+								<li class="breadcrumb-item">
+									<a href="#!">Home</a>
+								</li>
+								<li class="breadcrumb-item active">
+									Profile
+								</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+				<!--/.row-->
 
-        </div>
-    </section>
-    <section class="position-relative">
-                <div class="container position-relative">
-                    <div class="overflow-hidden">
-                        <!--Profile info header-->
-                        <div class="position-relative pb-7 pb-lg-12">
-                            <div class="row">
-                                <div class="col-lg-9 mx-auto">
-                                    <div class="pt-5 d-flex flex-column h-100">
-                                        <nav class="nav mb-5 nav-pills">
-                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
-                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
-                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo_my_payment_list" class="nav-link active"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
-                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
-                                        </nav>
-                                        <div class="card border-light p-3 mb-3">
-                                          <h5 class="mb-4">Edit profile</h5>
-                                            <div class="row align-items-center">
-                                                <div class="col-md-12">
-												    <div class="row pb-3 mb-3">
-														<label for="profileImage" class="col-sm-2 col-form-label">ProfileImage</label>
-														<div class="col-sm-10">
-														  <form method="POST" enctype="multipart/form-data" id="excelForm">
-                                                            <input type="file" class="size-190" name="excelFile" id="excelFile" accept="image/png, image/jpeg, image/gif">
-                                                          </form>
-                                                        <div class="col-sm-7" style="display: block;">
-                                                            <button class="btn btn-primary btn-sm" type="button" id="imageUpdateBtn">수정</button>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                          <form class="needs-validation" id="frm" name="frm" novalidate>
-					<div class="row pb-3 mb-3 border-bottom">
-						<label for="email" class="col-sm-2 col-form-label">Email</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="email" name="email" readonly="readonly" th:value="${userInfo.email}">
-						</div>
-					</div>
-					 <div class="row pb-3 mb-3">
-						<label for="pass1" class="col-sm-2 col-form-label">Password</label>
-						<div class="col-sm-10" id="u_password" style="display: none;">
-						  <div class="form-group">
-					        <input class="form-control pb-3 mb-3" placeholder="현재비밀번호" name="pass1" id="pass1" type="password">
-					        <div class="invalid-feedback" id="password_message1">
-			                  현재 비밀번호를 입력하세요.
-			                </div>
-			              </div>
-						  <div class="form-group">
-					        <input class="form-control pb-3 mb-3" placeholder="새 비밀번호" name="pass2" id="pass2" type="password">
-					        <input class="form-control pb-3 mb-3" placeholder="새 비밀번호 확인" name="pass3" id="pass3" type="password">
-					        <div class="invalid-feedback" id="password_message3">
-			                  8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합
-			                </div>
-			              </div>
-					        <button class="btn btn-danger btn-sm btn-space" id="password_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="password_reg" type="button">수정하기</button>
-						</div>
-						<div class="col-sm-7" style="display: block;">
-                          <button class="btn btn-primary btn-sm" type="button" id="passwordUpdateBtn">수정</button>
-                        </div>
-					</div>
-					
-					<div class="row pb-3 mb-3">
-						<label for="name" class="col-sm-2 col-form-label">Name</label>
-						<div class="col-sm-10">
-						  <input type="text" class="form-control" id="name" readonly="readonly" th:value="${userInfo.name}">
-						</div>
-					</div>
-				    
-				    <div class="row pb-3 mb-3">
-						<label for="nickName" class="col-sm-2 col-form-label">NickName</label>
-						<div class="col-sm-10">
-						  <input type="text" class="form-control pb-3 mb-3" id="nickName" readonly="readonly" th:value="${userInfo.nickName}">
-						    <div class="" id="u_nickName" style="display: none;">
-						       <div class="form-group" >
-						        <input class="form-control pb-3 mb-3" placeholder="새로운 닉네임" name="nick1" id="nick1" type="text">
-						        <div class="invalid-feedback" id="nickName_message">
-				                  닉네임을 입력해주세요.
-				                </div>
-				                <div class="">
-						          <button class="btn btn-danger btn-sm btn-space" id="nickName_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="nickName_reg" type="button">수정하기</button>
-						        </div>
-						       </div>
-						    </div>
-						  <div class="" style="display: block;">
-             			    <button class="btn btn-primary btn-sm" type="button" id="nickNameUpdateBtn">수정</button>
-                          </div>
-						</div>
-					</div>
-					
-				    <div class="row pb-3 mb-3">
-						<label for="phoneNum" class="col-sm-2 col-form-label">PhoneNumber</label>
-					    <div class="col-sm-7">
-					      <input type="text" class="form-control pb-3 mb-3" id="phoneNum" readonly="readonly" th:value="${userInfo.phoneNum}">
-					      <div class="" style="display: block;">
-             			    <button class="btn btn-danger btn-sm" type="button" id="phoneNumUpdateBtn">수정</button>
-                          </div>
-					    </div>
-					</div>
-					
-					 <div class="row pb-3 mb-3">
-						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
-					    <div class="col-sm-10">
-					        <input type="text" style="width:100px;" class="form-control pb-3 mb-3" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
-					        <input type="text" class="form-control pb-3 mb-3" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
-					      
-					    <div class="" id="u_address" style="display: none;"> 
-					        <input class="form-control pb-3 mb-3" style="width:100px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
-					        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="bi bi-search me-2 align-middle text-muted"></i>우편번호 찾기</button>                               
-					        <input class="form-control pb-3 mb-3" placeholder="도로명 및 지번 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
-					        <input class="form-control pb-3 mb-3" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
-					      <div class="">
-					        <button class="btn btn-danger btn-sm btn-space" id="address_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="address_reg" type="button" >수정하기</button>
-					      </div>
-			            </div>
-			            
-					      <div class="" style="display: block;">
-             			    <button class="btn btn-primary btn-sm" type="button" id="addrUpdateBtn">수정</button>
-                          </div>
-					    </div>
-					</div>
-                                              </div>
-                                          </form>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>                                          
-</main>
+			</div>
+		</section>
+		<section class="position-relative">
+			<div class="container position-relative">
+				<div class="overflow-hidden">
+					<!--Profile info header-->
+					<div class="position-relative pb-7 pb-lg-12">
+						<div class="row">
+							<div class="col-lg-9 mx-auto">
+								<div class="pt-5 d-flex flex-column h-100">
+									<nav class="nav mb-5 nav-pills">
+										<a href="main" class="nav-link"><i
+												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+										<a href="myinfo_my_course_list" class="nav-link"><i
+												class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+										<a href="myinfo_my_write_list" class="nav-link"><i
+												class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+										<a href="myinfo_my_comment_list" class="nav-link"><i
+												class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+										<a href="myinfo_my_payment_list" class="nav-link active"><i
+												class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+										<a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보
+											수정</a>
+									</nav>
+									<div class="card border-light p-3 mb-3">
+										<h5 class="mb-4">Edit profile</h5>
+										<div class="row align-items-center">
+											<div class="col-md-12">
+												<div class="row pb-3 mb-3">
+													<label for="profileImage"
+														class="col-sm-2 col-form-label">ProfileImage</label>
+													<div class="col-sm-10">
+														<form method="POST" enctype="multipart/form-data"
+															id="excelForm">
+															<input type="file" class="size-190" name="excelFile"
+																id="excelFile"
+																accept="image/png, image/jpeg, image/gif">
+														</form>
+														<div class="col-sm-7" style="display: block;">
+															<button class="btn btn-primary btn-sm" type="button"
+																id="imageUpdateBtn">수정</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<form class="needs-validation" id="frm" name="frm" novalidate>
+												<div class="row pb-3 mb-3 border-bottom">
+													<label for="email" class="col-sm-2 col-form-label">Email</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control" id="email" name="email"
+															readonly="readonly" th:value="${userInfo.email}">
+													</div>
+												</div>
+												<div class="row pb-3 mb-3">
+													<label for="pass1" class="col-sm-2 col-form-label">Password</label>
+													<div class="col-sm-10" id="u_password" style="display: none;">
+														<div class="form-group">
+															<input class="form-control pb-3 mb-3" placeholder="현재비밀번호"
+																name="pass1" id="pass1" type="password">
+															<div class="invalid-feedback" id="password_message1">
+																현재 비밀번호를 입력하세요.
+															</div>
+														</div>
+														<div class="form-group">
+															<input class="form-control pb-3 mb-3" placeholder="새 비밀번호"
+																name="pass2" id="pass2" type="password">
+															<input class="form-control pb-3 mb-3"
+																placeholder="새 비밀번호 확인" name="pass3" id="pass3"
+																type="password">
+															<div class="invalid-feedback" id="password_message3">
+																8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합
+															</div>
+														</div>
+														<button class="btn btn-danger btn-sm btn-space"
+															id="password_cncl" type="button">수정취소</button><button
+															class="btn btn-primary btn-sm" id="password_reg"
+															type="button">수정하기</button>
+													</div>
+													<div class="col-sm-7" style="display: block;">
+														<button class="btn btn-primary btn-sm" type="button"
+															id="passwordUpdateBtn">수정</button>
+													</div>
+												</div>
 
-  <div class="tm-page-wrap mx-auto">
-    <section class="p-5 tm-container-outer tm-bg-white">
-      	<div class="container">
-		  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-		    <span class="link-dark fs-4">회원정보</span>
-		  </div>
-		  
-		  <div class="row pb-3 mb-3">
-			<div class="col-sm-9">
-				<form class="needs-validation" id="frm" name="frm" novalidate>
-				
-					<div class="row pb-3 mb-3 border-bottom">
-						<label for="email" class="col-sm-2 col-form-label">Email</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="email" name="email" readonly="readonly" th:value="${userInfo.email}">
+												<div class="row pb-3 mb-3">
+													<label for="name" class="col-sm-2 col-form-label">Name</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control" id="name"
+															readonly="readonly" th:value="${userInfo.name}">
+													</div>
+												</div>
+
+												<div class="row pb-3 mb-3">
+													<label for="nickName"
+														class="col-sm-2 col-form-label">NickName</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control pb-3 mb-3" id="nickName"
+															readonly="readonly" th:value="${userInfo.nickName}">
+														<div class="" id="u_nickName" style="display: none;">
+															<div class="form-group">
+																<input class="form-control pb-3 mb-3"
+																	placeholder="새로운 닉네임" name="nick1" id="nick1"
+																	type="text">
+																<div class="invalid-feedback" id="nickName_message">
+																	닉네임을 입력해주세요.
+																</div>
+																<div class="">
+																	<button class="btn btn-danger btn-sm btn-space"
+																		id="nickName_cncl"
+																		type="button">수정취소</button><button
+																		class="btn btn-primary btn-sm" id="nickName_reg"
+																		type="button">수정하기</button>
+																</div>
+															</div>
+														</div>
+														<div class="" style="display: block;">
+															<button class="btn btn-primary btn-sm" type="button"
+																id="nickNameUpdateBtn">수정</button>
+														</div>
+													</div>
+												</div>
+
+												<div class="row pb-3 mb-3">
+													<label for="phoneNum"
+														class="col-sm-2 col-form-label">PhoneNumber</label>
+													<div class="col-sm-7">
+														<input type="text" class="form-control pb-3 mb-3" id="phoneNum"
+															readonly="readonly" th:value="${userInfo.phoneNum}">
+														<div class="" style="display: block;">
+															<button class="btn btn-danger btn-sm" type="button"
+																id="phoneNumUpdateBtn">수정</button>
+														</div>
+													</div>
+												</div>
+
+												<div class="row pb-3 mb-3">
+													<label for="pass1" class="col-sm-2 col-form-label">Address</label>
+													<div class="col-sm-10">
+														<input type="text" style="width:100px;"
+															class="form-control pb-3 mb-3" name="address1" id="address1"
+															readonly="readonly" th:value="${userInfo.addrzonecode}">
+														<input type="text" class="form-control pb-3 mb-3"
+															name="address2" id="address2" readonly="readonly"
+															th:value="${userInfo.addrfull}">
+														<input type="text" class="form-control pb-3 mb-3"
+															name="address3" id="address3" readonly="readonly"
+															th:value="${userInfo.addrdetail}">
+
+														<div class="" id="u_address" style="display: none;">
+															<input class="form-control pb-3 mb-3"
+																style="width:100px; display: inline;" placeholder="우편번호"
+																name="addr1" id="addr1" type="text" readonly="readonly">
+															<button type="button" class="btn btn-default"
+																onclick="execPostCode();"><i
+																	class="bi bi-search me-2 align-middle text-muted"></i>우편번호
+																찾기</button>
+															<input class="form-control pb-3 mb-3"
+																placeholder="도로명 및 지번 주소" name="addr2" id="addr2"
+																type="text" readonly="readonly" />
+															<input class="form-control pb-3 mb-3" placeholder="상세주소"
+																name="addr3" id="addr3" type="text" />
+															<div class="">
+																<button class="btn btn-danger btn-sm btn-space"
+																	id="address_cncl" type="button">수정취소</button><button
+																	class="btn btn-primary btn-sm" id="address_reg"
+																	type="button">수정하기</button>
+															</div>
+														</div>
+
+														<div class="" style="display: block;">
+															<button class="btn btn-primary btn-sm" type="button"
+																id="addrUpdateBtn">수정</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
 						</div>
 					</div>
-					
-				    <div class="row pb-3 mb-3 border-bottom">
-						<label for="pass1" class="col-sm-2 col-form-label">Password</label>
-						<div class="col-sm-7" id="u_password" style="display: none;">
-						  <div class="form-group">
-					        <input class="form-control" placeholder="현재비밀번호" name="pass1" id="pass1" type="password">
-					        <div class="invalid-feedback" id="password_message1">
-			                  현재 비밀번호를 입력하세요.
-			                </div>
-			              </div>
-						  <div class="form-group">
-					        <input class="form-control" placeholder="새 비밀번호" name="pass2" id="pass2" type="password">
-					        <br>
-					        <input class="form-control" placeholder="새 비밀번호 확인" name="pass3" id="pass3" type="password">
-					        <div class="invalid-feedback" id="password_message3">
-			                  8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합
-			                </div>
-			              </div>
-					        <button class="btn btn-primary btn-sm" id="password_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="password_reg" type="button">수정하기</button>
-						</div>
-						<div class="col-sm-7" style="display: block;">
-                          <button class="btn btn-primary btn-sm" type="button" id="passwordUpdateBtn">수정</button>
-                        </div>
-					</div>
-					
-					<div class="row pb-3 mb-3 border-bottom">
-						<label for="name" class="col-sm-2 col-form-label">Name</label>
-						<div class="col-sm-7 ">
-						  <input type="text" class="form-control" id="name" readonly="readonly" th:value="${userInfo.name}">
-						</div>
-					</div>
-				    
-				    <div class="row pb-3 mb-3 border-bottom">
-						<label for="nickName" class="col-sm-2 col-form-label">NickName</label>
-						<div class="col-sm-7">
-						  <input type="text" class="form-control" id="nickName" readonly="readonly" th:value="${userInfo.nickName}">
-						    <div class="mt-3" id="u_nickName" style="display: none;">
-						       <div class="form-group" >
-						        <input class="form-control" placeholder="새로운 닉네임" name="nick1" id="nick1" type="text">
-						        <div class="invalid-feedback" id="nickName_message">
-				                  닉네임을 입력해주세요.
-				                </div>
-				                <div class="mt-3">
-						          <button class="btn btn-primary btn-sm" id="nickName_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="nickName_reg" type="button">수정하기</button>
-						        </div>
-						       </div>
-						    </div>
-						  <div class="mt-3" style="display: block;">
-             			    <button class="btn btn-primary btn-sm" type="button" id="nickNameUpdateBtn">수정</button>
-                          </div>
-						</div>
-					</div>
-					
-				    <div class="row pb-3 mb-3 border-bottom">
-						<label for="phoneNum" class="col-sm-2 col-form-label">PhoneNumber</label>
-					    <div class="col-sm-7">
-					      <input type="text" class="form-control" id="phoneNum" readonly="readonly" th:value="${userInfo.phoneNum}">
-					      <div class="mt-3" style="display: block;">
-             			    <button class="btn btn-danger btn-sm" type="button" id="phoneNumUpdateBtn">수정</button>
-                          </div>
-					    </div>
-					</div>
-					
-					 <div class="row pb-3 mb-3 border-bottom">
-						<label for="pass1" class="col-sm-2 col-form-label">Address</label>
-					    <div class="col-sm-7">
-					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address1" id="address1" readonly="readonly" th:value="${userInfo.addrzonecode}">
-					      </div>
-					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address2" id="address2" readonly="readonly" th:value="${userInfo.addrfull}">
-					      </div>
-					      <div class="mb-3">
-					        <input type="text" class="form-control" name="address3" id="address3" readonly="readonly" th:value="${userInfo.addrdetail}">
-					      </div>
-					      
-					    <div class="" id="u_address" style="display: none;"> 
-					      <div class="form-group" >
-					        <input class="form-control" style="width:100px; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
-					        <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
-					      </div>
-						  <div class="form-group">
-					        <input class="form-control" style="top: 5px;" placeholder="도로명 및 지번 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
-					      </div>
-					      <div class="form-group">
-					        <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
-					      </div>
-					      <div class="">
-					        <button class="btn btn-primary btn-sm" id="address_cncl" type="button">수정취소</button><button class="btn btn-primary btn-sm" id="address_reg" type="button" >수정하기</button>
-					      </div>
-			            </div>
-			            
-					      <div class="" style="display: block;">
-             			    <button class="btn btn-primary btn-sm" type="button" id="addrUpdateBtn">수정</button>
-                          </div>
-					    </div>
-					</div>
-					
-		  		</form>
-			</div> <!-- col-sm-9 end -->
-		  </div> <!-- row pb-3 mb-3 end -->
-	    </div> <!-- container end -->
-			</section>
-		</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div class="tm-page-wrap mx-auto">
+		<section class="p-5 tm-container-outer tm-bg-white">
+			<div class="container">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+					<span class="link-dark fs-4">회원정보</span>
+				</div>
+
+				<div class="row pb-3 mb-3">
+					<div class="col-sm-9">
+						<form class="needs-validation" id="frm" name="frm" novalidate>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="email" class="col-sm-2 col-form-label">Email</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="email" name="email" readonly="readonly"
+										th:value="${userInfo.email}">
+								</div>
+							</div>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="pass1" class="col-sm-2 col-form-label">Password</label>
+								<div class="col-sm-7" id="u_password" style="display: none;">
+									<div class="form-group">
+										<input class="form-control" placeholder="현재비밀번호" name="pass1" id="pass1"
+											type="password">
+										<div class="invalid-feedback" id="password_message1">
+											현재 비밀번호를 입력하세요.
+										</div>
+									</div>
+									<div class="form-group">
+										<input class="form-control" placeholder="새 비밀번호" name="pass2" id="pass2"
+											type="password">
+										<br>
+										<input class="form-control" placeholder="새 비밀번호 확인" name="pass3" id="pass3"
+											type="password">
+										<div class="invalid-feedback" id="password_message3">
+											8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합
+										</div>
+									</div>
+									<button class="btn btn-primary btn-sm" id="password_cncl"
+										type="button">수정취소</button><button class="btn btn-primary btn-sm"
+										id="password_reg" type="button">수정하기</button>
+								</div>
+								<div class="col-sm-7" style="display: block;">
+									<button class="btn btn-primary btn-sm" type="button"
+										id="passwordUpdateBtn">수정</button>
+								</div>
+							</div>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="name" class="col-sm-2 col-form-label">Name</label>
+								<div class="col-sm-7 ">
+									<input type="text" class="form-control" id="name" readonly="readonly"
+										th:value="${userInfo.name}">
+								</div>
+							</div>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="nickName" class="col-sm-2 col-form-label">NickName</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="nickName" readonly="readonly"
+										th:value="${userInfo.nickName}">
+									<div class="mt-3" id="u_nickName" style="display: none;">
+										<div class="form-group">
+											<input class="form-control" placeholder="새로운 닉네임" name="nick1" id="nick1"
+												type="text">
+											<div class="invalid-feedback" id="nickName_message">
+												닉네임을 입력해주세요.
+											</div>
+											<div class="mt-3">
+												<button class="btn btn-primary btn-sm" id="nickName_cncl"
+													type="button">수정취소</button><button class="btn btn-primary btn-sm"
+													id="nickName_reg" type="button">수정하기</button>
+											</div>
+										</div>
+									</div>
+									<div class="mt-3" style="display: block;">
+										<button class="btn btn-primary btn-sm" type="button"
+											id="nickNameUpdateBtn">수정</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="phoneNum" class="col-sm-2 col-form-label">PhoneNumber</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="phoneNum" readonly="readonly"
+										th:value="${userInfo.phoneNum}">
+									<div class="mt-3" style="display: block;">
+										<button class="btn btn-danger btn-sm" type="button"
+											id="phoneNumUpdateBtn">수정</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="row pb-3 mb-3 border-bottom">
+								<label for="pass1" class="col-sm-2 col-form-label">Address</label>
+								<div class="col-sm-7">
+									<div class="mb-3">
+										<input type="text" class="form-control" name="address1" id="address1"
+											readonly="readonly" th:value="${userInfo.addrzonecode}">
+									</div>
+									<div class="mb-3">
+										<input type="text" class="form-control" name="address2" id="address2"
+											readonly="readonly" th:value="${userInfo.addrfull}">
+									</div>
+									<div class="mb-3">
+										<input type="text" class="form-control" name="address3" id="address3"
+											readonly="readonly" th:value="${userInfo.addrdetail}">
+									</div>
+
+									<div class="" id="u_address" style="display: none;">
+										<div class="form-group">
+											<input class="form-control" style="width:100px; display: inline;"
+												placeholder="우편번호" name="addr1" id="addr1" type="text"
+												readonly="readonly">
+											<button type="button" class="btn btn-default" onclick="execPostCode();"><i
+													class="fa fa-search"></i> 우편번호 찾기</button>
+										</div>
+										<div class="form-group">
+											<input class="form-control" style="top: 5px;" placeholder="도로명 및 지번 주소"
+												name="addr2" id="addr2" type="text" readonly="readonly" />
+										</div>
+										<div class="form-group">
+											<input class="form-control" placeholder="상세주소" name="addr3" id="addr3"
+												type="text" />
+										</div>
+										<div class="">
+											<button class="btn btn-primary btn-sm" id="address_cncl"
+												type="button">수정취소</button><button class="btn btn-primary btn-sm"
+												id="address_reg" type="button">수정하기</button>
+										</div>
+									</div>
+
+									<div class="" style="display: block;">
+										<button class="btn btn-primary btn-sm" type="button"
+											id="addrUpdateBtn">수정</button>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div> <!-- col-sm-9 end -->
+				</div> <!-- row pb-3 mb-3 end -->
+			</div> <!-- container end -->
+		</section>
+	</div>
 </th:block>
 
 <th:block layout:fragment="script">
-        <!--Flatpickr-->
-        <script th:src="@{/assets/vendor/flatpickr/flatpickr.js}"></script>
-        <script th:src="@{/assets/js/custom/flatpickr.js}"></script>
-        <!--Profile upload-->
-        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
-        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-       
-        <script th:inline="javascript">
-        
+	<!--Flatpickr-->
+	<script th:src="@{/assets/vendor/flatpickr/flatpickr.js}"></script>
+	<script th:src="@{/assets/js/custom/flatpickr.js}"></script>
+	<!--Profile upload-->
+	<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+	<script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
+	<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
-        </script>
-  <!-- 카카오 주소찾기 API -->
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script th:inline="javascript">
+	<script th:inline="javascript">
 
-  //카카오 주소 찾기 메서드
-  function execPostCode() {
-	      new daum.Postcode({
-	          oncomplete: function(data) {
-	             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	             // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-	             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	             var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-	             var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-	             var jibunAddr = data.jibunAddress; //지번 주소 변수
-	
-	             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	             if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                 extraRoadAddr += data.bname;
-	             }
-	             // 건물명이 있고, 공동주택일 경우 추가한다.
-	             if(data.buildingName !== '' && data.apartment === 'Y'){
-	                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	             }
-	             // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	             if(extraRoadAddr !== ''){
-	                 extraRoadAddr = ' (' + extraRoadAddr + ')';
-	             }
-	             // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-	             if(fullRoadAddr !== ''){
-	                 fullRoadAddr += extraRoadAddr;
-	             }
-	
-	             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	             console.log(data.zonecode);
-	             console.log(fullRoadAddr);
-	             
-	             $("[name=addr1]").val(data.zonecode);
-	             
-	             //사용자가 도로명 주소 선택 했을때,
-	             if (data.userSelectedType === 'R'){
-	               $("[name=addr2]").val(fullRoadAddr);
-	             }
-	             //사용자가 지번 주소 선택 했을때,
-	             else if (data.userSelectedType === 'J'){
-	               $("[name=addr2]").val(jibunAddr);
-	             }
-	             
-	             //주소 변경 했을때, 상세주소 비우기
-	             $("#addr3").val("");
-	
-	             //커서를 상세주소 필드로 이동
-	             document.getElementById("addr3").focus();
-	             
-	             //document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
-	             //document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
-	             //document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress;
-	         }
-	      }).open();
-  }//function execPostCode() END
 
-    $(function(){
+	</script>
+	<!-- 카카오 주소찾기 API -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script th:inline="javascript">
+		//카카오 주소 찾기 메서드
+		function execPostCode() {
+			new daum.Postcode({
+				oncomplete: function (data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	    let userId = userSession == null ? "" : userSession.userId; //세션에 있는 userId
+					// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+					var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+					var jibunAddr = data.jibunAddress; //지번 주소 변수
 
-	    let isPassword = false;  //
-    	let isPassword2 = false; //
-    	let isPassword3 = false; //
-    	let isnickName = false;  //
-	    
-    	//주소 수정 버튼 클릭
-    	$("#addrUpdateBtn").on('click',function(){
-    		$("#u_address").css("display","block");
-    		$("#addrUpdateBtn").css("display","none");
-    	})
-    	//주소 수정 취소 버튼 클릭
-    	$("#address_cncl").on('click',function(){
-    		$("#u_address").css("display","none");
-    		$("#addrUpdateBtn").css("display","block");
-    	})
-    	//주소 수정 하기 버튼 클릭
-    	$("#address_reg").on('click',function(){
-    		if($("#addr1").val()==null || $("#addr1").val()==""){
-    			alert("주소를 검색해주세요")
-    		}else if($("#addr3").val()==null || $("#addr3").val()==""){
-    			alert("상세주소를 입력해주세요")
-    		}else{
-    			$.ajax({
-        			url: "addressUpdate",
-        			method : "put",
-        			data : JSON.stringify({ userId: userId,
-        				                    addrzonecode:$("#addr1").val(),
-        				                    addrfull:$("#addr2").val(),
-        				                    addrdetail:$("#addr3").val()
-        			                     }),
-        			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
-        			dataType : "json",
-        			contentType : "application/json;charset=UTF-8",
-        			success: function(data){
-        				$("#address1").val(data.addrzonecode);
-        				$("#address2").val(data.addrfull);
-        				$("#address3").val(data.addrdetail);
-        				alert("주소 수정 완료")
-			    		$("#u_address").css("display","none");
-			    		$("#addrUpdateBtn").css("display","block");
-			    		$("#u_address").find("input").val("");
-        			},
-        			error : function(){
-        				
-        			}
-        		});	
-    		}
-    		
-    	})
-    	
-        //비밀번호 수정 버튼 클릭
-    	$("#passwordUpdateBtn").on('click',function(){
-    		$("#u_password").css("display","block");
-    		$("#passwordUpdateBtn").css("display","none");
-    	})
-    	//비밀번호 수정 취소 버튼 클릭
-    	$("#password_cncl").on('click',function(){
-    		$("#u_password").css("display","none");
-    		$("#passwordUpdateBtn").css("display","block");
-    	})
-    	//비밀번호 수정 하기 버튼 클릭
-    	$("#password_reg").on('click',function(){
-    		if(isPassword==false){
-    			alert("현재 비밀번호를 확인해주세요")
-    		}else if(isPassword2==false){
-    			alert("새로운 비밀번호를 확인해주세요")
-    		}else{
-	    		$.ajax({
-	    			url: "passwordUpdate",
-	    			method : "put",
-	    			data : JSON.stringify({ userId: userId,
-	    				                    password: $("#pass3").val()			 	          
-	    			                     }),
-	    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
-	    			dataType : "json",
-	    			contentType : "application/json;charset=UTF-8",
-	    			success: function(e){
-	    				if(e==true){
-	    				alert("비밀번호 수정완료");
-	    				$("#pass1").val("");
-	    				$("#pass2").val("");
-	    				$("#pass3").val("");
-	    				}
-	    				
-	    			},
-	    			error : function(){
-	    				
-	    			}
-	    		})	
-    		}
-    	})
-      //현재 비밀번호 input 클릭
-      $("#pass1").on('click',function(){
-    	  if($(this).val()=="" || $(this).val()==null){
-      	    $(this).attr("class","form-control is-invalid");
-    	  }
-      })
-      //현재 비밀번호 확인
-      $("#pass1").on('keyup',function(){
-    	  $.ajax({
-    		  url:"/mypage/passwordRead",
-    		  method : "post",
-    		  data : JSON.stringify({ userId: userId,
-                                      password: $("#pass1").val()			 	          
-                                   }),
-              dataType : "json",
-              contentType : "application/json;charset=UTF-8",
-              success: function(e){
-            	       if(e==true){
-            	         $("#pass1").attr("class","form-control is-valid");
-            	         $("#password_message1").attr("class","valid-feedback");
-            	         $("#password_message1").text("현재 비밀번호가 맞습니다");
-            	         isPassword = true;
-            	       }else{
-              	         $("#pass1").attr("class","form-control is-invalid");
-            	         $("#password_message1").attr("class","invalid-feedback");
-            	         $("#password_message1").text("현재 비밀번호가 틀립니다");
-            	         isPassword = false;
-            	       }           
-              },
-              error : function(){
-                    				
-              }                                   
-    	  })
-    	  
-      })
-      //새 비밀번호 input 클릭
-      $("#pass2").on('click',function(){
-    	  if($(this).val()=="" || $(this).val()==null){
-    	  $("#pass2").attr("class","form-control is-invalid");
-    	  $("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
-    	  }
-      });
-      
-      let reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-      
-      //새 비밀번호 유효성 검사
-      $("#pass2").on('keyup',function(){
-    	  if(false === reg.test($("#pass2").val())){
-    		  $("#pass2").attr("class","form-control is-invalid");
-    		  $("#password_message3").attr("class","invalid-feedback");
-    		  $("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
-    		  isPassword2 = false;
-    	  }else{
-    		  $("#pass2").attr("class","form-control is-valid");
-    		  $("#password_message3").attr("class","valid-feedback");
-    		  $("#password_message3").text("사용가능한 비밀번호입니다");
-    		  isPassword2 = true;
-    	  }
-      });
-      //새 비밀번호 확인 input 클릭
-      $("#pass3").on('click',function(){
-    	  if($(this).val()=="" || $(this).val()==null){
-        	  $("#pass3").attr("class","form-control is-invalid");
-        	  $("#password_message3").attr("class","invalid-feedback");
-        	  $("#password_message3").text("비밀번호가 맞지 않습니다, 확인해주세요");
-        	  }
-      });
-      //새 비밀번호 확인 검사
-      $("#pass3").on('keyup',function(){
-    	  let pass2 = $("#pass2").val()
-    	  let pass3 = $("#pass3").val()
-    	  if(pass2!=pass3){
-    	      $("#pass3").attr("class","form-control is-invalid");
-        	  $("#password_message3").attr("class","invalid-feedback");
-        	  $("#password_message3").text("비밀번호가 맞지 않습니다, 확인해주세요");
-      	      isPassword3 = false;
-    	  }else if(false === reg.test($("#pass3").val())){
-     		  $("#pass3").attr("class","form-control is-invalid");
-      	      $("#password_message3").attr("class","invalid-feedback");
-    	      $("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
-        	  isPassword3 = false;
-    	  }else{
-    		  $("#pass3").attr("class","form-control is-valid");
-        	  $("#password_message3").attr("class","valid-feedback");
-        	  $("#password_message3").text("비밀번호가 맞습니다");
-        	  isPassword3 = true;
-    	  }
-      });
-      
-      //닉네임 수정 버튼 클릭
-      $("#nickNameUpdateBtn").on('click',function(){
-    	$("#u_nickName").css("display","block");
-    	$("#nickNameUpdateBtn").css("display","none");
-    	})
-      //닉네임 수정 취소 버튼 클릭
-      $("#nickName_cncl").on('click',function(){
-    	$("#u_nickName").css("display","none");
-    	$("#nickNameUpdateBtn").css("display","block");
-    	})
-      //닉네임 수정 하기 버튼 클릭
-      $("#nickName_reg").on('click',function(){
-    		if(isnickName==false){
-    			alert("닉네임을 확인해주세요")
-    		}else{
-	    		$.ajax({
-	    			url: "nickNameUpdate",
-	    			method : "put",
-	    			data : JSON.stringify({ userId: userId,
-	    				                    nickName: $("#nick1").val()			 	          
-	    			                     }),
-	    			//async : false, //아이작스 끝나야 다음이 실행됨 동기식
-	    			dataType : "json",
-	    			contentType : "application/json;charset=UTF-8",
-	    			success: function(data){
-	    				$("#nickName").val(data.nickName);
-	    				$("#nick1").val("");
-	    				alert("닉네임 수정완료");
-	    		    	$("#u_nickName").css("display","none");
-	    		    	$("#nickNameUpdateBtn").css("display","block");
-	    				
-	    			},
-	    			error : function(){
-	    				
-	    			}
-	    		})	
-    		}
-    	})
-      //닉네임 수정 input 클릭
-      $("#nick1").on('click',function(){
-      	  if($(this).val()=="" || $(this).val()==null){
-            $("#nick1").attr("class","form-control is-invalid");
-            $("#nickName_message").attr("class","invalid-feedback");
-            $("#nickName_message").text("닉네임을 입력해주세요.");
-          	}
-        });
-      //현재 닉네임 중복 확인
-      $("#nick1").on('keyup',function(){
-    	  
-    	  if( $("#nick1").val().search(/\s/) != -1 || $("#nick1").val().search(/[~!@#$%^&*()_+|<>?:{}]/) != -1){
-              $("#nick1").attr("class","form-control is-invalid");
-              $("#nickName_message").attr("class","invalid-feedback");
-              $("#nickName_message").text("특수문자 또는 공백을 입력할 수 없습니다");
-    		  $("#nick1").focus();
-    		  isnickName = false;
-    	  }else if($(this).val()=="" || $(this).val()==null){
-              $("#nick1").attr("class","form-control is-invalid");
-              $("#nickName_message").attr("class","invalid-feedback");
-              $("#nickName_message").text("닉네임을 입력해주세요.");
-              isnickName = false;
-    	  }else{
-    		  
-    	  $.ajax({
-    		  url:"nickNameRead",
-    		  method : "post",
-    		  data : JSON.stringify({ userId: userId,
-                                      nickName: $("#nick1").val()			 	          
-                                   }),
-              dataType : "json",
-              contentType : "application/json;charset=UTF-8",
-              success: function(e){
-            	       if(e==true){
-            	         $("#nick1").attr("class","form-control is-valid");
-            	         $("#nickName_message").attr("class","valid-feedback");
-            	         $("#nickName_message").text("사용가능한 닉네임입니다.");
-            	         isnickName = true;
-            	       }else{
-              	         $("#nick1").attr("class","form-control is-invalid");
-            	         $("#nickName_message").attr("class","invalid-feedback");
-            	         $("#nickName_message").text("중복된 닉네임입니다.");
-            	         isnickName = false;
-            	       }           
-              },
-              error : function(){
-                    				
-              }                                   
-    	  })
-    	  }  
-      })
-    
-               //==============================================프로필 이미지
-            FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFilePoster);
+					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+					if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+						extraRoadAddr += data.bname;
+					}
+					// 건물명이 있고, 공동주택일 경우 추가한다.
+					if (data.buildingName !== '' && data.apartment === 'Y') {
+						extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+					}
+					// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+					if (extraRoadAddr !== '') {
+						extraRoadAddr = ' (' + extraRoadAddr + ')';
+					}
+					// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+					if (fullRoadAddr !== '') {
+						fullRoadAddr += extraRoadAddr;
+					}
+
+					// 우편번호와 주소 정보를 해당 필드에 넣는다.
+					console.log(data.zonecode);
+					console.log(fullRoadAddr);
+
+					$("[name=addr1]").val(data.zonecode);
+
+					//사용자가 도로명 주소 선택 했을때,
+					if (data.userSelectedType === 'R') {
+						$("[name=addr2]").val(fullRoadAddr);
+					}
+					//사용자가 지번 주소 선택 했을때,
+					else if (data.userSelectedType === 'J') {
+						$("[name=addr2]").val(jibunAddr);
+					}
+
+					//주소 변경 했을때, 상세주소 비우기
+					$("#addr3").val("");
+
+					//커서를 상세주소 필드로 이동
+					document.getElementById("addr3").focus();
+
+					//document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+					//document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+					//document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress;
+				}
+			}).open();
+		} //function execPostCode() END
+
+		$(function () {
+
+			let userId = userSession == null ? "" : userSession.userId; //세션에 있는 userId
+
+			let isPassword = false; //
+			let isPassword2 = false; //
+			let isPassword3 = false; //
+			let isnickName = false; //
+
+			//주소 수정 버튼 클릭
+			$("#addrUpdateBtn").on('click', function () {
+				$("#u_address").css("display", "block");
+				$("#addrUpdateBtn").css("display", "none");
+			})
+			//주소 수정 취소 버튼 클릭
+			$("#address_cncl").on('click', function () {
+				$("#u_address").css("display", "none");
+				$("#addrUpdateBtn").css("display", "block");
+			})
+			//주소 수정 하기 버튼 클릭
+			$("#address_reg").on('click', function () {
+				if ($("#addr1").val() == null || $("#addr1").val() == "") {
+					alert("주소를 검색해주세요")
+				} else if ($("#addr3").val() == null || $("#addr3").val() == "") {
+					alert("상세주소를 입력해주세요")
+				} else {
+					$.ajax({
+						url: "addressUpdate",
+						method: "put",
+						data: JSON.stringify({
+							userId: userId,
+							addrzonecode: $("#addr1").val(),
+							addrfull: $("#addr2").val(),
+							addrdetail: $("#addr3").val()
+						}),
+						//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+						dataType: "json",
+						contentType: "application/json;charset=UTF-8",
+						success: function (data) {
+							$("#address1").val(data.addrzonecode);
+							$("#address2").val(data.addrfull);
+							$("#address3").val(data.addrdetail);
+							alert("주소 수정 완료")
+							$("#u_address").css("display", "none");
+							$("#addrUpdateBtn").css("display", "block");
+							$("#u_address").find("input").val("");
+						},
+						error: function () {
+
+						}
+					});
+				}
+
+			})
+
+			//비밀번호 수정 버튼 클릭
+			$("#passwordUpdateBtn").on('click', function () {
+				$("#u_password").css("display", "block");
+				$("#passwordUpdateBtn").css("display", "none");
+			})
+			//비밀번호 수정 취소 버튼 클릭
+			$("#password_cncl").on('click', function () {
+				$("#u_password").css("display", "none");
+				$("#passwordUpdateBtn").css("display", "block");
+			})
+			//비밀번호 수정 하기 버튼 클릭
+			$("#password_reg").on('click', function () {
+				if (isPassword == false) {
+					alert("현재 비밀번호를 확인해주세요")
+				} else if (isPassword2 == false) {
+					alert("새로운 비밀번호를 확인해주세요")
+				} else {
+					$.ajax({
+						url: "passwordUpdate",
+						method: "put",
+						data: JSON.stringify({
+							userId: userId,
+							password: $("#pass3").val()
+						}),
+						//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+						dataType: "json",
+						contentType: "application/json;charset=UTF-8",
+						success: function (e) {
+							if (e == true) {
+								alert("비밀번호 수정완료");
+								$("#pass1").val("");
+								$("#pass2").val("");
+								$("#pass3").val("");
+							}
+
+						},
+						error: function () {
+
+						}
+					})
+				}
+			})
+			//현재 비밀번호 input 클릭
+			$("#pass1").on('click', function () {
+				if ($(this).val() == "" || $(this).val() == null) {
+					$(this).attr("class", "form-control is-invalid");
+				}
+			})
+			//현재 비밀번호 확인
+			$("#pass1").on('keyup', function () {
+				$.ajax({
+					url: "/mypage/passwordRead",
+					method: "post",
+					data: JSON.stringify({
+						userId: userId,
+						password: $("#pass1").val()
+					}),
+					dataType: "json",
+					contentType: "application/json;charset=UTF-8",
+					success: function (e) {
+						if (e == true) {
+							$("#pass1").attr("class", "form-control is-valid");
+							$("#password_message1").attr("class", "valid-feedback");
+							$("#password_message1").text("현재 비밀번호가 맞습니다");
+							isPassword = true;
+						} else {
+							$("#pass1").attr("class", "form-control is-invalid");
+							$("#password_message1").attr("class", "invalid-feedback");
+							$("#password_message1").text("현재 비밀번호가 틀립니다");
+							isPassword = false;
+						}
+					},
+					error: function () {
+
+					}
+				})
+
+			})
+			//새 비밀번호 input 클릭
+			$("#pass2").on('click', function () {
+				if ($(this).val() == "" || $(this).val() == null) {
+					$("#pass2").attr("class", "form-control is-invalid");
+					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
+				}
+			});
+
+			let reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+
+			//새 비밀번호 유효성 검사
+			$("#pass2").on('keyup', function () {
+				if (false === reg.test($("#pass2").val())) {
+					$("#pass2").attr("class", "form-control is-invalid");
+					$("#password_message3").attr("class", "invalid-feedback");
+					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
+					isPassword2 = false;
+				} else {
+					$("#pass2").attr("class", "form-control is-valid");
+					$("#password_message3").attr("class", "valid-feedback");
+					$("#password_message3").text("사용가능한 비밀번호입니다");
+					isPassword2 = true;
+				}
+			});
+			//새 비밀번호 확인 input 클릭
+			$("#pass3").on('click', function () {
+				if ($(this).val() == "" || $(this).val() == null) {
+					$("#pass3").attr("class", "form-control is-invalid");
+					$("#password_message3").attr("class", "invalid-feedback");
+					$("#password_message3").text("비밀번호가 맞지 않습니다, 확인해주세요");
+				}
+			});
+			//새 비밀번호 확인 검사
+			$("#pass3").on('keyup', function () {
+				let pass2 = $("#pass2").val()
+				let pass3 = $("#pass3").val()
+				if (pass2 != pass3) {
+					$("#pass3").attr("class", "form-control is-invalid");
+					$("#password_message3").attr("class", "invalid-feedback");
+					$("#password_message3").text("비밀번호가 맞지 않습니다, 확인해주세요");
+					isPassword3 = false;
+				} else if (false === reg.test($("#pass3").val())) {
+					$("#pass3").attr("class", "form-control is-invalid");
+					$("#password_message3").attr("class", "invalid-feedback");
+					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
+					isPassword3 = false;
+				} else {
+					$("#pass3").attr("class", "form-control is-valid");
+					$("#password_message3").attr("class", "valid-feedback");
+					$("#password_message3").text("비밀번호가 맞습니다");
+					isPassword3 = true;
+				}
+			});
+
+			//닉네임 수정 버튼 클릭
+			$("#nickNameUpdateBtn").on('click', function () {
+				$("#u_nickName").css("display", "block");
+				$("#nickNameUpdateBtn").css("display", "none");
+			})
+			//닉네임 수정 취소 버튼 클릭
+			$("#nickName_cncl").on('click', function () {
+				$("#u_nickName").css("display", "none");
+				$("#nickNameUpdateBtn").css("display", "block");
+			})
+			//닉네임 수정 하기 버튼 클릭
+			$("#nickName_reg").on('click', function () {
+				if (isnickName == false) {
+					alert("닉네임을 확인해주세요")
+				} else {
+					$.ajax({
+						url: "nickNameUpdate",
+						method: "put",
+						data: JSON.stringify({
+							userId: userId,
+							nickName: $("#nick1").val()
+						}),
+						//async : false, //아이작스 끝나야 다음이 실행됨 동기식
+						dataType: "json",
+						contentType: "application/json;charset=UTF-8",
+						success: function (data) {
+							$("#nickName").val(data.nickName);
+							$("#nick1").val("");
+							alert("닉네임 수정완료");
+							$("#u_nickName").css("display", "none");
+							$("#nickNameUpdateBtn").css("display", "block");
+
+						},
+						error: function () {
+
+						}
+					})
+				}
+			})
+			//닉네임 수정 input 클릭
+			$("#nick1").on('click', function () {
+				if ($(this).val() == "" || $(this).val() == null) {
+					$("#nick1").attr("class", "form-control is-invalid");
+					$("#nickName_message").attr("class", "invalid-feedback");
+					$("#nickName_message").text("닉네임을 입력해주세요.");
+				}
+			});
+			//현재 닉네임 중복 확인
+			$("#nick1").on('keyup', function () {
+
+				if ($("#nick1").val().search(/\s/) != -1 || $("#nick1").val().search(
+					/[~!@#$%^&*()_+|<>?:{}]/) != -1) {
+					$("#nick1").attr("class", "form-control is-invalid");
+					$("#nickName_message").attr("class", "invalid-feedback");
+					$("#nickName_message").text("특수문자 또는 공백을 입력할 수 없습니다");
+					$("#nick1").focus();
+					isnickName = false;
+				} else if ($(this).val() == "" || $(this).val() == null) {
+					$("#nick1").attr("class", "form-control is-invalid");
+					$("#nickName_message").attr("class", "invalid-feedback");
+					$("#nickName_message").text("닉네임을 입력해주세요.");
+					isnickName = false;
+				} else {
+
+					$.ajax({
+						url: "nickNameRead",
+						method: "post",
+						data: JSON.stringify({
+							userId: userId,
+							nickName: $("#nick1").val()
+						}),
+						dataType: "json",
+						contentType: "application/json;charset=UTF-8",
+						success: function (e) {
+							if (e == true) {
+								$("#nick1").attr("class", "form-control is-valid");
+								$("#nickName_message").attr("class", "valid-feedback");
+								$("#nickName_message").text("사용가능한 닉네임입니다.");
+								isnickName = true;
+							} else {
+								$("#nick1").attr("class", "form-control is-invalid");
+								$("#nickName_message").attr("class", "invalid-feedback");
+								$("#nickName_message").text("중복된 닉네임입니다.");
+								isnickName = false;
+							}
+						},
+						error: function () {
+
+						}
+					})
+				}
+			})
+			
+	        //이미지 url 가져오기
+			/*<![CDATA[*/ 
+		      let imgUrl = /*[[ ${userInfo.imgUrl} ]]*/ ''; 
+	        /*]]*/
+			
+			//==============================================프로필 이미지
+			FilePond.registerPlugin(
+				FilePondPluginImagePreview,
+				FilePondPluginFilePoster);
 
 			// Select the file input and use 
 			// create() to turn it into a pond
 			FilePond.create(
-			  document.querySelector('#excelFile'),
-			  {
-			    labelIdle: `Drag & Drop picture or Browse`,
-			    imagePreviewHeight: 160,
-			    allowMultiple:false,
-			    allowFilePoster:true,
-			    filePosterHeight:160,
-			    stylePanelLayout: 'compact circle',
-			    styleLoadIndicatorPosition: 'center bottom',
-			    styleProgressIndicatorPosition: 'right bottom',
-			    styleButtonRemoveItemPosition: 'left bottom',
-			    styleButtonProcessItemPosition: 'right bottom',
-			    storeAsFile: true,
-			    files: [
-			        {
-			            source: '12345',
-			            options: {
-			                type: 'local',
-			                file: {
-			                    name: 'Profile',
-			                    size: false,
-			                    type: 'image/jpg'
-			        },
-			
-			                // pass poster property
-			                metadata: {
-			                    poster: '/assets/img/avatar/4.jpg'
-			                }
-			            }
-			        }
-			    ]
-			  }
-			);
-	     //==============================================프로필 이미지 끝
-      
-  	$('#imageUpdateBtn').on('click', function() {
-/*   	    var file_data = $('#update_profile').find('input').eq(1);   
-  	    var form_data = new FormData();                  
-  	    form_data.append('filepond', file_data);
-  	    
-  	    console.log(file_data);
-  	    console.log(form_data); */                      
+				document.querySelector('#excelFile'), {
+					labelIdle: `Drag & Drop picture or Browse`,
+					imagePreviewHeight: 160,
+					allowMultiple: false,
+					allowFilePoster: true,
+					filePosterHeight: 160,
+					stylePanelLayout: 'compact circle',
+					styleLoadIndicatorPosition: 'center bottom',
+					styleProgressIndicatorPosition: 'right bottom',
+					styleButtonRemoveItemPosition: 'left bottom',
+					styleButtonProcessItemPosition: 'right bottom',
+					storeAsFile: true,
+					files: [{
+						source: '12345',
+						options: {
+							type: 'local',
+							file: {
+								name: 'Profile',
+								size: false,
+								type: 'image/jpg'
+							},
 
-	  	  var form = $('#excelForm')[0];
-	  	  console.log(form);
-  	      // 코드로 동적으로 데이터 추가 가능.
-  	      var formData = new FormData(form);
-	      formData.append("userId", userId);
-	
-	      $.ajax({
-	          type: "POST",
-	          enctype: 'multipart/form-data',
-	          url: "imgUpdate",
-	          data: formData,
-	          processData: false,
-	          contentType: false,
-	          cache: false,
-	          timeout: 600000,
-	          success: function (data) {
-	              console.log("SUCCESS : ", data);
-	          },
-	          error: function (e) {
-	              console.log("ERROR : ", e);
-	          }
-	      });
-  	    
-  	    }); //#imageUpdateBtn 끝
-      
-    }) //$(function(){ 끝
-  </script>
+							// pass poster property
+							metadata: {
+								poster: '/img/user/'+imgUrl
+							}
+						}
+					}]
+				}
+			);
+			//==============================================프로필 이미지 끝
+
+			$('#imageUpdateBtn').on('click', function () {
+				/*   	    var file_data = $('#update_profile').find('input').eq(1);   
+				  	    var form_data = new FormData();                  
+				  	    form_data.append('filepond', file_data);
+				  	    
+				  	    console.log(file_data);
+				  	    console.log(form_data); */
+
+				var form = $('#excelForm')[0];
+				console.log(form);
+				// 코드로 동적으로 데이터 추가 가능.
+				var formData = new FormData(form);
+				formData.append("userId", userId);
+
+				$.ajax({
+					type: "POST",
+					enctype: 'multipart/form-data',
+					url: "imgUpdate",
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					timeout: 600000,
+					success: function (data) {
+						console.log("SUCCESS : ", data);
+					},
+					error: function (e) {
+						console.log("ERROR : ", e);
+					}
+				});
+
+			}); //#imageUpdateBtn 끝
+
+		}) //$(function(){ 끝
+	</script>
 
 </th:block>
 
