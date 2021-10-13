@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.meetme.mypage.mapper.MypageMapper">
-  
+
+<!-- 결제정보 전체 조회 -->
+ <select id="readPayment" resultType="PaymentVO"> 
+		SELECT
+		a.user_id,
+		a.merchant_uid,
+		a.sub_term,
+		a.pay_cost,
+		b.cancel_amount,
+		a.pay_date,
+		b.cancel_date,
+		b.user_name,
+		b.email
+		FROM payment a LEFT OUTER JOIN refund b
+		ON a.merchant_uid=b.merchant_uid
+		WHERE a.user_id= #{userId}
+		ORDER BY a.pay_date DESC
+ </select>
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
+ 
   <!-- 태그 조회해서 오기 -->
   <select id="getTags" resultType="UserTagsVO">
     SELECT tag_id

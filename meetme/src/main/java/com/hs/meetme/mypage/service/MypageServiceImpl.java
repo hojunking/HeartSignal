@@ -12,6 +12,7 @@ import com.hs.meetme.mypage.domain.PostVO;
 import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.mapper.MypageMapper;
+import com.hs.meetme.payment.domain.PaymentVO;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -83,7 +84,6 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Override
 	public int userUpdateImage(MyPageUserInfoVO myPageUserInfoVO) {
-		// TODO Auto-generated method stub
 		return mypageMapper.userUpdateImage(myPageUserInfoVO);
 	}
 	
@@ -126,6 +126,12 @@ public class MypageServiceImpl implements MypageService {
 		int r = mypageMapper.deleteUserTags(userTagsVO);
 		    r = mypageMapper.insertUserTags(userTagsVO);
 		return r;
+	}
+
+	//마이페이지 결제 내역 관련
+	@Override
+	public List<PaymentVO> readPayment(PaymentVO paymentVO) {
+		return mypageMapper.readPayment(paymentVO);
 	}
 
     

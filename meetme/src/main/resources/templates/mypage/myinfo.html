@@ -61,9 +61,9 @@
 												class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
 										<a href="myinfo_my_comment_list" class="nav-link"><i
 												class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-										<a href="myinfo_my_payment_list" class="nav-link active"><i
+										<a href="myinfo_my_payment_list" class="nav-link"><i
 												class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
-										<a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보
+										<a href="myinfo" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>정보
 											수정</a>
 									</nav>
 									<div class="card border-light p-3 mb-3">
@@ -75,12 +75,13 @@
 														class="col-sm-2 col-form-label">ProfileImage</label>
 													<div class="col-sm-10">
 														<form method="POST" enctype="multipart/form-data"
-															id="excelForm">
-															<input type="file" class="size-190" name="excelFile"
-																id="excelFile"
+															id="update_profileImage">
+															<input type="file" class="size-190" name="updateImage"
+																id="updateImage"
 																accept="image/png, image/jpeg, image/gif">
 														</form>
 														<div class="col-sm-7" style="display: block;">
+														<button id="button2">클릭연습</button>
 															<button class="btn btn-primary btn-sm" type="button"
 																id="imageUpdateBtn">수정</button>
 														</div>
@@ -735,7 +736,7 @@
 			
 	        //이미지 url 가져오기
 			/*<![CDATA[*/ 
-		      let imgUrl = /*[[ ${userInfo.imgUrl} ]]*/ ''; 
+		      let imgUrl = /*[[ ${userInfo.imgUrl} ]]*/''; 
 	        /*]]*/
 			
 			//==============================================프로필 이미지
@@ -745,8 +746,9 @@
 
 			// Select the file input and use 
 			// create() to turn it into a pond
-			FilePond.create(
-				document.querySelector('#excelFile'), {
+			
+	        FilePond.create(
+				document.querySelector('#updateImage'), {
 					labelIdle: `Drag & Drop picture or Browse`,
 					imagePreviewHeight: 160,
 					allowMultiple: false,
@@ -776,23 +778,51 @@
 					}]
 				}
 			);
+			
+			var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp)$");
+		    var maxSize = 5242880; //5MB
+			
+			function checkExtension(fileName, fileSize) {
+
+				if (fileSize >= maxSize) {
+					alert("파일 사이즈 초과");
+					return false;
+				}
+
+				if (regex.test(fileName)) {
+					return true;
+				}else{
+					alert("사진파일만 업로드할 수 있습니다.");
+					return false;
+				}
+				return true;
+			}
+		    
+			$('#button2').on('click',function(){
+				let inputfile = document.getElementById('updateImage');
+				console.log($('#updateImage').find('legend').text());
+				//console.log($('#updateImage').find('input').eq(1).val());
+				/* console.log(inputfile);
+				let files = inputfile[0].file;
+				console.log(inputfile.files[0].size);
+				//console.log(inputfile);
+				if( ! checkExtension(inputfile[0].name, inputfile[0].size))
+					$('#updateImage').val('');
+					return; */
+					
+			});
 			//==============================================프로필 이미지 끝
+			
+            //==============================================프로필 이미지 업데이트 시작            
+            
+            $('#imageUpdateBtn').on('click', function () {
 
-			$('#imageUpdateBtn').on('click', function () {
-				/*   	    var file_data = $('#update_profile').find('input').eq(1);   
-				  	    var form_data = new FormData();                  
-				  	    form_data.append('filepond', file_data);
-				  	    
-				  	    console.log(file_data);
-				  	    console.log(form_data); */
-
-				var form = $('#excelForm')[0];
-				console.log(form);
+				var form = $('#update_profileImage')[0];
 				// 코드로 동적으로 데이터 추가 가능.
 				var formData = new FormData(form);
 				formData.append("userId", userId);
 
-				$.ajax({
+			$.ajax({
 					type: "POST",
 					enctype: 'multipart/form-data',
 					url: "imgUpdate",
@@ -803,11 +833,16 @@
 					timeout: 600000,
 					success: function (data) {
 						console.log("SUCCESS : ", data);
+						if(data){
+							swal('프로필사진이 수정되었습니다', '', 'success');
+						}else{
+							swal('실패했습니다..!', '', 'error');
+						}						
 					},
 					error: function (e) {
 						console.log("ERROR : ", e);
 					}
-				});
+				}); 
 
 			}); //#imageUpdateBtn 끝
 
