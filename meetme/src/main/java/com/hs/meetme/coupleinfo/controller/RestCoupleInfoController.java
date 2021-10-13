@@ -17,12 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hs.meetme.coupleinfo.domain.CoupleInfoVO;
 import com.hs.meetme.coupleinfo.service.CoupleInfoService;
+import com.hs.meetme.image.service.ImageService;
 
 @RestController
 
 public class RestCoupleInfoController {
-	@Autowired
-	CoupleInfoService coupleService;
+	@Autowired CoupleInfoService coupleService;
+	@Autowired ImageService imageService;
 	
 	File fileDir = new File("src/main/resources/static/img/");
 
@@ -115,15 +116,18 @@ public class RestCoupleInfoController {
 			UUID uuid = UUID.randomUUID();
 			String imgUrl = uuid + filename + ".jpg";
 			File file = new File(path, imgUrl);
-//				ufile.transferTo(file); //파일 옮기기
+			ufile.transferTo(file); //파일 옮기기
 			vo.setImgUrl(imgUrl);
 			System.out.println("이미지URL=" + vo.getImgUrl());
-			/* coupleService.insertImage(vo); */ // 이미지 테이블에 등록
-			System.out.println("커플디데이=" + vo.getCoupleDate());
-			/* coupleService.coupleCustomUpdate(vo); */ // 커플 테이블 이미지, 디데이 업뎃
+			imageService.insertImage(vo);  // 이미지 테이블에 등록
+			coupleService.updateCoupleImage(vo); //이미지 커플테이블에 업뎃
 		}
-
 		return vo;
+	}
+	@PostMapping("/updateDday") //dday 업데이트하기
+	public void updateDday(CoupleInfoVO vo) {
+		System.out.println("커플디데이=" + vo.getCoupleDate());
+		coupleService.updateDday(vo); // 커플 테이블 이미지, 디데이 업뎃
 	}
 
 }

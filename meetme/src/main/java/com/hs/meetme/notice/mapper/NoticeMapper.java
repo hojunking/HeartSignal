@@ -10,4 +10,5 @@ public interface NoticeMapper {
 	//notice
 		public List<NoticeVO> getNoticeList(NoticeVO vo); //나의 notice정보 들고오기
 		public int deleteNotice(NoticeVO noticeVO);       //나의 notice정보 삭제하기
+		public int insertNotice(NoticeVO vo); 			//알림 보내기
 }

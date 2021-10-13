@@ -28,11 +28,7 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 		return map.coupleInfoSelect(vo);
 	}
 
-	@Override
-	public int coupleCustomUpdate(CoupleInfoVO vo) {
-		return map.coupleCustomUpdate(vo);
-	}
-
+	
 	@Override
 	public int couplePhotoDefault(int coupleId) {
 		return map.couplePhotoDefault(coupleId);
@@ -66,6 +62,16 @@ public class CoupleInfoServiceImpl implements CoupleInfoService {
 	@Override
 	public CoupleInfoVO findLove(CoupleInfoVO vo) {
 		return map.findLove(vo);
+	}
+
+	@Override
+	public int updateCoupleImage(CoupleInfoVO vo) {
+		return map.updateCoupleImage(vo);
+	}
+
+	@Override
+	public int updateDday(CoupleInfoVO vo) {
+		return map.updateDday(vo);
 	}
 
 }
