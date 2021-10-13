@@ -5,12 +5,23 @@
 
 <th:block layout:fragment="css">
 	<style>
+.mainTitle {
+	font-family: 'Black Han Sans', sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+.cusBadge{
+	padding:10px;
+	border-radius:12px;
+}
+div{
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight:bold;
+}
 </style>
 </th:block>
 
 <th:block layout:fragment="content">
-
-
 	<br>
 	<br>
 	<br>
@@ -24,7 +35,7 @@
 			method="post">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">커플로그 한 건 조회</h1>
+					<h1 class="page-header mainTitle">커플로그</h1><br>
 				</div>
 			</div>
 
@@ -34,11 +45,10 @@
 						<div class="col-lg-6">
 							<input type="hidden" id="logId" name="logId"
 								th:value="${log.logId}"> 제목 <input type="text"
-								class="form-control" name="logTitle"
-								th:value="${log.logTitle}" placeholder="내용을 입력해주세요">
-							내용 <input type="text" name="logContent"
-								th:value="${log.logContent}" class="form-control"
-								placeholder="내용을 입력해주세요">
+								class="form-control" name="logTitle" th:value="${log.logTitle}"
+								placeholder="내용을 입력해주세요"> 내용 <input type="text"
+								name="logContent" th:value="${log.logContent}"
+								class="form-control" placeholder="내용을 입력해주세요">
 
 						</div>
 						<div class="col-lg-6">
@@ -57,14 +67,13 @@
 				<div class="col-md-12">
 					<div class="row">
 
-
-
 						<div class="card-columns" th:if="${img} != null">
-							<div style="text-align:center;">
-								<h4>사진</h4>
-								<img th:attr="src=@{'/img/coupleLog/' + ${img.imgUrl}}, alt=${img.imgUrl}"
+							<div style="text-align: center;">
+								<span class="badge cusBadge" style="background-color:#f73e69;">Photo</span><br><br>
+								<img
+									th:attr="src=@{'/img/coupleLog/' + ${img.imgUrl}}, alt=${img.imgUrl}"
 									class="img-fluid tm-recommended-img cardImgCus"
-									style="width: 150px; height: 150px; margin-left: 0px;">
+									style="width: 250px; height: 250px;">
 							</div>
 						</div>
 
@@ -87,13 +96,15 @@
 
 
 			<br>
-
+			
 			<div style="text-align: center;">
+			
+			
 				<button type="button" class="btn btn-primary"
-				onclick="location.href='./logList'">리스트</button>
-				<button type="submit" class="btn btn-primary">수정 완료</button>
-				<button type="submit" class="btn btn-primary"
-				formaction="coupleLogDelete">삭제</button>
+					onclick="location.href='./logList'">리스트</button>
+				<button id="updatebtn" type="submit" class="btn btn-primary">수정</button>
+				<button type="submit" class="btn btn-light"
+					formaction="coupleLogDelete">삭제</button>
 			</div>
 
 		</form>
@@ -105,7 +116,12 @@
 </th:block>
 <th:block layout:fragment="script">
 	<script>
-		
+	$(document).ready(
+			function() {
+				$("#updatebtn").on("click",function(){
+					alert("수정되었습니다")
+				})
+			});
 	</script>
 </th:block>
 

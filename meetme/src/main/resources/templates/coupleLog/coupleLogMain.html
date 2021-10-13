@@ -2,68 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
+	
 <th:block layout:fragment="css">
 	<style>
 
+.fontCus {
+	text-align: center;
+}
 
-.cusImg {
-	width: 400px;
-	height: 400px;
-}
-.fontCus{
-	text-align:center;
-}
-img{
+img {
 	background-size: cover;
+}
+.dodamFont,h6{
+	 font-family: 'Gowun Dodum', sans-serif;
 }
 </style>
 </th:block>
 
 <th:block layout:fragment="content">
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<!-- 임시로 헤더 밑에가게 -->
-
-	<div style="text-align: right; padding-right: 20px;">
+	<div class="container py-7 py-lg-12 position-relative z-index-1">
+		<div style="text-align: right;">
 		<button class="btn btn-primary" style="font-size: 12px"
-			onclick="location.href='./coupleLogRecord'">새로운 추억 기록하기</button>
-	</div>
-	<br>
-
-
-
-	<div class="container-fluid px-0 position-relative z-index-1">
-		<div id="projects" data-isotope='{"layoutMode": "masonry"}'
-			class="row g-0">
+			onclick="location.href='./coupleLogRecord'">Record Our Memory</button>
+		</div>	<!-- END OF 버튼 -->
+		<br>
+		<div id="projects" data-isotope='{"layoutMode": "masonry"}' class="row g-2">
 			<th:block th:if="${logList} != null">
-				<div class="col-md-6 col-lg-3 mb-3 figma grid-item"
+				<div class="col-md-6 col-lg-3 design development grid-item"
 					th:each="c: ${logList}">
 					<a th:href="@{|/coupleLog/logOne?logId=${c.logId}|}"
-						class="card-hover"> <!-- <img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
-						class="img-fluid img-zoom"> -->
-						<div class="overflow-hidden position-relative mb-4">
-						<!-- 오류시 기본 이미지 -->
-							<img
-								th:attr="src=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}, alt=${c.imgUrl}"
-								class="img-fluid img-zoom cusImg">
-						</div> <!-- img th:src="${(comment.user.image != null && 
+						class="text-white bg-gradient-dark position-relative d-block overflow-hidden card-hover-2">
+						<!-- <img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
+						class="img-fluid img-zoom"> --> <!-- 오류시 기본 이미지 --> <img
+						th:attr="src=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}, alt=${c.imgUrl}"
+						class="img-fluid img-zoom cusImg"> <!-- img th:src="${(comment.user.image != null && 
 						!#strings.isEmpty(comment.user.image)) ? comment.user.image :
 						 '/images/default-user.png'}" th:alt="${comment.user.nameSurname}"/> -->
 
-						<div class="fontCus">
-						<h5 class="mb-1" th:text="${c.logTitle}"></h5> 
-						<span class="text-muted"
-						data-splitting th:text="${c.logUpdated}"></span>
+						<div
+							class="card-hover-2-overlay position-absolute start-0 top-0 w-100 h-100 d-flex px-4 py-5 flex-column justify-content-between dodamFont">
+							<div class="card-hover-2-header w-100">
+								<!-- <div class="card-hover-2-title">
+									<h6 class="fs-5 mb-2" style="font-weight:bold;" ></h6>
+								</div> -->
+								<p class="mb-0" th:text="${c.logTitle}"></p>
+								<p class="mb-0" ></p>
+							</div>
+							<div class="card-hover-2-footer w-100 mt-auto">
+								<span class="tags d-block flex-grow-1"></span> 
+								<span class="card-hover-2-footer-link"> 
+								<span th:text="${c.logUpdated}"></span>
+								</span>
+							</div>
 						</div>
 					</a>
 					<!-- A 태그 끝-->
-				</div>
+				</div>	<!-- LOG LIST 끝 -->
 			</th:block>
 		</div>
 	</div>
+	<!-- container-fluid -->
 </th:block>
 <th:block layout:fragment="script">
 	<script>
