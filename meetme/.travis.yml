@@ -9,7 +9,7 @@ branches:
 before_install:
   - chmod +x mvnw
   
-script: "./mvn clean pakage"
+script: "./mvnw clean pakage"
 
 # Travis CI 서버의 Home
 cache:
