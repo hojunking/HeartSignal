@@ -74,7 +74,7 @@
 										<h5 class="mb-4">Edit profile</h5>
 										<div class="row align-items-center">
 											<div class="col-md-12">
-												<div class="row pb-3 mb-3">
+												<div class="row pb-3 mb-3 border-bottom">
 													<label for="profileImage"
 														class="col-sm-2 col-form-label">ProfileImage</label>
 													<div class="col-sm-10">
@@ -84,8 +84,13 @@
 																id="updateImage"
 																accept="image/png, image/jpeg, image/gif">
 														</form>
+														<div id="imagebtn" class="col-sm-7" style="display:none;">
+														  <button class="btn btn-danger btn-sm btn-space"
+															id="image_cncl" type="button">수정취소</button>
+													      <button	class="btn btn-primary btn-sm" id="image_reg"
+															type="button">수정하기</button>
+														</div>
 														<div class="col-sm-7" style="display: block;">
-														<button id="button2">클릭연습</button>
 															<button class="btn btn-primary btn-sm" type="button"
 																id="imageUpdateBtn">수정</button>
 														</div>
@@ -100,7 +105,7 @@
 															readonly="readonly" th:value="${userInfo.email}">
 													</div>
 												</div>
-												<div class="row pb-3 mb-3">
+												<div class="row pb-3 mb-3 border-bottom">
 													<label for="pass1" class="col-sm-2 col-form-label">Password</label>
 													<div class="col-sm-10" id="u_password" style="display: none;">
 														<div class="form-group">
@@ -125,13 +130,13 @@
 															class="btn btn-primary btn-sm" id="password_reg"
 															type="button">수정하기</button>
 													</div>
-													<div class="col-sm-7" style="display: block;">
+													<div class="col-sm-10" style="display: block;">
 														<button class="btn btn-primary btn-sm" type="button"
 															id="passwordUpdateBtn">수정</button>
 													</div>
 												</div>
 
-												<div class="row pb-3 mb-3">
+												<div class="row pb-3 mb-3 border-bottom">
 													<label for="name" class="col-sm-2 col-form-label">Name</label>
 													<div class="col-sm-10">
 														<input type="text" class="form-control" id="name"
@@ -139,7 +144,7 @@
 													</div>
 												</div>
 
-												<div class="row pb-3 mb-3">
+												<div class="row pb-3 mb-3 border-bottom">
 													<label for="nickName"
 														class="col-sm-2 col-form-label">NickName</label>
 													<div class="col-sm-10">
@@ -169,7 +174,7 @@
 													</div>
 												</div>
 
-												<div class="row pb-3 mb-3">
+												<div class="row pb-3 mb-3 border-bottom">
 													<label for="phoneNum"
 														class="col-sm-2 col-form-label">PhoneNumber</label>
 													<div class="col-sm-7">
@@ -235,7 +240,8 @@
 		</section>
 	</main>
 
-	<div class="tm-page-wrap mx-auto">
+
+<!-- <div class="tm-page-wrap mx-auto">
 		<section class="p-5 tm-container-outer tm-bg-white">
 			<div class="container">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
@@ -377,11 +383,12 @@
 							</div>
 
 						</form>
-					</div> <!-- col-sm-9 end -->
-				</div> <!-- row pb-3 mb-3 end -->
-			</div> <!-- container end -->
+					</div> col-sm-9 end
+				</div> row pb-3 mb-3 end
+			</div> container end
 		</section>
-	</div>
+	</div> --> 
+
 </th:block>
 
 <th:block layout:fragment="script">
@@ -785,7 +792,7 @@
 			
 			var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp)$");
 		    var maxSize = 5242880; //5MB
-			
+			//이미지 유효성 검사
 			function checkExtension(fileName, fileSize) {
 
 				if (fileSize >= maxSize) {
@@ -802,25 +809,39 @@
 				return true;
 			}
 		    
-			$('#button2').on('click',function(){
+/* 			$('#button2').on('click',function(){
 				let inputfile = document.getElementById('updateImage');
 				console.log($('#updateImage').find('legend').text());
 				//console.log($('#updateImage').find('input').eq(1).val());
-				/* console.log(inputfile);
+				console.log(inputfile);
 				let files = inputfile[0].file;
 				console.log(inputfile.files[0].size);
 				//console.log(inputfile);
 				if( ! checkExtension(inputfile[0].name, inputfile[0].size))
 					$('#updateImage').val('');
-					return; */
+					return; 
 					
-			});
+			}); */
 			//==============================================프로필 이미지 끝
 			
             //==============================================프로필 이미지 업데이트 시작            
-            
-            $('#imageUpdateBtn').on('click', function () {
+            //이미지 수정 버튼 클릭
+			$("#imageUpdateBtn").on('click', function () {
+				$("#imagebtn").css("display", "block");
+				$("#imageUpdateBtn").css("display", "none");
+			})
+			//이미지 수정 취소 버튼 클릭
+			$("#image_cncl").on('click', function () {
+				$("#imagebtn").css("display", "none");
+				$("#imageUpdateBtn").css("display", "block");
+			})
+            $('#image_reg').on('click', function () {
 
+            	if($('#updateImage').find('input').eq(1).val()==12345){
+            		alert("사진을 변경하시고 수정해주세요")
+            		return
+            	}
+            	
 				var form = $('#update_profileImage')[0];
 				// 코드로 동적으로 데이터 추가 가능.
 				var formData = new FormData(form);
@@ -836,7 +857,6 @@
 					cache: false,
 					timeout: 600000,
 					success: function (data) {
-						console.log("SUCCESS : ", data);
 						if(data){
 							swal('프로필사진이 수정되었습니다', '', 'success');
 						}else{

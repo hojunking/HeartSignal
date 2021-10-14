@@ -22,7 +22,7 @@
                             <nav class="d-md-flex" aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="#!">Home</a>
+                                        <a href="#">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active">
                                         Profile
@@ -58,14 +58,12 @@
                                                         <span class="small">[[${myAddress}]]</span>
                                                     </li>
                                                     <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-globe me-2 align-middle text-muted"></i>
-                                                        <a href="#!"
-                                                            class="small link-hover-decoration">https://emilydoe.com/</a>
+                                                        <i class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
+                                                        <span class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
                                                     </li>
                                                     <li class="d-flex align-items-stretch mb-2">
-                                                        <i
-                                                            class="bi bi-check fs-5 lh-1 text-success me-2 align-middle"></i>
-                                                        <span class="small">Available for hire</span>
+                                                        <i class="bi bi-envelope me-2 align-middle text-muted"></i>
+                                                        <a href="#" class="small link-hover-decoration">[[${userInfo.email}]]</a>
                                                     </li>
                                                     <li class="d-flex align-items-stretch mb-2">
                                                         <i class="bi bi-twitter me-2 align-middle text-muted"></i>

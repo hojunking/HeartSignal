@@ -4,6 +4,10 @@ import lombok.Data;
 
 @Data
 public class MyPageCourseVO {
+	
+	private String nickName;
+	private String imgUrl;
+	
 	private String userId;
 	private String courseId;
 	private String courseName;

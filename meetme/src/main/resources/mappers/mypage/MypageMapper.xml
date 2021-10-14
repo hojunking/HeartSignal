@@ -124,6 +124,8 @@
       FROM
 			(SELECT ROW_NUMBER()OVER(ORDER BY x.course_id DESC) rn,
 			  x.user_id,
+			  x.nickname,
+			  x.img_url,
 			  x.course_id,
 			  x.course_name,
 			  x.course_state,
@@ -134,6 +136,8 @@
 			(SELECT
 			  DISTINCT
 			  a.user_id,
+			  (SELECT e.nickname FROM user_info e WHERE e.user_id=a.user_id) nickname,
+              (SELECT f.img_url FROM img f WHERE f.img_id IN (SELECT img_id FROM user_info WHERE user_id=a.user_id))img_url,
 			  a.course_id,
 			  a.course_name,
 			  a.course_state,
@@ -146,6 +150,8 @@
 			SELECT
 			  DISTINCT
 			  a.user_id,
+			  (SELECT e.nickname FROM user_info e WHERE e.user_id=a.user_id) nickname,
+              (SELECT f.img_url FROM img f WHERE f.img_id IN (SELECT img_id FROM user_info WHERE user_id=a.user_id))img_url,
 			  a.course_id,
 			  a.course_name,
 			  a.course_state,
@@ -182,7 +188,7 @@
 		  c.thumbnail_href
 		FROM course a, course_order b, place c
 		WHERE a.course_id IN (SELECT course_id FROM course_like WHERE user_id = #{userId}) AND a.course_id=b.course_id AND b.place_id =c.place_id
-		UNION ALL
+		UNION
 		SELECT
 		  a.user_id,
 		  a.course_id,
