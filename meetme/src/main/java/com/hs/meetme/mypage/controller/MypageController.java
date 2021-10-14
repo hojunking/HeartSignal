@@ -8,23 +8,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hs.meetme.mypage.domain.Criteria;
-import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.notice.domain.NoticeVO;
-import com.hs.meetme.notice.mapper.NoticeMapper;
 import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.payment.domain.PaymentVO;
-import com.hs.meetme.payment.service.PaymentService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
 @Controller
@@ -195,4 +192,22 @@ public class MypageController {
 		System.out.println(noticeService.getNoticeList(vo));
 		return noticeService.getNoticeList(vo);
 	}
+	
+//	-------------------------------------------------------------
+	@PostMapping("/userTags")
+	public String userTags(List<UserTagsVO> list) {
+		
+		int result = mypageService.insertUserTags(list);
+		System.out.println(result);
+		
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/userTags")
+	public String userTags(Model model) {
+		model.addAttribute("tags", mypageService.getTags());
+		
+		return "security/userTags";
+	}
+	
 }

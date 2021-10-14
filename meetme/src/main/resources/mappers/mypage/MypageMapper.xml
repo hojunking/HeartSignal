@@ -24,7 +24,8 @@
   <!-- 태그 조회해서 오기 -->
   <select id="getTags" resultType="UserTagsVO">
     SELECT tag_id
-    FROM tags
+    FROM tags 
+    ORDER BY DBMS_RANDOM.VALUE
   </select>
   
   <!-- 나의 유저 태그 조회해서 가져오기 -->

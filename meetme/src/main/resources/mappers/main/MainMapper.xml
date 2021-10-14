@@ -17,6 +17,7 @@
 	    ON p.place_id = t.place_id
 	    WHERE p.place_id=#{placeId}
 	</select>
+	
 	<!-- 서울, 인천 -->
 	<select id="addressList" resultType="MainVO">
 		SELECT DISTINCT SUBSTR(ADDRESS,'1',INSTR(ADDRESS,' ',1,1)-1) ADDRESS 
@@ -46,7 +47,7 @@
 	</select>
 	
 	<select id="courseListReco" resultType="MainVO">
-		SELECT p.THUMBNAIL_HREF,c.COURSE_NAME, c.REGION, o.AVG_COST
+		SELECT p.THUMBNAIL_HREF,c.COURSE_ID,c.COURSE_NAME, c.REGION, o.AVG_COST
 		FROM course c , (select * from course_order where course_order = 1) o , PLACE p
         WHERE c.COURSE_ID = o.COURSE_ID AND o.PLACE_ID = p.PLACE_ID 
         ORDER BY c.COURSE_ID DESC

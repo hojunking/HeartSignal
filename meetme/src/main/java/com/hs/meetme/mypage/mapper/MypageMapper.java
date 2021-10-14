@@ -21,7 +21,7 @@ public interface MypageMapper {
 	public List<PaymentVO> readPayment(PaymentVO paymentVO);
 	
 	//태그 다 가져오기
-	public List<UserTagsVO> getTags(UserTagsVO userTagsVO);
+	public List<UserTagsVO> getTags();
 	//나의 취향 태그 가져 오기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 삭제

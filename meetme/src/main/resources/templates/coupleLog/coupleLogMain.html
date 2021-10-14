@@ -13,8 +13,9 @@
 img {
 	background-size: cover;
 }
-.dodamFont,h6{
-	 font-family: 'Gowun Dodum', sans-serif;
+.dodamFont,h6,.cusRec{
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight:600;
 }
 </style>
 </th:block>
@@ -22,8 +23,8 @@ img {
 <th:block layout:fragment="content">
 	<div class="container py-7 py-lg-12 position-relative z-index-1">
 		<div style="text-align: right;">
-		<button class="btn btn-primary" style="font-size: 12px"
-			onclick="location.href='./coupleLogRecord'">Record Our Memory</button>
+		<button class="btn btn-primary cusRec" style="font-size: 13px;"
+			onclick="location.href='./coupleLogRecord'">기록하기</button>
 		</div>	<!-- END OF 버튼 -->
 		<br>
 		<div id="projects" data-isotope='{"layoutMode": "masonry"}' class="row g-2">
