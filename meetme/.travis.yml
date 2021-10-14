@@ -10,7 +10,7 @@ before_install:
   - chmod +x ./meetme/mvnw
   - cd meetme
   
-script: "mvn clean pakage"
+script: "mvn clean package"
 
 # Travis CI 서버의 Home
 cache:
