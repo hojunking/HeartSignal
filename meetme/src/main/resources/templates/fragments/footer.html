@@ -88,6 +88,52 @@
                     <div class="col-sm-5 text-sm-end"><span class="small text-muted">© Assan. </span></div>
                 </div>
             </div>
+            
+            
+<!-- 커플 신청받기 모달창 -->
+<div class="modal fade" id="receiveLove" tabindex="-1" aria-labelledby="receiveLove" aria-hidden="true" 
+ data-bs-backdrop="static">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content border-0 ">
+             <div class="modal-header border-0 bg-white">
+                 <button type="button" class="btn-close text-reset p-0 m-0 size-20 center-both ms-auto"
+                            data-bs-dismiss="modal" aria-label="Close">
+                           <i class="bi bi-x fs-5"></i>
+                        </button>
+             </div>
+             <div class="modal-body">
+                 <div class="position-relative  shadow-lg overflow-hidden">
+                     <div class="position-relative bg-white overflow-hidden">
+						<!--Get started image-->
+                         <div class="position-relative my-4 overflow-hidden size-180 mx-auto rounded-circle" id="findLoveInfo">
+                                <img src="/img/coupleImage1.jpg" alt="" class="img-fluid">
+                            </div>
+                     </div>
+                     <div class="px-2 bg-white position-relative pt-2 mb-2">
+                         <h4 class="mb-4 text-center" id="nickFind">커플이메일을 입력해주세요</h4>
+                         
+                             <div class="mb-3">
+                                 <input type="email" name="email" placeholder="Email address" class="form-control rounded-pill px-4">
+                             		<small class="d-block text-danger my-2" id="noFind"></small>
+                             		
+                             </div>
+                             <div class="d-grid">
+                                 <button type="button" class="btn btn-primary rounded-pill hover-shadow btn-hover-arrow hover-lift"
+                                 id="search">
+                                 <span>검색</span></button>
+                             </div>
+                             <br> 
+                     </div>
+                 </div>
+             </div>
+             <div class="modal-footer bg-white border-0" >
+                 <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>&nbsp;
+                 <button type="button" class="btn btn-primary btn-sm" id="request">커플신청</button>
+             </div>
+         </div>
+     </div>
+ </div>
+            
         </footer>
 </th:block>
 
