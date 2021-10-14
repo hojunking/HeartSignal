@@ -96,6 +96,8 @@ public class PostController {
 		String courseId = post.getCourseId();
 		model.addAttribute("list", pService.getPost(postId));
 		model.addAttribute("cmt", pService.commentCM(postId));
+		int count = pService.countCM(postId);
+		model.addAttribute("count",count);
 		if (courseId != null) {
 			model.addAttribute("course", pService.getCourse(courseId));
 		}

@@ -13,7 +13,7 @@ public class PostVO{
   
 	private String postId; //게시물 번호 시퀀스
 	private String postTitle; 
-	private String postContent;
+	private String postContent; 
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date postCreated;
 	private Date postUpdated;
@@ -26,5 +26,6 @@ public class PostVO{
 	private String postLikeCount; //게시글 추천수
 	private String nickname;
 	private String postCount;      //게시글 갯수
+	private String imgUrl; //프로필 사진 이미지
   
 }

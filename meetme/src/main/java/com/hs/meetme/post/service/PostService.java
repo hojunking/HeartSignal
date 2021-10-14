@@ -40,4 +40,5 @@ public interface PostService {
    public int getPostLike(PostVO vo);//게시글 좋아요 들고오기
    public int postLikeCancle(long postId,long userId);//좋아요 취소하기
    public int scrapCancel(long courseId, long userId);//코스 스크랩 취소
+   public int countCM(long postId);//댓글 갯수 세기
 }

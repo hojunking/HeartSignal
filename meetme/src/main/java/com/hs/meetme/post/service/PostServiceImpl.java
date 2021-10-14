@@ -147,6 +147,12 @@ public class PostServiceImpl implements PostService{
 	public int scrapCancel(long courseId, long userId) {
 		// TODO Auto-generated method stub
 		return pMapper.scrapCancel(courseId,userId);
+	}
+
+	@Override
+	public int countCM(long postId) {
+		// TODO Auto-generated method stub
+		return pMapper.countCM(postId);
 	}                                                                              
 
 	
