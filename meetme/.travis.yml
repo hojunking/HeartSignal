@@ -8,6 +8,7 @@ branches:
     
 before_install:
   - chmod +x ./meetme/mvnw
+  - cd meetme
   
 script: "mvn clean pakage"
 
