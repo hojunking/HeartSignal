@@ -134,6 +134,8 @@
 											.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님께 커플신청이 왔어요!"))
 											.append($('<p class="mb-0"/>').html(item.noticeDate)))))
 					.appendTo($("#noticeBlock"));
+				
+				
 				});
 
 				}
@@ -141,7 +143,22 @@
          }
         }); // 페이지 로드 종료
         
-        
+        /* var exampleModal = document.getElementById('exampleModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+          // Button that triggered the modal
+          var button = event.relatedTarget
+          // Extract info from data-bs-* attributes
+          var recipient = button.getAttribute('data-bs-whatever')
+          // If necessary, you could initiate an AJAX request here
+          // and then do the updating in a callback.
+          //
+          // Update the modal's content.
+          var modalTitle = exampleModal.querySelector('.modal-title')
+          var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+          modalTitle.textContent = 'New message to ' + recipient
+          modalBodyInput.value = recipient
+        })  모달창 각각 만들어진거에 대해 path*/
         	
         	
         	
