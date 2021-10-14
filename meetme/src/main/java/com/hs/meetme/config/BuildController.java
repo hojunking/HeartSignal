@@ -13,31 +13,33 @@ public class BuildController {
 	
 	@GetMapping("/vue")
 	public String vueIndex() {
-		return "/index";
+		return "index";
 	}
 	
 	@GetMapping("/createCourse")
 	public String createCourse(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		System.out.println(user);
 		
 		if(user == null) {
-			return "";
+			return "redirect:/login";
 		}
 		
-		return "/index";
+		return "index";
 	}
 	@GetMapping("/coupleCreateCourse")
 	public String coupleCreateCourse(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AccountVO user = (AccountVO) session.getAttribute("userSession");
-		String coupleId = user.getCoupleStatus();
+		String coupleStatus = user.getCoupleStatus();
 		
 		// 조건을 좀 더 확인 해야함.
-		if(user == null || !coupleId.equals("y")) {
-			return "";
+		if(user == null || !coupleStatus.equals("y")) {
+			return "redirect:/login";
 		}
-		return "/index";
+		
+		return "index";
 	}
 	
 	@GetMapping("/test")

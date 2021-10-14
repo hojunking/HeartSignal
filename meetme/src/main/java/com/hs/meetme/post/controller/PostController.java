@@ -75,19 +75,21 @@ public class PostController {
 	public String get_community(@PathVariable long postId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
-		String userId = null;
-		if(accountVO != null) {
-			userId = accountVO.getUserId();
+		
+		if(accountVO == null) {
+			return "redirect:/login";
 		}
 		
+		String userId = accountVO.getUserId();
+
 		PostVO post = pService.getPost(postId);
 		post.setUserId(userId);
 				
-		//좋아요 했으면 1 안했으면 0
+		// 좋아요 했으면 1 안했으면 0
 		int isLike = pService.getPostLike(post);
 		model.addAttribute("like", isLike);
 		
-		//
+		// 스크랩 했으면 1 안했으면 0
 		int isScraped = pService.getCourseScrap(post);
 		model.addAttribute("scrap", isScraped);
 		
@@ -97,8 +99,6 @@ public class PostController {
 		if (courseId != null) {
 			model.addAttribute("course", pService.getCourse(courseId));
 		}
-	
-		
 
 		pService.countHit(postId);
 
