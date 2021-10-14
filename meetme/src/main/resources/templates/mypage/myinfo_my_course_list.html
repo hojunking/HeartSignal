@@ -181,22 +181,19 @@
                                     <!--/.card-body-->
                                 </article>
                                 <!--/.article-->
+
 <!-- 예시 만들기 -->
 <th:block th:each="c: ${#numbers.sequence(0,list.size-1)}">
 <article class="card align-items-stretch flex-md-row mb-4 mb-md-7 border-0 no-gutters" data-aos="fade-up">
     <div class="col-lg-5">
-    <!-- 장소사진 나오는 부분 -->
+    <!-- 장소사진 나오는 부분 -->    
       <div class="swiper-container swiper-progress rounded-2 overflow-hidden shadow-lg">
           <div class="swiper-wrapper">
-              <div class="swiper-slide rounded-2 overflow-hidden">
-                  <img src="/assets/img/800x732/4.jpg" alt="" class="img-fluid rounded-2 position-relative">
+  <th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
+              <div th:if="${list[c].courseId==detail[d].courseId}" class="swiper-slide rounded-2 overflow-hidden">
+                  <img th:if="${list[c].courseId==detail[d].courseId}" th:src="${detail[d].thumbnailHref}" alt="" class="img-fluid rounded-2 position-relative" style="width:300px; height:280px; background-size:cover;">
               </div>
-              <div class="swiper-slide rounded-2 overflow-hidden">
-                  <img src="/assets/img/800x732/4.jpg" alt="" class="img-fluid rounded-2 position-relative">
-              </div>
-              <div class="swiper-slide rounded-2 overflow-hidden">
-                  <img src="/assets/img/800x732/4.jpg" alt="" class="img-fluid rounded-2 position-relative">
-              </div>
+  </th:block>
           </div>
           <div class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
           <!-- Add Arrows -->
@@ -220,34 +217,34 @@
                                                 </svg>
                                                 <span class="text-muted">3rd January</span>
                                             </span>
-                                            <a href="#!" class="small">Design</a>
+                                            <a th:if="${list[c].userId==session.userSession.userId }" href="#!" class="small">나의코스</a>
+                                            <a th:if="${list[c].userId!=session.userSession.userId }" href="#!" class="small">스크랩</a>
                                         </div>
                                         
-                                        <h3 class="mb-3 h2 mt-3">
-                                            <a href="#!" class="text-dark flex-grow-1 d-block" th:text="${list[c].courseName}">
+                                        <h3 class="mb-3 mt-3 h5 ">
+                                            <a th:href="|/courseDetail?courseId=${list[c].courseId}|" class="text-dark flex-grow-1 d-block" th:text="${list[c].courseName}">
                                             </a>
                                         </h3>
                                         <p class="mb-4 flex-grow-1 d-none d-lg-block" th:text="${list[c].region}">
                                         </p>
-                                        <span th:if="${list[c].userId==session.userSession.userId }" class="badge rounded-pill bg-info text-warning">나의코스</span>
-								        <span th:if="${list[c].userId!=session.userSession.userId }" class="badge rounded-pill bg-info text-danger">스크랩</span>
+                                        <span>
                                         	<th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
-								               <i th:if="${list[c].courseId==detail[d].courseId}" th:text="${detail[d].placeName}"></i>
+								              <a class="badge bg-primary badge-pill mb-1" th:if="${list[c].courseId==detail[d].courseId}" th:text="${detail[d].placeName}"></a>
 								            </th:block>
-								            
+								        </span>    
 								         		<div class="">
-								<p class="tm-recommended-price-link" style="font-size: 15px;">평균비용</p>
-								<p class="tm-recommended-price" th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
+								<p>
+								<span>평균합계비용 :</span> <span th:text="'₩ '+${list[c].sumCost}"></span>
+								</p>
 								<p><button th:data-courseId="${list[c].courseId}"
 								           th:data-userId="${list[c].userId}"
 								           onclick="courseDelFunc(this)">삭제</button></p>
 							</div>   
                                         <div class="d-flex mb-0 small align-items-center">
-                                            <img src="assets/img/avatar/7.jpg" alt=""
+                                            <img th:src="|/img/user/${list[c].imgUrl}|" alt=""
                                                 class="avatar sm me-2 rounded-circle">
                                             <span class="text-muted d-inline-block">By <a href="#!"
-                                                    class="text-dark">Anjum
-                                                    Al Habib</a></span>
+                                                    class="text-dark" th:text="${list[c].nickName}"></a></span>
                                         </div>
                                     </div>
                                     <!--/.card-body-->
@@ -276,7 +273,7 @@
                                                 </a>
                                             </li>
 									        <th:block th:each="num: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" >
-										      <li class="page-item active">
+										      <li class="page-item">
 										        <a class="page-link" th:href="${num}" th:text="${num}"></a>
 										      </li>
 										    </th:block>
@@ -315,58 +312,6 @@
             </section>                                          
 </main>
 
-
-			<div class="tm-page-wrap mx-auto">
-			<section class="p-5 tm-container-outer tm-bg-white">
-				<div class="container">
-					<div class="row">
-	  
-
-		<!-- Tab 4 -->
-		<div class="tab-pane fade show active">
-			<!-- 카드1 -->
-			<div>
-				<th:block th:each="c: ${#numbers.sequence(0,list.size-1)}">
-					<!-- (0,course.size-1) -->
-					<!-- Current Active Tab WITH "show active" classes in DIV tag -->
-					<div class="tm-recommended-place-wrap">
-						<div class="tm-recommended-place">
-							<img src="img/tm-img-06.jpg" alt="Image"
-								class="img-fluid tm-recommended-img">
-							<div class="tm-recommended-description-box">
-								<br>
-								<h3 class="tm-recommended-title"
-									th:text="${list[c].courseName}"></h3>
-									
-								<span th:if="${list[c].userId==session.userSession.userId }" class="badge rounded-pill bg-info text-warning">나의코스</span>
-								<span th:if="${list[c].userId!=session.userSession.userId }" class="badge rounded-pill bg-info text-danger">스크랩</span>
-								<!-- 코스 -->
-								<br>
-								<p class="tm-text-highlight" th:text="${list[c].region}" style="font-size: 15px;"></p>
-								<p class="tm-text-gray"></p>
-								<th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
-								  <i th:if="${list[c].courseId==detail[d].courseId}" th:text="${detail[d].placeName}"></i>
-								</th:block>
-							</div>
-							<!-- <a href="#" class="tm-recommended-price-box"> -->
-							<div class="tm-recommended-price-box">
-								<p class="tm-recommended-price-link" style="font-size: 15px;">평균비용</p>
-								<p class="tm-recommended-price" th:text="'₩ '+${list[c].sumCost}" style="font-size: 20px;"></p>
-								<p><button th:data-courseId="${list[c].courseId}"
-								           th:data-userId="${list[c].userId}"
-								           onclick="courseDelFunc(this)">삭제</button></p>
-							</div>
-							<!-- </a> -->
-						</div>
-					</div>
-			</th:block>
-			</div>
-		</div>
-
-					</div>
-				</div>
-			</section>
-		</div>
 </th:block>
 <!-- .main-content -->
 
@@ -437,7 +382,7 @@
 		      }) */
 		      
 		      //페이징 클릭
-		      $(".pull-right a").on("click", function(e){
+		      $(".page-item a").on("click", function(e){
 		        e.preventDefault(); //a,submit 기본기능 막기
 		    	var p = $(this).attr("href");
 		    	$('[name="pageNum"]').val(p);
