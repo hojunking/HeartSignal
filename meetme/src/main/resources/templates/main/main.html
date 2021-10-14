@@ -178,48 +178,47 @@
 	<section class="position-relative pb-lg-7 overflow-hidden mt-5">
 		<div class="container pb-7 pt-7 pt-lg-0 z-index-1">
 			<div class="row align-items-center justify-content-between">
-				<div class="order-last order-lg-1 col-lg-5">
-					<h2 class="mb-4 display-4 cusFontBold" data-aos="fade-right">Try Make the Course!
+				<div class="order-last order-lg-1 col-lg-6">
+					<h2 class="mb-4 display-4 cusFontBold" data-aos="fade-right">Try Make the Course
 					</h2>
-					<!-- <p class="mb-5" data-aos="fade-up">
-						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-						industries for previewing layouts and visual mockups.
-					</p> -->
+					<p class="mb-5" data-aos="fade-up">
+						
+					</p>
 					<div class="row">
-						<div class="col-sm-6">
-							<ul class="list-unstyled d-flex flex-column mb-0">
+						<div class="col-sm-8">
+							<ul class="list-unstyled d-flex flex-column mb-0 cusFont">
 								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
 									<i
 										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
 									<div class="flex-grow-1">
-										Mobile friendly
+										원하는 태그를 골라보세요
 									</div>
 								</li>
 								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
 									<i
 										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
 									<div class="flex-grow-1">
-										Latest bootstrap 5
+										우리만의 데이트 코스를 만들어보세요
 									</div>
 								</li>
 								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
 									<i
 										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
 									<div class="flex-grow-1">
-										Modern & elegant
+										직접 만든 데이트 코스로 데이트를 해보세요
 									</div>
 								</li>
-								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+								<!-- <li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
 									<i
 										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
 									<div class="flex-grow-1">
 										Reusable components
 									</div>
-								</li>
+								</li> -->
 							</ul>
 						</div>
-						<div class="col-sm-6">
-							<ul class="list-unstyled d-flex flex-column mb-0">
+						<div class="col-sm-4">
+							<!-- <ul class="list-unstyled d-flex flex-column mb-0">
 								<li class="mb-3 d-flex" data-aos="fade-up" data-aos-delay="100">
 									<i
 										class="bi bi-check fs-5 me-2 lh-1 align-middle size-25 center-both bg-tint-success text-success rounded-circle"></i>
@@ -248,7 +247,7 @@
 										Free lifetime updates
 									</div>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 					</div>
 					<div class="mt-5" data-aos="fade-up" data-aos-delay="250">
@@ -261,7 +260,7 @@
 				<div class="col-lg-6 col-md-10 ms-lg-auto order-1 order-lg-last mb-6 mb-lg-0">
 					<div class="position-relative position-absolute-lg w-lg-45 end-0 top-0" data-aos="fade-left"
 						data-aos-delay="150">
-						<img src="assets/img/800x732/1.jpg" alt=""
+						<img th:src="@{/img/oldCouple.jpg}" alt=""
 							class="img-fluid position-relative shadow-lg">
 					</div>
 				</div>
@@ -275,13 +274,13 @@
 			<div class="row mb-7 align-items-end">
 				<div class="col-lg-9 mb-5 mb-lg-0">
 					<h2 class="mb-3 display-4" data-aos="fade-right">인기 코스</h2>
-					<p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
-						사람들이 많이 찾는 코스에요~!
+					<p class="mb-0 w-lg-75 lead cusFont" data-aos="fade-right" data-aos-delay="150">
+						사람들이 많이 찾는 코스에요!
 					</p>
 				</div>
 				<div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
-					<a href="/post/community_list" class="link-hover-underline h6">
-						더 많은 코스 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+					<a href="/post/community_list" class="link-hover-underline h6 cusFont">
+						코스 더보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
 					</a>
 				</div>
 			</div>
@@ -294,9 +293,9 @@
 					<div class="swiper-container swiper-3 overflow-visible">
 						<div class="swiper-wrapper">
 							<!--Swiper-slide -->
-							<div class="swiper-slide" th:each="c: ${#numbers.sequence(0, 5)}">
-								<th:block >
-								<a href="#!" class="card-over d-block card-hover overflow-hidden">
+							<div class="swiper-slide" th:each="c: ${#numbers.sequence(0, 4)}">
+								<th:block>
+								<a th:href="@{|/courseDetail?courseId=${reco[c].courseId}|}" class="card-over d-block card-hover overflow-hidden">
 									<img th:src="${reco[c].thumbnailHref}" style="width:352px; height:396px; background-size: cover;" alt="" class="img-fluid img-zoom">
 									<div class="card-overlay p-4 d-flex align-items-end text-white">
 										<ul class="list-unstyled overlay-items">
@@ -349,7 +348,7 @@
 					<!-- <div class="mb-3" data-aos="fade-up">
 						<h6 class="mb-3 text-muted">Focus on whats important</h6>
 					</div> -->
-					<h1 class="mb-4 display-4 cusFontBold" data-aos="fade-up" data-aos-delay="100">Try the CoupleLog!</h1><br>
+					<h1 class="mb-4 display-4 cusFontBold" data-aos="fade-up" data-aos-delay="100">Try the CoupleLog</h1><br>
 					<!-- <p class="mb-5 w-lg-80" data-aos="fade-up" data-aos-delay="150">
 						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
 						industries for layouts and visual mockups.
@@ -436,7 +435,7 @@
 							class="position-absolute end-0 bottom-0 width-70 h-auto fill-warning"
 							data-inject-svg>
 						<!--Feature image-->
-						<img th:src="@{/img/Hawaii.jpg}" style="border-radius:5px;" alt=""
+						<img th:src="@{/img/Hand.jpg}" alt=""
 							class="img-fluid flip-x position-relative shadow-lg">
 					</div>
 				</div>
@@ -447,7 +446,7 @@
 	<section class="position-relative bg-light">
 		<div class="container px-lg-12 pt-9 pb-5 position-relative z-index-1">
 			<div class="mb-5 px-lg-12 text-center" data-aos="fade-up" data-aos-delay="100">
-				<h5 class="mb-0">Hate is always foolish, but Love is always wise.</h5>
+				<h5 class="mb-0 cusFont">Hate is always foolish, but Love is always wise.</h5>
 			</div>
 		</div>
 	</section>

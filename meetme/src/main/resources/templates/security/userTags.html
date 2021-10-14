@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+<th:block layout:fragment="css">
+	<style>
+.TagsTitle {
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+
+.cusBtn {
+	font-size: 14px;
+}
+
+.finalBtn {
+	text-align: center;
+}
+
+.submitBtn {
+	padding: 10px;
+	font-size: 14px;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+</style>
+</th:block>
+<th:block layout:fragment="content">
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<div class="container py-7 py-lg-9">
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<div class="d-flex align-items-center justify-content-center mb-4">
+					<h6 class="mb-0 me-2 me-lg-4 TagsTitle">Choose Your Tags!</h6>
+					<span class="border-top d-block flex-grow-1 border-light"></span>
+				</div>
+				<input type="text" class="insertcustom form-control"
+					placeholder="원하는 태그를 선택해주세요"> <br>
+					
+				
+				<th:block th:each="t: ${#numbers.sequence(0, 15)}">
+					<button type="button" class="btn btn-primary m-1 cusBtn"
+						data-bs-toggle="tooltip" data-bs-placement="top" title="Try me!"
+						th:text="${tags[t].tagId}"></button>
+				</th:block>
+
+				<div class="moreTags">
+					<th:block th:each="t: ${#numbers.sequence(16, tags.size-1)}">
+						<button type="button" class="btn btn-primary m-1 cusBtn"
+							data-bs-toggle="tooltip" data-bs-placement="top" title="Try me!"
+							th:text="${tags[t].tagId}"></button>
+					</th:block>
+				</div>
+				
+				
+				<br> <br>
+				<!-- 더보기, 접기 버튼 -->
+				<div>
+					<div class="col text-center">
+						<button type="button" id="regToggle" class="btn btn-primary btn-circle-ripple p-0 size-70 rounded-pill fs-3 lh-1 center-both me-4 mb-3">
+						<div>❤</div>
+						</button>
+					</div>
+				</div>
+				
+				
+				<div class="finalBtn">
+					<button type="submit"
+						class="btn btn-rise btn-outline-primary m-2 btn-lg submitBtn">
+						<div class="btn-rise-bg bg-primary"></div>
+						<div class="btn-rise-text">등록</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Of Container -->
+
+
+
+</th:block>
+<th:block layout:fragment="script">
+	<script>
+		$(function() {
+			var tag = " ";
+
+			$(".cusBtn").on("click", function() {
+				var tagId = $(this).text();
+				console.log(tagId);
+				tag += tagId + " ";
+				$(".insertcustom").attr("value", tag);
+			});
+			/* tcustom click 이벤트 */
+
+		});
+
+		// 숨겨진 태그
+		let moreCourse = $(".moreTags");
+		$(moreCourse).hide();
+
+		// 더보기 , 접기
+		$("#regToggle").click(function() {
+			$(moreCourse).slideToggle(500);
+			if ($(this).text() == '❤') {
+				$(this).text('❤');
+			} else {
+				$(this).text('❤');
+			}
+		});
+	</script>
+</th:block>
+</html>

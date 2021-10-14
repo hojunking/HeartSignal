@@ -24,6 +24,7 @@ public class MainController {
 		//model.addAttribute("course",service.courseList());
 		model.addAttribute("address",service.addressList());
 		model.addAttribute("reco",service.courseListReco());
+		
 		/* model.addAttribute("regCourse",service.regionCourse()); */
 		return "main/main";
 	}

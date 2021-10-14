@@ -134,5 +134,23 @@ public class MypageServiceImpl implements MypageService {
 		return mypageMapper.readPayment(paymentVO);
 	}
 
+	//태그 다 가져오기
+		
+	@Override
+	public int insertUserTags(List<UserTagsVO> tagList) {
+		
+		int result = 0;
+		for(UserTagsVO tag:tagList) {
+			result += mypageMapper.insertUserTags(tag);
+		}
+		return result;
+	}
+
+	@Override
+	public List<UserTagsVO> getTags() {
+		
+		return mypageMapper.getTags();
+	}
+
     
 }

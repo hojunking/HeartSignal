@@ -22,6 +22,10 @@ public interface MypageService {
 	//나의 취향 업데이트
 	public int UpdateUserTags(UserTagsVO userTagsVO);
 	
+	public int insertUserTags(List<UserTagsVO> tagList);
+	
+	public List<UserTagsVO> getTags();
+	
 	//내 코스 조회
 	public List<MyPageCourseVO> getCourseList(Criteria cri, String userId);
 	//내 코스 페이징 위한 갯수

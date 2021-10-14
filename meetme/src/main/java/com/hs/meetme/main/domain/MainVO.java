@@ -10,6 +10,7 @@ public class MainVO {
 	private String region;
 	private String placeId;
 	private String courseName;
+	private String courseId;
 	private String avgCost;
 	private String address;
 	private String addressSec;
