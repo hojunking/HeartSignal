@@ -10,11 +10,20 @@
 </select>
 
 <select id="coupleRequest" resultType="NoticeVO">
-	SELECT *
-	FROM NOTIFICATION
-	WHERE USER_RECEIVED = #{userReceived}
-	AND POST_ID IS NULL
-	ORDER BY NOTICE_DATE DESC
+	SELECT U.NAME,
+			U.IMG_URL,
+			N.*
+	FROM NOTIFICATION N
+	JOIN (SELECT US.NAME,
+				 I.IMG_URL,
+				 US.USER_ID AS USER_ID
+	        FROM USER_INFO US
+	        JOIN IMG I
+	        ON US.IMG_ID = I.IMG_ID) U
+	ON U.USER_ID = N.USER_SENT
+	WHERE N.USER_RECEIVED=#{userReceived}
+	AND N.POST_ID IS NULL
+	ORDER BY N.NOTICE_DATE DESC
 </select>
 
 <delete id="deleteNotice" parameterType="NoticeVO">

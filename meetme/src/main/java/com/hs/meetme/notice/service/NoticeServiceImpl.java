@@ -23,7 +23,7 @@ public class NoticeServiceImpl implements NoticeService{
 		return map.insertNotice(vo);
 	}
 	@Override
-	public NoticeVO coupleRequest(NoticeVO vo) {
+	public List<NoticeVO> coupleRequest(NoticeVO vo) {
 		return map.coupleRequest(vo);
 	}
 

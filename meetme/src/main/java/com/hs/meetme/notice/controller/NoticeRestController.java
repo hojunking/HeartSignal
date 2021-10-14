@@ -1,7 +1,11 @@
 package com.hs.meetme.notice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +21,8 @@ public class NoticeRestController {
 	
 	@PostMapping("/request") //커플메인에서 커플요청 시 notice INSERT
 	public String userRequest(NoticeVO vo) {
-		MyPageUserInfoVO myVo =new MyPageUserInfoVO();
 		
+		MyPageUserInfoVO myVo =new MyPageUserInfoVO();
 		myVo.setUserId(vo.getUserSent());
 		myVo= userService.getMyinfo(myVo);
 		
@@ -31,8 +35,12 @@ public class NoticeRestController {
 	}
 	
 	
-	@GetMapping("/getRequest") //커플요청정보만 알려주기
-	public NoticeVO getRequest(NoticeVO vo) {
-		return noticeService.coupleRequest(vo);
+	@GetMapping("/getRequest/{userId}") //커플요청정보만 알려주기 리스트로 뿌려야할 가능성
+	public List<NoticeVO> getRequest(@PathVariable String userId, NoticeVO vo) {
+		System.out.println("여기까지 왔으면 보여줘 "+ userId);
+		vo.setUserReceived(userId);				//receiver의 아이디
+		List<NoticeVO> list = noticeService.coupleRequest(vo);	//신청정보들고오기
+		System.out.println(list); 
+		return list;
 	}
 }
