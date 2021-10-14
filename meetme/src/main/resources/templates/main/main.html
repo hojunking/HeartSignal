@@ -5,9 +5,16 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="assets/vendor/masterslider/style/masterslider.css">
 	<link rel="stylesheet" href="assets/vendor/masterslider/skins/black-1/style.css">
+<style>
+.cusFont{
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight:bold;
+}
+.cusFontBold{
+	font-family: 'Black Han Sans', sans-serif;
+}
+</style>
 </th:block>
-
-
 <th:block layout:fragment="content">
 <main>
 	<!--page-hero-master-slider-->
@@ -172,13 +179,12 @@
 		<div class="container pb-7 pt-7 pt-lg-0 z-index-1">
 			<div class="row align-items-center justify-content-between">
 				<div class="order-last order-lg-1 col-lg-5">
-					<h2 class="mb-4 display-4" data-aos="fade-right">Everything you need to build a stunning
-						website
+					<h2 class="mb-4 display-4 cusFontBold" data-aos="fade-right">Try Make the Course!
 					</h2>
-					<p class="mb-5" data-aos="fade-up">
+					<!-- <p class="mb-5" data-aos="fade-up">
 						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
 						industries for previewing layouts and visual mockups.
-					</p>
+					</p> -->
 					<div class="row">
 						<div class="col-sm-6">
 							<ul class="list-unstyled d-flex flex-column mb-0">
@@ -246,8 +252,8 @@
 						</div>
 					</div>
 					<div class="mt-5" data-aos="fade-up" data-aos-delay="250">
-						<a href="#!" class="btn btn-primary">
-							Learn more <i class="bi bi-arrow-right-short fs-4 align-middle lh-1 ms-1"></i>
+						<a th:href="@{/createCourse}" class="btn btn-primary">
+							코스 만들기 <i class="bi bi-arrow-right-short fs-4 align-middle lh-1 ms-1"></i>
 						</a>
 					</div>
 
@@ -340,15 +346,14 @@
 		<div class="container pb-7 pb-lg-12 position-relative">
 			<div class="row align-items-center justify-content-lg-around">
 				<div class="col-lg-6 order-last order-lg-1">
-					<div class="mb-3" data-aos="fade-up">
+					<!-- <div class="mb-3" data-aos="fade-up">
 						<h6 class="mb-3 text-muted">Focus on whats important</h6>
-					</div>
-					<h1 class="mb-4 display-4" data-aos="fade-up" data-aos-delay="100">Let us handle your
-						business online</h1>
-					<p class="mb-5 w-lg-80" data-aos="fade-up" data-aos-delay="150">
+					</div> -->
+					<h1 class="mb-4 display-4 cusFontBold" data-aos="fade-up" data-aos-delay="100">Try the CoupleLog!</h1><br>
+					<!-- <p class="mb-5 w-lg-80" data-aos="fade-up" data-aos-delay="150">
 						Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
 						industries for layouts and visual mockups.
-					</p>
+					</p> -->
 					<div class="position-relative z-index-1">
 						<!--Feature icon card-->
 						<div class="d-flex mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="150">
@@ -363,13 +368,13 @@
 
 							<!--Feature text-->
 							<div>
-								<h5>
-									500+ Reusable components
+								<h5 class="cusFont">
+									우리의 일상을 기록해보세요
 								</h5>
-								<p class="mb-0 w-lg-85">
+								<!-- <p class="mb-0 w-lg-85">
 									Purus faucibus pulvinar elementum nulla pharetra diam sit
 									amet.
-								</p>
+								</p> -->
 							</div>
 						</div>
 						<!--Feature icon card-->
@@ -385,13 +390,13 @@
 
 							<!--Feature text-->
 							<div>
-								<h5>
-									Beautifully designed layouts
+								<h5 class="cusFont">
+									사진으로 기억을 남겨보세요
 								</h5>
-								<p class="mb-0 w-lg-85">
+								<!-- <p class="mb-0 w-lg-85">
 									Viverra accumsan mauris rhoncus aenean vel elit
 									scelerisque mauris.
-								</p>
+								</p> -->
 							</div>
 						</div>
 						<!--Feature icon card-->
@@ -407,17 +412,23 @@
 
 							<!--Feature text-->
 							<div>
-								<h5>
-									Clean & well coded
+								<h5 class="cusFont">
+									함께 데이트 코스를 만들어보세요
 								</h5>
-								<p class="mb-0 w-lg-85">
+								<!-- <p class="mb-0 w-lg-85">
 									Leo vel fringilla nulla etiam. Eget lorem dolor
 									sed viverra ipsum.
-								</p>
+								</p> -->
+								<div class="mt-5" data-aos="fade-up" data-aos-delay="250">
+								<a th:href="@{/coupleMain3}" class="btn btn-primary">
+								커플로그 <i class="bi bi-arrow-right-short fs-4 align-middle lh-1 ms-1"></i>
+								</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 				<div class="col-lg-6 order-1 order-lg-last mb-5 mb-lg-0" data-aos="fade-right">
 					<div class="position-relative  pe-4 pb-4">
 						<!--Pattern vector-->
@@ -425,7 +436,7 @@
 							class="position-absolute end-0 bottom-0 width-70 h-auto fill-warning"
 							data-inject-svg>
 						<!--Feature image-->
-						<img src="assets/img/900x1000/1.jpg" alt=""
+						<img th:src="@{/img/Hawaii.jpg}" style="border-radius:5px;" alt=""
 							class="img-fluid flip-x position-relative shadow-lg">
 					</div>
 				</div>
