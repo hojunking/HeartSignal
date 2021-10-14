@@ -1,6 +1,7 @@
 package com.hs.meetme.notice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class NoticeRestController {
 	@Autowired NoticeService noticeService;
 	@Autowired MypageService userService;
 	
-	@PostMapping("/request")
+	@PostMapping("/request") //커플메인에서 커플요청 시 notice INSERT
 	public String userRequest(NoticeVO vo) {
 		MyPageUserInfoVO myVo =new MyPageUserInfoVO();
 		
@@ -29,4 +30,9 @@ public class NoticeRestController {
 		return "요청을 보냈습니다.";
 	}
 	
+	
+	@GetMapping("/getRequest") //커플요청정보만 알려주기
+	public NoticeVO getRequest(NoticeVO vo) {
+		return noticeService.coupleRequest(vo);
+	}
 }

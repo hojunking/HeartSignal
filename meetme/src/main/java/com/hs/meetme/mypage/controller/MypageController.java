@@ -134,6 +134,9 @@ public class MypageController {
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		if(accountVO == null) {
+			return "redirect:/login";
+		}
 		String userId = accountVO.getUserId();
 		
 		myPageUserInfoVO.setUserId(userId);

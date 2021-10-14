@@ -42,7 +42,8 @@
 							class="width-60 h-auto position-absolute start-0 bottom-0 fill-primary ms-n4 mb-n4">
 						<!-- <img src="assets/img/projects/case1.jpg" alt=""
 							class="img-fluid mt-lg-n12 mt-n7 position-relative"> -->
-						<div id="map" class="mt-lg-n12 mt-n7 position-relative" style="width:100%; max-width: 1920px; max-height:1080px"></div>
+						<div id="map" class="mt-lg-n12 mt-n7 position-relative"
+							style="width:100%; max-width: 1920px; max-height:1080px"></div>
 					</div>
 				</div>
 			</div>
@@ -54,140 +55,121 @@
 		<div class="container pb-7 pb-lg-12">
 			<div class="row">
 				<div class="col-lg-10 col-xl-9 mx-auto mb-5 mb-md-0">
-					<blockquote
-						class="blockquote ms-3 position-relative ps-5 ps-lg-9 border-start border-3 border-primary mb-7 mb-lg-12"
-						data-aos="fade-up">
-						<div class="d-flex position-absolute start-0 top-0 mt-4 ms-n4">
-							<img src="assets/img/avatar/4.jpg" alt="Image"
-								class="avatar lg shadow-lg rounded-pill p-1 bg-white">
-						</div>
-						<div class="ms-3">
-							<!--Quote icon-->
-							<img class="fill-primary opacity-20 width-25 h-auto mb-3"
-								src="assets/img/vectors/quote-sign.svg" alt="" data-inject-svg>
-							<p class="mb-4 fs-2 text-secondary lh-sm" th:text="${detail[0].placeName}">
-								placeName
-							</p>
-							<div>
-								<h6 class="mb-0">
-									Gunjan Sharma
-								</h6>
-								<small class="text-muted">Head of Marketing at Creative_DM</small>
+					<th:block th:each="course : ${detail}">
+						<blockquote
+							class="blockquote ms-3 position-relative ps-5 ps-lg-9 border-start border-3 border-primary mb-7 mb-lg-12"
+							data-aos="fade-up" th:data-lat="${course.latitude}" th:data-lng="${course.longtitude}">
+							<div class="ms-3">
+								<!--Quote icon-->
+								<img class="fill-primary opacity-20 width-25 h-auto mb-3"
+									src="assets/img/vectors/quote-sign.svg" alt="" data-inject-svg>
+								<p class="mb-4 fs-2 text-secondary lh-sm" th:text="${course.courseComment}">
+									placeName
+								</p>
+								<div>
+									<h6 class="text-muted" th:text="${course.placeName}">
+										Gunjan Sharma
+									</h6>
+								</div>
+								<img th:src="${course.thumbnailHref}" alt="Image"
+									class="img-fluid mb-4 position-relative">
 							</div>
-							<img src="assets/img/projects/case3.jpg" alt="Image" class="img-fluid mb-4 position-relative">
-						</div>
-					</blockquote>
+						</blockquote>
+					</th:block>
 				</div>
 			</div>
 		</div>
 	</section>
 </th:block>
 <th:block layout:fragment="script">
-	 <!-- 네이버 지도 -->
-	 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8"></script>
-	<script>
-		$(function(){
-			let locations = [];
-			let centerLat = 0;
-			let centerLng = 0;
-			let markers = new Array(); // 마커 담는 배열 
-			let infoWindows = new Array(); //정보창을 담는 배열
+	<!-- 네이버 지도 -->
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8">
+	</script>
+	<script th:inline="javascript">
+		// 페이지 로드
+		$(function () {
+			// 코스 정보
+			/*<![CDATA[*/
+			const detail = /*[[${detail}]]*/ '';
+			/*]]*/
 
-			let mapHeight = parseInt($('#map').css('width'))*0.51;
+			let locations = []; // 코스 내의 장소 좌표 정보
+			let centerLat = 0; // 지도 중심 좌표
+			let centerLng = 0; // 지도 중심 좌표
+
+			// 지도 사이즈 반응형
+			let mapHeight = parseInt($('#map').css('width')) * 0.51;
 
 			$('#map').css('height', mapHeight);
-			
-			$(window).resize(()=>{
+
+			$(window).resize(() => {
 				$('#map').css('height', mapHeight);
 			});
+			// 지도 사이즈 반응형
 
+			// 코스 내 장소 좌표 정보 저장
+			for (let c of detail) {
+				let course = {
+					lat: c.latitude,
+					lng: c.longtitude
+				};
+				locations.push(course);
+				// 코스 내 장소 좌표 정보 저장
+
+				// 중심 좌표 계산
+				centerLat += parseFloat(c.latitude);
+				centerLng += parseFloat(c.longtitude);
+			}
+			centerLat = centerLat / detail.length;
+			centerLng = centerLng / detail.length;
+			// 중심 좌표 계산
+
+			// 지도 생성
 			let map = new naver.maps.Map('map', {
-				 center: new naver.maps.LatLng(centerLat, centerLng),
-				 zoom: 10
+				center: new naver.maps.LatLng(centerLat, centerLng),
+				zoom: 10
 			});
-		})
+			// 지도 생성
 
+			// // 마커 옵션
+			// let markerOptions = {
+			// 	map: map,
+			// 	icon: {
+			// 		url: "https://img.icons8.com/plasticine/100/000000/marker.png",
+			// 		size: new naver.maps.Size(50, 52),
+			// 		origin: new naver.maps.Point(0, 0),
+			// 		anchor: new naver.maps.Point(25, 26)
+			// 	}
+			// };
+			// // 마커 옵션
 
+			// 마커 생성
+			let marker;
 
-		//코스 있으면 네이버지도에서 해주기!
-		// if (course != null) {
-		// 	for (let item of course) {
-		// 		let info = {
-		// 			place: item.placeName,
-		// 			lat: item.latitude,
-		// 			lng: item.longtitude
-		// 		}
-		// 		locations.push(info);
-		// 		centerLat += parseFloat(item.latitude);
-		// 		centerLng += parseFloat(item.longtitude);
-		// 	}
-		// 	console.log(centerLat, centerLng);
-		// 	centerLat = centerLat / course.length;
-		// 	centerLng = centerLng / course.length;
-		// 	console.log(locations);
-		// 	console.log(centerLat, centerLng);
+			for (let c of locations) {
+				marker = new naver.maps.Marker({
+					map: map,
+					title: c.place,
+					position: new naver.maps.LatLng(c.lat, c.lng),
+					icon: {
+						url: "https://img.icons8.com/officel/32/000000/place-marker--v2.png",
+						size: new naver.maps.Size(50, 52),
+						origin: new naver.maps.Point(0, 0),
+						anchor: new naver.maps.Point(25, 26)
+					}
+				});
+				naver.maps.Event.addListener(marker, 'click', () => {
+					let loc = $('blockquote[data-lat="' + c.lat + '"][data-lng="' + c.lng + '"]');
+					let offset = $(loc).offset();
+					$('html, body').animate({
+						scrollTop: (offset.top - ($(window).height())/3)
+					},'fast', 'linear');
+				});
+			}
+			// 마커 생성
 
-		// 	var map = new naver.maps.Map('map', {
-		// 		center: new naver.maps.LatLng(centerLat, centerLng),
-		// 		zoom: 10
-		// 	});
-
-
-		// 	var markerOptions = {
-		// 		map: map,
-		// 		icon: {
-		// 			url: "https://img.icons8.com/plasticine/100/000000/marker.png",
-		// 			size: new naver.maps.Size(50, 52),
-		// 			origin: new naver.maps.Point(0, 0),
-		// 			anchor: new naver.maps.Point(25, 26)
-		// 		}
-		// 	};
-
-		// 	for (var i = 0; i < locations.length; i++) {
-		// 		console.log();
-		// 		var marker = new naver.maps.Marker({
-		// 			map: map,
-		// 			title: locations[i].place,
-		// 			position: new naver.maps.LatLng(locations[i].lat, locations[i].lng),
-		// 			icon: {
-		// 				url: "https://img.icons8.com/officel/32/000000/place-marker--v2.png",
-		// 				size: new naver.maps.Size(50, 52),
-		// 				origin: new naver.maps.Point(0, 0),
-		// 				anchor: new naver.maps.Point(25, 26)
-		// 			}
-		// 		});
-
-
-
-		// 		//정보창
-		// 		var infoWindow = new naver.maps.InfoWindow({
-		// 			content: '<div style="width:200px; text-align:cneter;padding:10px"><b>' + locations[i]
-		// 				.place + '</b></div>'
-		// 		});
-
-		// 		markers.push(marker); //생성한 마커를 담는다
-		// 		infoWindows.push(infoWindow); //생성한 정보창을 담는다. 
-		// 	}
-
-		// 	function getClickHandler(seq) {
-
-		// 		return function (e) { //마커를 클릭하는 부분
-		// 			var marker = markers[seq],
-		// 				infoWindow = infoWindows[seq];
-
-		// 			if (infoWindow.getMap()) {
-		// 				infoWindow.close();
-		// 			} else {
-		// 				infoWindow.open(map, marker); //표출
-		// 			}
-
-		// 		}
-		// 	}
-
-		// 	for (var i = 0, ii = markers.length; i < ii; i++) {
-		// 		naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
-		// 	}
-		// }
+		});
+		// 페이지 로드
 	</script>
 </th:block>
 

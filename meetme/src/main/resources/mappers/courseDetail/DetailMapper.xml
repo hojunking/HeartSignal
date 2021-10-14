@@ -20,8 +20,10 @@
 		SELECT DISTINCT
 			c.course_name,
 	        u.nickname,
+	        co.course_comment,
 			SUBSTR(P.ADDRESS,'1',INSTR(P.ADDRESS,' ',1,1)-1) ADDRESS,
-			P.PLACE_NAME, P.AVG_COST, P.THUMBNAIL_HREF, CO.COURSE_ORDER
+			P.PLACE_NAME, P.AVG_COST, P.THUMBNAIL_HREF, CO.COURSE_ORDER,
+			p.latitude, p.longtitude
 	    FROM 
 	        COURSE C 
 	    JOIN 
@@ -36,7 +38,10 @@
 	        user_info u
 	    on
 	        c.user_id = u.user_id
-	    WHERE C.COURSE_ID = 49
+	    WHERE 
+	    	C.COURSE_ID = #{courseId}
+	    ORDER BY 
+	    	co.course_order
 	</select>
 	
 </mapper>

@@ -8,6 +8,15 @@
 	WHERE USER_RECEIVED = #{userReceived}
 	ORDER BY notice_date DESC
 </select>
+
+<select id="coupleRequest" resultType="NoticeVO">
+	SELECT *
+	FROM NOTIFICATION
+	WHERE USER_RECEIVED = #{userReceived}
+	AND POST_ID IS NULL
+	ORDER BY NOTICE_DATE DESC
+</select>
+
 <delete id="deleteNotice" parameterType="NoticeVO">
   DELETE
   FROM NOTIFICATION
