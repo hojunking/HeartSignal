@@ -124,7 +124,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int UpdateUserTags(UserTagsVO userTagsVO) {
 		int r = mypageMapper.deleteUserTags(userTagsVO);
-		    r = mypageMapper.insertUserTags(userTagsVO);
+		    r += mypageMapper.insertUserTags(userTagsVO);
 		return r;
 	}
 

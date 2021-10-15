@@ -110,7 +110,7 @@ public class MypageController {
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
-		
+		//
 		myPageUserInfoVO.setUserId(userId);
 		String myAddress=null;
 		if(mypageService.getMyinfo(myPageUserInfoVO).getAddrfull()!=null) {	
@@ -120,7 +120,7 @@ public class MypageController {
 		}
 		model.addAttribute("myAddress",myAddress);
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
-		
+		//
 		int total = mypageService.getTotalPostCount(cri, userId);
 		
 		model.addAttribute("count",mypageService.getPostCount(userId));
@@ -128,19 +128,33 @@ public class MypageController {
 		model.addAttribute("list", mypageService.getPostList(cri, userId));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
+		System.out.println(new PageVO(cri, total));
+		System.out.println(cri);
+		
 		return "mypage/myinfo_my_write_list";
 	}
 	
 	// 내 댓글 리스트 보기
 	@GetMapping("/myinfo_my_comment_list")
-	public String myinfo_my_comment_list(Model model, 
+	public String myinfo_my_comment_list(Model model,
+			                             MyPageUserInfoVO myPageUserInfoVO,
 			                             @ModelAttribute("cri") Criteria cri,
 			                             HttpServletRequest request) {
 		//세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
-		
+		//
+		myPageUserInfoVO.setUserId(userId);
+		String myAddress=null;
+		if(mypageService.getMyinfo(myPageUserInfoVO).getAddrfull()!=null) {	
+		myAddress = mypageService.getMyinfo(myPageUserInfoVO).getAddrfull();
+		String[ ] array = myAddress.split(" ");
+		myAddress = array[0]+" "+array[1];
+		}
+		model.addAttribute("myAddress",myAddress);
+		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
+		//
 		int total = mypageService.getTotalCommentCount(cri, userId);
 		
 		model.addAttribute("count",mypageService.getCommentCount(userId));
