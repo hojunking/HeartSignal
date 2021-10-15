@@ -25,10 +25,10 @@ cache:
 #s3 deploy setting
 before_deploy:
   - cd ../
-  - zip -r yedam-spring.boot-webservice meetme
+  - zip -r yedam-springboot-webservice meetme
   - mkdir -p deploy
   - ls
-  - mv yedam-spring.boot-webservice.zip deploy/yedam-spring.boot-webservice.zip
+  - mv yedam-springboot-webservice.zip deploy/yedam-springboot-webservice.zip
   
 deploy:
   - provider: s3
