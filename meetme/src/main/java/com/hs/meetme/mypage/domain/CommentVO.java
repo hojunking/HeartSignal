@@ -19,4 +19,5 @@ public class CommentVO {
 	
 	private String nickname;
 	private String imgUrl;
+	private String imgId;
 }

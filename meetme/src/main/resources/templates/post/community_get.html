@@ -51,31 +51,33 @@
          <hr>
          <div class="d-flex mb-0 small align-items-center">
             <img th:src="@{|/img/user/${list.imgUrl}|}" alt="사진" class="size-40 rounded-circle me-2" >
-            <span class="text-muted d-inline-block">By <a href="#!" class="text-dark" th:text="${list.nickname}"></a></span>
-            <span class="text-muted d-inline-block">Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
+            <span class="text-muted d-inline-block">By <a href="#!" class="text-dark" th:text="${list.nickname} "></a></span>
+            <span class="text-muted d-inline-block">   | Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
         </div>
 
          <br>
-         <div class="form-group">
-            <div class="col-sm-10">
-               <!--코스 여기-->
-               <th:block th:if='${course} != null'>
-                  <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
-                  <img src="${course[0].thumbnailHref}" alt="코스 사진">
-                  <div>
-                     <div th:each="c : ${course}" class="d-flex justify-content-between">
-                        <div th:text="${c.placeName}"></div>
-                        <div th:text="${c.avgCost}"></div>
+        <section class="overflow-hidden">  
+            <div class="form-group container order-lg-last pb-7 pb-lg-12 position-relative ">
+               <div class="justify-content-between align-items-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                  <!--코스 여기-->
+                  <th:block th:if='${course} != null'>
+                     <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+                     <img src="${course[0].thumbnailHref}" alt="코스 사진">
+                     <div>
+                        <div th:each="c : ${course}" class="d-flex justify-content-between">
+                           <div th:text="${c.placeName}"></div>
+                           <div th:text="${c.avgCost}"></div>
+                        </div>
                      </div>
-                  </div>
-                  <div id="map" style="width:100%;height:400px;"></div>
-                  <br><br>
-               </th:block>
-               <!-- 글 내용 here-->
-               <th:block th:utext="${list.postContent}" class="mx-auto text-center"></th:block>
-               <!-- <textarea name="postContent" class="form-control" id="ckcontents" th:text="${list.postContent}" disabled></textarea> -->
+                     <div id="map" style="width:100%;height:400px;"></div>
+                     <br><br>
+                  </th:block>
+                  <!-- 글 내용 here-->
+                  <th:block th:utext="${list.postContent}" class="mx-auto text-center"></th:block>
+                  <!-- <textarea name="postContent" class="form-control" id="ckcontents" th:text="${list.postContent}" disabled></textarea> -->
+               </div>
             </div>
-         </div>
+         </section> 
          <br>
          <hr>
          <br>
@@ -93,7 +95,7 @@
                       <div class="d-flex mb-3 justify-content-between">
                           <div class="d-flex align-items-center">
                               <h6 class="mb-0 me-3" th:text="${list.nickname}"></h6>
-                              <small class="text-muted">02 June</small>
+                              <small class="text-muted" th:text="${#dates.format(list.comCreated,'yyyy.MM.dd.')}"></small>
                           </div>
                           <div th:if="${session.userSession.userId} == ${list.userId}">
                              <div>
@@ -333,6 +335,7 @@
 
 </th:block>
 <th:block layout:fragment="script">
+   <script src="assets/js/theme.bundle.js"></script>
    <!--  <script src="/js/ckeditor/ckeditor.js"></script> -->
    <!-- 네이버 지도 -->
    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v1v61xter8">
@@ -451,12 +454,14 @@
                //       </div>
                //정보창
                var infoWindow = new naver.maps.InfoWindow({
-                  content: '<div class="mapboxgl-popup mapboxgl-popup-anchor-bottom" style="max-width: 240px; transform: translate(-50%, -100%) translate(368px, 157px);"><div class="mapboxgl-popup-tip"></div> <div  class="mapboxgl-popup-content"><h6 class="text-primary mb-0 fw-normal">' 
+                  content: '<div class="mapboxgl-popup mapboxgl-popup-anchor-bottom" style="max-width: 240px; "><div class="mapboxgl-popup-tip"></div><div  class="mapboxgl-popup-content"><button class="mapboxgl-popup-close-button" type="button" data-bs-dismiss="toast" aria-label="Close Close popup"><i class="bi bi-x"></i></button> <h6 class="text-primary mb-0 fw-normal">' 
                      + locations[i].place + 
                      '</h6><small class="text-muted">'+ locations[i].add 
-                     +'</small><button class="mapboxgl-popup-close-button" type="button" aria-label="Close popup">×</button></div></div>'
+                     +'</small></div></div>'
                });
-
+               // <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+               //    <i class="bi bi-x"></i>
+               // </button>
                markers.push(marker); //생성한 마커를 담는다
                infoWindows.push(infoWindow); //생성한 정보창을 담는다. 
             }
@@ -784,6 +789,8 @@
             success: function (result) {
                console.log(result);
                insertCallback(result);
+               //내용입력후 textarea 지워주기~
+               document.getElementById("cmtContent").value='';
             },
             error: function (err) {
                console.log(err);
@@ -853,6 +860,8 @@
               );
           }
            */
+
+          
    </script>
 
 

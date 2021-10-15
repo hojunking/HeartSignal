@@ -58,9 +58,9 @@ public class PostController {
 	// 커뮤니티 리스트 조회... 페이징 해야함!
 	@GetMapping("/community_list")
 	public String community_list(Model model, Criteria cri) {
-
+		cri.setAmount(20);
 		int total = pService.getTotalCmNum(cri);
-
+		System.out.println("토탈 ==== "+total);
 		model.addAttribute("count", pService.getCmNum());
 
 		List<PostVO> list = new ArrayList<>();
@@ -170,7 +170,7 @@ public class PostController {
 		pService.insertCMComment(vo);
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		vo.setNickname(accountVO.getNickname());
-		vo.setImgUrl(accountVO.getImgId());
+		vo.setImgId(accountVO.getImgId());
 		return vo;
 	}
 
