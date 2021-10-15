@@ -69,12 +69,12 @@
 
 
    <select id="getPost" parameterType="long" resultType="PostVO">
-
-      select
+	  select
       a.*,
-      b.nickname
+      b.nickname,
+      c.img_url
       from
-      post a join user_info b on a.user_id = b.user_id where post_id=#{postId}
+      post a join user_info b on a.user_id = b.user_id join img c on b.img_id = c.img_id where post_id=#{postId}
 
    </select>
    
@@ -113,16 +113,19 @@
    </delete>
 
    <!-- 커뮤니티 댓글 가져오기 - 한 페이지 보기에 넣기위함.(comment, post, account) -->
-   <select id="commentCM" resultType="CommentVO"
-      parameterType="long">
+   <select id="commentCM" resultType="CommentVO"  parameterType="long">
       select a.post_id, b.*,
       (select nickname from user_info where user_id=b.user_id)"nickname",
-      (select
-      img_id from user_info where user_id=b.user_id)"imgId"
+      (select d.img_url from user_info p join img d on p.img_id = d.img_id where p.user_id=b.user_id) "imgUrl"
       from post a join post_comment b
       on a.post_id = b.post_id
       where b.com_distinct='c'
       and a.post_id=#{postId}
+   </select>
+   
+   <!-- comment개수 구하기 -->
+   <select id="countCM" resultType="int" parameterType="long">
+      select count(*) from  post a join post_comment b on a.post_id = b.post_id where a.post_id=#{postId}
    </select>
 
    <!-- 커뮤니티 댓글 입력 -->

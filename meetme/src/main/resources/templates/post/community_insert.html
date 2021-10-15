@@ -13,10 +13,11 @@
 
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
-	<div class="container">
+	<div class="container" align="center">
 		<br>
-		<div> 	
-			<h2>커뮤니티 글쓰기</h2>
+		<div > 	
+			<br><br><br><br>
+			<h2>게시판 글쓰기</h2>
 		</div>
 		<br>
 		<div class="card-content">
@@ -33,18 +34,19 @@
 				<!--코스 가져오기 모달 -> 모달에서 코스 선택하면 버튼 아래에 뜨게 하자! courseVo는 mypage 도메인 패키지 안에 있당. -->
 				<div class="form-group">
 					<!-- <label for="inp-type-5" class="col-sm-2 control-label">코스 가져오기</label> -->
-
+					<br>
 					<div class="col-sm-10" id="modalShow">
 						<span>
-							<a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
+							<a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-outline-danger mb-2 me-1">내 코스 가져오기</a>
 						</span>
 					</div>
 					<div class="courseShow d-flex" ></div>
-
+					<br>
 				</div>
 
 
 				<div class="form-group">
+					<br>
 					<label for="inp-type-5" class="col-sm-2 control-label">내용</label>
 
 					<div class="col-sm-10">
@@ -72,7 +74,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content border-0">
                             <div class="modal-header border-0 bg-light">
-                                <h5 class="modal-title"></h5>
+                                <h5 class="modal-title" align="center"> 내 코스 가져오기 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     <i class="bi bi-x fs-5 lh-1"></i>
                                 </button>
