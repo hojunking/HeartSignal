@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hs.meetme.coursecreate.domain.TagNumAddrYearVO;
 import com.hs.meetme.coursecreate.domain.TensorCauseVO;
 import com.hs.meetme.coursecreate.domain.TensorResultVO;
 import com.hs.meetme.coursecreate.domain.TensorVO;
@@ -22,14 +23,17 @@ public class TensorServiceImple implements TensorService {
 
 	@Override
 	public List<TensorCauseVO> createTensorCauseData() {
-		// TODO Auto-generated method stub
 		return tensorMapper.createTensorCauseData();
 	}
 
 	@Override
 	public List<TensorResultVO> createTensorResultData() {
-		// TODO Auto-generated method stub
 		return tensorMapper.createTensorResultData();
+	}
+
+	@Override
+	public List<TagNumAddrYearVO> getDataOfTensor(String userId) {
+		return tensorMapper.getDataOfTensor(userId);
 	}
 
 }

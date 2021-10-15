@@ -14,6 +14,12 @@
 		WHERE PLACE_NAME = #{placeName}
 	</select>
 	
+	<select id="getPlaceById" resultType="PlaceVO">
+		SELECT * 
+		FROM PLACE
+		WHERE PLACE_ID = #{placeId}
+	</select>
+	
 	<select id="getTagList" resultType="com.hs.meetme.coursecreate.domain.TagVO2">
 		SELECT * FROM tags
 	</select>

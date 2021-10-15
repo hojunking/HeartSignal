@@ -128,8 +128,8 @@
                                 :key="element.name">
                                 <div class="d-flex justify-content-between">
                                     <span class="fs-5">{{ element.placeName }}</span>
-                                    <button type="button" class="btn-close btn-lg m-2" @click="deletePlaceInCourse(element.placeId)"
-                                    ></button>
+                                    <a type="button" class="icon-Close-Window fs-3" @click="deletePlaceInCourse(element.placeId)"
+                                    ></a>
                                 </div>
                                 <div>
                                     <span class="text-muted mx-2">{{element.subTitle}}</span>
@@ -329,6 +329,12 @@ export default defineComponent ({
 
         // 클릭한 태그 가져오기
         const pushTag = (tagId) => {
+            for(let i=0; i<tags.value.length; i++) {
+                if(tagId == tags.value[i]) {
+                    tags.value.splice(i,1);
+                    return;
+                }
+            }
             tags.value.push(tagId);
         };
 

@@ -26,6 +26,11 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 	
 	@Override
+	public PlaceVO getPlaceById(String placeId) {
+		return placeMapper.getPlaceById(placeId);
+	}
+
+	@Override
 	public List<TagVO2> getTagList() {
 		return placeMapper.getTagList();
 	}
@@ -40,6 +45,8 @@ public class PlaceServiceImpl implements PlaceService {
 	public List<PlaceVO> getListBySearched(String[] keywords) {
 		return placeMapper.getListBySearched(keywords);
 	}
+
+	
 
 	
 
