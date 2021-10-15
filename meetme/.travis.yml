@@ -23,20 +23,12 @@ cache:
     - $HOME/.mvn
 
 #s3 deploy setting
-before_deploy:
-  - pwd
+before_deploy
+  - zip -r yedam-spring.boot-webservice meetme
   - mkdir -p deploy
-  - pwd
-  - cd ../
-  - pwd
-  - zip -r yedam-springboot-webservice meetme
-  - pwd
-  - mv yedam-springboot-webservice.zip ../deploy/yedam-springboot-webservice.zip
-  - pwd
-  - cd meetme
-
+  - mv yedam-spring.boot-webservice.zip deploy/yedam-spring.boot-webservice.zip
   
-deploy:
+deploy
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
@@ -45,15 +37,4 @@ deploy:
     skip_cleanup: true
     acl: private
     local_dir: deploy
-    wait-until-deployed: true
-    
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: yedam-spring.boot-webservice
-    key: yedam-springboot-webservice.zip
-    bundle_type: zip
-    appication: yedam-springboot-webservice
-    deployment_group: yedam-springboot-webservice
-    region: ap-northeast-2
-    wait-until-deployed: true
+    wait-until-deploy: true

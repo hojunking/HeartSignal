@@ -121,14 +121,12 @@
                         <h5 class="mb-0 flex-grow-0 px-3">나의취향</h5>
                         <div class="flex-grow-1 border-bottom"></div>
                     </div>
-                          <div class="pb-5">
-                                <h5 class="title mb-3">Tags</h5>
+                          <div class="mx-8 mb-5">
                                 <th:block th:each="userTag : ${userTag}">
 	                                <a href="#!" class="badge bg-primary badge-pill mb-1">
 	                                    [[${userTag.TagId}]]
 	                                </a>
  								</th:block>
- 								
                             </div>
                             
                     <div class="d-flex align-items-center mb-3 mb-lg-3">

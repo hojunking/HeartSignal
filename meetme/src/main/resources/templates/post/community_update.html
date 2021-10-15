@@ -94,40 +94,11 @@
 					language : "ko" 
 				}); 
 				// ... 
-				let userId = userSession.userId;
+			let userId = userSession.userId;
 			const courseBtn = $('#courseBtn');
 			const courseInsertBtn = $('#courseInsertBtn');
 		
 
-			// 버튼 클릭 if문 넣어주기
-			//if "${'.courseShow'} == null"
-		/* 		 		<span>
-							<a href="#modalBasic"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
-						</span>
-
-						<!--show title에 값이 있으면 alert!-->
-			 		<span th:if="${'.courseShow'} != null">
-
-							<a href="#alertModal"  id="courseBtn" data-bs-toggle="modal" aria-expanded="false" class="courseBtn btn btn-primary">내 코스 가져오기</a>
-						</span>  */
-
-
-		/* 	let modalShow = $('#modalShow');
-			let modalBasicShow = $('<a />').addClass("courseBtn btn btn-primary")
-								.attr({"id":"courseBtn"})
-								.text("내 코스 가져오기")
-
-			let alertModalShow = $('<a />').addClass("courseBtn1 btn btn-primary")
-								.attr({"id":"courseBtn"})
-								.text("내 코스 가져오기")
-			 */
-			//코스 선택된게 없을 때
-		/* 	if($('.courseShow').html()==""){
-				modalShow.append(modalBasicShow)
-			}else{//코스 선택 되었을 때
-				modalShow.append(alertModalShow)
-			}
- */
 			//모달 띄울 때 쓸 ajax~!
 			$(courseBtn).on('click', function () {
 				data =  userId
