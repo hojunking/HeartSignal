@@ -27,7 +27,6 @@ before_deploy:
   - cd ../
   - zip -r yedam-springboot-webservice meetme
   - mkdir -p deploy
-  - ls
   - mv yedam-springboot-webservice.zip deploy/yedam-springboot-webservice.zip
   
 deploy:
@@ -39,4 +38,15 @@ deploy:
     skip_cleanup: true
     acl: private
     local_dir: deploy
-    wait-until-deploy: true
+    wait-until-deployed: true
+    
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: yedam-spring.boot-webservice
+    key: yedam-springboot-webservice.zip
+    bundle_type: zip
+    appication: yedam-springboot-webservice
+    deployment_group: yedam-springboot-webservice
+    region: ap-northeast-2
+    wait-until-deployed: true
