@@ -30,6 +30,7 @@ before_deploy:
   - zip -r yedam-springboot-webservice meetme
   - mkdir -p deploy
   - mv yedam-springboot-webservice.zip deploy/yedam-springboot-webservice.zip
+  - cd meetme
   
 deploy:
   - provider: s3
