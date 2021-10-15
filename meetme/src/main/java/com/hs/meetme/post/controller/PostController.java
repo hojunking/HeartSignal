@@ -170,7 +170,7 @@ public class PostController {
 		pService.insertCMComment(vo);
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		vo.setNickname(accountVO.getNickname());
-		vo.setImgId(accountVO.getImgId());
+		vo.setImgUrl(accountVO.getImgId());
 		return vo;
 	}
 
