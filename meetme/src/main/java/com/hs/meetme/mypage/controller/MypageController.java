@@ -1,5 +1,6 @@
 package com.hs.meetme.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.payment.domain.PaymentVO;
 import com.hs.meetme.useraccess.domain.AccountVO;
+
+import net.bytebuddy.agent.builder.AgentBuilder.InitializationStrategy.SelfInjection.Split;
 
 @Controller
 @RequestMapping("/mypage/*")
@@ -195,10 +198,27 @@ public class MypageController {
 	
 //	-------------------------------------------------------------
 	@PostMapping("/userTags")
-	public String userTags(List<UserTagsVO> list) {
+	public String userTags(String list, String userId) {
+		List<UserTagsVO> tagList = new ArrayList<UserTagsVO>();
 		
-		int result = mypageService.insertUserTags(list);
-		System.out.println(result);
+		String[] str = list.split(" ");
+		System.out.println(str.toString());
+		
+		for(int i=0; i<str.length; i++) {
+			UserTagsVO vo = new UserTagsVO();
+			vo.setUserId(userId);
+			vo.setTagId(str[i]);
+			tagList.add(vo);
+			System.out.println(tagList);
+		}
+		
+		
+		
+		
+//		int result = mypageService.insertUserTags(list);
+//		System.out.println(result);
+		System.out.println(list);
+		System.out.println(userId);
 		
 		return "redirect:/login";
 	}

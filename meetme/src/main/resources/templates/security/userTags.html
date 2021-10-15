@@ -19,9 +19,19 @@
 
 .submitBtn {
 	padding: 10px;
-	font-size: 14px;
+	font-size:14px;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
+	border-radius: 30px;
+}
+ul {
+    list-style:none;
+    height:55px;
+}
+
+li {
+    display:inline;
+    float: left;
 }
 </style>
 </th:block>
@@ -32,51 +42,58 @@
 	<br>
 
 	<div class="container py-7 py-lg-9">
-		<div class="row">
-			<div class="col-lg-8 mx-auto">
-				<div class="d-flex align-items-center justify-content-center mb-4">
-					<h6 class="mb-0 me-2 me-lg-4 TagsTitle">Choose Your Tags!</h6>
-					<span class="border-top d-block flex-grow-1 border-light"></span>
-				</div>
-				<input type="text" class="insertcustom form-control"
-					placeholder="원하는 태그를 선택해주세요"> <br>
+		<form th:action="@{/mypage/userTags}" th:object="${tags}" method="post">
+			<input type="hidden" name="list">
+			<input type="hidden" name="userId">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<div class="d-flex align-items-center justify-content-center mb-4">
+						<h6 class="mb-0 me-2 me-lg-4 TagsTitle">Choose Your Tags!</h6>
+						<span class="border-top d-block flex-grow-1 border-light"></span>
+						<div class="finalBtn">
+							<button type="button" id="submit"
+								class="btn btn-rise btn-outline-primary m-2 btn-lg submitBtn">
+								<div class="btn-rise-bg bg-primary"></div>
+								<div class="btn-rise-text">SUBMIT</div>
+							</button>
+							<button type="submit" class="d-none"></button>
+						</div>
+						<!-- final Button -->
+					</div>
+					<!-- <input type="text" class="insertcustom form-control"
+						placeholder="원하는 태그를 선택해주세요"> <br> -->
+						
+					<ul class="tags form-control">
+					</ul>
 					
-				
-				<th:block th:each="t: ${#numbers.sequence(0, 15)}">
-					<button type="button" class="btn btn-primary m-1 cusBtn"
-						data-bs-toggle="tooltip" data-bs-placement="top" title="Try me!"
-						th:text="${tags[t].tagId}"></button>
-				</th:block>
 
-				<div class="moreTags">
-					<th:block th:each="t: ${#numbers.sequence(16, tags.size-1)}">
+					<th:block th:each="t: ${#numbers.sequence(0, 15)}">
 						<button type="button" class="btn btn-primary m-1 cusBtn"
 							data-bs-toggle="tooltip" data-bs-placement="top" title="Try me!"
 							th:text="${tags[t].tagId}"></button>
 					</th:block>
-				</div>
-				
-				
-				<br> <br>
-				<!-- 더보기, 접기 버튼 -->
-				<div>
+
+					<div class="moreTags">
+						<th:block th:each="t: ${#numbers.sequence(16, tags.size-1)}">
+							<button type="button" class="btn btn-primary m-1 cusBtn"
+								data-bs-toggle="tooltip" data-bs-placement="top" title="Try me!"
+								th:text="${tags[t].tagId}"></button>
+						</th:block>
+					</div>
+
+
+					<br> <br>
+					<!-- 더보기, 접기 버튼 -->
 					<div class="col text-center">
-						<button type="button" id="regToggle" class="btn btn-primary btn-circle-ripple p-0 size-70 rounded-pill fs-3 lh-1 center-both me-4 mb-3">
-						<div>❤</div>
+						<button type="button" id="tagToggle"
+							class="btn btn-primary btn-circle-ripple p-0 size-70 rounded-pill fs-3 lh-1 center-both me-4 mb-3">
+							<div>❤</div>
 						</button>
 					</div>
 				</div>
-				
-				
-				<div class="finalBtn">
-					<button type="submit"
-						class="btn btn-rise btn-outline-primary m-2 btn-lg submitBtn">
-						<div class="btn-rise-bg bg-primary"></div>
-						<div class="btn-rise-text">등록</div>
-					</button>
-				</div>
 			</div>
-		</div>
+		</form>
+		<!-- End  Of form  -->
 	</div>
 	<!-- End Of Container -->
 
@@ -86,31 +103,70 @@
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-			var tag = " ";
-
-			$(".cusBtn").on("click", function() {
+			let list = [];
+			let realList = [];
+			
+			var ul= $(".tags");
+			$(".cusBtn").on("click", function(e) {
+				let targetBtn = e.target;
+				$(targetBtn).addClass('d-none');
+				
 				var tagId = $(this).text();
 				console.log(tagId);
-				tag += tagId + " ";
-				$(".insertcustom").attr("value", tag);
+				li = $("<li>").text(tagId).css("border","1px solid #f73e69")
+									      .css("color","white")
+										  .css("background-color","#f73e69")
+										  .css("border-radius","10px")
+										  .css("padding","5px")
+										  .css("margin-right","5px")
+										  .css("cursor", "pointer");
+				$(li).on('click', function(e){
+					let removeBtn = e.target;
+					$(removeBtn).remove();
+					$(targetBtn).removeClass('d-none');
+				});
+				ul.append(li);
+				
+				list.push($(li).text());
+				console.log(list);
+				/* realList.push(tagId); */
+				console.log(realList);
 			});
 			/* tcustom click 이벤트 */
-
+			
+			// 숨겨진 태그
+			let moreCourse = $(".moreTags");
+			$(moreCourse).hide();
+	
+			// 더보기 , 접기
+			$("#tagToggle").click(function() {
+				$(moreCourse).slideToggle(500);
+				if ($(this).text() == '❤') {
+					$(this).text('❤');
+				} else {
+					$(this).text('❤');
+				}
+			});
+			
+			$('#submit').on('click', function(){
+				let tags = $('.tags li');
+				let strtags = '';
+				
+				for(let t of tags){
+					strtags += $(t).text();
+					strtags += " ";
+				}
+				strtags = strtags.substring(0,strtags.length-1);
+				
+				console.log(realList);
+				
+				$('input[name="list"]').val(strtags);
+				$('input[name="userId"]').val(1);
+				$('button[type="submit"]').click();
+			});
+			
 		});
 
-		// 숨겨진 태그
-		let moreCourse = $(".moreTags");
-		$(moreCourse).hide();
-
-		// 더보기 , 접기
-		$("#regToggle").click(function() {
-			$(moreCourse).slideToggle(500);
-			if ($(this).text() == '❤') {
-				$(this).text('❤');
-			} else {
-				$(this).text('❤');
-			}
-		});
 	</script>
 </th:block>
 </html>
