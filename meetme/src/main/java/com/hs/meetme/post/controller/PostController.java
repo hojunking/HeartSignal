@@ -40,6 +40,8 @@ import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.PageVO;
 import com.hs.meetme.mypage.domain.PostVO;
+import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.post.service.PostService;
 import com.hs.meetme.useraccess.domain.AccountVO;
 
@@ -52,6 +54,8 @@ public class PostController {
 
 	@Autowired
 	PostService pService;
+	@Autowired
+	NoticeService noticeService;
 
 	File fileDir = new File("src/main/resources/static/img/");
 
@@ -166,11 +170,26 @@ public class PostController {
 	@ResponseBody
 	@PostMapping("/insertCMComment")
 	public CommentVO insertCMComment(@RequestBody CommentVO vo, HttpServletRequest request) {
+		
+		
 		HttpSession session = request.getSession();
 		pService.insertCMComment(vo);
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		vo.setNickname(accountVO.getNickname());
-		vo.setImgId(accountVO.getImgId());
+		
+		//notice INSERT 
+		if(vo.getUserId()!=vo.getPostUserId()) { 		//댓글을 작성하면 게시글
+			NoticeVO nVo = new NoticeVO();
+			nVo.setUserSent(vo.getUserId()); 			//댓글 쓴 사람
+			nVo.setUserReceived(vo.getPostUserId()); 	//게시글 쓴 사람
+			nVo.setPostId(vo.getPostId()); 				// 게시글 번호 넣기
+			nVo.setNoticeContent(accountVO.getNickname()+"님이 게시글에 댓글을 달았습니다.");
+			noticeService.insertNotice(nVo);
+			System.out.println("댓글달고 댓글정보 INSERT"+nVo);
+		}
+		
+		//notice INSERT end
+
 		return vo;
 	}
 

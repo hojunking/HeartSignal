@@ -34,14 +34,14 @@
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <!-- 프로필 img 링크 -->
-                            <img src="assets/img/avatar/12.jpg" alt="" class="avatar sm rounded-circle me-1">
+                            <img src="/assets/img/avatar/12.jpg" alt="" class="avatar sm rounded-circle me-1">
                             <th:block th:text="${session.userSession.nickname}"></th:block>
                         </a>
                         <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
                             <a th:href="@{/mypage/main}" class="dropdown-header border-bottom p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img src="assets/img/avatar/12.jpg" alt="" class="avatar xl rounded-pill me-3">
+                                        <img src="/assets/img/avatar/12.jpg" alt="" class="avatar xl rounded-pill me-3">
                                     </div>
                                     <div>
                                         <h5 class="mb-0" th:text="${session.userSession.name}">Name</h5>
@@ -52,8 +52,8 @@
                                 </div>
                             </a>
                             <!-- 알림창 시작 , 커플신청알림 우선 -->
-                            <ul class="list-group" id="">
-                            	<a href="#receiveLove" data-bs-toggle="modal">
+                            <ul class="list-group" id="noticeBlock">
+                            	<!-- <a href="#receiveLove" data-bs-toggle="modal">
                                 <li class="list-group-item py-2">
                                     <div class="d-flex align-items-start">
                                         <div class="me-1 me-lg-2">
@@ -65,7 +65,7 @@
                                           </div>
                                     </div>
                                 </li>
-                                </a>
+                                </a> -->
                                 <!-- 여기서부터 댓글알림 -->
                             </ul>
                             

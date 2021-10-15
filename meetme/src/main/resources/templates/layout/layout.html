@@ -114,28 +114,59 @@
             console.log(userSession);
             /*]]>*/
         	requestInfo();
+        	noticeCommentClick();
+        
             
+        function noticeCommentClick(){
+        	$('#noticeBlock').on('click','.noticeComment', function(){
+        		var notice =$(this);
+        		$.ajax({
+    				url : "/getRequest/" + userId,
+    				dataType : "json",
+    				success : function(datas) {
+    					notice.remove();
+    					location.href=notice.attr('href');
+    					console.log(datas);
+    				}
+    			
+        		});
+        	})
+        }    
+        
         // requester 정보뿌리기
         function requestInfo(){
         	let userId = userSession.userId;
         	$.ajax({
-				url : "getRequest/" + userId,
+				url : "/getRequest/" + userId,
 				dataType : "json",
 				success : function(datas) {
 				console.log(datas);
 				
 				$.each(datas,function(idx,item){
-					$('<a href="#receiveLove" data-bs-toggle="modal"/>')
-					.append($('<li class="list-group-item py-2"/>')
+					if(item.postId==null){
+					 var noticeInfo = $('<a href="#receiveLove" data-bs-toggle="modal"/>');
+					 noticeInfo.append($('<li class="list-group-item py-2 bg-tint-danger"/>')
 							.append($('<div class="d-flex align-items-start"/>')
 									.append($('<div class="me-1 me-lg-2"/>')
-											.append($('<img/>').attr('src',"/img/"+item.imgUrl)))
+											.append($('<img class="avatar rounded-circle shadow"/>').attr('src',"/img/"+item.imgUrl)))
 									.append($('<div class="flex-grow-1"/>')
 											.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님께 커플신청이 왔어요!"))
-											.append($('<p class="mb-0"/>').html(item.noticeDate)))))
+											.append($('<span class="text-muted d-block"/>').html(item.noticeDate)))))
 					.appendTo($("#noticeBlock"));
-				
-				
+					noticeInfo.data("item",item);
+					}
+					//이건 댓글정보입니다
+					else{
+						var noticeInfo = $('<a class="noticeComment" href="/post/get_community/'+item.postId+'"/>');
+						noticeInfo.append($('<li class="list-group-item py-2 bg-tint-info"/>')
+						.append($('<div class="d-flex align-items-start"/>')
+								.append($('<div class="me-1 me-lg-2"/>')
+										.append($('<img class="avatar rounded-circle shadow"/>').attr('src',"/img/"+item.imgUrl)))
+								.append($('<div class="flex-grow-1"/>')
+										.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님의 게시글에"+item.noticeContent))
+										.append($('<span class="text-muted d-block"/>').html(item.noticeDate)))))
+						.appendTo($("#noticeBlock"));
+					}
 				});
 				
 				}
@@ -143,25 +174,23 @@
          }
         }); // 페이지 로드 종료
         
-       var exampleModal = document.getElementById('exampleModal')
-        $('#receiveLove').addEventListener('show.bs.modal', function (event) {
+        
+        //커플신청받기 모달창 연결하기 
+        var receiveLove = document.getElementById('receiveLove')
+      	receiveLove.addEventListener('show.bs.modal', function (event) {
           // Button that triggered the modal
           var button = event.relatedTarget
           // Extract info from data-bs-* attributes
-          var recipient = button.getAttribute('data-bs-whatever')
-          // If necessary, you could initiate an AJAX request here
-          // and then do the updating in a callback.
-          //
-          // Update the modal's content.
-          var modalTitle = exampleModal.querySelector('.modal-title')
-          var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-          modalTitle.textContent = 'New message to ' + recipient
-          modalBodyInput.value = recipient
+          //var recipient = button.getAttribute('data-item')
+           var item= $(button).data("item")
+           $('#requesterImg').attr('src',"/img/"+item.imgUrl);
+           $("#requester").text(item.name);
+           $("#noticeContent").text(item.noticeContent);
+			console.log("여기",item);
         })  
         //모달창 각각 만들어진거에 대해 path
         	
-        	
+        
         	
     </script>
 
