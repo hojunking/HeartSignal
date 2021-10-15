@@ -7,7 +7,7 @@ branches:
     - master
     
 before_install:
-#   - chmod +x ./meetme/mvnw
+  - chmod +x ./meetme/mvnw
   - cd meetme
   
 script: "mvn clean package"
