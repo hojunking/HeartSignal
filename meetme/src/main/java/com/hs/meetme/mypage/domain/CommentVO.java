@@ -19,4 +19,6 @@ public class CommentVO {
 	
 	private String nickname;
 	private String imgUrl;
+	
+	private String postUserId; //게시글 작성자의 아이디
 }

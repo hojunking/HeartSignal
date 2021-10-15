@@ -22,7 +22,6 @@
 	        ON US.IMG_ID = I.IMG_ID) U
 	ON U.USER_ID = N.USER_SENT
 	WHERE N.USER_RECEIVED=#{userReceived}
-	AND N.POST_ID IS NULL
 	ORDER BY N.NOTICE_DATE DESC
 </select>
 
@@ -32,7 +31,7 @@
   WHERE notice_id = #{noticeId}
 </delete>
 	<insert id="insertNotice">
-	<selectKey keyProperty="coupleId" resultType="String" order="BEFORE">
+	<selectKey keyProperty="noticeId" resultType="String" order="BEFORE">
 		SELECT SEQ_NOTICE.NEXTVAL FROM DUAL
 	</selectKey>
 	INSERT INTO NOTIFICATION(NOTICE_ID,
@@ -40,13 +39,15 @@
 							USER_RECEIVED,
 							NOTICE_CONTENT,
 							NOTICE_DATE,
-							NOTICE_CONFIRMED)
+							NOTICE_CONFIRMED,
+							POST_ID)
 			VALUES(#{noticeId},
 					#{userSent},
 					#{userReceived},
 					#{noticeContent},
 					SYSDATE,
-					#{noticeConfirmed})
+					DEFAULT,
+					#{postId})
 	</insert> 
 
 </mapper>
