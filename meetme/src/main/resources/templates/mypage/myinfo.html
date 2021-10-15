@@ -52,11 +52,11 @@
 			<div class="container position-relative">
 				<div class="overflow-hidden">
 					<!--Profile info header-->
-					<div class="position-relative pb-7 pb-lg-12">
+					<div class="position-relative pb-3 pb-lg-12">
 						<div class="row">
 							<div class="col-lg-9 mx-auto">
-								<div class="pt-5 d-flex flex-column h-100">
-									<nav class="nav mb-5 nav-pills">
+								<div class="pt-3 d-flex flex-column h-100">
+									<nav class="nav mb-3 nav-pills">
 										<a href="main" class="nav-link"><i
 												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
 										<a href="myinfo_my_course_list" class="nav-link"><i
@@ -109,16 +109,16 @@
 													<label for="pass1" class="col-sm-2 col-form-label">Password</label>
 													<div class="col-sm-10" id="u_password" style="display: none;">
 														<div class="form-group">
-															<input class="form-control pb-3 mb-3" placeholder="현재비밀번호"
+															<input class="form-control mb-3" placeholder="현재비밀번호"
 																name="pass1" id="pass1" type="password">
 															<div class="invalid-feedback" id="password_message1">
 																현재 비밀번호를 입력하세요.
 															</div>
 														</div>
 														<div class="form-group">
-															<input class="form-control pb-3 mb-3" placeholder="새 비밀번호"
+															<input class="form-control" placeholder="새 비밀번호"
 																name="pass2" id="pass2" type="password">
-															<input class="form-control pb-3 mb-3"
+															<input class="form-control mb-3"
 																placeholder="새 비밀번호 확인" name="pass3" id="pass3"
 																type="password">
 															<div class="invalid-feedback" id="password_message3">
@@ -148,11 +148,11 @@
 													<label for="nickName"
 														class="col-sm-2 col-form-label">NickName</label>
 													<div class="col-sm-10">
-														<input type="text" class="form-control pb-3 mb-3" id="nickName"
+														<input type="text" class="form-control mb-3" id="nickName"
 															readonly="readonly" th:value="${userInfo.nickName}">
 														<div class="" id="u_nickName" style="display: none;">
 															<div class="form-group">
-																<input class="form-control pb-3 mb-3"
+																<input class="form-control mb-3"
 																	placeholder="새로운 닉네임" name="nick1" id="nick1"
 																	type="text">
 																<div class="invalid-feedback" id="nickName_message">
@@ -178,7 +178,7 @@
 													<label for="phoneNum"
 														class="col-sm-2 col-form-label">PhoneNumber</label>
 													<div class="col-sm-7">
-														<input type="text" class="form-control pb-3 mb-3" id="phoneNum"
+														<input type="text" class="form-control mb-3" id="phoneNum"
 															readonly="readonly" th:value="${userInfo.phoneNum}">
 														<div class="" style="display: block;">
 															<button class="btn btn-danger btn-sm" type="button"
@@ -191,27 +191,27 @@
 													<label for="pass1" class="col-sm-2 col-form-label">Address</label>
 													<div class="col-sm-10">
 														<input type="text" style="width:100px;"
-															class="form-control pb-3 mb-3" name="address1" id="address1"
+															class="form-control mb-3" name="address1" id="address1"
 															readonly="readonly" th:value="${userInfo.addrzonecode}">
-														<input type="text" class="form-control pb-3 mb-3"
+														<input type="text" class="form-control mb-3"
 															name="address2" id="address2" readonly="readonly"
 															th:value="${userInfo.addrfull}">
-														<input type="text" class="form-control pb-3 mb-3"
+														<input type="text" class="form-control mb-3"
 															name="address3" id="address3" readonly="readonly"
 															th:value="${userInfo.addrdetail}">
 
 														<div class="" id="u_address" style="display: none;">
-															<input class="form-control pb-3 mb-3"
+															<input class="form-control mb-3"
 																style="width:100px; display: inline;" placeholder="우편번호"
 																name="addr1" id="addr1" type="text" readonly="readonly">
 															<button type="button" class="btn btn-default"
 																onclick="execPostCode();"><i
 																	class="bi bi-search me-2 align-middle text-muted"></i>우편번호
 																찾기</button>
-															<input class="form-control pb-3 mb-3"
+															<input class="form-control mb-3"
 																placeholder="도로명 및 지번 주소" name="addr2" id="addr2"
 																type="text" readonly="readonly" />
-															<input class="form-control pb-3 mb-3" placeholder="상세주소"
+															<input class="form-control mb-3" placeholder="상세주소"
 																name="addr3" id="addr3" type="text" />
 															<div class="">
 																<button class="btn btn-danger btn-sm btn-space"
@@ -601,7 +601,7 @@
 			//새 비밀번호 input 클릭
 			$("#pass2").on('click', function () {
 				if ($(this).val() == "" || $(this).val() == null) {
-					$("#pass2").attr("class", "form-control is-invalid");
+					$("#pass2").attr("class", "form-control mb-3 is-invalid");
 					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
 				}
 			});
