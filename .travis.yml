@@ -24,6 +24,7 @@ cache:
 
 #s3 deploy setting
 before_deploy:
+  - cd ../
   - pwd
   - zip -r yedam-spring.boot-webservice meetme
   - mkdir -p deploy
