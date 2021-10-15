@@ -38,9 +38,3 @@ deploy
     acl: private
     local_dir: deploy
     wait-until-deploy: true
-
-# CI 실행 완료시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - wpdlxldpf4@gmail.com
