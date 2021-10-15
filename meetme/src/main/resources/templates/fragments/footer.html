@@ -92,43 +92,32 @@
             
 <!-- 커플 신청받기 모달창 -->
 <div class="modal fade" id="receiveLove" tabindex="-1" aria-labelledby="receiveLove" aria-hidden="true" 
- data-bs-backdrop="static">
+ data-bs-backdrop="static" >
      <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content border-0 ">
              <div class="modal-header border-0 bg-white">
                  <button type="button" class="btn-close text-reset p-0 m-0 size-20 center-both ms-auto"
                             data-bs-dismiss="modal" aria-label="Close">
-                           <i class="bi bi-x fs-5"></i>
+                           <i class="bi bi-x fs-5" style="color:black;"></i>
                         </button>
              </div>
              <div class="modal-body">
-                 <div class="position-relative  shadow-lg overflow-hidden">
-                     <div class="position-relative bg-white overflow-hidden">
-						<!--Get started image-->
-                         <div class="position-relative my-4 overflow-hidden size-180 mx-auto rounded-circle" id="findLoveInfo">
-                                <img src="/img/coupleImage1.jpg" alt="" class="img-fluid">
+                 <div class="mb-5 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                            <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
+                                <img src="assets/img/team/3.jpg" alt="" class="img-fluid" id="requesterImg">
                             </div>
-                     </div>
-                     <div class="px-2 bg-white position-relative pt-2 mb-2">
-                         <h4 class="mb-4 text-center" id="nickFind">커플이메일을 입력해주세요</h4>
-                         
-                             <div class="mb-3">
-                                 <input type="email" name="email" placeholder="Email address" class="form-control rounded-pill px-4">
-                             		<small class="d-block text-danger my-2" id="noFind"></small>
-                             		
-                             </div>
-                             <div class="d-grid">
-                                 <button type="button" class="btn btn-primary rounded-pill hover-shadow btn-hover-arrow hover-lift"
-                                 id="search">
-                                 <span>검색</span></button>
-                             </div>
-                             <br> 
-                     </div>
-                 </div>
+                            <div>
+                                <h5 class="mb-1" style="color:black;" id="requester">
+                                    Aarav Lynn
+                                </h5>
+                                <p class="w-lg-80 mx-auto mb-2" style="color:black;" id="noticeContent">
+                                    Duis aute irure dolor in velit esse cillum fugiat nulla pariatur.
+                                </p>
+                            </div>
+                        </div>
              </div>
              <div class="modal-footer bg-white border-0" >
-                 <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>&nbsp;
-                 <button type="button" class="btn btn-primary btn-sm" id="request">커플신청</button>
+                 <button type="button" class="btn btn-primary btn-sm" id="accept">커플수락</button>
              </div>
          </div>
      </div>

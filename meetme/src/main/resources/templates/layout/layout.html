@@ -113,10 +113,55 @@
             userSession = /*[[${session.userSession}]]*/ '';
             console.log(userSession);
             /*]]>*/
-        });
-        // 페이지 로드 종료
+        	requestInfo();
+            
+        // requester 정보뿌리기
+        function requestInfo(){
+        	let userId = userSession.userId;
+        	$.ajax({
+				url : "getRequest/" + userId,
+				dataType : "json",
+				success : function(datas) {
+				console.log(datas);
+				
+				$.each(datas,function(idx,item){
+					$('<a href="#receiveLove" data-bs-toggle="modal"/>')
+					.append($('<li class="list-group-item py-2"/>')
+							.append($('<div class="d-flex align-items-start"/>')
+									.append($('<div class="me-1 me-lg-2"/>')
+											.append($('<img/>').attr('src',"/img/"+item.imgUrl)))
+									.append($('<div class="flex-grow-1"/>')
+											.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님께 커플신청이 왔어요!"))
+											.append($('<p class="mb-0"/>').html(item.noticeDate)))))
+					.appendTo($("#noticeBlock"));
+				
+				
+				});
+
+				}
+			});//ajax 끝
+         }
+        }); // 페이지 로드 종료
         
-        //$('#receiveRequest').on('click')
+        /* var exampleModal = document.getElementById('exampleModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+          // Button that triggered the modal
+          var button = event.relatedTarget
+          // Extract info from data-bs-* attributes
+          var recipient = button.getAttribute('data-bs-whatever')
+          // If necessary, you could initiate an AJAX request here
+          // and then do the updating in a callback.
+          //
+          // Update the modal's content.
+          var modalTitle = exampleModal.querySelector('.modal-title')
+          var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+          modalTitle.textContent = 'New message to ' + recipient
+          modalBodyInput.value = recipient
+        })  모달창 각각 만들어진거에 대해 path*/
+        	
+        	
+        	
     </script>
 
     <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->

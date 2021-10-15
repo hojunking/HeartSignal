@@ -52,20 +52,17 @@
                                 </div>
                             </a>
                             <!-- 알림창 시작 , 커플신청알림 우선 -->
-                            <ul class="list-group">
+                            <ul class="list-group" id="">
                             	<a href="#receiveLove" data-bs-toggle="modal">
                                 <li class="list-group-item py-2">
                                     <div class="d-flex align-items-start">
-                                        <div class="me-3 me-lg-4">
+                                        <div class="me-1 me-lg-2">
                                             <img src="assets/img/avatar/7.jpg" alt="" class="avatar rounded-circle shadow">
                                         </div>
-                                        <div class="flex-grow-1">
-                                            <div class="d-sm-flex align-items-center">
-                                                <div class="mb-3 mb-sm-0 flex-grow-1">
-                                                    <p class="text-dark fs-6" th:text="|${session.userSession.name}님께 커플신청이 왔어요!|"></p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <div class="flex-grow-1">
+                                                <p class="text-dark fs-6 mb-0" th:text="|${session.userSession.name}님께 커플신청이 왔어요!|"></p>
+                                                	<p class="mb-0">날짜</p>
+                                          </div>
                                     </div>
                                 </li>
                                 </a>
