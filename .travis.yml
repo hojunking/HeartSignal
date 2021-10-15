@@ -26,7 +26,6 @@ cache:
 before_deploy:
   - cd ../
   - zip -r yedam-springboot-webservice meetme
-  - cd meetme
   - mkdir -p deploy
   - mv yedam-springboot-webservice.zip deploy/yedam-springboot-webservice.zip
 
