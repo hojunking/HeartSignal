@@ -14,6 +14,8 @@ public interface PlaceMapper {
 	
 	PlaceVO getPlace(String placeName);
 	
+	PlaceVO getPlaceById(String placeId);
+	
 	List<TagVO2> getTagList();
 	
 	List<TagVO2> getTagsSelected(int placeId); // 정한 장소의 태그들

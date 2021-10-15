@@ -67,5 +67,14 @@
 		    C.USER_ID, 
 		    C.COURSE_ID
 	</select>
+	
+	<select id="getDataOfTensor" resultType="com.hs.meetme.coursecreate.domain.TagNumAddrYearVO">
+		select t.tag_num "tagNum", ui.addrzonecode "addrzonecode", ui.birth_year "birthYear"
+		from user_info ui join user_tags ut
+		on(ui.user_id = ut.user_id)
+		join tags t
+		on(ut.tag_id = t.tag_id)
+		where ui.user_id = #{userId}
+	</select>
 
 </mapper>

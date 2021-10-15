@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hs.meetme.coursecreate.domain.TagNumAddrYearVO;
 import com.hs.meetme.coursecreate.domain.TensorCauseVO;
 import com.hs.meetme.coursecreate.domain.TensorResultVO;
 import com.hs.meetme.coursecreate.domain.TensorVO;
@@ -17,5 +18,7 @@ public interface TensorMapper {
 	List<TensorCauseVO> createTensorCauseData();
 	
 	List<TensorResultVO> createTensorResultData();
+	
+	List<TagNumAddrYearVO> getDataOfTensor(String userId);
 	
 }

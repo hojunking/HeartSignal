@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hs.meetme.coursecreate.domain.PlaceVO;
+import com.hs.meetme.coursecreate.domain.TagNumAddrYearVO;
 import com.hs.meetme.coursecreate.domain.TensorCauseVO;
 import com.hs.meetme.coursecreate.domain.TensorResultVO;
 import com.hs.meetme.coursecreate.domain.TensorVO;
+import com.hs.meetme.coursecreate.service.PlaceService;
 import com.hs.meetme.coursecreate.service.TensorService;
 
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +24,7 @@ import lombok.extern.log4j.Log4j2;
 public class RestTensorController {
 	
 	@Autowired TensorService tensorService;
+	@Autowired PlaceService placeService;
 	
 	@GetMapping("/userCourseData")
 	public List<TensorVO> getUserCourseData() {
@@ -65,4 +69,22 @@ public class RestTensorController {
 		return sendList;
 	}
 	
+	@GetMapping("/userTagAddrYear")
+	public List<TagNumAddrYearVO> getTagAddrYear(String userId) {
+		
+		List<TagNumAddrYearVO> resultList = tensorService.getDataOfTensor(userId);
+		
+		return resultList;
+	}
+	
+	@GetMapping("/getPlaceList")
+	public List<PlaceVO> getTagAddrYear(String[] list) {
+		List<PlaceVO> resultList = new ArrayList<PlaceVO>();
+		
+		for(String num : list) {
+			resultList.add(placeService.getPlaceById(num));
+		}
+		
+		return resultList;
+	}
 }

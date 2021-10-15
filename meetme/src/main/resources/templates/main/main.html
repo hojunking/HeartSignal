@@ -15,6 +15,7 @@
 }
 </style>
 </th:block>
+
 <th:block layout:fragment="content">
 <main>
 	<!--page-hero-master-slider-->
@@ -455,26 +456,127 @@
 <!-- .main-content -->
 
 <th:block layout:fragment="script">
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
 	<script src="assets/vendor/jquery/jquery.easing.min.js"></script>
     <script src="assets/vendor/masterslider/masterslider.min.js"></script>
 	<script>
-		var slider = new MasterSlider();
-		slider.setup('masterslider', {
-			width: 1140,
-			height: 660,
-			minHeight: 400,
-			space: 0,
-			start: 1,
-			grabCursor: false,
-			layout: "fullwidth",
-			wheel: false,
-			autoplay: true,
-			instantStartLayers: true,
-			loop: true,
-			view: "basic",
-			instantStartLayers: true,
-		});
-		slider.control('arrows');
+		
+		// ai 쓰기
+		async function loadModel() {
+            const model = await tf.loadLayersModel('model/my-model-1.json');    
+            console.log(model);
+            
+            nextResultIntList = "46,47,48";
+            
+            if(userSession != null) {
+            	let userId = userSession.userId;
+                
+                $.ajax({
+                	url : "/api/tensor/userTagAddrYear",
+    				data : {
+    					userId : userId,
+    				},
+    				method : "GET",
+    				success : function(data) {
+    					console.log(data);
+    					let cause = [];
+    					let causeDetail = [];
+    					causeDetail.push(parseInt(data[0].tagNum));
+    					causeDetail.push(parseInt(data[0].addrzonecode));
+    					causeDetail.push(parseInt(data[0].birthYear));
+    					cause.push(causeDetail);
+    					var nextCause = tf.tensor(cause);
+    		            var nextResult = model.predict(nextCause).toString();
+    		            
+    		            nextResult = nextResult.substring(14, nextResult.length-3);
+    		            console.log(nextResult);
+    		            
+    		            nextResultList = nextResult.split(", ");
+    		            console.log(nextResultList);
+    		            
+    		            // 문자열형으로
+    		            nextResultIntList = "";
+    		            
+    		            for(let item of nextResultList) {
+    		            	item = parseFloat(item);
+    		            	item = Math.round(item);
+    		            	nextResultIntList += String(item);
+    		            	nextResultIntList += ",";
+    		            }
+    		            nextResultIntList = nextResultIntList.substring(0, nextResultIntList.length-1);
+    		            
+    		            $.ajax({
+    		            	url : "/api/tensor/getPlaceList",
+    						data : {
+    							list : nextResultIntList,
+    						},
+    						method : "GET",
+    						success : function(data) {
+    							drawSlide(data)
+    							var slider = new MasterSlider();
+    							slider.setup('masterslider', {
+    								width: 1140,
+    								height: 660,
+    								minHeight: 400,
+    								space: 0,
+    								start: 1,
+    								grabCursor: false,
+    								layout: "fullwidth",
+    								wheel: false,
+    								autoplay: true,
+    								instantStartLayers: true,
+    								loop: true,
+    								view: "basic",
+    								instantStartLayers: true,
+    							});
+    							slider.control('arrows');
+    						}
+    		            })
+    				}
+                })
+            } else {
+            	$.ajax({
+	            	url : "/api/tensor/getPlaceList",
+					data : {
+						list : nextResultIntList,
+					},
+					method : "GET",
+					success : function(data) {
+						drawSlide(data)
+						var slider = new MasterSlider();
+						slider.setup('masterslider', {
+							width: 1140,
+							height: 660,
+							minHeight: 400,
+							space: 0,
+							start: 1,
+							grabCursor: false,
+							layout: "fullwidth",
+							wheel: false,
+							autoplay: true,
+							instantStartLayers: true,
+							loop: true,
+							view: "basic",
+							instantStartLayers: true,
+						});
+						slider.control('arrows');
+					}
+	            })
+            }
+            
+        }
+		
+		function drawSlide(data) {
+			let sliderImgs = $('#masterslider').find('img')
+			console.log(sliderImgs)
+			for(let i=0; i<data.length; i++) {
+				console.log(data[i].thumbnailHref);
+				$(sliderImgs).eq(i).attr("data-src", data[i].thumbnailHref)
+			}
+		}
+		
+        loadModel();
 	</script>
 </th:block>
+
 </html>
