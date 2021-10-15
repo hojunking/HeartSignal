@@ -28,6 +28,7 @@ before_deploy:
   - cd ../
   - zip -r yedam-springboot-webservice meetme
   - mv yedam-springboot-webservice.zip deploy/yedam-springboot-webservice.zip
+  - cd meetme
 
   
 deploy:
