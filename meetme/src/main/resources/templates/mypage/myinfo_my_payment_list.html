@@ -116,6 +116,8 @@
 
                                         <div class="card shadow-sm p-3 h-100">
                                             <div class="row align-items-center">
+									            
+									            
 									            <section class="position-relative">
 									                <div class="container py-3">
 									                    <table class="table" id="payment">
@@ -128,6 +130,8 @@
 													                <th>처리상태</th>
 													                <th>결제일자</th>
 													                <th>환불일자</th>
+													                <th></th>
+													                <!-- <th></th> -->
 													            </tr>
 													        </thead>
 															<tbody>
@@ -140,6 +144,13 @@
 								                                  <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}"></td>
 													              <td th:text="${#dates.format(pinfo.payDate,'yyyy.MM.dd')}"></td>
 													              <td th:text="${#dates.format(pinfo.cancelDate,'yyyy.MM.dd')}"></td>
+													              <td th:if="${#calendars.createNow().getTimeInMillis() - pinfo.payDate.getTime() < 345600000}">
+													              
+													              <a href="#refunding" data-bs-toggle="modal" class="btn btn-sm btn-outline-light border text-secondary shadow-sm">
+													              
+													              <i class="me-1 bi bi-check fs-6 lh-1"></i>환불하기</a></td>
+													              <!--  <td th:text ="${#calendars.format(#calendars.)}"></td> -->
+													              <!-- #calendars.createNow().getTimeInMillis() -->
 													            </tr>
 													          </th:block>													          
 															</tbody>
@@ -147,6 +158,8 @@
 									                </div>
 									                <!--/.container-end-->
 									            </section>
+									            
+									            
                                             </div>
                                         </div>
                                     </div>
@@ -158,6 +171,76 @@
             </section>
         </main>
         
+        <!-- 환불 모달창 -->
+        <div class="modal fade" id="refunding" tabindex="-1" aria-labelledby="refunding"
+                    aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+                    
+                        <div class="modal-content border-0">
+                            <div class="modal-body p-0 border-0">
+                                <button type="button"
+                                    class="btn-close position-absolute end-0 top-0 mt-2 me-2 me-md-n3 mt-md-n3 size-40 p-0 center-both rounded-circle bg-tint-primary z-index-1"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="bi bi-x fs-5"></i>
+                                </button>
+                                <div class="d-md-flex row">
+                                   
+                                   <!-- 왼쪽 사진 -->
+                                    <div class="col-md-6">
+                                        <img th:src="@{/img/coupleImage8.jpg}" alt=""
+                                            class="d-block rounded-top d-md-none img-fluid">
+                                        <div
+                                            class="d-none d-md-flex overflow-hidden bg-shade-primary rounded-3 rounded-end-0 h-md-100 position-relative">
+                                            <img th:src="@{/img/coupleImage8.jpg}" alt="" class="bg-image">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 오른쪽 -->
+                                    <div class="col-md-6 h-100">
+                                        <div class="h-100 py-5 px-4 position-relative">
+                                            
+                                            <h2 class="display-6 mb-2">
+                                            이용권환불
+                                            </h2>
+                                            <p>환불정보</p>
+                                            <div class="position-relative">
+                                            	<div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
+                                data-aos-delay="100">
+                                <div
+                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                    <span
+                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                        이벤트</span>
+                                    <div class="position-relative overflow-hidden">
+                                        <h6 id="subterm"></h6>
+                                        <div class="price display-4" id="subprice">
+                                            </div>
+                                    </div>
+                                    <!--/.price-card-header-->
+                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="use"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="off"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="store"><i
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+             
+             
+            <br>
+                                            </div>
+			                            <div class="d-grid">
+			                               	<button class="btn btn-primary" type="button" id="payment">결제하기</button>
+			                   			</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </th:block>
 
 <th:block layout:fragment="script">

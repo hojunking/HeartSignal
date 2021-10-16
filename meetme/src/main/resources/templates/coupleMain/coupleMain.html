@@ -16,7 +16,7 @@
 
 .photo_them{position:relative;width:100%;height:420px;background:#eee;margin :10px 0;}
 
-.them_img, .result_box{position:absolute;top:0;left:0;width:100%;height:100%;}
+.them_img, .result_box{position:absolute;top:0;left:0;width     :100%;height:100%;}
 .them_img img, .result_box img{display:block;margin:0 auto;height:100%;}
 
 .btn-circle-ripple::after, .btn-circle-ripple::before{
@@ -507,6 +507,8 @@ style="display: none;" data-bs-backdrop="static">
 									data : {
 										userSent : userId,
 										userReceived : datas.userId,
+										coupleId : coupleId
+									
 									},
 									method : "POST",
 									success : function(data) {

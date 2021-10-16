@@ -26,5 +26,9 @@ public class NoticeServiceImpl implements NoticeService{
 	public List<NoticeVO> coupleRequest(NoticeVO vo) {
 		return map.coupleRequest(vo);
 	}
+	@Override
+	public int confirmUpdate(NoticeVO vo) {
+		return map.confirmUpdate(vo);
+	}
 
 }

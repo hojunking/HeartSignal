@@ -116,13 +116,18 @@
         	requestInfo();
         	noticeCommentClick();
         
-            
+          //notice 클릭시 확인 상태로 변경하는 ajax
         function noticeCommentClick(){
         	$('#noticeBlock').on('click','.noticeComment', function(){
         		var notice =$(this);
+        		let noticeId=$(notice).attr('data-noticeId');
+        		console.log(notice);
+        		
+        		console.log(noticeId);
         		$.ajax({
-    				url : "/getRequest/" + userId,
+    				url : "/updateConfirmed/"+noticeId,
     				dataType : "json",
+    				method : "put",
     				success : function(datas) {
     					notice.remove();
     					location.href=notice.attr('href');
@@ -131,7 +136,7 @@
     			
         		});
         	})
-        }    
+        }  //function 종료
         
         // requester 정보뿌리기
         function requestInfo(){
@@ -157,7 +162,7 @@
 					}
 					//이건 댓글정보입니다
 					else{
-						var noticeInfo = $('<a class="noticeComment" href="/post/get_community/'+item.postId+'"/>');
+						var noticeInfo = $('<a class="noticeComment" data-noticeId="'+item.noticeId+'" href="/post/get_community/'+item.postId+'"/>');
 						noticeInfo.append($('<li class="list-group-item py-2 bg-tint-info"/>')
 						.append($('<div class="d-flex align-items-start"/>')
 								.append($('<div class="me-1 me-lg-2"/>')
@@ -172,6 +177,35 @@
 				}
 			});//ajax 끝
          }
+        
+        $('#accept').on('click',function(){
+        	let coupleId=$(this).attr('data-coupleId');
+        	let userId = userSession.userId;
+        	console.log(coupleId);
+        	
+        	$.ajax({
+				url : "/matching",
+				dataType : "text",
+				data : {userReceived : userId,
+						coupleId : coupleId},
+				method : "put",
+				success : function(data) {
+				console.log(data);
+				
+				swal(data,"", "success",
+						{button : {text : "확인",className : "btn btn-primary"}
+						}).then(()=>{
+							$('#receiveLove').hide(); //모달창 닫기
+							//location.href ="coupleMain?coupleStatus=y";
+						});
+				
+				},
+				error:function(data){
+					console.log(data);
+				}
+        	
+        	});//ajax 끝
+        })
         }); // 페이지 로드 종료
         
         
@@ -186,7 +220,8 @@
            $('#requesterImg').attr('src',"/img/"+item.imgUrl);
            $("#requester").text(item.name);
            $("#noticeContent").text(item.noticeContent);
-			console.log("여기",item);
+           $('#accept').attr('data-coupleId',item.coupleId);
+           console.log("여기",item);
         })  
         //모달창 각각 만들어진거에 대해 path
         	

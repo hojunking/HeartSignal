@@ -131,7 +131,7 @@
 
 <select id="findLove" resultType="CoupleInfoVO">
 	SELECT U.EMAIL,
-			U.USER_ID
+			U.USER_ID,
 			U.NICKNAME,
 			U.COUPLE_STATUS,
 			I.IMG_URL AS userImg
