@@ -23,6 +23,7 @@ import com.hs.meetme.image.domain.ImageVO;
 import com.hs.meetme.image.service.ImageService;
 import com.hs.meetme.mypage.domain.MyPageCourseVO;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
+import com.hs.meetme.mypage.domain.UserTagsVO;
 import com.hs.meetme.mypage.service.MypageService;
 import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.notice.service.NoticeService;
@@ -153,7 +154,19 @@ public class MypageRestController {
 		return myPageUserInfoVO;
 	}
 	
-	//마이페이지 내정보 뿌링클
+	//마이페이지 내정보 뿌링클(뭐야 이거...유치해)
 	
+	
+	
+	/*
+	 * // tag delete 한 뒤 insert
+	 * 
+	 * @PostMapping("/updateUserTags") public UserTagsVO tagsUpdate(@RequestBody
+	 * UserTagsVO vo) {
+	 * 
+	 * mypageService.deleteUserTags(vo);
+	 * 
+	 * return vo; }
+	 */
 	
 }

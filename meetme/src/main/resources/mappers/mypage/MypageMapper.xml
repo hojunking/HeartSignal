@@ -43,10 +43,8 @@
   </delete>
   <insert id="insertUserTags">
     INSERT INTO
-    user_tags(
-               user_id, tag_id)
-    VALUES(
-               #{userId}, #{tagId})
+    user_tags(user_id, tag_id)
+    VALUES(#{userId}, #{tagId})
   </insert>
   
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
