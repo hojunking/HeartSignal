@@ -257,7 +257,7 @@
           <div class="swiper-wrapper">
   <th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
               <div th:if="${list[c].courseId==detail[d].courseId}" class="swiper-slide rounded-2 overflow-hidden">
-                  <img th:if="${list[c].courseId==detail[d].courseId}" th:src="${detail[d].thumbnailHref}" alt="" class="img-fluid rounded-2 position-relative" style="width:300px; height:280px; background-size:cover;">
+                  <img th:if="${list[c].courseId==detail[d].courseId}" th:src="${detail[d].thumbnailHref}" alt="" class="img-fluid rounded-2 position-relative" style="width:400px; height:280px; background-size:cover;">
               </div>
   </th:block>
           </div>
