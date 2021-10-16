@@ -463,28 +463,28 @@
 		
 		// ai 쓰기
 		async function loadModel() {
+			// tensor 모델 불러오기 (await 사용함)
             const model = await tf.loadLayersModel('model/my-model-1.json');    
             console.log(model);
             
+            // 비로그인 대상자 초기값 지정
             nextResultIntList = "46,47,48";
             
             if(userSession != null) {
-            	let userId = userSession.userId;
-                
                 $.ajax({
                 	url : "/api/tensor/userTagAddrYear",
-    				data : {
-    					userId : userId,
-    				},
     				method : "GET",
     				success : function(data) {
     					console.log(data);
     					let cause = [];
     					let causeDetail = [];
-    					causeDetail.push(parseInt(data[0].tagNum));
+    					const randomNum = parseInt(Math.floor(Math.random() * data.length))
+    					causeDetail.push(parseInt(data[randomNum].tagNum));
     					causeDetail.push(parseInt(data[0].addrzonecode));
     					causeDetail.push(parseInt(data[0].birthYear));
     					cause.push(causeDetail);
+    					
+    					// 직접만든 tensorFlow.js model 사용
     					var nextCause = tf.tensor(cause);
     		            var nextResult = model.predict(nextCause).toString();
     		            

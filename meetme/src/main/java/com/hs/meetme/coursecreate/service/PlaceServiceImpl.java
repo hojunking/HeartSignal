@@ -46,8 +46,10 @@ public class PlaceServiceImpl implements PlaceService {
 		return placeMapper.getListBySearched(keywords);
 	}
 
-	
-
+	@Override
+	public int getPlaceAllCount() {
+		return placeMapper.getPlaceAllCount();
+	}
 	
 
 }
