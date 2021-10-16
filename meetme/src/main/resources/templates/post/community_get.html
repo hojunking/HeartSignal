@@ -61,14 +61,15 @@
                <div class="justify-content-between align-items-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                   <!--코스 여기-->
                   <th:block th:if='${course} != null'>
-                     <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+                   <!--   <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
                      <img src="${course[0].thumbnailHref}" alt="코스 사진">
                      <div>
                         <div th:each="c : ${course}" class="d-flex justify-content-between">
                            <div th:text="${c.placeName}"></div>
                            <div th:text="${c.avgCost}"></div>
                         </div>
-                     </div>
+                     </div> -->
+                     <br>
                      <div id="map" style="width:100%;height:400px;"></div>
                      <br><br>
                   </th:block>
@@ -87,11 +88,11 @@
          <h4 class="mb-5" id="commentCount" ></h4>
          <ul class="list-unstyled mb-5 mb-lg-10" id="commentsBody">
             <li th:each="list : ${cmt}" class="d-flex mb-3 justify-content-between commentWrap">
-               <div class="row">
-                  <div class="me-3 col-lg-2">
-                      <img th:src="@{|/img/user/${list.imgUrl}|}" alt="이미지" id="profileImg" class="size-50 rounded-circle">
-                  </div>
+               <div class="row d-flex col-lg-12">
                   <div class="px-3 py-4 border rounded border-end col-lg-10">
+	                  <div class="me-3 col-lg-2">
+	                      <img th:src="@{|/img/user/${list.imgUrl}|}" alt="이미지" id="profileImg" class="size-50 rounded-circle">
+	                  </div>
                       <div class="d-flex mb-3 justify-content-between">
                           <div class="d-flex align-items-center">
                               <h6 class="mb-0 me-3" th:text="${list.nickname}"></h6>
@@ -801,17 +802,22 @@
 
       function insertCallback(result) {
          let commentWrap = $("<div />")
-            .addClass("d-flex justify-content-between commentWrap");
+            .addClass("row d-flex col-lg-12 commentWrap");
+         let Wrap = $("<div />")
+         	.addClass("px-3 py-4 border rounded border-end col-lg-10");
+         let imgDiv = $('<div />').addClass("me-3 col-lg-2");
+         let btnName = $('<div />').addClass("d-flex mb-3 justify-content-between");
          let profileImg = $("<img />")
-            .addClass("d-flex arounded-circle")
+            .addClass("size-50 arounded-circle")
             .attr({
                src: result.imgId,
                alt: "이미지",
                id: "profileImg"
             });
-         let nickname = $("<span />").addClass("pl-2").text(result.nickname);
+        
+         let nickname = $("<span />").addClass("pl-2").text(  result.nickname);
          let comContent = $("<span />").addClass("pl-2").attr("id", result.commentId).text(result.comContent);
-
+		 
          let btnWrap = $("<div />")
          let updBtn = $("<button />")
             .addClass("cmtUpdBtn1 btn btn-primary btn-sm")
@@ -844,7 +850,10 @@
          $(delBtn).append(delIcon);
 
          $(btnWrap).append(updBtn, delBtn);
-         $(commentWrap).append(profileImg, nickname, comContent, btnWrap);
+         $(imgDiv).append(profileImg,nickname );
+         $(btnName).append(nickname,btnWrap)
+         $(Wrap).append(imgDiv,btnName, comContent)
+         $(commentWrap).append(Wrap);
          $("#commentsBody").append(commentWrap);
 
          //댓글 수 바꾸기

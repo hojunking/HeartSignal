@@ -87,7 +87,10 @@
                      <a th:href="@{/post/get_community( idx=${row.idx} )}" th:text="${row.postTitle}"></a>
                   </td> -->
                   <td th:text="${row.postId}"></td>
-                  <td th:text="${row.postTitle}"></td>
+                  <td>
+                   	<li th:if="${row.region} != null"  th:text="|[${row.region}] ${row.postTitle}|">
+                   	<li th:if="${row.region} == null"  th:text=" ${row.postTitle}">
+                  </td>
                   <td th:text="${row.nickname}"></td>
                   <td th:text="${#dates.format(row.postCreated,'yyyy.MM.dd.')}"></td>
                   <td th:text="${row.hit}"></td>
