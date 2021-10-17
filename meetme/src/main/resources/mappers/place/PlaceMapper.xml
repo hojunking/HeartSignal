@@ -20,6 +20,13 @@
 		WHERE PLACE_ID = #{placeId}
 	</select>
 	
+	<!-- 전체 장소 갯수 -->
+	<select id="getPlaceAllCount" resultType="int">
+		SELECT MAX(PLACE_ID)
+		FROM PLACE
+	</select>
+	
+	<!-- 모든 태그 가져오기 -->
 	<select id="getTagList" resultType="com.hs.meetme.coursecreate.domain.TagVO2">
 		SELECT * FROM tags
 	</select>

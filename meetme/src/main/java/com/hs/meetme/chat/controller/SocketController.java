@@ -84,13 +84,13 @@ public class SocketController {
         // vo에서 getter로 userName을 가져옵니다.
 //    	String currUserName = ((AccountVO) session.getAttribute("userSession")).getNickname();
 //    	socketVO.setUserName(currUserName);
-        String userName = socketVO.getUserName();
+        String email = socketVO.getEmail();
         // vo에서 getter로 content를 가져옵니다.
-        String sendUserName = WSHandshakeInterceptor.map.get(userName);
+        String sendUserName = WSHandshakeInterceptor.nameMap.get(email);
         String content = socketVO.getContent();
 
         // 생성자로 반환값을 생성합니다.
-        SocketChatVO result = new SocketChatVO(sendUserName, content);
+        SocketChatVO result = new SocketChatVO(email, sendUserName, content);
         // 반환
         return result;
     }

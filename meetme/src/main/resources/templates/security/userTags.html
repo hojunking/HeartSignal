@@ -11,6 +11,8 @@
 
 .cusBtn {
 	font-size: 14px;
+	padding:7px;
+	
 }
 
 .finalBtn {
@@ -104,9 +106,6 @@ li {
 <th:block layout:fragment="script">
 	<script>
 		$(function() {
-			let list = [];
-			let realList = [];
-			
 			var ul= $(".tags");
 			$(".cusBtn").on("click", function(e) {
 				let targetBtn = e.target;
@@ -120,7 +119,8 @@ li {
 										  .css("border-radius","10px")
 										  .css("padding","5px")
 										  .css("margin-right","5px")
-										  .css("cursor", "pointer");
+										  .css("cursor", "pointer")
+										  .css("font-size","14px");
 				$(li).on('click', function(e){
 					let removeBtn = e.target;
 					$(removeBtn).remove();
@@ -128,12 +128,25 @@ li {
 				});
 				ul.append(li);
 				
-				list.push($(li).text());
-				console.log(list);
-				/* realList.push(tagId); */
-				console.log(realList);
 			});
-			/* tcustom click 이벤트 */
+			/* cusBtn click 이벤트 */
+			
+			
+			$('#submit').on('click', function(){
+				let tags = $('.tags li');
+				let strtags = '';
+				
+				for(let t of tags){
+					strtags += $(t).text();
+					strtags += " ";
+				}
+				strtags = strtags.substring(0,strtags.length-1);
+				
+				$('input[name="list"]').val(strtags);
+				$('input[name="userId"]').val(8);
+				$('button[type="submit"]').click();
+			});
+			
 			
 			// 숨겨진 태그
 			let moreCourse = $(".moreTags");
@@ -149,22 +162,7 @@ li {
 				}
 			});
 			
-			$('#submit').on('click', function(){
-				let tags = $('.tags li');
-				let strtags = '';
-				
-				for(let t of tags){
-					strtags += $(t).text();
-					strtags += " ";
-				}
-				strtags = strtags.substring(0,strtags.length-1);
-				
-				console.log(realList);
-				
-				$('input[name="list"]').val(strtags);
-				$('input[name="userId"]').val(1);
-				$('button[type="submit"]').click();
-			});
+			
 			
 		});
 

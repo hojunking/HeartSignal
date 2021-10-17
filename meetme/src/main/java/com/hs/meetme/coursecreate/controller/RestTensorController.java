@@ -3,6 +3,9 @@ package com.hs.meetme.coursecreate.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import com.hs.meetme.coursecreate.domain.TensorResultVO;
 import com.hs.meetme.coursecreate.domain.TensorVO;
 import com.hs.meetme.coursecreate.service.PlaceService;
 import com.hs.meetme.coursecreate.service.TensorService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -70,19 +74,50 @@ public class RestTensorController {
 	}
 	
 	@GetMapping("/userTagAddrYear")
-	public List<TagNumAddrYearVO> getTagAddrYear(String userId) {
+	public List<TagNumAddrYearVO> getTagAddrYear(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		AccountVO userSession = (AccountVO) session.getAttribute("userSession");
+		String userId = null;
+		String addrzonecode = null;
+		String birthYear = null;
+		System.out.println(userSession.toString());
+		if(userSession != null) {
+			userId = userSession.getUserId();
+			addrzonecode = userSession.getAddrzonecode();
+			birthYear = userSession.getBirthYear();
+		}
+		
+		if(addrzonecode.equals(null)) addrzonecode = "34501";		
+		if(birthYear.equals(null)) birthYear = "1995";
 		
 		List<TagNumAddrYearVO> resultList = tensorService.getDataOfTensor(userId);
+		
+		if(resultList.isEmpty()) {
+			TagNumAddrYearVO vo = new TagNumAddrYearVO();
+			vo.setTagNum("20");
+			vo.setAddrzonecode(addrzonecode);
+			vo.setBirthYear(birthYear);
+			resultList.add(vo);
+		}
 		
 		return resultList;
 	}
 	
 	@GetMapping("/getPlaceList")
-	public List<PlaceVO> getTagAddrYear(String[] list) {
+	public List<PlaceVO> getPlaceList(String[] list) {
 		List<PlaceVO> resultList = new ArrayList<PlaceVO>();
 		
 		for(String num : list) {
-			resultList.add(placeService.getPlaceById(num));
+			PlaceVO vo = placeService.getPlaceById(num);
+			int intNum = Integer.parseInt(num);
+			if (vo == null) {
+				while(vo == null) {
+					num = String.valueOf(intNum);
+					vo = placeService.getPlaceById(num);
+					intNum = (int)(Math.random() * placeService.getPlaceAllCount() - 1);
+				}
+			}
+			resultList.add(vo);
 		}
 		
 		return resultList;

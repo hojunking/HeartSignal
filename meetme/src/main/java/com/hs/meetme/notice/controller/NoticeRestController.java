@@ -1,12 +1,12 @@
 package com.hs.meetme.notice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
@@ -42,5 +42,12 @@ public class NoticeRestController {
 		List<NoticeVO> list = noticeService.coupleRequest(vo);	//신청정보들고오기
 		System.out.println(list); 
 		return list;
+	}
+	
+	@PutMapping("/updateConfirmed/{id}") //클릭 시 confirm으로 변경되는 메소드
+	public void updateConfirmed(NoticeVO vo,@PathVariable String id) {
+		System.out.println("아이디 왕ㅆ나?"+id);
+		vo.setNoticeId(id);
+		noticeService.confirmUpdate(vo);
 	}
 }

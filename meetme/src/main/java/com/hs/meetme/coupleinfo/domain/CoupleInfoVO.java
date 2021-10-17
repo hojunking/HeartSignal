@@ -37,6 +37,7 @@ public class CoupleInfoVO extends ImageVO{
 	private String nickName;
 	private String birthDay;  
 	private String userImg; //유저이미지 url
+	
 	private String imgUrl; //커플이미지 url
 	private String email;
 }
