@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
     	registry.addEndpoint("/ws")
     		.addInterceptors(new WSHandshakeInterceptor())
-       		.setAllowedOrigins("http://192.168.0.37:3000").withSockJS();
+       		.setAllowedOrigins("http://192.168.0.*:8000").withSockJS();
     }
     // 빌드 후 setAllowedOrigins : http://192.168.0.*:8000은 여러 컴퓨터에서 접근이 가능했었음.
 }
