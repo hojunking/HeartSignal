@@ -148,7 +148,7 @@
 				console.log(datas);
 				
 				$.each(datas,function(idx,item){
-					if(item.postId==null){
+					if(item.postId==null){ //커플신청 notice
 					 var noticeInfo = $('<a href="#receiveLove" data-bs-toggle="modal"/>');
 					 noticeInfo.append($('<li class="list-group-item py-2 bg-tint-danger"/>')
 							.append($('<div class="d-flex align-items-start"/>')
@@ -161,7 +161,7 @@
 					noticeInfo.data("item",item);
 					}
 					//이건 댓글정보입니다
-					else{
+					else{ //댓글달림 notice
 						var noticeInfo = $('<a class="noticeComment" data-noticeId="'+item.noticeId+'" href="/post/get_community/'+item.postId+'"/>');
 						noticeInfo.append($('<li class="list-group-item py-2 bg-tint-info"/>')
 						.append($('<div class="d-flex align-items-start"/>')
@@ -208,7 +208,6 @@
         })
         }); // 페이지 로드 종료
         
-        
         //커플신청받기 모달창 연결하기 
         var receiveLove = document.getElementById('receiveLove')
       	receiveLove.addEventListener('show.bs.modal', function (event) {
@@ -224,8 +223,6 @@
            console.log("여기",item);
         })  
         //모달창 각각 만들어진거에 대해 path
-        	
-        
         	
     </script>
 

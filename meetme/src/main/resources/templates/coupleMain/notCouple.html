@@ -10,10 +10,12 @@
 </th:block>
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
+	
+	<br><br><br><br>
 	<div class="tm-page-wrap mx-auto">
 		<!-- section 1 -->
 		<section class="position-relative bg-light">
-                <div class="container position-relative py-7 py-lg-12">
+                <div class="container position-relative py-lg-12 mt-4">
                     <div class="row align-items-center justify-content-around">
                         <div class="col-lg-6 mb-5 mb-lg-0">
                             <img th:src="@{/img/coupleImage6.jpg}" alt="" class="img-fluid rounded-xl shadow-lg">
@@ -114,7 +116,7 @@
             
             <!-- section 4 -->
             <section id="features" class="position-relative overflow-hidden">
-                <div class="container py-7 py-lg-12 position-relative">
+                <div class="container mb-6 py-9 py-lg-12 position-relative">
                     <div class="row justify-content-center">
                         <!--Feature column-->
                         <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="150">
@@ -474,9 +476,6 @@
 			
 			let subTerm = 0; //정기권 기간
 			let subPrice = 0; //정기권 가격
-		
-			
-			
 			
 			$("#one").on('click', function() {
 				subTerm = 1;

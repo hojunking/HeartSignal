@@ -133,7 +133,7 @@ public class RestCoupleInfoController {
 			File file = new File(path, imgUrl);
 			ufile.transferTo(file); //파일 옮기기
 			vo.setImgUrl(imgUrl);
-			System.out.println("이미지URL=" + vo.getImgUrl());
+			System.out.println("vo 확인하기 " + vo);
 			imageService.insertImage(vo);  // 이미지 테이블에 등록
 			coupleService.updateCoupleImage(vo); //이미지 커플테이블에 업뎃
 		}

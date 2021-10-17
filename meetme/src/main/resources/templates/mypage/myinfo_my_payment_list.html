@@ -228,11 +228,10 @@
                                 </div>
                             </div>
              
-             
             <br>
                                             </div>
 			                            <div class="d-grid">
-			                               	<button class="btn btn-primary" type="button" id="payment">결제하기</button>
+			                               	<button class="btn btn-primary" type="button" id="refund">환불</button>
 			                   			</div>
                                         </div>
                                     </div>
@@ -248,7 +247,17 @@
 	
   </script>
   <script th:inline="javascript">
-    
+  $(function() {
+    $('#refund').on('click',function(){
+    	
+    })
+  }); //ajax 끝
+	var refunding = document.getElementById('refunding')
+      	refunding.addEventListener('show.bs.modal', function (event) {
+      	var button = event.relatedTarget
+      	var item =$(button).data("payInfo")
+      	console.log(item.merchantUid);
+        })  
   </script>
 </th:block>
 
