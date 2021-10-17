@@ -168,18 +168,18 @@
 																</div>
 																<div class="modal-body py-5 border-0">
 																	<h6 class="cusTitle">현재 나의 태그</h6>
-																	<p>
+																	<p class="pOne">
 																		<th:block th:each="userTag : ${userTag}">
-																			<a href="#!" class="badge bg-primary mb-1"
-																				style="padding: 7px"> [[${userTag.TagId}]] </a>
+																			<button class="btn btn-primary m-1 cusBtn myTag" id="myTag"
+																				style="padding: 7px"  th:text="${userTag.tagId}"></button>
 																		</th:block>
 																	</p>
 																	<hr>
-																	<p>
+																	<p class="pAll">
 																		<th:block
 																			th:each="t: ${#numbers.sequence(0, tagAll.size-1)}">
 																			<button type="button"
-																				class="btn btn-primary m-1 cusBtn"
+																				class="btn btn-primary m-1 cusBtn tagAll"
 																				th:text="${tagAll[t].tagId}"></button>
 																		</th:block>
 																	</p>
@@ -187,18 +187,13 @@
 																<div class="modal-footer bg-light border-0">
 																	<button type="button" class="btn btn-white btn-sm"
 																		data-bs-dismiss="modal">Close</button>
-																	<button type="button" class="btn btn-primary btn-sm">Save
+																	<button type="button" class="btn btn-primary btn-sm saveBtn">Save
 																		changes</button>
 																</div>
 															</div>
 														</div>
 													</div>
 													<!-- 모달 끝 -->
-
-
-
-
-
 
 
 													<div class="d-flex align-items-center mb-3 mb-lg-3">
@@ -327,6 +322,36 @@
 				})//ajax end==
 			}
 		}
+		
+		$(function(){
+			let p1 = $(".pOne")
+			let p2 = $(".pAll")
+			$(".tagAll").on("click",function(e){
+				let tagAll = e.target;
+				p1.append(tagAll);
+				
+				var tagId=$(this).text();
+				console.log(tagId);
+				
+			})
+			$(".myTag").on("click",function(e){
+				let myTag = e.target;
+				p2.append(myTag);
+				
+			});
+		}); // function 끝
+		
+		$(".saveBtn").on("click",function(){
+			$.ajax({
+				url:"saveUserTags",
+				method:"post",
+				success:function(){
+					alert("변경되었습니다")
+				}
+				
+			});	//아작스 끝
+		});
+		
 	</script>
 	<script th:inline="javascript">
 		

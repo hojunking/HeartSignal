@@ -161,7 +161,7 @@ public class MypageRestController {
 	/*
 	 * // tag delete 한 뒤 insert
 	 * 
-	 * @PostMapping("/updateUserTags") public UserTagsVO tagsUpdate(@RequestBody
+	 * @PostMapping("/saveUserTags") public UserTagsVO tagsUpdate(@RequestBody
 	 * UserTagsVO vo) {
 	 * 
 	 * mypageService.deleteUserTags(vo);
