@@ -181,7 +181,8 @@
         c.place_name,
         c.avg_cost,
         c.place_id,
-        (select d.img_url from img_place p join img d on p.img_id = d.img_id where c.place_id=p.place_id) "이미지 위치" 
+        c.region,
+        c.thumbnail_href
 		from course a 
 		join (select * from course_order where course_order = 1) b 
 		    on a.course_id = b.course_id 

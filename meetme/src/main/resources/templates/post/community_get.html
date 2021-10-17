@@ -455,18 +455,25 @@
                //       </div>
                //정보창
                var infoWindow = new naver.maps.InfoWindow({
-                  content: '<div class="mapboxgl-popup mapboxgl-popup-anchor-bottom" style="max-width: 240px; "><div class="mapboxgl-popup-tip"></div><div  class="mapboxgl-popup-content"><button class="mapboxgl-popup-close-button" type="button" data-bs-dismiss="toast" aria-label="Close Close popup"><i class="bi bi-x"></i></button> <h6 class="text-primary mb-0 fw-normal">' 
+                  content: '<div class="mapboxgl-popup mapboxgl-popup-anchor-bottom" style="max-width: 240px; "><div class="mapboxgl-popup-tip"></div><div class="mapboxgl-popup-content">'
+                	  + '<small class="text-secondary"> ['+ i+' 번째 장소]'
+                	  +'<br><h5 class="text-primary mb-0 fw-normal"><b>' 
                      + locations[i].place + 
-                     '</h6><small class="text-muted">'+ locations[i].add 
+                     '</b></h5><small class="text-muted">'+ locations[i].add 
                      +'</small></div></div>'
                });
                // <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
                //    <i class="bi bi-x"></i>
                // </button>
                markers.push(marker); //생성한 마커를 담는다
-               infoWindows.push(infoWindow); //생성한 정보창을 담는다. 
+               infoWindows.push(infoWindow); //생성한 정보창을 담는다.
+               $('#popUpBtn').on("click",popUpClose);
             }
-
+			
+            function popUpClose(){
+            	$(".mapboxgl-popup").close();
+            }
+            
             function getClickHandler(seq) {
 
                return function (e) { //마커를 클릭하는 부분
@@ -484,6 +491,7 @@
 
             for (var i = 0, ii = markers.length; i < ii; i++) {
                naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+               naver.maps.Event.addListener($(".mapboxgl-popup mapboxgl-popup-anchor-bottom").find('.bi bi-x').eq(i), 'click', getClickHandler(i));
             }
 
 
