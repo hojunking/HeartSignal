@@ -133,7 +133,7 @@ public class MypageServiceImpl implements MypageService {
 	public List<PaymentVO> readPayment(PaymentVO paymentVO) {
 		return mypageMapper.readPayment(paymentVO);
 	}
-
+//----------------------------------------------------------------
 	//태그 다 가져오기
 		
 	@Override
@@ -150,6 +150,12 @@ public class MypageServiceImpl implements MypageService {
 	public List<UserTagsVO> getTags() {
 		
 		return mypageMapper.getTags();
+	}
+
+	@Override
+	public int deleteUserTags(UserTagsVO userTagsVO) {
+		
+		return mypageMapper.deleteUserTags(userTagsVO);
 	}
 
     

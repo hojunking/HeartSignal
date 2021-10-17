@@ -20,6 +20,7 @@ public interface MypageMapper {
 	//결제 내역 가져오기
 	public List<PaymentVO> readPayment(PaymentVO paymentVO);
 	
+// ------------------------------------------------------- BMJ
 	//태그 다 가져오기
 	public List<UserTagsVO> getTags();
 	//나의 취향 태그 가져 오기
@@ -28,7 +29,7 @@ public interface MypageMapper {
 	public int deleteUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 인서트
 	public int insertUserTags(UserTagsVO userTagsVO);
-	
+// --------------------------------------------------------
 	//내 코스 리스트 조회
 	public List<MyPageCourseVO> getCourseList(@Param("cri") Criteria cri, @Param("userId") String userId);
 	//내 코스 페이징 위한 갯수

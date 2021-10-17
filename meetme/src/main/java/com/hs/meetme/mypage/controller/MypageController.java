@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,6 +57,7 @@ public class MypageController {
 
 		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
 		model.addAttribute("userTag", mypageService.getUserTags(userTagVO));
+		model.addAttribute("tagAll",mypageService.getTags()); // bmj
 		
 		model.addAttribute("userNotice", noticeService.getNoticeList(noticeVO));
 		
@@ -234,8 +236,9 @@ public class MypageController {
 		return noticeService.getNoticeList(vo);
 	}
 	
-//	-------------------------------------------------------------
+//	---------------------------------------------- BMJ
 	@PostMapping("/userTags")
+	@Transactional
 	public String userTags(String list, String userId) {
 		List<UserTagsVO> tagList = new ArrayList<UserTagsVO>();
 		
@@ -249,12 +252,8 @@ public class MypageController {
 			tagList.add(vo);
 			System.out.println(tagList);
 		}
+		mypageService.insertUserTags(tagList);
 		
-		
-		
-		
-//		int result = mypageService.insertUserTags(list);
-//		System.out.println(result);
 		System.out.println(list);
 		System.out.println(userId);
 		
