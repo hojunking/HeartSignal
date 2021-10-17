@@ -15,7 +15,7 @@ public class NoticeVO {
 	private String userSent;
 	private String userReceived;
 	private String noticeContent;
-	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd:mm:ss")
 	private Date noticeDate;
 	private String noticeConfirmed;
 	
@@ -24,4 +24,5 @@ public class NoticeVO {
 	private String userId;
 	private String name;
 	private String imgUrl; //요청자 이미지 url
+	private String coupleId; //커플아이디
 }

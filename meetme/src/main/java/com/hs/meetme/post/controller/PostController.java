@@ -178,7 +178,8 @@ public class PostController {
 		vo.setNickname(accountVO.getNickname());
 		
 		//notice INSERT 
-		if(vo.getUserId()!=vo.getPostUserId()) { 		//댓글을 작성하면 게시글
+		System.out.println("보낸사람"+vo.getUserId()+"+"+"게시글만든 "+vo.getPostUserId());
+		if(!vo.getUserId().equals(vo.getPostUserId())) { 		//댓글을 작성하면 게시글
 			NoticeVO nVo = new NoticeVO();
 			nVo.setUserSent(vo.getUserId()); 			//댓글 쓴 사람
 			nVo.setUserReceived(vo.getPostUserId()); 	//게시글 쓴 사람
@@ -187,7 +188,6 @@ public class PostController {
 			noticeService.insertNotice(nVo);
 			System.out.println("댓글달고 댓글정보 INSERT"+nVo);
 		}
-		
 		//notice INSERT end
 
 		return vo;

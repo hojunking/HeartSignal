@@ -22,13 +22,15 @@
 	        ON US.IMG_ID = I.IMG_ID) U
 	ON U.USER_ID = N.USER_SENT
 	WHERE N.USER_RECEIVED=#{userReceived}
+	AND N.NOTICE_CONFIRMED ='n'
 	ORDER BY N.NOTICE_DATE DESC
 </select>
 
 <delete id="deleteNotice" parameterType="NoticeVO">
   DELETE
   FROM NOTIFICATION
-  WHERE notice_id = #{noticeId}
+  WHERE NOTICE_ID = #{noticeId}
+  OR COUPLE_ID =#{coupleId}
 </delete>
 	<insert id="insertNotice">
 	<selectKey keyProperty="noticeId" resultType="String" order="BEFORE">
@@ -40,14 +42,19 @@
 							NOTICE_CONTENT,
 							NOTICE_DATE,
 							NOTICE_CONFIRMED,
-							POST_ID)
+							POST_ID,
+							COUPLE_ID)
 			VALUES(#{noticeId},
 					#{userSent},
 					#{userReceived},
 					#{noticeContent},
 					SYSDATE,
 					DEFAULT,
-					#{postId})
+					#{postId},
+					#{coupleId})
 	</insert> 
-
+<update id="confirmUpdate"> <!-- notice 클릭 시 상태변화 -->
+	UPDATE NOTIFICATION SET NOTICE_CONFIRMED='y'
+	WHERE NOTICE_ID=#{noticeId}
+</update>
 </mapper>
