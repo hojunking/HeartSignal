@@ -52,7 +52,7 @@
          <div class="d-flex mb-0 small align-items-center">
             <img th:src="@{|/img/user/${list.imgUrl}|}" alt="사진" class="size-40 rounded-circle me-2" >
             <span class="text-muted d-inline-block">By <a href="#!" class="text-dark" th:text="${list.nickname} "></a></span>
-            <span class="text-muted d-inline-block">   | Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
+            <span class="text-muted d-inline-block">  &nbsp; |&nbsp; Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
         </div>
 
          <br>
@@ -61,18 +61,47 @@
                <div class="justify-content-between align-items-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                   <!--코스 여기-->
                   <th:block th:if='${course} != null'>
-                   <!--   <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
-                     <img src="${course[0].thumbnailHref}" alt="코스 사진">
-                     <div>
-                        <div th:each="c : ${course}" class="d-flex justify-content-between">
-                           <div th:text="${c.placeName}"></div>
-                           <div th:text="${c.avgCost}"></div>
-                        </div>
-                     </div> -->
+                  
                      <br>
                      <div id="map" style="width:100%;height:400px;"></div>
-                     <br><br>
+                     <br>
+                     <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+                     
+                     <div class="container py-7 py-lg-12">
+                        <div class="accordion accordion-custom" id="accordionCustomExample">
+                           <!--accordion item-->
+                           <div th:each="c : ${course}" class="d-flex justify-content-between">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="headingCustomOne">
+                                    <button class="accordion-button collapsed" th:text="${c.placeName}" type="button"
+                                       data-bs-toggle="collapse" th:data-bs-target="|#${c.placeName}|"
+                                       aria-expanded="false" aria-controls="collapseCustomOne">
+
+                                    </button>
+                                 </h2>
+                                 <div th:id="${c.placeName}" class="accordion-collapse collapse"
+                                    aria-labelledby="headingCustomOne" data-bs-parent="#accordionCustomExample"
+                                    style="">
+                                    <div class="accordion-body">
+                                       <strong th:text="${c.avgCost}">.</strong>
+                                       <p th:text="${c.address}"></p>
+                                       <img th:src="${c.thumbnailHref}" alt="">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </div>
+                        <!-- <div th:each="c : ${course}" class="d-flex justify-content-between">
+                           <div th:text="${c.placeName}"></div>
+                           <div th:text="${c.avgCost}"></div>
+                           <img th:src="${c.thumbnailHref}" alt="코스 사진">
+                           <br>
+                        </div> -->
+                     </div>
+                     <br>
                   </th:block>
+                  <hr>
                   <!-- 글 내용 here-->
                   <th:block th:utext="${list.postContent}" class="mx-auto text-center"></th:block>
                   <!-- <textarea name="postContent" class="form-control" id="ckcontents" th:text="${list.postContent}" disabled></textarea> -->
