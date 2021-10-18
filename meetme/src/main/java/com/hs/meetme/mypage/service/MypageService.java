@@ -84,5 +84,8 @@ public interface MypageService {
 
 	// 회원정보 수정(닉네임)
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
+	
+	//회원정보 수정(생년월일)
+	public int userUpdateBirthDay(MyPageUserInfoVO myPageUserInfoVO);
 
 }
