@@ -387,6 +387,16 @@
 		WHERE user_id = #{userId}
 	</update>
 	
+	<!-- 회원정보 수정 (닉네임) -->
+	<update id="userUpdateBirthDay" parameterType="MypageUserInfoVO">
+		UPDATE user_info
+		SET nickname = #{nickName},
+		    birth_year = #{birthYear},
+		    birth_day = #{birthDay},
+		    updated=sysdate
+		WHERE user_id = #{userId}
+	</update>
+	
 	<!-- 회원정보 수정 (전화번호) -->
 <!-- 	<update id="" parameterType="">
 		UPDATE userinfo

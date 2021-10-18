@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
 
+
 <th:block layout:fragment="css">
 	<style>
 		.pencil {
@@ -75,34 +76,27 @@
 														href="#"
 														class="small link-hover-decoration">[[${userInfo.email}]]</a>
 												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-														class="bi bi-twitter me-2 align-middle text-muted"></i> <a
-														href="#!" class="small link-hover-decoration">@emily.dev</a>
-												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-														class="bi bi-linkedin me-2 align-middle text-muted"></i> <a
-														href="#!" class="small link-hover-decoration">emilyatin</a>
-												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-														class="bi bi-instagram me-2 align-middle text-muted"></i> <a
-														href="#!" class="small link-hover-decoration">emily93</a></li>
+										
 											</ul>
 											<ul class="list-unstyled border-bottom pb-3 mb-3">
 												<li class="d-flex justify-content-between align-items-center mb-2">
-													<span class="small">Followers</span> <span class="fs-5">134</span>
+												  <span class="small">현재 상태</span>
+												  <span th:if="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="솔로"></span>
+												  <span th:unless="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="커플"></span>
+
 												</li>
-												<li class="d-flex justify-content-between align-items-center mb-2">
-													<span class="small">Following</span> <span class="fs-5">23</span>
-												</li>
+												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
+													<li class="d-flex justify-content-between align-items-center mb-2">
+														<span class="small">구독권 이용기간</span>
+														<span class="small">3개월</span>
+													</li>
+												</th:block>
 											</ul>
 											<div class="d-grid">
-												<button class="btn btn-light border shadow-sm mb-2 py-1" type="button">
+												<button class="btn btn-primary border shadow-sm mb-2 py-1"
+													type="button" onclick="goCoupleMain(userSession)">
 													<i class="bi bi-person-plus fs-6 align-middle lh-1"></i>
-													Follow
-												</button>
-												<button class="btn btn-primary shadow-sm py-1" type="button">
-													<i class="bi bi-envelope fs-6 align-middle lh-1"></i>
-													Message
+													커플로그 이용하기
 												</button>
 											</div>
 										</div>
@@ -111,7 +105,7 @@
 							</div>
 							<div class="col-lg-9">
 								<div class="d-flex flex-column h-100">
-									<nav class="nav mb-5 nav-pills">
+									<nav class="nav mb-3 nav-pills">
 										<a href="main" class="nav-link active"><i
 												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
 										<a href="myinfo_my_course_list" class="nav-link"><i
@@ -205,7 +199,8 @@
 																		<div class="step-row">
 																			<span class="step-icon bg-tint-primary text-primary">
 																				<!--ICON-DOT--> <i th:if="${notice.postId}!=null"
-																				class="bi bi-reply-fill text-primary align-middle lh-1"></i>
+																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-postid="${notice.postId}"></i>
+																				
 																				<i th:if="${notice.postId}==null"
 																				class="bi bi-heart-fill text-primary align-middle lh-1"></i>
 																			</span>

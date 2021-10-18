@@ -156,5 +156,10 @@ public class MypageServiceImpl implements MypageService {
 		return mypageMapper.deleteUserTags(userId);
 	}
 
+	@Override
+	public int userUpdateBirthDay(MyPageUserInfoVO myPageUserInfoVO) {
+		return mypageMapper.userUpdateBirthDay(myPageUserInfoVO);
+	}
+
     
 }

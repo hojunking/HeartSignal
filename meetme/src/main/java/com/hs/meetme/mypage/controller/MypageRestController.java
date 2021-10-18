@@ -165,7 +165,15 @@ public class MypageRestController {
 		return myPageUserInfoVO;
 	}
 
-	// 마이페이지 내정보 뿌링클(뭐야 이거...유치해)
+	
+	//수정하기 (주소)
+	@PutMapping("/birthDayUpdate")
+	public MyPageUserInfoVO birthDayUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
+		
+		mypageService.userUpdateBirthDay(myPageUserInfoVO);
+		
+		return myPageUserInfoVO;
+	}
 
 	@PostMapping("/saveUserTags")
 	@Transactional
