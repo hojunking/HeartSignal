@@ -222,7 +222,7 @@
                     }
                 }); //ajax 끝
             }
-
+			//커플 수락했을 때
             $('#accept').on('click', function () {
                 let coupleId = $(this).attr('data-coupleId');
                 let userId = userSession.userId;
@@ -246,7 +246,7 @@
                             }
                         }).then(() => {
                             $('#receiveLove').hide(); //모달창 닫기
-                            //location.href ="coupleMain?coupleStatus=y";
+                            location.href ="coupleMain?coupleStatus=y";
                         });
 
                     },
