@@ -78,6 +78,12 @@
 			 #{birthDay},
 			 #{imgId},
 			 'USER')
+		<selectKey keyProperty="userId" order="AFTER" resultType="String">
+			SELECT 
+				seq_user_info.CURRVAL 
+			FROM 
+				DUAL
+		</selectKey>
 	</insert>
 	
 	<update id="updatePwd">

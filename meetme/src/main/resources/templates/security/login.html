@@ -116,18 +116,7 @@
     </script>
 
     <script type="text/javascript" th:inline="javascript">
-        /*<![CDATA[*/
-        const isSignUp = /*[[${signUp}]]*/'';
-        /*]]>*/
-        console.log(isSignUp);
-
-        if(isSignUp != null){
-            if(isSignUp){
-                swal('회원가입에 성공했습니다!','','success');
-            } else if (!isSignUp){
-                swal('회원가입에 실패했습니다!','','error');
-            }
-        }
+        
 
         document.addEventListener("DOMContentLoaded", function () {
             // 네이버 로그인 구현

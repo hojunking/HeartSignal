@@ -1,6 +1,8 @@
 package com.hs.meetme.mypage.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,18 +35,22 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 @RequestMapping("/mypage/*")
 public class MypageRestController {
 
-	@Autowired MypageService mypageService;
-	@Autowired NoticeService noticeService;
-	@Autowired private PasswordEncoder encoder;
-	@Autowired ImageService imageService;
-	
+	@Autowired
+	MypageService mypageService;
+	@Autowired
+	NoticeService noticeService;
+	@Autowired
+	private PasswordEncoder encoder;
+	@Autowired
+	ImageService imageService;
+
 	File fileDir = new File("src/main/resources/static/img/");
-    
-	//수정하기 (이미지)
+
+	// 수정하기 (이미지)
 	@PostMapping("/imgUpdate")
 	@Transactional
 	public boolean imgUpdate(Model model, MultipartFile updateImage, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo) {
-		
+
 		int r = 0;
 		try {
 			String path = fileDir.getAbsolutePath() + "/user/";
@@ -52,121 +58,129 @@ public class MypageRestController {
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
 				UUID uuid = UUID.randomUUID();
-				String imgUrl = uuid + "_"+ filename;
+				String imgUrl = uuid + "_" + filename;
 				File uufile = new File(path, imgUrl);
 				System.out.println(uufile.getPath());
-				
+
 				imgvo.setImgUrl(imgUrl);
 				r = imageService.insertImage(imgvo);
-				
-				file.transferTo(uufile); //파일 옮기기
-				
+
+				file.transferTo(uufile); // 파일 옮기기
+
 				mypageUserInfoVO.setImgId(String.valueOf(imgvo.getImgId()));
 			}
 			r += mypageService.userUpdateImage(mypageUserInfoVO);
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			r= 0;
+			r = 0;
 		}
-		
-		return r==2 ? true : false;
+
+		return r == 2 ? true : false;
 	}
-	
-	
-	
+
 	@DeleteMapping("/deleteNotice")
 	public boolean deleteNotice(NoticeVO noticeVO) {
-		
+
 		int r = noticeService.deleteNotice(noticeVO);
-		
-		return r ==1 ? true : false;
+
+		return r == 1 ? true : false;
 	}
-	
+
 	@DeleteMapping("/deleteCourse")
 	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO, HttpServletRequest request) {
-		
-		//세션 쓰는법
+
+		// 세션 쓰는법
 		HttpSession session = request.getSession();
-		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
 		String courseUserId = myPageCourseVO.getUserId();
-		
+
 		int r = 0;
-		if(userId.equals(courseUserId)) {
-	      r = mypageService.deleteCourse(myPageCourseVO);
-	      r = mypageService.deleteCourseLike2(myPageCourseVO);
-		}else {
-	      myPageCourseVO.setUserId(userId);
-		  r =mypageService.deleteCourseLike(myPageCourseVO);
+		if (userId.equals(courseUserId)) {
+			r = mypageService.deleteCourse(myPageCourseVO);
+			r = mypageService.deleteCourseLike2(myPageCourseVO);
+		} else {
+			myPageCourseVO.setUserId(userId);
+			r = mypageService.deleteCourseLike(myPageCourseVO);
 		}
 		return r == 1 ? true : false;
 	}
-	
-	//현재 비밀번호 확인
+
+	// 현재 비밀번호 확인
 	@PostMapping("/passwordRead")
 	public boolean passwordRead(@RequestBody MyPageUserInfoVO vo) {
 		String currentPassword = vo.getPassword();
 		String dbPassword = mypageService.userSelectPassword(vo).getPassword();
-		
+
 		return encoder.matches(currentPassword, dbPassword);
 	}
-	
-	//수정하기 (비밀번호)
+
+	// 수정하기 (비밀번호)
 	@PutMapping("/passwordUpdate")
 	public boolean passwordUpdate(@RequestBody MyPageUserInfoVO vo) {
-		String newPassword = vo.getPassword();//새로 입력한 비밀번호
-		
+		String newPassword = vo.getPassword();// 새로 입력한 비밀번호
+
 		// 암호화 된 비밀번호
 		String encodedPw = encoder.encode(newPassword);
-		
-		vo.setPassword(encodedPw);	
-		
+
+		vo.setPassword(encodedPw);
+
 		int r = mypageService.userUpdatePassword(vo);
-		
+
 		return r == 1 ? true : false;
 	}
-	
-	//닉네임 중복 확인
+
+	// 닉네임 중복 확인
 	@PostMapping("/nickNameRead")
 	public boolean nickNameRead(@RequestBody MyPageUserInfoVO vo) {
-		if( mypageService.userSelectNickName(vo) == null) {
-		  	return true;
+		if (mypageService.userSelectNickName(vo) == null) {
+			return true;
 		} else {
 			return false;
 		}
 	}
-	//수정하기 (닉네임)
+
+	// 수정하기 (닉네임)
 	@PutMapping("/nickNameUpdate")
 	public MyPageUserInfoVO nickNameUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
-		
+
 		mypageService.userUpdateNickName(myPageUserInfoVO);
-		
+
 		return myPageUserInfoVO;
 	}
-	
-	//수정하기 (주소)
+
+	// 수정하기 (주소)
 	@PutMapping("/addressUpdate")
 	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
-		
+
 		mypageService.updateAddress(myPageUserInfoVO);
-		
+
 		return myPageUserInfoVO;
 	}
-	
-	//마이페이지 내정보 뿌링클(뭐야 이거...유치해)
-	
-	
-	
-	/*
-	 * // tag delete 한 뒤 insert
-	 * 
-	 * @PostMapping("/saveUserTags") public UserTagsVO tagsUpdate(@RequestBody
-	 * UserTagsVO vo) {
-	 * 
-	 * mypageService.deleteUserTags(vo);
-	 * 
-	 * return vo; }
-	 */
-	
+
+	// 마이페이지 내정보 뿌링클(뭐야 이거...유치해)
+
+	@PostMapping("/saveUserTags")
+	@Transactional
+	public List<UserTagsVO> tagsUpdate(String tags, String userId) {
+		mypageService.deleteUserTags(userId);
+		
+		List<UserTagsVO> tagList = new ArrayList<UserTagsVO>();
+		
+		String[] str = tags.split(" ");
+		System.out.println(str.toString());
+		
+		for(int i=0; i<str.length; i++) {
+			UserTagsVO vo = new UserTagsVO();
+			vo.setUserId(userId);
+			vo.setTagId(str[i]);
+			tagList.add(vo);
+			System.out.println(tagList);
+		}
+		mypageService.insertUserTags(tagList);
+		
+		return tagList;
+	}
+
 }

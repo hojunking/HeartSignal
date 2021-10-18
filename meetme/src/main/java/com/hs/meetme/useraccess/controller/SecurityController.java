@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hs.meetme.image.domain.ImageVO;
 import com.hs.meetme.image.service.ImageService;
@@ -50,7 +51,7 @@ public class SecurityController {
 
 	@PostMapping("/signUp")
 	@Transactional
-	public String signUpPro(Model model, MultipartFile filepond, AccountVO vo, ImageVO imgvo) {
+	public String signUpPro(RedirectAttributes rttr, MultipartFile filepond, AccountVO vo, ImageVO imgvo) {
 		System.out.println(filepond);
 		System.out.println(vo);
 		try {
@@ -71,12 +72,14 @@ public class SecurityController {
 				vo.setImgId(String.valueOf(imgvo.getImgId()));
 			}
 			accountService.signUp(vo);
-			model.addAttribute("signUp", true);
+			rttr.addFlashAttribute("signUp", true);
+			rttr.addFlashAttribute("signUpUser", vo.getUserId());
 		} catch(Exception e) {
 			e.printStackTrace();
-			model.addAttribute("signUp", false);
+			rttr.addFlashAttribute("signUp", false);
+			return "redirect:/login";
 		}
-		return "security/login";
+		return "redirect:/mypage/userTags";
 	}
 	
 	@GetMapping("/findPwd")
