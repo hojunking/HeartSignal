@@ -32,6 +32,7 @@ img {
 				<div class="col-md-6 col-lg-3 design development grid-item"
 					th:each="c: ${logList}">
 					<a th:href="@{|/coupleLog/logOne?logId=${c.logId}|}"
+						th:data-bigpicture='{"imgSrc": "/img/coupleLog/"+${c.imgUrl}}'
 						class="text-white bg-gradient-dark position-relative d-block overflow-hidden card-hover-2">
 						<!-- <img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
 						class="img-fluid img-zoom"> --> <!-- 오류시 기본 이미지 --> <img
