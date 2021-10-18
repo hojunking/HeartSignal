@@ -39,11 +39,6 @@ li {
 </style>
 </th:block>
 <th:block layout:fragment="content">
-	<br>
-	<br>
-	<br>
-	<br>
-
 	<div class="container py-7 py-lg-9">
 		<form th:action="@{/mypage/userTags}" th:object="${tags}" method="post">
 			<input type="hidden" name="list">
@@ -104,8 +99,26 @@ li {
 
 </th:block>
 <th:block layout:fragment="script">
-	<script>
+	<script th:inline="javascript">
+
+		/*<![CDATA[*/
+        const signUpUser = /*[[${signUpUser}]]*/'';
+        /*]]>*/
+
 		$(function() {
+			/*<![CDATA[*/
+			const isSignUp = /*[[${signUp}]]*/'';
+			/*]]>*/
+			console.log(isSignUp);
+
+			if(isSignUp != null){
+				if(isSignUp){
+					swal('회원가입에 성공했습니다!','','success');
+				} else if (!isSignUp){
+					swal('회원가입에 실패했습니다!','','error');
+				}
+			}
+
 			var ul= $(".tags");
 			$(".cusBtn").on("click", function(e) {
 				let targetBtn = e.target;
@@ -133,6 +146,7 @@ li {
 			
 			
 			$('#submit').on('click', function(){
+				
 				let tags = $('.tags li');
 				let strtags = '';
 				
@@ -143,7 +157,7 @@ li {
 				strtags = strtags.substring(0,strtags.length-1);
 				
 				$('input[name="list"]').val(strtags);
-				$('input[name="userId"]').val(8);
+				$('input[name="userId"]').val(signUpUser);
 				$('button[type="submit"]').click();
 			});
 			

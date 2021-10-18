@@ -26,7 +26,7 @@ public interface MypageMapper {
 	//나의 취향 태그 가져 오기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 삭제
-	public int deleteUserTags(UserTagsVO userTagsVO);
+	public int deleteUserTags(String userId);
 	//나의 취향 태그 인서트
 	public int insertUserTags(UserTagsVO userTagsVO);
 // --------------------------------------------------------

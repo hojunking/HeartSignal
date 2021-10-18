@@ -41,6 +41,7 @@
     FROM user_tags
     WHERE user_id = #{userId}
   </delete>
+  
   <insert id="insertUserTags">
     INSERT INTO
     user_tags(user_id, tag_id)

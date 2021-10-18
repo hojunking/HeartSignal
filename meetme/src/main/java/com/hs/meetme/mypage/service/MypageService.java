@@ -22,7 +22,7 @@ public interface MypageService {
 	public int UpdateUserTags(UserTagsVO userTagsVO);
 //--------------------------------------------------------- BMJ
 	// 나의 취향 태그 삭제
-	public int deleteUserTags(UserTagsVO userTagsVO);
+	public int deleteUserTags(String userId);
 
 	// 나의 취향 태그 인서트
 	public int insertUserTags(List<UserTagsVO> tagList);

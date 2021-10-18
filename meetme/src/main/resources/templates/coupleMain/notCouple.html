@@ -11,7 +11,6 @@
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
 	
-	<br><br><br><br>
 	<div class="tm-page-wrap mx-auto">
 		<!-- section 1 -->
 		<section class="position-relative bg-light">
@@ -604,10 +603,10 @@
 							success : function(result) {
 								console.log(result);
 								swal(result,"", "success",{
-									button : {
-										text : "확인",
-										className : "btn btn-primary"
-									}
+									button : {text : "확인",className : "btn btn-primary"}
+								}).then(()=>{
+									location.href ="coupleMain?coupleStatus=y";
+									console.log("응애!");
 								});
 							},
 							error : function(error) {
