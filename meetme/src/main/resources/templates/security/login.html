@@ -5,7 +5,7 @@
     
     <main>
         <section class="bg-white position-relative">
-            <div class="container py-9 pt-lg-12 position-relative z-index-1">
+            <div class="container py-9 position-relative z-index-1">
                 <div class="row align-items-center justify-content-center">
                     <div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
                         <h2 class="mb-1 display-6">
@@ -116,8 +116,6 @@
     </script>
 
     <script type="text/javascript" th:inline="javascript">
-        
-
         document.addEventListener("DOMContentLoaded", function () {
             // 네이버 로그인 구현
             let naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
@@ -133,6 +131,10 @@
             $('#naverLogin').on('click', function () {
                 $('#naver_id_login').children().eq(0).click()
             });
+
+            if(currentURL == 'login?error'){
+                swal('로그인에 실패했습니다.','','error');
+            }
         });
     </script>
 
