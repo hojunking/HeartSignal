@@ -24,7 +24,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-
     <!-- End Of CoupleLog -->
 
     <!-- Main CSS -->
@@ -85,6 +84,14 @@
         let userSession; // 세션정보 저장
         let currentURL; // hostdomain을 제외한 URL
 
+        currentURL = window.location.href; // 전체 URL
+
+        // url에서 http://localhost:8000/을 제거 
+        for (let i = 0; i < 3; i++) {
+                currentURL = currentURL.substring(currentURL.indexOf('/') + 1, currentURL.length);
+            }
+        // url에서 http://localhost:8000/을 제거
+
         // ajax csrf 설정
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
@@ -112,18 +119,12 @@
             userSession = /*[[${session.userSession}]]*/ '';
             /*]]>*/
 
-            currentURL = window.location.href; // 전체 URL
-
-            // url에서 http://localhost:8000/을 제거 
-            for (let i = 0; i < 3; i++) {
-                currentURL = currentURL.substring(currentURL.indexOf('/') + 1, currentURL.length);
-            }
-            // url에서 http://localhost:8000/을 제거
+            console.log(userSession);
 
             let pathCheck = currentURL == '' // 메인 페이지일때
                 ||  // OR
                 currentURL.indexOf('courseDetail') != -1 // 코스 상세보기 페이지일때
-                ||
+                ||  // OR
                 currentURL.indexOf('coupleStatus=y') != -1 // 커플인 상태일때
                 ;
 

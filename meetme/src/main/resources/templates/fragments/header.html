@@ -34,14 +34,14 @@
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <!-- 프로필 img 링크 -->
-                            <img src="/assets/img/avatar/12.jpg" alt="" class="avatar sm rounded-circle me-1">
+                            <img th:src="|@{|/img/user/${session.userSession.imgUrl}|}|" alt="" class="avatar sm rounded-circle me-1">
                             <th:block th:text="${session.userSession.nickname}"></th:block>
                         </a>
                         <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
                             <a th:href="@{/mypage/main}" class="dropdown-header border-bottom p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img src="/assets/img/avatar/12.jpg" alt="" class="avatar xl rounded-pill me-3">
+                                        <img th:src="|@{|/img/user/${session.userSession.imgUrl}|}|" alt="" class="avatar xl rounded-pill me-3">
                                     </div>
                                     <div>
                                         <h5 class="mb-0" th:text="${session.userSession.name}">Name</h5>
