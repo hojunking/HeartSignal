@@ -37,10 +37,8 @@ public class NoticeRestController {
 	
 	@GetMapping("/getRequest/{userId}") //커플요청정보만 알려주기 리스트로 뿌려야할 가능성
 	public List<NoticeVO> getRequest(@PathVariable String userId, NoticeVO vo) {
-		System.out.println("여기까지 왔으면 보여줘 "+ userId);
 		vo.setUserReceived(userId);				//receiver의 아이디
 		List<NoticeVO> list = noticeService.coupleRequest(vo);	//신청정보들고오기
-		System.out.println(list); 
 		return list;
 	}
 	

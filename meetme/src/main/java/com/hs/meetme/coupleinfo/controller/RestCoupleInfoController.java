@@ -85,7 +85,12 @@ public class RestCoupleInfoController {
 	public String matchingUpdate(CoupleInfoVO vo) {
 		System.out.println("매칭하는 중 "+ vo);
 		
-		coupleService.coupleMatching(vo);
+		coupleService.coupleMatching(vo); //received 커플창에 업데이트
+		
+		vo.setUserId(vo.getUserReceived()); 
+		vo.setCoupleStatus("y");
+		coupleService.userCoupleStatusUpdate(vo); //유저들 상태 y로 업데이트
+		
 		NoticeVO nvo =new NoticeVO();
 		
 		String coupleId= String.valueOf(vo.getCoupleId());

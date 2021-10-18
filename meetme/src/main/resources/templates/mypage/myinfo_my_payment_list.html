@@ -141,12 +141,12 @@
 													              <td th:text="${pinfo.subTerm}+'개월권'"></td>
 													              <td th:text="${pinfo.payCost}"></td>
 													              <td th:if="${pinfo.cancelAmount!=null}" th:text="${pinfo.cancelAmount}"></td>
-								                                  <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}"></td>
+								                                  <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}" class="cancelStatus"></td>
 													              <td th:text="${#dates.format(pinfo.payDate,'yyyy.MM.dd')}"></td>
 													              <td th:text="${#dates.format(pinfo.cancelDate,'yyyy.MM.dd')}"></td>
-													              <td th:if="${#calendars.createNow().getTimeInMillis() - pinfo.payDate.getTime() < 345600000}">
+													              <td th:if="${#calendars.createNow().getTimeInMillis() - pinfo.payDate.getTime() < 345600000 and pinfo.cancelDate==null}" >
 													              
-													              <a href="#refunding" data-bs-toggle="modal" class="btn btn-sm btn-outline-light border text-secondary shadow-sm">
+													              <a href="#refunding" data-bs-toggle="modal" class="btn btn-sm btn-outline-light border text-secondary shadow-sm refund">
 													              
 													              <i class="me-1 bi bi-check fs-6 lh-1"></i>환불하기</a></td>
 													              <!--  <td th:text ="${#calendars.format(#calendars.)}"></td> -->
@@ -206,32 +206,26 @@
                                             <div class="position-relative">
                                             	<div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
                                 data-aos-delay="100">
-                                <div
-                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
-                                    <span
-                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
-                                        이벤트</span>
+                                <div class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
                                     <div class="position-relative overflow-hidden">
-                                        <h6 id="subterm"></h6>
-                                        <div class="price display-4" id="subprice">
+                                        <h6 id="subTerm"></h6>
+                                        <div class="price display-4" id="payAmount">
                                             </div>
                                     </div>
                                     <!--/.price-card-header-->
                                     <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
                                         <li class="mb-2 border-dashed border-bottom d-table pb-2" id="use"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-primary text-white rounded-circle"></i>
+                                                <span id="payDate"></span></li>
                                         <li class="mb-2 border-dashed border-bottom d-table pb-2" id="off"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="store"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-primary text-white rounded-circle"></i>
+                                                <span id="merchantUid"></span></li>
                                     </ul>
                                 </div>
                             </div>
-             
-            <br>
                                             </div>
 			                            <div class="d-grid">
-			                               	<button class="btn btn-primary" type="button" id="refund">환불</button>
+			                               	<button class="btn btn-primary" type="button" id="goRefund">환불</button>
 			                   			</div>
                                         </div>
                                     </div>
@@ -244,20 +238,62 @@
 
 <th:block layout:fragment="script">
   <script>
+  
 	
   </script>
   <script th:inline="javascript">
   $(function() {
-    $('#refund').on('click',function(){
+	 cancelButton();
+	 function cancelButton(){
+			if($('.cancelStatus').text()=="환불완료"){
+				$('.refund').remove();
+			}
+		} 
+	 
+	 
+	 
+    $('.refund').on('click',function(){
+    	var tr= $(this).closest('tr');
+    	let merchantUid= $(tr).find('td').eq(0).text();
+    	let userId=userSession.userId;
+    	let subTerm =$(tr).find('td').eq(1).text();
+    	let payAmount =$(tr).find('td').eq(2).text();
+    	let payDate = $(tr).find('td').eq(5).text();
     	
-    })
+    	$('#payAmount').text(payAmount);
+    	$('#subTerm').text(subTerm);
+    	$('#payDate').text("결제일자 : "+payDate);
+    	$('#merchantUid').text("결제번호 : " +merchantUid);
+    	
+    	$('#goRefund').on('click',function(){
+      		
+    		$.ajax({
+    			url : '../refund', //'../AddItemServlet.do'
+    			method : 'post',
+    			data : {
+    				userId : userId,
+    				merchantUid : merchantUid,
+    			},
+    			success : function(result) {
+    				console.log(result);
+    				swal(result,"", "success",
+   						{button : {text : "확인",className : "btn btn-primary"}
+    				}).then(()=>{
+			        	window.location.reload();
+						console.log("응애!");
+					});
+    			},
+    			error : function(error) {
+    				console.log("문제발생");
+    				console.log(error);
+    			}
+    		});
+      		
+      	})
   }); //ajax 끝
-	var refunding = document.getElementById('refunding')
-      	refunding.addEventListener('show.bs.modal', function (event) {
-      	var button = event.relatedTarget
-      	var item =$(button).data("payInfo")
-      	console.log(item.merchantUid);
-        })  
+  
+  	
+	});
   </script>
 </th:block>
 
