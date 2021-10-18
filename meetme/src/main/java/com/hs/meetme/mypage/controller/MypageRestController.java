@@ -49,8 +49,10 @@ public class MypageRestController {
 	// 수정하기 (이미지)
 	@PostMapping("/imgUpdate")
 	@Transactional
-	public boolean imgUpdate(Model model, MultipartFile updateImage, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo) {
+	public boolean imgUpdate(Model model, MultipartFile updateImage, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo, HttpServletRequest request) {
 
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		int r = 0;
 		try {
 			String path = fileDir.getAbsolutePath() + "/user/";
@@ -68,9 +70,9 @@ public class MypageRestController {
 				file.transferTo(uufile); // 파일 옮기기
 
 				mypageUserInfoVO.setImgId(String.valueOf(imgvo.getImgId()));
+				accountVO.setImgUrl(imgUrl);
 			}
 			r += mypageService.userUpdateImage(mypageUserInfoVO);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			r = 0;
@@ -143,8 +145,9 @@ public class MypageRestController {
 
 	// 수정하기 (닉네임)
 	@PutMapping("/nickNameUpdate")
-	public MyPageUserInfoVO nickNameUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
-
+	public MyPageUserInfoVO nickNameUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		((AccountVO) session.getAttribute("userSession")).setNickname(myPageUserInfoVO.getNickName());
 		mypageService.userUpdateNickName(myPageUserInfoVO);
 
 		return myPageUserInfoVO;
@@ -152,8 +155,11 @@ public class MypageRestController {
 
 	// 수정하기 (주소)
 	@PutMapping("/addressUpdate")
-	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
-
+	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		((AccountVO) session.getAttribute("userSession")).setAddrzonecode(myPageUserInfoVO.getAddrzonecode());
+		((AccountVO) session.getAttribute("userSession")).setAddrfull(myPageUserInfoVO.getAddrfull());
+		((AccountVO) session.getAttribute("userSession")).setAddrdetail(myPageUserInfoVO.getAddrdetail());
 		mypageService.updateAddress(myPageUserInfoVO);
 
 		return myPageUserInfoVO;
