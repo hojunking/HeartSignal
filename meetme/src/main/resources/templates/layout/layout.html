@@ -19,20 +19,18 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
-        
-     <!-- CoupleLog fonts-->
-    <link
-	href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-	rel="stylesheet">	
-	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-	
-	<!-- End Of CoupleLog -->
-	
+
+    <!-- CoupleLog fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <!-- End Of CoupleLog -->
+
     <!-- Main CSS -->
     <link th:href="@{/assets/css/theme-pink.min.css}" rel="stylesheet">
     <style>
-        .swal-button:hover{
+        .swal-button:hover {
             background-color: #d23559 !important;
         }
     </style>
@@ -65,10 +63,10 @@
 
     <th:block th:replace="fragments/header :: headerFragment"></th:block>
 
-    
+
     <th:block layout:fragment="content"></th:block>
-    
-    
+
+
     <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
     <!-- 공통으로 쓰이는 javascript파일을넣는다.-->
@@ -85,6 +83,7 @@
     <script th:inline="javascript">
 
         let userSession; // 세션정보 저장
+        let currentURL; // hostdomain을 제외한 URL
 
         // ajax csrf 설정
         let token = $("meta[name='_csrf']").attr("content");
@@ -98,11 +97,11 @@
         // ajax csrf 설정
 
         // header 커플로그 이벤트
-        function goCoupleMain(user){
-            if(user == null){
+        function goCoupleMain(user) {
+            if (user == null) {
                 location.href = '/coupleMain?coupleStatus=n';
-            } else{
-                location.href = '/coupleMain?coupleStatus='+user.coupleStatus;
+            } else {
+                location.href = '/coupleMain?coupleStatus=' + user.coupleStatus;
             }
         };
         // header 커플로그
@@ -111,119 +110,169 @@
         $(function () {
             /*<![CDATA[*/
             userSession = /*[[${session.userSession}]]*/ '';
-            console.log(userSession);
             /*]]>*/
-        	requestInfo();
-        	noticeCommentClick();
-        
-          //notice 클릭시 확인 상태로 변경하는 ajax
-        function noticeCommentClick(){
-        	$('#noticeBlock').on('click','.noticeComment', function(){
-        		var notice =$(this);
-        		let noticeId=$(notice).attr('data-noticeId');
-        		console.log(notice);
-        		
-        		console.log(noticeId);
-        		$.ajax({
-    				url : "/updateConfirmed/"+noticeId,
-    				dataType : "json",
-    				method : "put",
-    				success : function(datas) {
-    					notice.remove();
-    					location.href=notice.attr('href');
-    					console.log(datas);
-    				}
-    			
-        		});
-        	})
-        }  //function 종료
-        
-        // requester 정보뿌리기
-        function requestInfo(){
-        	let userId = userSession.userId;
-        	$.ajax({
-				url : "/getRequest/" + userId,
-				dataType : "json",
-				success : function(datas) {
-				console.log(datas);
-				
-				$.each(datas,function(idx,item){
-					if(item.postId==null){ //커플신청 notice
-					 var noticeInfo = $('<a href="#receiveLove" data-bs-toggle="modal"/>');
-					 noticeInfo.append($('<li class="list-group-item py-2 bg-tint-danger"/>')
-							.append($('<div class="d-flex align-items-start"/>')
-									.append($('<div class="me-1 me-lg-2"/>')
-											.append($('<img class="avatar rounded-circle shadow"/>').attr('src',"/img/"+item.imgUrl)))
-									.append($('<div class="flex-grow-1"/>')
-											.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님께 커플신청이 왔어요!"))
-											.append($('<span class="text-muted d-block"/>').html(item.noticeDate)))))
-					.appendTo($("#noticeBlock"));
-					noticeInfo.data("item",item);
-					}
-					//이건 댓글정보입니다
-					else{ //댓글달림 notice
-						var noticeInfo = $('<a class="noticeComment" data-noticeId="'+item.noticeId+'" href="/post/get_community/'+item.postId+'"/>');
-						noticeInfo.append($('<li class="list-group-item py-2 bg-tint-info"/>')
-						.append($('<div class="d-flex align-items-start"/>')
-								.append($('<div class="me-1 me-lg-2"/>')
-										.append($('<img class="avatar rounded-circle shadow"/>').attr('src',"/img/"+item.imgUrl)))
-								.append($('<div class="flex-grow-1"/>')
-										.append($('<p class="text-dark fs-6 mb-0"/>').html(userSession.name+"님의 게시글에"+item.noticeContent))
-										.append($('<span class="text-muted d-block"/>').html(item.noticeDate)))))
-						.appendTo($("#noticeBlock"));
-					}
-				});
-				
-				}
-			});//ajax 끝
-         }
-        
-        $('#accept').on('click',function(){
-        	let coupleId=$(this).attr('data-coupleId');
-        	let userId = userSession.userId;
-        	console.log(coupleId);
-        	
-        	$.ajax({
-				url : "/matching",
-				dataType : "text",
-				data : {userReceived : userId,
-						coupleId : coupleId},
-				method : "put",
-				success : function(data) {
-				console.log(data);
-				
-				swal(data,"", "success",
-						{button : {text : "확인",className : "btn btn-primary"}
-						}).then(()=>{
-							$('#receiveLove').hide(); //모달창 닫기
-							//location.href ="coupleMain?coupleStatus=y";
-						});
-				
-				},
-				error:function(data){
-					console.log(data);
-				}
-        	
-        	});//ajax 끝
-        })
+
+            currentURL = window.location.href; // 전체 URL
+
+            // url에서 http://localhost:8000/을 제거 
+            for (let i = 0; i < 3; i++) {
+                currentURL = currentURL.substring(currentURL.indexOf('/') + 1, currentURL.length);
+            }
+            // url에서 http://localhost:8000/을 제거
+
+            let pathCheck = currentURL == '' // 메인 페이지일때
+                ||  // OR
+                currentURL.indexOf('courseDetail') != -1 // 코스 상세보기 페이지일때
+                ||
+                currentURL.indexOf('coupleStatus=y') != -1 // 커플인 상태일때
+                ;
+
+            let headerElem = $('header');
+            if (pathCheck) {
+                $(headerElem).addClass('header-absolute-top');
+                $(headerElem).find('nav').addClass('navbar-link-white');
+                // $('header').find('img').eq(0).attr('src','/img/phoebe.jpg');
+            }
+
+            requestInfo();
+            noticeCommentClick();
+
+            //notice 클릭시 확인 상태로 변경하는 ajax
+            function noticeCommentClick() {
+                $('#noticeBlock').on('click', '.noticeComment', function () {
+                    var notice = $(this);
+                    let noticeId = $(notice).attr('data-noticeId');
+                    console.log(notice);
+
+                    console.log(noticeId);
+                    $.ajax({
+                        url: "/updateConfirmed/" + noticeId,
+                        dataType: "json",
+                        method: "put",
+                        success: function (datas) {
+                            notice.remove();
+                            location.href = notice.attr('href');
+                            console.log(datas);
+                        }
+
+                    });
+                })
+            } //function 종료
+
+            // requester 정보뿌리기
+            function requestInfo() {
+                let userId = userSession.userId;
+                $.ajax({
+                    url: "/getRequest/" + userId,
+                    dataType: "json",
+                    success: function (datas) {
+                        console.log(datas);
+
+                        $.each(datas, function (idx, item) {
+                            if (item.postId == null) { //커플신청 notice
+                                var noticeInfo = $(
+                                    '<a href="#receiveLove" data-bs-toggle="modal"/>');
+                                noticeInfo.append($(
+                                            '<li class="list-group-item py-2 bg-tint-danger"/>'
+                                            )
+                                        .append($('<div class="d-flex align-items-start"/>')
+                                            .append($('<div class="me-1 me-lg-2"/>')
+                                                .append($(
+                                                        '<img class="avatar rounded-circle shadow"/>'
+                                                        ).attr('src', "/img/" + item
+                                                    .imgUrl)))
+                                            .append($('<div class="flex-grow-1"/>')
+                                                .append($(
+                                                        '<p class="text-dark fs-6 mb-0"/>')
+                                                    .html(userSession.name +
+                                                        "님께 커플신청이 왔어요!"))
+                                                .append($(
+                                                    '<span class="text-muted d-block"/>'
+                                                    ).html(item.noticeDate)))))
+                                    .appendTo($("#noticeBlock"));
+                                noticeInfo.data("item", item);
+                            }
+                            //이건 댓글정보입니다
+                            else { //댓글달림 notice
+                                var noticeInfo = $(
+                                    '<a class="noticeComment" data-noticeId="' + item
+                                    .noticeId + '" href="/post/get_community/' + item
+                                    .postId + '"/>');
+                                noticeInfo.append($(
+                                            '<li class="list-group-item py-2 bg-tint-info"/>'
+                                            )
+                                        .append($('<div class="d-flex align-items-start"/>')
+                                            .append($('<div class="me-1 me-lg-2"/>')
+                                                .append($(
+                                                        '<img class="avatar rounded-circle shadow"/>'
+                                                        ).attr('src', "/img/" + item
+                                                    .imgUrl)))
+                                            .append($('<div class="flex-grow-1"/>')
+                                                .append($(
+                                                        '<p class="text-dark fs-6 mb-0"/>')
+                                                    .html(userSession.name + "님의 게시글에" +
+                                                        item.noticeContent))
+                                                .append($(
+                                                    '<span class="text-muted d-block"/>'
+                                                    ).html(item.noticeDate)))))
+                                    .appendTo($("#noticeBlock"));
+                            }
+                        });
+
+                    }
+                }); //ajax 끝
+            }
+
+            $('#accept').on('click', function () {
+                let coupleId = $(this).attr('data-coupleId');
+                let userId = userSession.userId;
+                console.log(coupleId);
+
+                $.ajax({
+                    url: "/matching",
+                    dataType: "text",
+                    data: {
+                        userReceived: userId,
+                        coupleId: coupleId
+                    },
+                    method: "put",
+                    success: function (data) {
+                        console.log(data);
+
+                        swal(data, "", "success", {
+                            button: {
+                                text: "확인",
+                                className: "btn btn-primary"
+                            }
+                        }).then(() => {
+                            $('#receiveLove').hide(); //모달창 닫기
+                            //location.href ="coupleMain?coupleStatus=y";
+                        });
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+
+                }); //ajax 끝
+            })
         }); // 페이지 로드 종료
-        
+
         //커플신청받기 모달창 연결하기 
         var receiveLove = document.getElementById('receiveLove')
-      	receiveLove.addEventListener('show.bs.modal', function (event) {
-          // Button that triggered the modal
-          var button = event.relatedTarget
-          // Extract info from data-bs-* attributes
-          //var recipient = button.getAttribute('data-item')
-           var item= $(button).data("item")
-           $('#requesterImg').attr('src',"/img/"+item.imgUrl);
-           $("#requester").text(item.name);
-           $("#noticeContent").text(item.noticeContent);
-           $('#accept').attr('data-coupleId',item.coupleId);
-           console.log("여기",item);
-        })  
+        receiveLove.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            //var recipient = button.getAttribute('data-item')
+            var item = $(button).data("item")
+            $('#requesterImg').attr('src', "/img/" + item.imgUrl);
+            $("#requester").text(item.name);
+            $("#noticeContent").text(item.noticeContent);
+            $('#accept').attr('data-coupleId', item.coupleId);
+            console.log("여기", item);
+        })
         //모달창 각각 만들어진거에 대해 path
-        	
     </script>
 
     <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
