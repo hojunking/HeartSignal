@@ -587,12 +587,25 @@
 				console.log(data[i].thumbnailHref);
 				$(sliderImgs).eq(i).attr("data-src", data[i].thumbnailHref);
 				$(placeTitles).eq(i).text(data[i].placeName);
-				$(placeButton).eq(i).attr("btnnum", data[i].placeId);
+				$(placeButton).eq(i).attr("btn-num", data[i].placeId);
 			}
-			console.log($(placeButton).attr("btnnum"));
+			console.log($(placeButton).attr("btn-num"));
 		}
 		
         loadModel();
+        
+        $(".placeButton").on("click", (e) => {
+        	e.preventDefault();
+        	
+        	let placeId = $(e.target).parent().attr("btn-num");
+			
+        	if(placeId == undefined) {
+				return;
+			}
+			
+        	location.href = "/createCourse/" + placeId;
+			
+        })
 	</script>
 </th:block>
 

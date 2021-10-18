@@ -24,4 +24,6 @@ public interface PlaceMapper {
 	
 	List<PlaceVO> getListBySearched(String[] keywords); // 검색 결과
 	
+	List<PlaceVO> getListByCourseId(String courseId);
+	
 }
