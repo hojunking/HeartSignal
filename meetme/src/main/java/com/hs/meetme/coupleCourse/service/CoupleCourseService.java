@@ -10,5 +10,7 @@ public interface CoupleCourseService {
 	public List<CoupleCourseVO> getCourse(String coupleId);
 
 	public int deleteCourse(CoupleCourseVO vo);
+	
+	public int deleteCourseOrder(CoupleCourseVO vo);
 
 }

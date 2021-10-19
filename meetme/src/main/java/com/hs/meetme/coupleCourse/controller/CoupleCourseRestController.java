@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.meetme.coupleCourse.domain.CoupleCourseVO;
@@ -21,13 +21,19 @@ public class CoupleCourseRestController {
 	CoupleCourseService courseService;
 
 	@DeleteMapping("/deleteCourse")
+	@Transactional
 	public boolean deleteCourse(@RequestBody CoupleCourseVO vo, HttpServletRequest request) {
 
 		// 세션 쓰는법
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 
+		courseService.deleteCourseOrder(vo);
 		int r = courseService.deleteCourse(vo);
-		return r == 1 ? true : false;
+		if (r == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -14,5 +14,7 @@ public interface CoupleCourseMapper {
 	public List<CoupleCourseVO> getCourse(String coupleId);
 	// 내가 만든 코스 삭제
 	public int deleteCourse(CoupleCourseVO vo);
+	
+	public int deleteCourseOrder(CoupleCourseVO vo);
 
 }

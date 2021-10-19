@@ -147,6 +147,14 @@
 		WHERE
 		course_id = #{courseId} AND couple_id= #{coupleId}
 	</delete>
+	
+	<delete  id="deleteCourseOrder" parameterType="CoupleCourseVO">
+		DELETE 
+			FROM 
+			COURSE_ORDER
+		WHERE
+		COURSE_ID= #{courseId}
+	</delete>
 
 
 </mapper>
