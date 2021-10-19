@@ -1,601 +1,659 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout}">
 <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
 <th:block layout:fragment="css">
 
-	<style>
-</style>
+    <style>
+    </style>
 </th:block>
 <th:block layout:fragment="content">
-	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
-	
-	<div class="tm-page-wrap mx-auto">
-		<!-- section 1 -->
-		<section class="position-relative bg-light">
-                <div class="container position-relative py-lg-12 mt-4">
-                    <div class="row align-items-center justify-content-around">
-                        <div class="col-lg-6 mb-5 mb-lg-0">
-                            <img th:src="@{/img/coupleImage6.jpg}" alt="" class="img-fluid rounded-xl shadow-lg">
-                        </div>
-                        
-                        
-                        <div class="col-lg-6 col-xl-5">
+    <!-- 여기에 body에 들어갈 내용을 적어주세요 -->
+
+    <div class="tm-page-wrap mx-auto">
+        <!-- section 1 -->
+        <section class="position-relative bg-light">
+            <div class="container position-relative py-lg-12 mt-4">
+                <div class="row align-items-center justify-content-around">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <img th:src="@{/img/coupleImage6.jpg}" alt="" class="img-fluid rounded-xl shadow-lg">
+                    </div>
+
+
+                    <div class="col-lg-6 col-xl-5">
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                            <h2 class="mb-5 display-4 ms-lg-n15 position-relative" data-aos="zoom-in-up" data-aos-delay="150">
-                                너와 나,<br> <span class="text-warning text-underline-warning fw-lighter"
-                                    data-typed='{"strings": ["영원히", "하루하루", "추억의", "각별한","우리의"]}'></span>
-                                커플로그
-                            </h2>
-                            <p class="mb-5 lead w-lg-80">
-                                &ldquo;함께 그려가는 아름다운 기억&rdquo;
-                            </p>
-                            <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                        <h2 class="mb-5 display-4 ms-lg-n15 position-relative" data-aos="zoom-in-up"
+                            data-aos-delay="150">
+                            너와 나,<br> 
+                            <span class="text-warning text-underline-warning fw-lighter" 
+                                    data-typed='{"strings": ["사랑의", "愛である", "Meilė", "Amour","Liebe"]}'></span>
+                            커플로그
+                        </h2>
+                        <p class="mb-5 lead w-lg-80">
+                            &ldquo;함께 그려가는 아름다운 기억&rdquo;
+                        </p>
+                        <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
                             <span>커플로그시작하기</span></a>
-                        </div>
                     </div>
                 </div>
-            </section>
-		
-		<!-- section 2 -->
-		<section class="position-relative overflow-hidden">
-                <div class="container position-relative py-7 py-lg-12">
-                    <div class="row justify-content-center align-items-center">
-                        <div class="col-md-6 col-sm-8 mx-auto mx-md-0 mb-5 mb-md-0 order-md-last position-relative">
+            </div>
+        </section>
 
-                            <div class="position-relative">
-                                <div class="row g-3 position-relative">
-                                    <div class="col-6 position-relative">
-                                        <img data-aos="fade-right" th:src="@{/img/coupleImage4.jpg}" alt=""
-                                            class="img-fluid rounded-xl shadow-lg mb-4">
-                                        <img data-aos="fade-left" th:src="@{/img/coupleImage7.jpg}" alt=""
-                                            class="img-fluid rounded-xl shadow-lg">
-                                    </div>
-                                    <div class="col-6 position-relative">
-                                        <img data-aos="fade-right" th:src="@{/img/coupleImage2.jpg}" alt=""
-                                            class="img-fluid rounded-xl mb-4 mt-5 shadow-lg">
-                                        <img data-aos="fade-left" th:src="@{/img/coupleImage3.jpg}" alt=""
-                                            class="img-fluid rounded-xl shadow-lg">
-                                    </div>
+        <!-- section 2 -->
+        <section class="position-relative overflow-hidden">
+            <div class="container position-relative py-7 py-lg-12">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-6 col-sm-8 mx-auto mx-md-0 mb-5 mb-md-0 order-md-last position-relative">
 
+                        <div class="position-relative">
+                            <div class="row g-3 position-relative">
+                                <div class="col-6 position-relative">
+                                    <img data-aos="fade-right" th:src="@{/img/coupleImage4.jpg}" alt=""
+                                        class="img-fluid rounded-xl shadow-lg mb-4">
+                                    <img data-aos="fade-left" th:src="@{/img/coupleImage7.jpg}" alt=""
+                                        class="img-fluid rounded-xl shadow-lg">
                                 </div>
+                                <div class="col-6 position-relative">
+                                    <img data-aos="fade-right" th:src="@{/img/coupleImage2.jpg}" alt=""
+                                        class="img-fluid rounded-xl mb-4 mt-5 shadow-lg">
+                                    <img data-aos="fade-left" th:src="@{/img/coupleImage3.jpg}" alt=""
+                                        class="img-fluid rounded-xl shadow-lg">
+                                </div>
+
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-4 order-md-1" data-aos="fade-right">
-                            <h2 class="mb-4 display-6">특별한 기억을<br>
+                    </div>
+                    <div class="col-md-6 col-xl-4 order-md-1" data-aos="fade-right">
+                        <h2 class="mb-4 display-6">특별한 기억을<br>
                             함께 간직해요</h2>
-                            <p class="mb-5 w-lg-65 text-muted">
-                                뜨거웠던 우리의 데이트를 영원히 기억해요
-                            </p>
-                            <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
-                            <span>커플로그시작하기</span></a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-		
-		<!-- section 3 -->
-		<section class="position-relative">
-                <div class="container pt-7 pt-lg-12 position-relative">
-                    <div class="row mb-5 align-items-end">
-                        <div class="col-lg-8">
-                            <h2 class="mb-3 display-5" data-aos="fade-right">함께 데이트 코스를 만들어요</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="container position-relative pb-7 pb-lg-12">
-                    <div class="row">
-                        <div class="col-sm-6 mb-5 mb-sm-0" data-aos="">
-                            <!--Card-->
-                            <a href="#!" class="d-block overflow-hidden position-relative card-hover">
-                                <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
-                                    <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid img-zoom">
-                                </div>
-                                        <span class="text-muted small">데이트코스 만들기</span>
-                            </a>
-                        </div>
-                        <div class="col-sm-6" data-aos="">
-                            <!--Card-->
-                            <a href="#!" class="d-block overflow-hidden position-relative card-hover">
-                                <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
-                                    <img th:src="@{/img/coupleImage5.jpg}" alt="" class="img-fluid img-zoom">
-                                </div>
-                                        <span class="text-muted small">우리들만의 이야기</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mx-auto text-center pt-7 pt-lg-9">
-
-                       <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                        <p class="mb-5 w-lg-65 text-muted">
+                            뜨거웠던 우리의 데이트를 영원히 기억해요
+                        </p>
+                        <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
                             <span>커플로그시작하기</span></a>
                     </div>
                 </div>
-            </section>
-            
-            <!-- section 4 -->
-            <section id="features" class="position-relative overflow-hidden">
-                <div class="container mb-6 py-9 py-lg-12 position-relative">
-                    <div class="row justify-content-center">
-                        <!--Feature column-->
-                        <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="150">
-                            <div class="center-both mx-auto size-60 rounded-circle bg-primary text-white lh-1 mb-4">
-                                <i class="fs-3 bi bi-brush"></i>
-                            </div>
-                            <h5 class="mb-3">연인과속닥속닥</h5>
+            </div>
+        </section>
 
-                            <p class="mb-0 w-lg-85 mx-auto">
-                               데이트코스를 함께 만들면서 채팅을 할 수 있어요
-                            </p>
+        <!-- section 3 -->
+        <section class="position-relative">
+            <div class="container pt-7 pt-lg-12 position-relative">
+                <div class="row mb-5 align-items-end">
+                    <div class="col-lg-8">
+                        <h2 class="mb-3 display-5" data-aos="fade-right">함께 데이트 코스를 만들어요</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container position-relative pb-7 pb-lg-12">
+                <div class="row">
+                    <div class="col-sm-6 mb-5 mb-sm-0" data-aos="">
+                        <!--Card-->
+                        <a href="#!" class="d-block overflow-hidden position-relative card-hover">
+                            <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
+                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid img-zoom">
+                            </div>
+                            <span class="text-muted small">데이트코스 만들기</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-6" data-aos="">
+                        <!--Card-->
+                        <a href="#!" class="d-block overflow-hidden position-relative card-hover">
+                            <div class="overflow-hidden rounded-xl card-reveal-effect bg-dark">
+                                <img th:src="@{/img/coupleImage5.jpg}" alt="" class="img-fluid img-zoom">
+                            </div>
+                            <span class="text-muted small">우리들만의 이야기</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="mx-auto text-center pt-7 pt-lg-9">
+
+                    <a class="btn btn-outline-primary btn-hover-arrow" href="#start">
+                        <span>커플로그시작하기</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- section 4 -->
+        <section id="features" class="position-relative overflow-hidden">
+            <div class="container mb-6 py-9 py-lg-12 position-relative">
+                <div class="row justify-content-center">
+                    <!--Feature column-->
+                    <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="150">
+                        <div class="center-both mx-auto size-60 rounded-circle bg-primary text-white lh-1 mb-4">
+                            <i class="fs-3 bi bi-brush"></i>
                         </div>
+                        <h5 class="mb-3">연인과속닥속닥</h5>
 
-                        <!--Feature column-->
-                        <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
-                            <div class="center-both mx-auto size-60 rounded-circle bg-danger text-white mb-4">
-                                <i class="fs-3 bi bi-app-indicator"></i>
-                            </div>
-                            <h5 class="mb-3">우리들만의코스</h5>
-                            <p class="mb-0 w-lg-85 mx-auto">
-                                AI가 추천한 코스 뿐만 아니라 다른 커플의 데이트코스를 추천받아 우리들의 데이트로 만들 수 있어요
-                            </p>
+                        <p class="mb-0 w-lg-85 mx-auto">
+                            데이트코스를 함께 만들면서 채팅을 할 수 있어요
+                        </p>
+                    </div>
+
+                    <!--Feature column-->
+                    <div class="col-12 col-lg-4 text-center mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+                        <div class="center-both mx-auto size-60 rounded-circle bg-danger text-white mb-4">
+                            <i class="fs-3 bi bi-app-indicator"></i>
                         </div>
+                        <h5 class="mb-3">우리들만의코스</h5>
+                        <p class="mb-0 w-lg-85 mx-auto">
+                            AI가 추천한 코스 뿐만 아니라 다른 커플의 데이트코스를 추천받아 우리들의 데이트로 만들 수 있어요
+                        </p>
+                    </div>
 
-                        <!--Feature column-->
-                        <div class="col-12 col-lg-4 text-center" data-aos="fade-up" data-aos-delay="250">
-                            <div class="center-both mx-auto size-60 rounded-circle bg-info text-white lh-1 mb-4">
-                                <i class="fs-3 bi bi-images"></i>
+                    <!--Feature column-->
+                    <div class="col-12 col-lg-4 text-center" data-aos="fade-up" data-aos-delay="250">
+                        <div class="center-both mx-auto size-60 rounded-circle bg-info text-white lh-1 mb-4">
+                            <i class="fs-3 bi bi-images"></i>
+                        </div>
+                        <h5 class="mb-3">장소사진저장</h5>
+                        <p class="mb-0 w-lg-85 mx-auto">
+                            데이트 코스로 방문했던 장소들의 사진을 저장하고 블로그처럼 꾸밀 수 있어요
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- section 5 -->
+        <section class="position-relative bg-white">
+            <!--Half background-->
+            <div class="position-absolute start-0 top-0 w-100 h-50 bg-dark rounded-top-start-block" id="start">
+            </div>
+
+            <!--Vector sign-->
+            <div class="container position-relative py-7 py-lg-12">
+                <div class="row mb-3 mb-md-5 align-items-end text-white">
+                    <div class="col-md-7 mb-4 mb-md-0 position-relative">
+                        <p class="mb-2">커플로그 이용권</p>
+                        <h2 class="display-5 mb-0">커플로그시작하기</h2>
+                    </div>
+                    <div class="col-md-5">
+                        <!-- Plans-Switch -->
+                        <div class="d-flex justify-content-start justify-content-md-end align-items-center">
+                            <div class="price-monthly">
+                                <strong>달</strong>
                             </div>
-                            <h5 class="mb-3">장소사진저장</h5>
-                            <p class="mb-0 w-lg-85 mx-auto">
-                                데이트 코스로 방문했던 장소들의 사진을 저장하고 블로그처럼 꾸밀 수 있어요
-                            </p>
+                            <!-- Switch -->
+                            <div class="form-check form-switch ms-2 me-1">
+                                <input class="form-check-input border-0 me-0" type="checkbox" id="planSwitch"
+                                    data-as-toggle="price" data-as-target=".price">
+                                <label class="form-check-label" for="planSwitch"></label>
+                            </div>
+                            <div class="price-monthly">
+                                <strong>전체</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            
-            <!-- section 5 -->
-             <section class="position-relative bg-white">
-                <!--Half background-->
-                <div class="position-absolute start-0 top-0 w-100 h-50 bg-dark rounded-top-start-block" id="start">
-                </div>
+                <!--/.row-->
 
-                <!--Vector sign-->
-                <div class="container position-relative py-7 py-lg-12">
-                    <div class="row mb-3 mb-md-5 align-items-end text-white">
-                        <div class="col-md-7 mb-4 mb-md-0 position-relative">
-                            <p class="mb-2">커플로그 이용권</p>
-                            <h2 class="display-5 mb-0">커플로그시작하기</h2>
-                        </div>
-                        <div class="col-md-5">
-                            <!-- Plans-Switch -->
-                            <div class="d-flex justify-content-start justify-content-md-end align-items-center">
-                                <div class="price-monthly">
-                                    <strong>달</strong>
+                <div class="position-relative">
+                    <div class="row justify-content-center position-relative z-index-1">
+                        <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up">
+                            <div
+                                class="card shadow-sm card-body p-4 rounded-xl border-0 d-flex flex-column overflow-hidden h-100">
+                                <div class="position-relative overflow-hidden">
+                                    <h6>1개월권</h6>
+                                    <div class="d-flex align-items-end mb-4">
+                                        <sup class="d-inline-block">₩</sup>
+                                        <div class="price display-4" data-as-annual="4500" data-as-monthly="4500">4,500
+                                        </div>
+                                    </div>
+                                    <span></span>
                                 </div>
-                                <!-- Switch -->
-                                <div class="form-check form-switch ms-2 me-1">
-                                    <input class="form-check-input border-0 me-0" type="checkbox" id="planSwitch"
-                                        data-as-toggle="price" data-as-target=".price">
-                                    <label class="form-check-label" for="planSwitch"></label>
-                                </div>
-                                <div class="price-monthly">
-                                    <strong>전체</strong>
+                                <!--/.price-card-header-->
+                                <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>1개월이용
+                                    </li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>한달무료이용
+                                    </li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>사진저장
+                                        및 코스저장</li>
+                                    <li class="pb-1 mb-2 d-table"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>연장가능
+                                    </li>
+                                </ul>
+                                <div class="d-grid d-md-flex">
+                                    <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" id="one"
+                                        data-index="0" data-bs-toggle="modal"><span>상세보기</span></a>
                                 </div>
                             </div>
                         </div>
+                        <!--/.col-->
+                        <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                            <div
+                                class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                <span
+                                    class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                    인기</span>
+                                <div class="position-relative overflow-hidden">
+                                    <h6>3개월권</h6>
+                                    <div class="d-flex align-items-end mb-4">
+                                        <sup class="d-inline-block">₩</sup>
+                                        <div class="price display-4" data-as-annual="4000" data-as-monthly="12000">4,000
+                                        </div>
+                                    </div>
+                                    <span></span>
+                                </div>
+                                <!--/.price-card-header-->
+                                <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        3개월이용</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        12%off</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        사진저장 및 코스저장</li>
+                                    <li class="pb-1 mb-2 d-table"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        연장가능</li>
+                                </ul>
+                                <div class="d-grid d-md-flex">
+                                    <a href="#paymentInfo" class="btn btn-secondary hover-lift payment"
+                                        data-bs-toggle="modal" data-index="1" id="three"><span>상세보기</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.col-->
+                        <div class="col-lg-3 aos-init aos-animate" data-aos="fade-up" data-aos-delay="150">
+                            <div class="card shadow-sm card-body p-4 rounded-xl border-0 overflow-hidden h-100">
+
+                                <div class="position-relative overflow-hidden">
+                                    <h6>6개월권</h6>
+                                    <div class="d-flex align-items-end mb-4">
+                                        <sup class="d-inline-block">₩</sup>
+                                        <div class="price display-4" data-as-annual="3000" data-as-monthly="18000">3,000
+                                        </div>
+                                    </div>
+                                    <span></span>
+                                </div>
+                                <!--/.price-card-header-->
+                                <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        6개월이용</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        33%off</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        사진저장 및 코스저장</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        연장가능</li>
+                                </ul>
+                                <div class="d-grid d-md-flex">
+                                    <a href="#paymentInfo" class="btn btn-secondary hover-lift payment"
+                                        data-bs-toggle="modal" data-index="2" id="six"><span>상세보기</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.col-->
+                        <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                            <div
+                                class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                <span
+                                    class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                    이벤트</span>
+                                <div class="position-relative overflow-hidden">
+                                    <h6>무제한이용권</h6>
+                                    <div class="d-flex align-items-end mb-4">
+                                        <sup class="d-inline-block">₩</sup>
+                                        <div class="price display-4" data-as-annual="20000" data-as-monthly="20000">
+                                            20,000
+                                        </div>
+                                    </div>
+                                    <span></span>
+                                </div>
+                                <!--/.price-card-header-->
+                                <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        <span>무제한이용</span></li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        100%off</li>
+                                    <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
+                                            class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                        사진저장 및 코스저장</li>
+
+                                </ul>
+                                <div class="d-grid d-md-flex">
+                                    <a href="#paymentInfo" class="btn btn-secondary hover-lift payment"
+                                        data-bs-toggle="modal" data-index="3" id="forever"><span>상세보기</span></a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <!--/.row-->
-
-                    <div class="position-relative">
-                        <div class="row justify-content-center position-relative z-index-1">
-                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up">
-                                <div
-                                    class="card shadow-sm card-body p-4 rounded-xl border-0 d-flex flex-column overflow-hidden h-100">
-                                    <div class="position-relative overflow-hidden">
-                                        <h6>1개월권</h6>
-                                        <div class="d-flex align-items-end mb-4">
-                                            <sup class="d-inline-block">₩</sup>
-                                            <div class="price display-4" data-as-annual="4500" data-as-monthly="4500">4,500</div>
-                                        </div>
-                                        <span></span>
-                                    </div>
-                                    <!--/.price-card-header-->
-                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>1개월이용</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>한달무료이용</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>사진저장 및 코스저장</li>
-                                        <li class="pb-1 mb-2 d-table"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>연장가능</li>
-                                    </ul>
-                                    <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" id="one" data-index="0" data-bs-toggle="modal"><span>상세보기</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.col-->
-                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
-                                data-aos-delay="100">
-                                <div
-                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
-                                    <span
-                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
-                                        인기</span>
-                                    <div class="position-relative overflow-hidden">
-                                        <h6>3개월권</h6>
-                                        <div class="d-flex align-items-end mb-4">
-                                            <sup class="d-inline-block">₩</sup>
-                                            <div class="price display-4" data-as-annual="4000" data-as-monthly="12000">4,000
-                                            </div>
-                                        </div>
-                                        <span></span>
-                                    </div>
-                                    <!--/.price-card-header-->
-                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" ><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            3개월이용</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" ><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle" ></i>
-                                            12%off</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" ><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            사진저장 및 코스저장</li>
-                                        <li class="pb-1 mb-2 d-table"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            연장가능</li>
-                                    </ul>
-                                    <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" data-bs-toggle="modal" data-index="1"  id="three"><span>상세보기</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.col-->
-                            <div class="col-lg-3 aos-init aos-animate" data-aos="fade-up" data-aos-delay="150">
-                                <div class="card shadow-sm card-body p-4 rounded-xl border-0 overflow-hidden h-100">
-
-                                    <div class="position-relative overflow-hidden">
-                                        <h6>6개월권</h6>
-                                        <div class="d-flex align-items-end mb-4">
-                                            <sup class="d-inline-block">₩</sup>
-                                            <div class="price display-4" data-as-annual="3000" data-as-monthly="18000">3,000
-                                            </div>
-                                        </div>
-                                        <span></span>
-                                    </div>
-                                    <!--/.price-card-header-->
-                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" ><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle" ></i>
-                                            6개월이용</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            33%off</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            사진저장 및 코스저장</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
-                                            연장가능</li>
-                                    </ul>
-                                    <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" data-bs-toggle="modal" data-index="2" id="six"><span>상세보기</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.col-->
-                            <div class="col-lg-3 mb-3 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
-                                data-aos-delay="100">
-                                <div
-                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
-                                    <span
-                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
-                                        이벤트</span>
-                                    <div class="position-relative overflow-hidden">
-                                        <h6>무제한이용권</h6>
-                                        <div class="d-flex align-items-end mb-4">
-                                            <sup class="d-inline-block">₩</sup>
-                                            <div class="price display-4" data-as-annual="20000" data-as-monthly="20000">20,000
-                                            </div>
-                                        </div>
-                                        <span></span>
-                                    </div>
-                                    <!--/.price-card-header-->
-                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" ><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle" ></i>
-                                            <span>무제한이용</span></li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle" ></i>
-                                            100%off</li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle" ></i>
-                                            사진저장 및 코스저장</li>
-                                        
-                                    </ul>
-                                    <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment"  data-bs-toggle="modal" data-index="3" id="forever"><span>상세보기</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <!--/.pricing row-->
-                    </div>
-                    <!--/.Plans-container-->
+                    <!--/.pricing row-->
                 </div>
-                <!--/.content-->
-            </section>
+                <!--/.Plans-container-->
+            </div>
+            <!--/.content-->
+        </section>
 
-		</div>
-		
-		
-		<!-- 결제 Modal창 -->
-                <div class="modal fade" id="paymentInfo" tabindex="-1" aria-labelledby="paymentInfo"
-                    aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
-                    
-                        <div class="modal-content border-0">
-                            <div class="modal-body p-0 border-0">
-                                <button type="button"
-                                    class="btn-close position-absolute end-0 top-0 mt-2 me-2 me-md-n3 mt-md-n3 size-40 p-0 center-both rounded-circle bg-tint-primary z-index-1"
-                                    data-bs-dismiss="modal" aria-label="Close">
-                                    <i class="bi bi-x fs-5"></i>
-                                </button>
-                                <div class="d-md-flex row">
-                                   
-                                   <!-- 왼쪽 사진 -->
-                                    <div class="col-md-6">
-                                        <img th:src="@{/img/coupleImage8.jpg}" alt=""
-                                            class="d-block rounded-top d-md-none img-fluid">
+    </div>
+
+
+    <!-- 결제 Modal창 -->
+    <div class="modal fade" id="paymentInfo" tabindex="-1" aria-labelledby="paymentInfo" aria-hidden="true"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+
+            <div class="modal-content border-0">
+                <div class="modal-body p-0 border-0">
+                    <button type="button"
+                        class="btn-close position-absolute end-0 top-0 mt-2 me-2 me-md-n3 mt-md-n3 size-40 p-0 center-both rounded-circle bg-tint-primary z-index-1"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <i class="bi bi-x fs-5"></i>
+                    </button>
+                    <div class="d-md-flex row">
+
+                        <!-- 왼쪽 사진 -->
+                        <div class="col-md-6">
+                            <img th:src="@{/img/coupleImage8.jpg}" alt=""
+                                class="d-block rounded-top d-md-none img-fluid">
+                            <div
+                                class="d-none d-md-flex overflow-hidden bg-shade-primary rounded-3 rounded-end-0 h-md-100 position-relative">
+                                <img th:src="@{/img/coupleImage8.jpg}" alt="" class="bg-image">
+                            </div>
+                        </div>
+
+                        <!-- 오른쪽 -->
+                        <div class="col-md-6 h-100">
+                            <div class="h-100 py-5 px-4 position-relative">
+
+                                <h2 class="display-6 mb-2">
+                                    이용권결제
+                                </h2>
+                                <p>결제정보</p>
+                                <div class="position-relative">
+                                    <div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
+                                        data-aos-delay="100">
                                         <div
-                                            class="d-none d-md-flex overflow-hidden bg-shade-primary rounded-3 rounded-end-0 h-md-100 position-relative">
-                                            <img th:src="@{/img/coupleImage8.jpg}" alt="" class="bg-image">
+                                            class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
+                                            <span
+                                                class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
+                                                이벤트</span>
+                                            <div class="position-relative overflow-hidden">
+                                                <h6 id="subterm"></h6>
+                                                <div class="price display-4" id="subprice">
+                                                </div>
+                                            </div>
+                                            <!--/.price-card-header-->
+                                            <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
+                                                <li class="mb-2 border-dashed border-bottom d-table pb-2" id="use"><i
+                                                        class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                                </li>
+                                                <li class="mb-2 border-dashed border-bottom d-table pb-2" id="off"><i
+                                                        class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                                </li>
+                                                <li class="mb-2 border-dashed border-bottom d-table pb-2" id="store"><i
+                                                        class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    
-                                    <!-- 오른쪽 -->
-                                    <div class="col-md-6 h-100">
-                                        <div class="h-100 py-5 px-4 position-relative">
-                                            
-                                            <h2 class="display-6 mb-2">
-                                            이용권결제
-                                            </h2>
-                                            <p>결제정보</p>
-                                            <div class="position-relative">
-                                            	<div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
-                                data-aos-delay="100">
-                                <div
-                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
-                                    <span
-                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
-                                        이벤트</span>
-                                    <div class="position-relative overflow-hidden">
-                                        <h6 id="subterm"></h6>
-                                        <div class="price display-4" id="subprice">
-                                            </div>
-                                    </div>
-                                    <!--/.price-card-header-->
-                                    <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="use"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="off"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="store"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-             
-             <section class="position-relative bg-light">
-                <div class="container">
-                    <div class="row">
-                            <!--Collapse item-->
-                            <div class="border-bottom py-3 fw-semibold text-dark fs-5 d-block">
-                                주문 상품의 구매 조건을 확인하였으며,<br> 결제 진행에 동의합니다.&nbsp;
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck">
-                            </div>
-                            <!--Collapse item-->
-                            <div class="border-bottom py-3 fw-semibold text-dark fs-5 d-block">
-                                <a class="fw-semibold text-dark fs-5 d-inline" data-bs-toggle="collapse" href="#faq2"
-                                    role="button" aria-expanded="false" aria-controls="faq2">
-                                    개인정보 제3자 제공 동의
-                                </a>
-                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck">
-                                <div class="collapse" id="faq2">
-                                    <p class="pt-3">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.
-                                        eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
-                                        cras sed
-                                      
-                                    </p>
-                                        <br>
-                                        
-                                </div>
-                            </div>
 
-                            <!--Collapse item-->
-                            <div class="py-3 fw-semibold text-dark fs-5 d-block">
-                                <a class="fw-semibold text-dark fs-5 d-inline" data-bs-toggle="collapse" href="#faq3"
-                                    role="button" aria-expanded="false" aria-controls="faq3">
-                                    개인정보 수집 이용 동의
-                                </a>
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck">
-                                <div class="collapse" id="faq3">
-                                    <p class="pt-3">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. 
-                                        eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
-                                        cras sed
-                                    </p>
-                                        <br>
-                                </div>
-                            </div>
-                        </div>
-                	</div>
-            </section>
-            <br>
+                                    <section class="position-relative bg-light">
+                                        <div class="container">
+                                            <div class="row">
+                                                <!--Collapse item-->
+                                                <div class="border-bottom py-3 fw-semibold text-dark fs-5 d-block">
+                                                    주문 상품의 구매 조건을 확인하였으며,<br> 결제 진행에 동의합니다.&nbsp;
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="invalidCheck">
+                                                </div>
+                                                <!--Collapse item-->
+                                                <div class="border-bottom py-3 fw-semibold text-dark fs-5 d-block">
+                                                    <a class="fw-semibold text-dark fs-5 d-inline"
+                                                        data-bs-toggle="collapse" href="#faq2" role="button"
+                                                        aria-expanded="false" aria-controls="faq2">
+                                                        개인정보 제3자 제공 동의
+                                                    </a>
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="invalidCheck">
+                                                    <div class="collapse" id="faq2">
+                                                        <p class="pt-3">
+                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                                            do eiusmod tempor
+                                                            incididunt ut labore et dolore magna aliqua.
+                                                            eros donec ac odio tempor. Ac turpis egestas maecenas
+                                                            pharetra. Nibh venenatis
+                                                            cras sed
+
+                                                        </p>
+                                                        <br>
+
+                                                    </div>
+                                                </div>
+
+                                                <!--Collapse item-->
+                                                <div class="py-3 fw-semibold text-dark fs-5 d-block">
+                                                    <a class="fw-semibold text-dark fs-5 d-inline"
+                                                        data-bs-toggle="collapse" href="#faq3" role="button"
+                                                        aria-expanded="false" aria-controls="faq3">
+                                                        개인정보 수집 이용 동의
+                                                    </a>
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="invalidCheck">
+                                                    <div class="collapse" id="faq3">
+                                                        <p class="pt-3">
+                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                                            do eiusmod tempor
+                                                            incididunt ut labore et dolore magna aliqua.
+                                                            eros donec ac odio tempor. Ac turpis egestas maecenas
+                                                            pharetra. Nibh venenatis
+                                                            cras sed
+                                                        </p>
+                                                        <br>
+                                                    </div>
+                                                </div>
                                             </div>
-			                            <div class="d-grid">
-			                               	<button class="btn btn-primary" type="button" id="payment">결제하기</button>
-			                   			</div>
                                         </div>
-                                    </div>
+                                    </section>
+                                    <br>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="button" id="payment">결제하기</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="script">
- <script type="text/javascript"
-		src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-	<script th:inline='javascript'>
-var payInfo=[{subTerm:1,subPrice:450, use:"1개월이용", off:"한달무료이용",store:"사진저장 및 코스저장"},
-	{subTerm:3,subPrice:1200, use:"3개월이용", off:"12%off",store:"사진저장 및 코스저장"},
-	{subTerm:6,subPrice:1800, use:"6개월이용", off:"33%off",store:"사진저장 및 코스저장"},
-	{subTerm:1000,subPrice:2000, use:"무제한이용", off:"100%off",store:"사진저장 및 코스저장"}]
-		$(function() {
-			
-			
-			let subTerm = 0; //정기권 기간
-			let subPrice = 0; //정기권 가격
-			
-			
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+    <script th:inline='javascript'>
+        var payInfo = [{
+                subTerm: 1,
+                subPrice: 450,
+                use: "1개월이용",
+                off: "한달무료이용",
+                store: "사진저장 및 코스저장"
+            },
+            {
+                subTerm: 3,
+                subPrice: 1200,
+                use: "3개월이용",
+                off: "12%off",
+                store: "사진저장 및 코스저장"
+            },
+            {
+                subTerm: 6,
+                subPrice: 1800,
+                use: "6개월이용",
+                off: "33%off",
+                store: "사진저장 및 코스저장"
+            },
+            {
+                subTerm: 1000,
+                subPrice: 2000,
+                use: "무제한이용",
+                off: "100%off",
+                store: "사진저장 및 코스저장"
+            }
+        ]
+        $(function () {
 
-			
-			$(".payment").on('click', function(e) {
-				
-				 if (userSession != null){
-				var index =$(this).data("index");
-				$("#subterm").text(payInfo[index].subTerm+"개월권");
-				$("#subprice").text(payInfo[index].subPrice+" ₩");
-				
-				
-				$("#use").append($('<span/>').text(payInfo[index].use));
-				$("#off").append($('<span/>').text(payInfo[index].off));
-				$("#store").append($('<span/>').text(payInfo[index].store));
-				
-				//$(".payment").off('click'); //on click 이벤트에 append 스텍 쌓이는걸 제거해준다
-				$("#payment").on('click',function(e){
-					e.preventDefault()
-					if(!$('#invalidCheck').is(':checked')){
-						swal("개인정보 동의를 해주세요.","", "error", {
-							button : {
-								text : "확인",
-								className : "btn btn-primary"
-							}
-						});
-						this.focus();
-						return;
-					} 
-					let subTerm=payInfo[index].subTerm;
-					let subPrice=payInfo[index].subPrice;
-					requestPay(subTerm,subPrice);
-				});
-				 }else{	e.preventDefault();
-					 
-					 swal('로그인이 필요합니다\n로그인 하시겠습니까?', "", "error",
-							{button : {text : "확인",className : "btn btn-primary"}
-							}).then(()=>{
-								location.href ="/login";
-								console.log("응애!");
-							});
-					 } 
-			});
 
-			
-			//모달창 초기화하기
-			 $('#paymentInfo').on('hidden.bs.modal', function () {
-	                // 실행 할 내용
-	               
-	                $("#use").find('span').remove();
-	                $("#off").find('span').remove();
-	                $("#store").find('span').remove();
-	                console.log("응애!");
-	            });
-			
-			//결제실행
-			function requestPay(subTerm, subPrice) {
-				var IMP = window.IMP; // 생략가능
-				let coupleId= Number(userSession.coupleId);
-				let name=userSession.name;
-				let coupleStatus= userSession.coupleStatus;
-				let email = userSession.email;
-				let userId = Number(userSession.userId);
-				
-				IMP.init("imp61283402");
-				let buyerName = name; //이름 필요합니다.
-				const merchantUid = Math.floor(Math.random() * 1000000) + 1; //난수설정
-				
-				let passName = subTerm + '개월 커플로그 이용권'; //결제시 정기권 이름
-				
-				IMP.request_pay({ // param
-					pg : "html5_inicis",
-					pay_method : "card",
-					merchant_uid : merchantUid,
-					name : passName,
-					amount : subPrice, //금액
-					buyer_email : email, //결제자 이메일
-					buyer_name : buyerName, //결제자 이름
-					// buyer_tel: $('#bPhone').text(),
-					// buyer_addr: $('#bAddress').text(),
-					// buyer_postcode: "우편번호",
-					m_redirect_url : 'http://localhost:8000/coupleMain'
+            let subTerm = 0; //정기권 기간
+            let subPrice = 0; //정기권 가격
 
-				}, function(rsp) { // callback
-					console.log(rsp);
-					if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-						/* 결제 성공 시 결과 저장 */
-						$.ajax({
-							url : 'payment', //'../AddItemServlet.do'
-							method : 'post',
-							data : {
-								userId : userId, //userId는 세션에 있습니다.
-								subTerm : subTerm,
-								payCost : rsp.paid_amount,
-								merchantUid : rsp.merchant_uid,
-								coupleId : coupleId
-							},
-							success : function(result) {
-								console.log(result);
-								swal(result,"", "success",{
-									button : {text : "확인",className : "btn btn-primary"}
-								}).then(()=>{
-									 $('#paymentInfo').hide(); //모달창 닫기
-									location.href ="/coupleMain?coupleStatus=y";
-									console.log("응애!");
-								});
-							},
-							error : function(error) {
-								console.log(error);
-								swal("결제에 실패했습니다. 관리자에게 문의해주세요!", "","error",{
-									button : {text : "확인",className : "btn btn-primary"}
-								}).then(()=>{
-									 $('#paymentInfo').hide(); //모달창 닫기
-										console.log("응애!");
-									});
-							}
-						});
-					} else {
-						console.log(rsp.error_msg);
-						swal("결제에 실패하였습니다. 관리자에게 문의해주세요!", "","error",{
-							button : {text : "확인",className : "btn btn-primary"}
-						}).then(()=>{
-							 $('#paymentInfo').hide(); //모달창 닫기
-								console.log("응애!");
-							});
-					}
-				});
-			}
-			;//import 결제 API 끝
-		});
-		//ajax 끝
-	</script>
+
+
+
+            $(".payment").on('click', function (e) {
+
+                if (userSession != null) {
+                    var index = $(this).data("index");
+                    $("#subterm").text(payInfo[index].subTerm + "개월권");
+                    $("#subprice").text(payInfo[index].subPrice + " ₩");
+
+
+                    $("#use").append($('<span/>').text(payInfo[index].use));
+                    $("#off").append($('<span/>').text(payInfo[index].off));
+                    $("#store").append($('<span/>').text(payInfo[index].store));
+
+                    //$(".payment").off('click'); //on click 이벤트에 append 스텍 쌓이는걸 제거해준다
+                    $("#payment").on('click', function (e) {
+                        e.preventDefault()
+                        if (!$('#invalidCheck').is(':checked')) {
+                            swal("개인정보 동의를 해주세요.", "", "error", {
+                                button: {
+                                    text: "확인",
+                                    className: "btn btn-primary"
+                                }
+                            });
+                            this.focus();
+                            return;
+                        }
+                        let subTerm = payInfo[index].subTerm;
+                        let subPrice = payInfo[index].subPrice;
+                        requestPay(subTerm, subPrice);
+                    });
+                } else {
+                    e.preventDefault();
+
+                    swal('로그인이 필요합니다\n로그인 하시겠습니까?', "", "error", {
+                        button: {
+                            text: "확인",
+                            className: "btn btn-primary"
+                        }
+                    }).then(() => {
+                        location.href = "/login";
+                        console.log("응애!");
+                    });
+                }
+            });
+
+
+            //모달창 초기화하기
+            $('#paymentInfo').on('hidden.bs.modal', function () {
+                // 실행 할 내용
+
+                $("#use").find('span').remove();
+                $("#off").find('span').remove();
+                $("#store").find('span').remove();
+                console.log("응애!");
+            });
+
+            //결제실행
+            function requestPay(subTerm, subPrice) {
+                var IMP = window.IMP; // 생략가능
+                let coupleId = Number(userSession.coupleId);
+                let name = userSession.name;
+                let coupleStatus = userSession.coupleStatus;
+                let email = userSession.email;
+                let userId = Number(userSession.userId);
+
+                IMP.init("imp61283402");
+                let buyerName = name; //이름 필요합니다.
+                const merchantUid = Math.floor(Math.random() * 1000000) + 1; //난수설정
+
+                let passName = subTerm + '개월 커플로그 이용권'; //결제시 정기권 이름
+
+                IMP.request_pay({ // param
+                    pg: "html5_inicis",
+                    pay_method: "card",
+                    merchant_uid: merchantUid,
+                    name: passName,
+                    amount: subPrice, //금액
+                    buyer_email: email, //결제자 이메일
+                    buyer_name: buyerName, //결제자 이름
+                    // buyer_tel: $('#bPhone').text(),
+                    // buyer_addr: $('#bAddress').text(),
+                    // buyer_postcode: "우편번호",
+                    m_redirect_url: 'http://localhost:8000/coupleMain'
+
+                }, function (rsp) { // callback
+                    console.log(rsp);
+                    if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+                        /* 결제 성공 시 결과 저장 */
+                        $.ajax({
+                            url: 'payment', //'../AddItemServlet.do'
+                            method: 'post',
+                            data: {
+                                userId: userId, //userId는 세션에 있습니다.
+                                subTerm: subTerm,
+                                payCost: rsp.paid_amount,
+                                merchantUid: rsp.merchant_uid,
+                                coupleId: coupleId
+                            },
+                            success: function (result) {
+                                console.log(result);
+                                swal(result, "", "success", {
+                                    button: {
+                                        text: "확인",
+                                        className: "btn btn-primary"
+                                    }
+                                }).then(() => {
+                                    $('#paymentInfo').hide(); //모달창 닫기
+                                    location.href = "/coupleMain?coupleStatus=y";
+                                    console.log("응애!");
+                                });
+                            },
+                            error: function (error) {
+                                console.log(error);
+                                swal("결제에 실패했습니다. 관리자에게 문의해주세요!", "", "error", {
+                                    button: {
+                                        text: "확인",
+                                        className: "btn btn-primary"
+                                    }
+                                }).then(() => {
+                                    $('#paymentInfo').hide(); //모달창 닫기
+                                    console.log("응애!");
+                                });
+                            }
+                        });
+                    } else {
+                        console.log(rsp.error_msg);
+                        swal("결제에 실패하였습니다. 관리자에게 문의해주세요!", "", "error", {
+                            button: {
+                                text: "확인",
+                                className: "btn btn-primary"
+                            }
+                        }).then(() => {
+                            $('#paymentInfo').hide(); //모달창 닫기
+                            console.log("응애!");
+                        });
+                    }
+                });
+            }; //import 결제 API 끝
+        });
+        //ajax 끝
+    </script>
 </th:block>
+
 </html>
