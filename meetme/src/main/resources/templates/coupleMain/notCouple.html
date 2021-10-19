@@ -212,7 +212,7 @@
                                                 class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i>연장가능</li>
                                     </ul>
                                     <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" id="one" data-bs-toggle="modal"><span>상세보기</span></a>
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" id="one" data-index="0" data-bs-toggle="modal"><span>상세보기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                             연장가능</li>
                                     </ul>
                                     <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" data-bs-toggle="modal" id="three"><span>상세보기</span></a>
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" data-bs-toggle="modal" data-index="1"  id="three"><span>상세보기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -282,7 +282,7 @@
                                             연장가능</li>
                                     </ul>
                                     <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift" data-bs-toggle="modal" id="six"><span>상세보기</span></a>
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment" data-bs-toggle="modal" data-index="2" id="six"><span>상세보기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +317,7 @@
                                         
                                     </ul>
                                     <div class="d-grid d-md-flex">
-                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift"  data-bs-toggle="modal" id="forever"><span>상세보기</span></a>
+                                        <a href="#paymentInfo" class="btn btn-secondary hover-lift payment"  data-bs-toggle="modal" data-index="3" id="forever"><span>상세보기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -411,13 +411,7 @@
                                         incididunt ut labore et dolore magna aliqua.
                                         eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
                                         cras sed
-                                        felis. Justo eget magna neque vitae tempus
-                                        quam
-                                        pellentesque nec. Urna molestie at elementum eu facilisis sed. Congue mauris
-                                        rhoncus
-                                        aenean vel. Lobortis mattis aliquam faucibus purus. Rutrum quisque non tellus
-                                        orci ac
-                                        auctor augue.
+                                      
                                     </p>
                                         <br>
                                         
@@ -437,13 +431,6 @@
                                         incididunt ut labore et dolore magna aliqua. 
                                         eros donec ac odio tempor. Ac turpis egestas maecenas pharetra. Nibh venenatis
                                         cras sed
-                                        felis. Justo eget magna neque vitae tempus
-                                        quam
-                                        pellentesque nec. Urna molestie at elementum eu facilisis sed. Congue mauris
-                                        rhoncus
-                                        aenean vel. Lobortis mattis aliquam faucibus purus. Rutrum quisque non tellus
-                                        orci ac
-                                        auctor augue.
                                     </p>
                                         <br>
                                 </div>
@@ -469,69 +456,34 @@
  <script type="text/javascript"
 		src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	<script th:inline='javascript'>
-
+var payInfo=[{subTerm:1,subPrice:450, use:"1개월이용", off:"한달무료이용",store:"사진저장 및 코스저장"},
+	{subTerm:3,subPrice:1200, use:"3개월이용", off:"12%off",store:"사진저장 및 코스저장"},
+	{subTerm:6,subPrice:1800, use:"6개월이용", off:"33%off",store:"사진저장 및 코스저장"},
+	{subTerm:1000,subPrice:2000, use:"무제한이용", off:"100%off",store:"사진저장 및 코스저장"}]
 		$(function() {
 			
 			
 			let subTerm = 0; //정기권 기간
 			let subPrice = 0; //정기권 가격
 			
-			$("#one").on('click', function() {
-				subTerm = 1;
-				subPrice = 450;
-				
-				$("#subterm").text(subTerm+"개월권");
-				$("#subprice").text(subPrice+" ₩");
-				
-				
-				$("#use").append($('<span/>').text("1개월이용"));
-				$("#off").append($('<span/>').text("한달무료이용"));
-				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
-				
-				$("#payment").on('click',function(){
-					requestPay(subTerm, subPrice);
-				});
-			});
+			
 
-			$("#three").on('click', function() {
-				subTerm = 3;
-				subPrice = 1200;
-				$("#subterm").text(subTerm+"개월권");
-				$("#subprice").text(subPrice+" ₩");
+			
+			$(".payment").on('click', function(e) {
 				
-				$("#use").append($('<span/>').text("3개월이용"));
-				$("#off").append($('<span/>').text("12%off"));
-				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
-				$("#payment").on('click',function(){
-					requestPay(subTerm, subPrice);
-				});
-			});
-
-			$("#six").on('click', function() {
-				subTerm = 6;
-				subPrice = 1800;
-				$("#subterm").text(subTerm+"개월권");
-				$("#subprice").text(subPrice+" ₩");
+				 if (userSession != null){
+				var index =$(this).data("index");
+				$("#subterm").text(payInfo[index].subTerm+"개월권");
+				$("#subprice").text(payInfo[index].subPrice+" ₩");
 				
-				$("#use").append($('<span/>').text("6개월이용"));
-				$("#off").append($('<span/>').text("33%off"));
-				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
-				$("#payment").on('click',function(){
-					requestPay(subTerm, subPrice);
-				});
-			});
-
-			$("#forever").on('click', function() {
-				subTerm = 1000;
-				subPrice = 2000;
-				$("#subterm").text("평생이용권");
-				$("#subprice").text(subPrice+" ₩");
 				
-				$("#use").append($('<span/>').text("무제한이용"));
-				$("#off").append($('<span/>').text("100%off"));
-				$("#store").append($('<span/>').text("사진저장 및 코스저장"));
-				$("#payment").on('click',function(){
-					
+				$("#use").append($('<span/>').text(payInfo[index].use));
+				$("#off").append($('<span/>').text(payInfo[index].off));
+				$("#store").append($('<span/>').text(payInfo[index].store));
+				
+				//$(".payment").off('click'); //on click 이벤트에 append 스텍 쌓이는걸 제거해준다
+				$("#payment").on('click',function(e){
+					e.preventDefault()
 					if(!$('#invalidCheck').is(':checked')){
 						swal("개인정보 동의를 해주세요.","", "error", {
 							button : {
@@ -541,42 +493,56 @@
 						});
 						this.focus();
 						return;
-					}
-					requestPay(subTerm, subPrice);
+					} 
+					let subTerm=payInfo[index].subTerm;
+					let subPrice=payInfo[index].subPrice;
+					requestPay(subTerm,subPrice);
 				});
+				 }else{	e.preventDefault();
+					 
+					 swal('로그인이 필요합니다\n로그인 하시겠습니까?', "", "error",
+							{button : {text : "확인",className : "btn btn-primary"}
+							}).then(()=>{
+								location.href ="/login";
+								console.log("응애!");
+							});
+					 } 
 			});
-			
+
 			
 			//모달창 초기화하기
 			 $('#paymentInfo').on('hidden.bs.modal', function () {
 	                // 실행 할 내용
+	               
 	                $("#use").find('span').remove();
 	                $("#off").find('span').remove();
 	                $("#store").find('span').remove();
 	                console.log("응애!");
 	            });
 			
-			
-			
 			//결제실행
 			function requestPay(subTerm, subPrice) {
 				var IMP = window.IMP; // 생략가능
+				let coupleId= Number(userSession.coupleId);
+				let name=userSession.name;
+				let coupleStatus= userSession.coupleStatus;
+				let email = userSession.email;
+				let userId = Number(userSession.userId);
+				
 				IMP.init("imp61283402");
-				let userId = 1; //session의 아이디값 여기 넣기 //${session.userSession.userId}
-				let buyerName = "송호준"; //이름 필요합니다.
+				let buyerName = name; //이름 필요합니다.
 				const merchantUid = Math.floor(Math.random() * 1000000) + 1; //난수설정
-				console.log(merchantUid);
+				
 				let passName = subTerm + '개월 커플로그 이용권'; //결제시 정기권 이름
-				let coupleId =1;
 				
 				IMP.request_pay({ // param
 					pg : "html5_inicis",
 					pay_method : "card",
 					merchant_uid : merchantUid,
 					name : passName,
-					amount : subPrice,
-					buyer_email : "gkwlal3@gmail.com",
-					buyer_name : buyerName,
+					amount : subPrice, //금액
+					buyer_email : email, //결제자 이메일
+					buyer_name : buyerName, //결제자 이름
 					// buyer_tel: $('#bPhone').text(),
 					// buyer_addr: $('#bAddress').text(),
 					// buyer_postcode: "우편번호",
@@ -585,16 +551,12 @@
 				}, function(rsp) { // callback
 					console.log(rsp);
 					if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-						swal("결제 성공하셨습니다!","", "success",{
-							button : {text : "확인",className : "btn btn-primary"}
-						});
-
 						/* 결제 성공 시 결과 저장 */
 						$.ajax({
 							url : 'payment', //'../AddItemServlet.do'
 							method : 'post',
 							data : {
-								userId : userId,
+								userId : userId, //userId는 세션에 있습니다.
 								subTerm : subTerm,
 								payCost : rsp.paid_amount,
 								merchantUid : rsp.merchant_uid,
@@ -605,22 +567,29 @@
 								swal(result,"", "success",{
 									button : {text : "확인",className : "btn btn-primary"}
 								}).then(()=>{
-									location.href ="coupleMain?coupleStatus=y";
+									 $('#paymentInfo').hide(); //모달창 닫기
+									location.href ="/coupleMain?coupleStatus=y";
 									console.log("응애!");
 								});
 							},
 							error : function(error) {
-								console.log("문제발생");
 								console.log(error);
+								swal("결제에 실패했습니다. 관리자에게 문의해주세요!", "","error",{
+									button : {text : "확인",className : "btn btn-primary"}
+								}).then(()=>{
+									 $('#paymentInfo').hide(); //모달창 닫기
+										console.log("응애!");
+									});
 							}
 						});
 					} else {
-						swal("결제에 실패하였습니다."+rsp.error_msg, "","error",{
-							button : {
-								text : "확인",
-								className : "btn btn-primary"
-							}
-						});
+						console.log(rsp.error_msg);
+						swal("결제에 실패하였습니다. 관리자에게 문의해주세요!", "","error",{
+							button : {text : "확인",className : "btn btn-primary"}
+						}).then(()=>{
+							 $('#paymentInfo').hide(); //모달창 닫기
+								console.log("응애!");
+							});
 					}
 				});
 			}

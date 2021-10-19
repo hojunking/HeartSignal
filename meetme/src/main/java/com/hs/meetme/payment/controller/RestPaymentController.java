@@ -3,6 +3,9 @@ package com.hs.meetme.payment.controller;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,6 +20,7 @@ import com.hs.meetme.payment.api.GetTokenAPI;
 import com.hs.meetme.payment.api.RefundAPI;
 import com.hs.meetme.payment.domain.PaymentVO;
 import com.hs.meetme.payment.service.PaymentService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 
 @RestController
@@ -25,8 +29,9 @@ public class RestPaymentController {
 	@Autowired CoupleInfoService coupleService;
 	
 	@PostMapping("/payment") //결제
-	public String paymentInsert(PaymentVO vo) {
-		
+	public String paymentInsert(PaymentVO vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		payService.paymentInsert(vo); //결제정보 DB입력/
 		System.out.println("결제정보 :"+vo);
 		CoupleInfoVO oc = new CoupleInfoVO(); //커플정보 들고오기
@@ -49,13 +54,14 @@ public class RestPaymentController {
 				System.out.println("사용자 상태변경:"+oc);
 				oc.setUserId(oc.getUserRequest()); //userId에 req를 넣느다.
 				coupleService.userCoupleStatusUpdate(oc); //유저테이블의 coupleStatus 둘 다 y변경
-				result="기존커플갱신되었습니다.";
+				result="커플로그기간이 새롭게 갱신되었습니다.\n"
+						+ "감사합니다.";
 									//커플테이블의 상태가 n일 때 기존커플테이블 갱신
 			
 			}else if(oc.getCoupleStatus().equals("y")){ //커플 연장하기
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(oc.getStartDate());
-				cal.add(Calendar.MONTH, oc.getSubTerm());
+				cal.add(Calendar.MONTH, oc.getSubTerm()); //연장 기간 더하기
 				Date endDate= cal.getTime();
 				
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
@@ -63,7 +69,8 @@ public class RestPaymentController {
 				coupleService.coupleInfoUpdate(oc); //커플테이블 최신화
 				
 			
-				result="기존커플 연장되었습니다."; //기존 커플의 연장 성공
+				result="커플로그기간 연장되었습니다.\n"
+						+ "감사합니다."; //기존 커플의 연장 성공
 			}else {
 				result="비정상적인 접근입니다.";
 			}
@@ -72,7 +79,11 @@ public class RestPaymentController {
 			oc.setUserRequest(vo.getUserId());
 			oc.setSubTerm(vo.getSubTerm());
 			coupleService.coupleInfoInsert(oc); //커플테이블에 신규등록
-			result="신규커플등록되었습니다.";
+			
+			oc =coupleService.read(oc);
+			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
+			result="커플로그가 시작되었습니다. \n"
+					+ "감사합니다.";
 		}	//커플테이블에 대한 정보가 없을 때 신규테이블 생성
 		return result;
 	}

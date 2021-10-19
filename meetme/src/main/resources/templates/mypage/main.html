@@ -88,7 +88,7 @@
 												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
 													<li class="d-flex justify-content-between align-items-center mb-2">
 														<span class="small">구독권 이용기간</span>
-														<span class="small">3개월</span>
+														<span class="small" id="endDate">3개월</span> 
 													</li>
 												</th:block>
 											</ul>
@@ -320,6 +320,7 @@
 		const showMyTags = $('.showMyTags');
 
 		$(function(){
+			endDate();
 			for(let m of $(myTags).find('button')){
 				for(let a of $(allTags).find('button')){
 					if($(a).text() == $(m).text()){
@@ -377,6 +378,22 @@
 					}
 				});	//아작스 끝
 			});
+			
+			function endDate(){
+				$.ajax({
+					url:"../endDate",
+					method:"GET",
+					data: {
+						coupleId: Number(userSession.coupleId)
+					},
+					success: (data)=>{
+						$('#endDate').text(data.endDate)
+					},
+					error: (err)=>{
+						console.log(err);
+					}
+				});	//아작스 끝
+			}
 		}); // function 끝
 		
 	</script>
