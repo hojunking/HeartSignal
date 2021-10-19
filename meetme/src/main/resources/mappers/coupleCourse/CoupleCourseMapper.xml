@@ -5,93 +5,178 @@
 
 	<select id="getList" resultType="CoupleCourseVO">
 		select *
-		from(SELECT DISTINCT
-		a.user_id,
-		(
-		SELECT e.nickname
-		FROM user_info e
-		WHERE e.user_id =
-		a.user_id
-		) nickname,
-		(
-		SELECT f.img_url
-		FROM img f
-		WHERE f.img_id IN (
-		SELECT img_id
-		FROM user_info
-		WHERE user_id=a.user_id
-		)
-		) img_url,
-		a.course_id,
-		a.course_name,
-		a.course_state,
-		a.course_open,
-		a.course_created,
-		a.region,
-		(
-		SELECT sum_cost
-		FROM (
-		SELECT
-		course_id,
-		SUM(avg_cost) sum_cost
-		FROM course_order
-		GROUP BY course_id
-		) c
-		WHERE
-		c.course_id = b.course_id
-		) sum_cost,
-		a.couple_id
-		FROM course a,
-		course_order b
-		WHERE a.course_id IN (
-		SELECT course_id
-		FROM course_like
-		WHERE user_id = #{userId} AND a.course_id=b.course_id
-		)
-
-		UNION
-
-		SELECT
-		DISTINCT
-		a.user_id,
-		(
-		SELECT e.nickname
-		FROM user_info e
-		WHERE
-		e.user_id=a.user_id
-		) nickname,
-		(
-		SELECT f.img_url
-		FROM img f
-		WHERE
-		f.img_id
-		IN (SELECT img_id FROM user_info WHERE
-		user_id=a.user_id))img_url,
-		a.course_id,
-		a.course_name,
-		a.course_state,
-		a.course_open,
-		a.course_created,
-		a.region,
-		(
-		SELECT sum_cost
-		FROM (
-		SELECT
-		course_id,
-		SUM(avg_cost) sum_cost
-		FROM course_order
-		GROUP BY course_id
-		) c
-		WHERE c.course_id = b.course_id
-		) sum_cost,
-		a.couple_id couple_id
-		FROM
-		course a, course_order b
-		WHERE a.user_id=#{userId} AND
-		a.course_id=b.course_id AND
-		a.course_open='y')
-		where
-		couple_id=#{coupleId}
+from(
+    SELECT DISTINCT
+    a.user_id,
+    (
+        SELECT e.nickname
+        FROM user_info e
+        WHERE e.user_id =
+        a.user_id
+    ) nickname,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE f.img_id IN (
+            SELECT img_id
+            FROM user_info
+            WHERE user_id=a.user_id
+        )
+    ) img_url,
+    a.course_id,
+    a.course_name,
+    a.course_state,
+    a.course_open,
+    a.course_created,
+    a.region,
+    (
+        SELECT sum_cost
+        FROM (
+        SELECT
+        course_id,
+        SUM(avg_cost) sum_cost
+        FROM course_order
+        GROUP BY course_id
+    ) c
+    WHERE
+    c.course_id = b.course_id
+    ) sum_cost,
+    a.couple_id,
+    (
+        SELECT ui.nickname
+        FROM couple_info ci join user_info ui
+        on(ci.user_request = ui.user_id)
+        WHERE couple_id = #{coupleId}  
+    ) user_request,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE f.img_id IN (
+            SELECT img_id
+            FROM user_info
+            WHERE user_id=(
+                SELECT ui.user_id
+                FROM couple_info ci join user_info ui
+                on(ci.user_request = ui.user_id)
+                WHERE couple_id = #{coupleId}
+            )
+        )
+    ) user_request_img,
+    (
+        SELECT ui.nickname
+        FROM couple_info ci join user_info ui
+        on(ci.user_received = ui.user_id)
+        WHERE couple_id = #{coupleId}
+    ) user_received,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE f.img_id IN (
+            SELECT img_id
+            FROM user_info
+            WHERE user_id=(
+                SELECT ui.user_id
+                FROM couple_info ci join user_info ui
+                on(ci.user_received = ui.user_id)
+                WHERE couple_id = #{coupleId}
+            )
+        )
+    ) user_received_img
+    FROM course a,
+    course_order b
+    WHERE a.course_id IN (
+        SELECT course_id
+        FROM course_like
+        WHERE user_id = #{userId} AND a.course_id=b.course_id
+    )
+    
+    UNION
+    
+    SELECT
+    DISTINCT
+    a.user_id,
+    (
+        SELECT e.nickname
+        FROM user_info e
+        WHERE
+        e.user_id=a.user_id
+        ) nickname,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE
+        f.img_id
+        IN (SELECT img_id FROM user_info WHERE
+        user_id=a.user_id)
+    )img_url,
+    a.course_id,
+    a.course_name,
+    a.course_state,
+    a.course_open,
+    a.course_created,
+    a.region,
+    (
+        SELECT sum_cost
+        FROM (
+            SELECT
+            course_id,
+            SUM(avg_cost) sum_cost
+            FROM course_order
+            GROUP BY course_id
+        ) c
+        WHERE c.course_id = b.course_id
+    ) sum_cost,
+    a.couple_id couple_id,
+    (
+        SELECT ui.nickname
+        FROM couple_info ci join user_info ui
+        on(ci.user_request = ui.user_id)
+        WHERE couple_id = #{coupleId}
+    ) user_request,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE f.img_id IN (
+            SELECT img_id
+            FROM user_info
+            WHERE user_id=(
+                SELECT ui.user_id
+                FROM couple_info ci join user_info ui
+                on(ci.user_request = ui.user_id)
+                WHERE couple_id = #{coupleId}
+            )
+        )
+    ) user_request_img,
+    (
+        SELECT ui.nickname
+        FROM couple_info ci join user_info ui
+        on(ci.user_received = ui.user_id)
+        WHERE couple_id = #{coupleId}
+    ) user_received,
+    (
+        SELECT f.img_url
+        FROM img f
+        WHERE f.img_id IN (
+            SELECT img_id
+            FROM user_info
+            WHERE user_id=(
+                SELECT ui.user_id
+                FROM couple_info ci join user_info ui
+                on(ci.user_received = ui.user_id)
+                WHERE couple_id = 1
+            )
+        )
+    ) user_received_img
+    FROM
+    course a, course_order b
+    WHERE a.user_id=1 
+    AND
+        a.course_id=b.course_id 
+    AND
+        a.course_open='y'
+    )
+where
+couple_id=#{coupleId}
 	</select>
 
 	<select id="getCourse" resultType="CoupleCourseVO">
@@ -145,7 +230,15 @@
 			FROM
 			course
 		WHERE
-		course_id = #{courseId} AND couple_id= #{coupleId}
+		course_id = #{courseId}
+	</delete>
+	
+	<delete  id="deleteCourseOrder" parameterType="CoupleCourseVO">
+		DELETE 
+			FROM 
+			COURSE_ORDER
+		WHERE
+		COURSE_ID= #{courseId}
 	</delete>
 
 

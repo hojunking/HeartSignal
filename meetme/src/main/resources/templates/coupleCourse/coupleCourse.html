@@ -1,28 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
 	<style>
-.cusBtn {
-	width: 50px;
-	height: 30px;
-	font-size: 12px;
-	padding: 5px;
-}
+		.cusBtn {
+			width: 50px;
+			height: 30px;
+			font-size: 12px;
+			padding: 5px;
+		}
 
-.cusImg {
-	width: 500px;
-	height: 350px;
-}
-</style>
+		.cusImg {
+			text-align: center;
+			background-color: #fbfbfb;
+		}
+
+		.cusImgIn {
+			width: 456px;
+			height: 300px;
+		}
+
+		.main-content,
+		.cusFont {
+			font-family: 'Nanum Gothic', sans-serif;
+			font-weight: bold;
+		}
+
+		.cusFontBold {
+			font-family: 'Black Han Sans', sans-serif;
+		}
+	</style>
 </th:block>
 <th:block layout:fragment="content">
 	<main class="main-content" id="main-content">
-		<div class="container py-7 py-lg-12 position-relative z-index-1">
-			<div id="projects" data-isotope='{"layoutMode": "masonry"}'
-				class="row g-2">
+		<div class="container py-7 py-lg-12 position-relative z-index-1" style="padding-top: 0px !important;">
+			<section class="py-6 py-lg-12 bg-white position-relative">
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-md-10 col-lg-9 mx-auto text-center">
+							<div class="position-relative">
+								<p class="mb-3" data-aos="fade-up">With us?</p>
+								<h2 class="display-4 mb-3 cusFontBold" data-aos="fade-up" data-aos-delay="100">Let's go
+									out with me</h2>
+								<div data-aos="fade-up" data-aos-delay="200">
+									<a href="/coupleCreateCourse/" class="btn btn-primary btn-lg">
+										<span class="cusFont" style="font-size: 15px;">함께 코스
+											만들러 가기</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div th:if="!${#lists.isEmpty(list)}" id="courseList">
 				<th:block th:each="c:${#numbers.sequence(0,list.size-1)}">
 					<article
 						class="card align-items-stretch flex-md-row mb-4 mb-md-7 border-0 no-gutters"
@@ -31,14 +63,13 @@
 							<!-- 장소사진 나오는 부분 -->
 							<div
 								class="swiper-container swiper-progress rounded-2 overflow-hidden shadow-lg">
-								<div class="swiper-wrapper">
+								<div class="swiper-wrapper cusImg">
 									<th:block th:each="d: ${#numbers.sequence(0,detail.size-1)}">
 										<div th:if="${list[c].courseId==detail[d].courseId}"
 											class="swiper-slide rounded-2 overflow-hidden">
 											<img th:if="${list[c].courseId==detail[d].courseId}"
 												th:src="${detail[d].thumbnailHref}" alt=""
-												class="img-fluid rounded-2 position-relative"
-												style="width: 465px; height: 280px; background-size: cover;">
+												class="img-fluid rounded-2 position-relative cusImgIn">
 										</div>
 									</th:block>
 								</div>
@@ -67,78 +98,190 @@
                                                     </path>
                                                 </svg> <span
 									class="text-muted"
-									th:text="${#dates.format(list[c].courseCreated,'yyyy.MM.dd')}"></span>
+									th:text="${#dates.format(list[c].courseCreated,'MM월 dd일, yyyy')}"></span>
 								</span>
-									<p><button class="btn btn-primary cusBtn" 
-									th:data-courseId="${list[c].courseId}"
-								           th:data-coupleId="${list[c].coupleId}"
-								           onclick="courseDelFunc(this)">삭제</button></p>
+
+								<div class="dropdown" style="display: inline;">
+									<a class="btn btn-lg dropdown-toggle" type="button"
+										id="dropdownMenuButton" data-bs-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false"> <i
+										class="bi bi-three-dots-vertical me-2 align-middle"></i>
+									</a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item"
+											th:href="|/updateCourse/${list[c].courseId}|">코스수정</a> <a
+											class="dropdown-item" href="#!"
+											th:data-courseId="${list[c].courseId}"
+											th:data-coupleId="${list[c].coupleId}"
+											onclick="courseDelFunc(this)">코스삭제</a>
+									</div>
+								</div>
+								<!-- <p>
+									<button class="btn btn-primary"
+										th:data-courseId="${list[c].courseId}"
+										th:data-coupleId="${list[c].coupleId}"
+										onclick="courseDelFunc(this)">삭제</button>
+								</p> -->
+
 							</div>
 							<h3 class="mb-3 h2 mt-3">
-								<a href="#!" class="text-dark flex-grow-1 d-block"
+								<a href="#!" class="text-dark flex-grow-1 d-block cusFont"
 									th:text="${list[c].courseName}"> </a>
 							</h3>
 							<span> <th:block
 									th:each="d: ${#numbers.sequence(0,detail.size-1)}">
-									<a class="badge bg-primary badge-pill mb-1"
+									<a class="badge bg-primary badge-pill mb-1 cusFont"
+										style="font-weight: 100"
 										th:if="${list[c].courseId==detail[d].courseId}"
 										th:text="${detail[d].placeName}"></a>
 								</th:block>
-							</span>
+							</span> <br>
 							<p>
-								<span>평균합계비용 :</span> <span th:text="'₩ '+${list[c].sumCost}"></span>
+								<span>평균합계비용 :</span> <span th:text="'₩'+${list[c].sumCost}"></span>
 							</p>
-							<div class="d-flex mb-0 small align-items-center">
-								<img src="assets/img/avatar/3.jpg" alt=""
-									class="avatar sm me-2 rounded-circle"> <span
-									class="text-muted d-inline-block">By <a href="#!"
-									class="text-dark">Andrew</a></span>
+
+							<div class="d-flex mb-2 small align-items-center">
+								<img class="avatar sm me-2 rounded-circle"
+									th:attr="src=@{'/img/user/' + ${#strings.isEmpty(list[c].userRequestImg) ? 'lavender.jpg' : list[c].userRequestImg}}, alt=${list[c].userRequestImg}">
+								<span class="text-muted d-inline-block">By <a href="#!"
+									class="text-dark" th:text="${list[c].userRequest}"></a></span>
 							</div>
-
-
+							<div class="d-flex mb-0 small align-items-center">
+								<img class="avatar sm me-2 rounded-circle"
+									th:attr="src=@{'/img/user/' + ${#strings.isEmpty(list[c].userReceivedImg) ? 'lavender.jpg' : list[c].userReceivedImg}}, alt=${list[c].userReceivedImg}">
+								<span class="text-muted d-inline-block">By <a href="#!"
+									class="text-dark" th:text="${list[c].userReceived}"></a></span>
+							</div>
 						</div>
 						<!--/.card-body-->
 					</article>
 					<!--/.article-->
+				</th:block>
+			</div>
+			<div th:classappend="${#lists.isEmpty(list)} ? '' : d-none"
+				id="emptyList" data-aos="fade-up" data-aos-delay="300" class="aos-init">
+				<div class="container pt-14 pb-9 position-relative z-index-1">
+					<div class="row pb-lg-7 align-items-center">
+						<div class="col-lg-8 mx-auto text-center">
+							<h2 class="display-3 mb-4">We make good designs for Web and
+								Mobile</h2>
+							<p class="mb-5 lead w-lg-75 mx-auto">Creative designs and
+								user-friendly interfaces can contribute to your business success
+								in web and mobile</p>
+							<a href="#next"
+								class="text-muted size-50 rounded-circle border border-dashed center-both d-flex text-center mx-auto">
+								<div class="link-arrow-bounce">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+										fill="currentColor" class="bi bi-chevron-double-down"
+										viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+											d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                                        <path fill-opacity=".4"
+											fill-rule="evenodd"
+											d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                                      </svg>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</main>
-
-
-
 </th:block>
 <th:block layout:fragment="script">
 	<script>
-	//삭제 함수
-	function courseDelFunc(obj){
-      let coupleId =$(obj).attr('data-coupleId');
-      let courseId =$(obj).attr('data-courseId');
-	  let result = confirm("삭제하시겠습니까?");
-	  console.log(coupleId);
-	  console.log(courseId);
-	  if(result) {
-		  $.ajax({
-			  url: "deleteCourse",
-			  type:'DELETE',
-			  data : JSON.stringify({coupleId:coupleId,
-                                     courseId:courseId}),
-			  dataType:'json',
-			  contentType:'application/json;charset="UTF-8"',
-			  success:function(result){
-				  if(result==true){
-					  alert("코스가 삭제 되었습니다.");
-					  $(location).attr("href", "/"); // 메인으로
-				  }else {
-					  alert('false');
-				  } 
-			  },
-			  error:function(request,status,error){
-			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-			  }
-		  })//ajax end==
-	  }  
-	}
-		
+		function courseDelFunc(obj) {
+			let coupleId = $(obj).attr('data-coupleId');
+			let courseId = $(obj).attr('data-courseId');
+			// let result = confirm("삭제하시겠습니까?");
+
+			swal({
+				title: "삭제하시겠습니까?",
+				text: " ",
+				icon: "info", //"info,success,warning,error" 중 택1
+				buttons: ["NO", "YES"],
+			}).then((YES) => {
+				if(YES){
+					$.ajax({
+						url: "deleteCourse",
+						type: 'DELETE',
+						data: JSON.stringify({
+							coupleId: coupleId,
+							courseId: courseId
+						}),
+						dataType: 'json',
+						contentType: 'application/json;charset="UTF-8"',
+						success: function (result) {
+							console.log(result)
+							if (result == true) {
+								swal("코스가 삭제 되었습니다.", "", "success");
+								$(ths).closest("article").remove();
+								if ($(ths).closest("article")) {
+									$('#emptyList').removeClass('d-none');
+									$('#courseList').addClass('d-none');
+								}
+							}
+						},
+						error: function (request, status, error) {
+							alert("code = " + request.status + " message = "
+								+ request.responseText + " error = " + error); // 실패 시 처리
+						}
+					});
+				} else{
+					swal('삭제를 취소하였습니다.')
+				}
+			});
+
+			console.log(courseId);
+			console.log(coupleId);
+			console.log(obj);
+			let ths = obj;
+			// if (result) {
+			// 	$.ajax({
+			// 		url: "deleteCourse",
+			// 		type: 'DELETE',
+			// 		data: JSON.stringify({
+			// 			coupleId: coupleId,
+			// 			courseId: courseId
+			// 		}),
+			// 		dataType: 'json',
+			// 		contentType: 'application/json;charset="UTF-8"',
+			// 		success: function (result) {
+			// 			console.log(result)
+			// 			if (result == true) {
+			// 				swal("코스가 삭제 되었습니다.", "", "success");
+			// 				$(ths).closest("article").remove();
+			// 				if ($(ths).closest("article")) {
+			// 					$('#emptyList').removeClass('d-none');
+			// 					$('#courseList').addClass('d-none');
+			// 				}
+			// 			}
+			// 		},
+			// 		error: function (request, status, error) {
+			// 			alert("code = " + request.status + " message = "
+			// 				+ request.responseText + " error = " + error); // 실패 시 처리
+			// 		}
+			// 	})//ajax end==
+
+			// }
+		}
+		$(function () {
+			console.log('good')
+			// $(".dropdown-menu").on("click", "a", function(event){
+			// 	let target = $(event.target);
+			//     console.log(event.target);
+			// });
+
+			// $('.courseDel').on('click', ()=>{
+			// 	console.log('this');
+			// });
+
+		})
+
+		//삭제 함수
 	</script>
 </th:block>
 </html>

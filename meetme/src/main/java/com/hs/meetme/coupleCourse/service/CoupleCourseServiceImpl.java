@@ -27,6 +27,11 @@ public class CoupleCourseServiceImpl implements CoupleCourseService {
 		// TODO Auto-generated method stub
 		return courseMapper.deleteCourse(vo);
 	}
+	@Override
+	public int deleteCourseOrder(CoupleCourseVO vo) {
+		// TODO Auto-generated method stub
+		return courseMapper.deleteCourse(vo);
+	}
 	
 
 }
