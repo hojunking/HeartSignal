@@ -3,7 +3,7 @@
         <div class="container p-5">
             <div class="row">
                 <div class="col-12 px-4">
-                    <h1 class="display-4">함께 코스 만들기 💕</h1>
+                    <h1 class="display-4">코스 수정하기</h1>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="col-2 my-auto">
-                            <button class="btn btn-rise btn-outline-primary m-2" @click="searchByTag()">
+                            <button class="btn btn-rise btn-outline-primary m-2 btn-lg" @click="searchByTag()">
                                 <div class="btn-rise-bg bg-primary"></div>
                                 <div class="btn-rise-text">검색</div>
                             </button>
@@ -30,12 +30,12 @@
                             <div class="col-12">
                                 <div v-if="loading" class="m-5">
                                     <div class="text-center m-5">
-                                        <div class="fs-4 text-primary">태그를 로딩중입니다!</div>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <div class="fs-4 text-danger">태그를 로딩중입니다!</div>
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
                                     </div>
                                 </div>
@@ -58,12 +58,12 @@
                             <div class="col-12">
                                 <div v-if="loadingSearch" class="m-5">
                                     <div class="text-center m-5">
-                                        <div class="fs-4 text-primary">결과를 로딩중입니다!</div>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <div class="fs-4 text-danger">결과를 로딩중입니다!</div>
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
-                                        <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                                        <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                                         </span>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                                                         </button>&nbsp;
                                                         <!-- 장소 코스에 추가하기 -->
                                                         <button class="btn btn-rise btn-outline-primary btn-sm" 
-                                                        @click="sendInsertCourse(result.placeName)">
+                                                        @click="insertCourse(result.placeName)">
                                                             <div class="btn-rise-bg bg-primary"></div>
                                                             <div class="btn-rise-text">추가하기</div>
                                                         </button>
@@ -114,7 +114,7 @@
                     <div class="m-3">
                         <!-- 디비에 저장된다. -->
                         <div class="d-flex justify-content-between">
-                            <span class="fs-2 px-4">우리의 코스</span>
+                            <span class="fs-2">나만의 코스</span>
                             <button class="btn btn-rise btn-outline-primary m-2"
                              data-bs-toggle="modal" data-bs-target="#courseTitleModal"   
                             >
@@ -122,7 +122,7 @@
                                 <div class="btn-rise-text">코스등록</div>
                             </button>
                         </div>
-                        <draggable class="dragArea list-group w-full" :list="list" @change="changeChack">
+                        <draggable class="dragArea list-group w-full" :list="list" @change="log">
                             <div data-aos="fade-right" data-aos-duration="800" class="list-group-item bg-gray-300 m-1 p-3 rounded-md"
                                 v-for="element in list"
                                 :key="element.name">
@@ -158,12 +158,12 @@
                 <div class="modal-body">
                     <div v-if="modalLoading || modalImagesLoading">
                         <div class="text-center m-5">
-                            <div class="fs-4 text-primary">결과를 로딩중입니다!</div>
-                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            <div class="fs-4 text-danger">결과를 로딩중입니다!</div>
+                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                             </span>
-                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                             </span>
-                            <span class="spinner-grow text-primary spinner-lg my-5 mx-1" role="status">
+                            <span class="spinner-grow text-danger spinner-lg my-5 mx-1" role="status">
                             </span>
                         </div>
                     </div>
@@ -248,37 +248,11 @@
             </div>
         </div>
     </div>
-    <div class="fixed-bottom text-end p-5">   
-        <div class="btn-group dropup">
-            <button type="button" class="bi bi-messenger btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                채팅
-            </button>
-            <ul class="dropdown-menu fs-6">
-                <div id="chatDiv" style="overflow:auto; width:17rem; height:20rem;">
-                    <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li :class="{'text-end' : item.email == userEmail}">
-                            <small class="dropdown-item-text">
-                                <span class="rounded shadow text-white p-1 px-2"
-                                    :class="{'bg-primary' : item.email == userEmail, 
-                                    'bg-secondary' : item.email != userEmail}">
-                                    {{ item.email == userEmail ? '' : item.userName + ' : '}}
-                                    {{ item.content }}
-                                </span> 
-                            </small>
-                        </li>
-                    </div>
-                </div>
-                <li><input class="form-control rounded-pill px-4" v-model="message" type="text" @keyup="sendMessage"></li>
-            </ul>
-        </div>
-    </div>
-    
 </template>
 
 <script>
-import Stomp from 'webstomp-client'
-import SockJS from 'sockjs-client'
 import { ref, onMounted, defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 import TagInput from '@mayank1513/vue-tag-input'
 import { VueDraggableNext } from 'vue-draggable-next'
 /**
@@ -288,34 +262,6 @@ export default defineComponent ({
     name: 'CourseCreate',
     setup() {
         
-        /**
-         * 채팅 기능
-         */
-
-        // 채팅
-        //const userName = ref("");
-        const message = ref("");
-        const recvList = ref([]);
-
-        const sendMessage = (e) => {
-            if(e.keyCode === 13 && message.value !== ''){
-                send()
-                message.value = ''
-            }
-            
-        }
-        const send = () => {
-            console.log("Send message:" + message.value);
-            if (stompClient && stompClient.connected) {
-                const msg = {
-                    email: userEmail.value,
-                    content: message.value
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/chatReceive", JSON.stringify(msg), {});
-            }
-        }
-
         /**
          *  태그 이용 검색
          */
@@ -334,7 +280,7 @@ export default defineComponent ({
             loading.value = true;
             // I prefer to use fetch
             // you can use use axios as an alternative
-            return fetch('api/course/place/tags', {
+            return fetch('/api/course/place/tags', {
                 method: 'get',
                 headers: {
                 'content-type': 'application/json'
@@ -383,24 +329,63 @@ export default defineComponent ({
             }
             tags.value.push(tagId);
         };
-        // 태그 웹소캣 추가하기
-        // const sendTags = (tagIdN) => {
-        //     console.log("Send tags:" + tagIdN);
-        //     if (stompClient && stompClient.connected) {
-        //         const msg = { 
-        //             tagId : tagIdN
-        //         };
-        //         console.log(JSON.stringify(msg))
-        //         stompClient.send("/tagReceive", JSON.stringify(msg), {});
-        //     }
-        // }
 
         // 페이지 진입하자마자 실행.
         onMounted(() => {
             fetchData();
-            // securityFetch();
         });
         
+        /**
+         * 만약 동적으로 들어왔다면 바로 추가하기.
+         */
+        // 장소 바로 추가하기
+        const route = useRoute();
+        function insertCourseByRouter(num) {
+            if(num == null) {
+                return;
+            }
+            fetch('/api/course/modifyCourseList/' + num, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                insertPlaceData.value = json;
+            })
+            .catch(err => {
+                searchError.value = err;
+                alert("코스입력 문제 발생")
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        insertError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                insertLoading.value = false;
+                for(let item of insertPlaceData.value) {
+                    item.subTitle = "소제목";
+                    list.value.push(item);
+                }
+            });
+        }
+        insertCourseByRouter(route.params.courseId);
+
 
         /**
          *  세부적인 장소 보여주기
@@ -508,18 +493,6 @@ export default defineComponent ({
         const insertPlaceData = ref(null);
         const insertLoading = ref(false);
         const insertError = ref(null);
-
-        const sendInsertCourse = (placeName) => {
-            console.log("Send insertCourse:" + placeName);
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    insertCourse : placeName
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/insertCourseReceive", JSON.stringify(msg), {});
-            }
-        }
-
         const insertCourse = (placeName) => {
             console.log(placeName)
             // 코스를 추가 해주는것.
@@ -527,7 +500,7 @@ export default defineComponent ({
         
             // 장소 디테일 가져오기
             insertLoading.value = true;
-            fetch('api/course/place/searchOne/' + placeName, {
+            fetch('/api/course/place/searchOne/' + placeName, {
                 method: 'get',
                 headers: {
                     'content-type': 'application/json'
@@ -581,31 +554,7 @@ export default defineComponent ({
                     list.value.splice(i, 1); 
                 }
             }
-            sendChangeList();
         }
-        
-        // 코스 이동 체크
-        const changeChack = (evt) => {
-            console.log(evt)
-            if(evt.moved) {
-                console.log(evt.moved.element.placeId);
-                console.log(list.value);
-                sendChangeList();
-            }
-        }
-
-        // 코스 수정 웹소캣 보내기
-        const sendChangeList = () => {
-            console.log("Send changedList:" + list.value);
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    changedList : list.value
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/changeListReceive", JSON.stringify(msg), {});
-            }
-        }
-
         // 코스 소제목 수정
         const replaceSubtitleOfPlaceId = ref(null);
         const replaceSubtitleText = ref(null);
@@ -625,7 +574,6 @@ export default defineComponent ({
             }
             replaceSubtitleOfPlaceId.value = null;
             replaceSubtitleText.value = null;
-            sendChangeList();
         }
 
 
@@ -637,22 +585,7 @@ export default defineComponent ({
         const searchError = ref(null);
         const searched = ref(null);       
 
-        // 검색 웹소캣 보내기
-        // const sendSearchByTag = (evt) => {
-        //     if(evt) {
-        //         evt.preventDefault()
-        //     }
-        //     console.log("Send searchByTag:" + " 검색");
-        //     if (stompClient && stompClient.connected) {
-        //         const msg = { 
-        //             searchByTag : "검색"
-        //         };
-        //         console.log(JSON.stringify(msg))
-        //         stompClient.send("/searchByTagReceive", JSON.stringify(msg), {});
-        //     }
-        // }
-
-        // 검색 버튼 활성화 -> connect 안으로 보냄
+        // 검색 버튼
         const searchByTag = (evt) => {
             if(evt) {
                 evt.preventDefault()
@@ -677,7 +610,7 @@ export default defineComponent ({
                 alert('검색어를 입력해주세요!')
                 return
             }
-            fetch('api/course/place/search?keywords=' + keywords, {
+            fetch('/api/course/place/search?keywords=' + keywords, {
                 method: 'get',
                 headers: {
                     'content-type': 'application/json'
@@ -715,7 +648,7 @@ export default defineComponent ({
 
 
         /**
-         *   코스 등록
+            코스 등록
          */
         // 코스 등록 버튼 
         const titleText = ref(null);
@@ -762,9 +695,10 @@ export default defineComponent ({
             // I prefer to use fetch
             // you can use use axios as an alternative
             var formData = new FormData();
+            formData.append("courseId", route.params.courseId);
             formData.append("courseName", sendTitleText);
             formData.append("list", JSON.stringify(sendList))
-            fetch('api/course/registerCouple', {
+            fetch('/api/course/modifyCourse', {
                 credentials: 'include',
                 method: 'POST',
                 body: formData
@@ -782,7 +716,7 @@ export default defineComponent ({
             .then(text => {
                 // set the response data
                 console.log(text)
-                registerConfirm.value = text;
+                registerConfirm.value = text * 1;
             })
             .catch(err => {
                 registerCourseError.value = err;
@@ -798,7 +732,6 @@ export default defineComponent ({
                 if ((registerConfirm.value) && (registerConfirm.value != "error")) {
                     alert('등록이 되었습니다.');
                     location.href = "/courseDetail?courseId=" + registerConfirm.value;
-                    sendRegisterConfirm(registerConfirm.value);
                 }
                 else if(registerConfirm.value == "error"){
                     alert('등록에 실패하였습니다.');
@@ -809,81 +742,7 @@ export default defineComponent ({
             });
         }
 
-        const sendRegisterConfirm = (regValue) => {
-            console.log("Send sendRegister:" + " 검색");
-            if (stompClient && stompClient.connected) {
-                const msg = { 
-                    registerConfirmValue : regValue
-                };
-                console.log(JSON.stringify(msg))
-                stompClient.send("/registerReceive", JSON.stringify(msg), {});
-            }
-        }
-
-        // 스프링 부트 웹소켓 연결
-        let stompClient = null;
-        const userEmail = ref(null);
-        const connect = () => {
-            const serverURL = "http://192.168.0.75:8000/ws"
-            let socket = new SockJS(serverURL);
-            stompClient = Stomp.over(socket);
-            console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-            stompClient.connect(
-                {},
-                frame => {
-                // 소켓 연결 성공
-                    stompClient.connected = true;
-                    console.log('소켓 연결 성공', frame);
-                    userEmail.value = frame.headers["user-name"];
-                    // 서버의 메시지 전송 endpoint를 구독합니다.
-                    // 이런형태를 pub sub 구조라고 합니다.
-                    stompClient.subscribe("/send", res => {
-                        console.log('구독으로 받은 메시지 입니다.', res.body);
-                        
-                        // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
-                        // 채팅
-                        if (JSON.parse(res.body).content) {
-                            recvList.value.push(JSON.parse(res.body))
-                            setTimeout(function(){
-                                document.getElementById('chatDiv').scrollTop = document.getElementById('chatDiv').scrollHeight;
-                            }, 1);
-                        // // 태그 검색어 추가
-                        // } else if (JSON.parse(res.body).tagId){
-                        //     tags.value.push(JSON.parse(res.body).tagId);
-                        // // 태그 검색
-                        // } else if (JSON.parse(res.body).searchByTag) {
-                        //     searchByTag();
-                        // 코스 추가하기
-                        } else if (JSON.parse(res.body).insertCourse) {
-                            insertCourse(JSON.parse(res.body).insertCourse)
-                        // 코스가 바뀔때마다 영향주기
-                        } else if (JSON.parse(res.body).changedList) {
-                            list.value = JSON.parse(res.body).changedList;
-                        // 코스 끝나면 보내버리기
-                        } else if (JSON.parse(res.body).registerConfirmValue) {
-                            console.log(JSON.parse(res.body).registerConfirmValue);
-                            location.href = "/courseDetail?courseId=" + JSON.parse(res.body).registerConfirmValue;
-                        } else {
-                            console.error(JSON.parse(res.body));
-                        }
-                    });
-                },
-                error => {
-                    // 소켓 연결 실패
-                    console.log('소켓 연결 실패', error);
-                    stompClient.connected = false;
-                }
-            );        
-        }
-
-        connect();
-
         return {
-            // chat
-            message,
-            recvList,
-            sendMessage,
-
             // tags
             data,
             loading,
@@ -895,7 +754,6 @@ export default defineComponent ({
 
             // tag function
             pushTag,
-            //sendTags,
 
             // placeDetail
             detailOfPlace,
@@ -907,7 +765,6 @@ export default defineComponent ({
             modalImagesData,
 
             // course insert
-            sendInsertCourse,
             insertCourse,
             insertPlaceData,
             insertLoading,
@@ -923,17 +780,12 @@ export default defineComponent ({
             replaceSubtitleOfPlaceId,
             changeSubTitle,
 
-            // list move check
-            changeChack,
-            sendChangeList,
-
             // search
             searched,
             searchData,
             loadingSearch,
             searchError,
             // search func
-            // sendSearchByTag,
             searchByTag,
 
             // last.. register course
@@ -942,17 +794,18 @@ export default defineComponent ({
             sendTitleText,
             sendList,
             subList,
-            
-            // 스프링 부트 웹소캣 연결
-            userEmail,
-            connect
         };
     },
   
     components: {
         TagInput,
         draggable : VueDraggableNext,
-    }
+    },
+    methods: {
+      log(event) {
+        console.log(event)
+      },
+    },
 })
 
 </script>

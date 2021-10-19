@@ -39,7 +39,7 @@ public class RestPaymentController {
 		oc =coupleService.read(oc);  //커플의 기본정보 다 들고오기
 		System.out.println("커플정보 :"+oc);
 		
-			if(oc.getCoupleStatus().equals("n")) { //기존 커플의 상태확인
+			if(oc.getCoupleStatus().equals("n")) { //커플의 상태확인
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
 				oc.setCoupleStatus("y");		//커플의 상태 변경
 				
@@ -78,12 +78,10 @@ public class RestPaymentController {
 	}
 	
 	
-	@GetMapping("/refund") //환불하기
-	public String refund(PaymentVO vo) {
+	@PostMapping("/refund") //환불하기
+	public String refund(PaymentVO vo) { //결제정보 merchantUid를 들고 옵니다
 		GetTokenAPI getToken =new GetTokenAPI();
 		RefundAPI refund = new RefundAPI();
-		PaymentVO pvo = new PaymentVO();
-		vo= payService.latestpaid(vo);
 		
 		System.out.println("가장최근결제정보:"+vo);
 		String json=getToken.getToken(); //토큰 받아오기 API 메소드 실행
@@ -94,6 +92,7 @@ public class RestPaymentController {
 		+"아임포트 : "+vo.getMerchantUid());
 		
 		String refundDb= refund.Refund(vo); //환불 API 실행 후 결과 저장
+		// 환불할 때 필요한 정보는 merchantUid랑 tokken이다
 		//파싱 두번, response에서 또 get해서 value값 추출하면 db에 저장가능
 		
 		JSONParser parser = new JSONParser();
@@ -110,8 +109,8 @@ public class RestPaymentController {
             vo.setEmail(refundParsing.get("buyer_email").toString());
             vo.setUserName(refundParsing.get("buyer_name").toString());
             vo.setCancelAmount(Integer.parseInt(refundParsing.get("cancel_amount").toString()) );
-            vo.setMerchantUid(Integer.parseInt(refundParsing.get("merchant_uid").toString()));
-            System.out.println("들고온 친구들="+pvo);
+            vo.setMerchantUid(refundParsing.get("merchant_uid").toString());
+            System.out.println("들고온 친구들="+vo);
              
             //vo객체 안에 바로 넣어서 DB로 넘기면 된다.
              //cancel_amount,buyer_name,buyer_email,merchant_uid
@@ -119,25 +118,28 @@ public class RestPaymentController {
              System.out.println("변환에 실패");
              e.printStackTrace();
         }
-        payService.insertRefundInfo(pvo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
+        payService.insertRefundInfo(vo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
         
         
         //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
         cvo.setUserId(vo.getUserId());
-        coupleService.userCoupleStatusRead(cvo); 
+        cvo= coupleService.userCoupleStatusRead(cvo); 
         String message ="";
 	        if(cvo.getCoupleStatus().equals("w")) { //결제를 하고 커플 매칭에 실패하여 환불
 	        	coupleService.deleteCoupleInfo(cvo); //커플 테이블을 삭제해줌
+	        	
 	        	cvo.setCoupleStatus("n"); //커플 상태를 w->n으로 다시 변경
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	
-	        	message="커플매칭 실패 후 환불";
+	        	
+	        	message="환불되었습니다!";
 	        }else{  //구독 중 커플의 환불
 	        	cvo.setSubTerm(0); //구독기간 초기화
 	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
 	        	coupleService.userCoupleStatusUpdate(cvo);
-	        	message="커플구독 중 환불";
+	        	message="환불되었습니다! \n"
+	        			+ "더 나은 우리 오늘 뭐해?가 되도록 노력하겠습니다.";
 	        }
         
 		return message;

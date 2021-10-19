@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
+
 
 <th:block layout:fragment="css">
 	<style>
-.pencil {
-	background-color: transparent;
-	border: 0px;
-	float: right;
-}
+		.pencil {
+			background-color: transparent;
+			border: 0px;
+			float: right;
+		}
 
-.cusBtn {
-	font-size: 13px;
-	padding: 5px;
-}
-.cusTitle{
-	text-align:center; 
-	font-family: 'Nanum Gothic', sans-serif;
-	font-weight:bold;
-}
-</style>
+		.cusBtn {
+			font-size: 13px;
+			padding: 5px;
+		}
+
+		.cusTitle {
+			text-align: center;
+			font-family: 'Nanum Gothic', sans-serif;
+			font-weight: bold;
+		}
+	</style>
 </th:block>
 
 <th:block layout:fragment="content">
-	
+
 	<!--Main content-->
 	<main class="main-content" id="main-content">
 
@@ -56,55 +57,46 @@
 									<div class="card bg-gradient-light h-lg-100 p-3">
 										<div>
 											<!--profile image-->
-											<div
-												class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+											<div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
 												th:style="'background-position: center center; background-image: url(/img/user/'+${userInfo.imgUrl}+');'">
 											</div>
 											<h4 class="mb-2">[[${userInfo.name}]]</h4>
 											<small class="d-block mb-3">[[${userInfo.nickName}]]</small>
 											<ul class="list-unstyled border-bottom pb-3 mb-3">
 												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
+														class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
 													<span class="small">[[${myAddress}]]</span></li>
 												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
-													<span class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
+														class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
+													<span
+														class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
 												</li>
 												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-envelope me-2 align-middle text-muted"></i> <a
-													href="#" class="small link-hover-decoration">[[${userInfo.email}]]</a>
+														class="bi bi-envelope me-2 align-middle text-muted"></i> <a
+														href="#"
+														class="small link-hover-decoration">[[${userInfo.email}]]</a>
 												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-twitter me-2 align-middle text-muted"></i> <a
-													href="#!" class="small link-hover-decoration">@emily.dev</a>
-												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-linkedin me-2 align-middle text-muted"></i> <a
-													href="#!" class="small link-hover-decoration">emilyatin</a>
-												</li>
-												<li class="d-flex align-items-stretch mb-2"><i
-													class="bi bi-instagram me-2 align-middle text-muted"></i> <a
-													href="#!" class="small link-hover-decoration">emily93</a></li>
+										
 											</ul>
 											<ul class="list-unstyled border-bottom pb-3 mb-3">
-												<li
-													class="d-flex justify-content-between align-items-center mb-2">
-													<span class="small">Followers</span> <span class="fs-5">134</span>
+												<li class="d-flex justify-content-between align-items-center mb-2">
+												  <span class="small">현재 상태</span>
+												  <span th:if="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="솔로"></span>
+												  <span th:unless="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="커플"></span>
+
 												</li>
-												<li
-													class="d-flex justify-content-between align-items-center mb-2">
-													<span class="small">Following</span> <span class="fs-5">23</span>
-												</li>
+												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
+													<li class="d-flex justify-content-between align-items-center mb-2">
+														<span class="small">구독권 이용기간</span>
+														<span class="small">3개월</span>
+													</li>
+												</th:block>
 											</ul>
 											<div class="d-grid">
-												<button class="btn btn-light border shadow-sm mb-2 py-1"
-													type="button">
+												<button class="btn btn-primary border shadow-sm mb-2 py-1"
+													type="button" onclick="goCoupleMain(userSession)">
 													<i class="bi bi-person-plus fs-6 align-middle lh-1"></i>
-													Follow
-												</button>
-												<button class="btn btn-primary shadow-sm py-1" type="button">
-													<i class="bi bi-envelope fs-6 align-middle lh-1"></i>
-													Message
+													커플로그 이용하기
 												</button>
 											</div>
 										</div>
@@ -113,19 +105,18 @@
 							</div>
 							<div class="col-lg-9">
 								<div class="d-flex flex-column h-100">
-									<nav class="nav mb-5 nav-pills">
+									<nav class="nav mb-3 nav-pills">
 										<a href="main" class="nav-link active"><i
-											class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
 										<a href="myinfo_my_course_list" class="nav-link"><i
-											class="bi bi-people me-2 align-middle"></i>저장된 코스</a> <a
+												class="bi bi-people me-2 align-middle"></i>저장된 코스</a> <a
 											href="myinfo_my_write_list" class="nav-link"><i
-											class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a> <a
+												class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a> <a
 											href="myinfo_my_comment_list" class="nav-link"><i
-											class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a> <a
+												class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a> <a
 											href="myinfo_my_payment_list" class="nav-link"><i
-											class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a> <a
-											href="myinfo" class="nav-link"><i
-											class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
+												class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a> <a href="myinfo"
+											class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
 									</nav>
 
 									<div class="card shadow-sm p-3 h-100">
@@ -137,16 +128,15 @@
 														<h5 class="mb-0 flex-grow-0 px-3">나의취향</h5>
 														<div class="flex-grow-1 border-bottom"></div>
 													</div>
-													<div class="mx-8 mb-5">
+													<div class="mx-8 mb-5 showMyTags">
 														<th:block th:each="userTag : ${userTag}">
 															<a href="#!" class="badge bg-primary mb-1"
-																style="padding: 7px"> [[${userTag.TagId}]] </a>
+																style="padding: 7px">[[${userTag.TagId}]]</a>
 														</th:block>
-
 														<a href="#modalBasic" data-bs-toggle="modal"
 															aria-expanded="false"
 															class="btn btn-outline-secondary pencil"> <img
-															src="https://img.icons8.com/ios-glyphs/30/000000/edit--v2.png" /></a>
+																src="https://img.icons8.com/ios-glyphs/30/000000/edit--v2.png" /></a>
 													</div>
 													<!-- mx-8 끝 -->
 
@@ -165,18 +155,19 @@
 																</div>
 																<div class="modal-body py-5 border-0">
 																	<h6 class="cusTitle">현재 나의 태그</h6>
-																	<p class="pOne">
+																	<p class="myTags">
 																		<th:block th:each="userTag : ${userTag}">
-																			<button class="btn btn-primary m-1 cusBtn myTag" id="myTag"
-																				style="padding: 7px"  th:text="${userTag.tagId}"></button>
+																			<button
+																				class="btn btn-primary m-1 cusBtn tagBtn"
+																				style="padding: 7px"
+																				th:text="${userTag.tagId}"></button>
 																		</th:block>
 																	</p>
 																	<hr>
-																	<p class="pAll">
-																		<th:block
-																			th:each="t: ${#numbers.sequence(0, tagAll.size-1)}">
+																	<p class="allTags">
+																		<th:block th:each="t: ${#numbers.sequence(0, tagAll.size-1)}">
 																			<button type="button"
-																				class="btn btn-primary m-1 cusBtn tagAll"
+																				class="btn btn-primary m-1 cusBtn tagBtn"
 																				th:text="${tagAll[t].tagId}"></button>
 																		</th:block>
 																	</p>
@@ -184,8 +175,10 @@
 																<div class="modal-footer bg-light border-0">
 																	<button type="button" class="btn btn-white btn-sm"
 																		data-bs-dismiss="modal">Close</button>
-																	<button type="button" class="btn btn-primary btn-sm saveBtn">Save
-																		changes</button>
+																	<button type="button" class="btn btn-primary btn-sm saveBtn">
+																		<span>Save changes</span>
+																		<div class="spinner-border text-black d-none" role="status"></div>
+																	</button>
 																</div>
 															</div>
 														</div>
@@ -206,7 +199,8 @@
 																		<div class="step-row">
 																			<span class="step-icon bg-tint-primary text-primary">
 																				<!--ICON-DOT--> <i th:if="${notice.postId}!=null"
-																				class="bi bi-reply-fill text-primary align-middle lh-1"></i>
+																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-postid="${notice.postId}"></i>
+																				
 																				<i th:if="${notice.postId}==null"
 																				class="bi bi-heart-fill text-primary align-middle lh-1"></i>
 																			</span>
@@ -320,37 +314,70 @@
 			}
 		}
 		
+		const tagBtns = $('.tagBtn');
+		const myTags = $('.myTags');
+		const allTags = $('.allTags');
+		const showMyTags = $('.showMyTags');
+
 		$(function(){
-			let p1 = $(".pOne")
-			let p2 = $(".pAll")
-			$(".tagAll").on("click",function(e){
-				let tagAll = e.target;
-				p1.append(tagAll);
+			for(let m of $(myTags).find('button')){
+				for(let a of $(allTags).find('button')){
+					if($(a).text() == $(m).text()){
+						$(a).remove();
+					}
+				}
+			}
+
+			$(tagBtns).on('click', (e)=>{
+				let tagTarget = e.target;
+				let myTagCondition = $(tagTarget).parent().hasClass('myTags');
 				
-				var tagId=$(this).text();
-				console.log(tagId);
-				
-			})
-			$(".myTag").on("click",function(e){
-				let myTag = e.target;
-				p2.append(myTag);
-				
-			});
-		}); // function 끝
-		
-		$(".saveBtn").on("click",function(){
-			$.ajax({
-				url:"saveUserTags",
-				method:"post",
-				success:function(){
-					alert("변경되었습니다")
+				if(myTagCondition){
+					$(tagTarget).appendTo(allTags);
+				} else{
+					$(tagTarget).appendTo(myTags);
 				}
 				
-			});	//아작스 끝
-		});
-		
-	</script>
-	<script th:inline="javascript">
+			});
+
+			$(".saveBtn").on("click",()=>{
+				let tags = $(myTags).find('button');
+				let tagStr = '';
+	
+				for(let t of tags){
+					tagStr += $(t).text();
+					tagStr += ' ';
+				}
+	
+				console.log(tagStr);
+	
+				$.ajax({
+					url:"/mypage/saveUserTags",
+					method:"post",
+					data: {
+						userId: userSession.userId,
+						tags: tagStr
+					},
+					dataType: 'json',
+					success: (data)=>{
+						swal("변경되었습니다",'','success')
+						.then(()=>{
+							$(showMyTags).empty();
+							for(let l of data){
+								$(showMyTags)
+									.append($('<a href="#!" class="badge bg-primary mb-1" style="padding: 7px; margin: 3px;"/>')
+									.text(l.tagId));
+							}	
+							console.log(data);
+							$('#modalBasic').modal('hide');
+						});
+					},
+					error: (err)=>{
+						console.log(err);
+					}
+				});	//아작스 끝
+			});
+		}); // function 끝
 		
 	</script>
 </th:block>

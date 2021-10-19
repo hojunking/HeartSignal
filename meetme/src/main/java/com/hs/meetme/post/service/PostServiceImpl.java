@@ -153,6 +153,12 @@ public class PostServiceImpl implements PostService{
 	public int countCM(long postId) {
 		// TODO Auto-generated method stub
 		return pMapper.countCM(postId);
+	}
+
+	@Override
+	public List<MyPageCourseVO> getPlaceList(MyPageCourseVO vo) {
+		// TODO Auto-generated method stub
+		return pMapper.getPlaceList(vo);
 	}                                                                              
 
 	

@@ -16,9 +16,9 @@ public class RefundAPI {
 	public String Refund(PaymentVO vo) {
 		
 		String token = vo.getToken() ;
-		long merchant_uid = vo.getMerchantUid();
+		String merchant_uid = vo.getMerchantUid();
 		
-		System.out.println("토근="+token+"merchant="+merchant_uid);
+		System.out.println("토근="+token+" merchant="+merchant_uid);
 		try {
 			
 			String apiURL = "https://api.iamport.kr/payments/cancel"; // url 집어넣기

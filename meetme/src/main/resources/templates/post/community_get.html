@@ -52,7 +52,7 @@
          <div class="d-flex mb-0 small align-items-center">
             <img th:src="@{|/img/user/${list.imgUrl}|}" alt="사진" class="size-40 rounded-circle me-2" >
             <span class="text-muted d-inline-block">By <a href="#!" class="text-dark" th:text="${list.nickname} "></a></span>
-            <span class="text-muted d-inline-block">   | Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
+            <span class="text-muted d-inline-block">  &nbsp; |&nbsp; Hit <a href="#!" class="text-dark" th:text="  | ${list.hit}"></a></span>
         </div>
 
          <br>
@@ -61,18 +61,47 @@
                <div class="justify-content-between align-items-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                   <!--코스 여기-->
                   <th:block th:if='${course} != null'>
-                   <!--   <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
-                     <img src="${course[0].thumbnailHref}" alt="코스 사진">
-                     <div>
-                        <div th:each="c : ${course}" class="d-flex justify-content-between">
-                           <div th:text="${c.placeName}"></div>
-                           <div th:text="${c.avgCost}"></div>
-                        </div>
-                     </div> -->
+                  
                      <br>
                      <div id="map" style="width:100%;height:400px;"></div>
-                     <br><br>
+                     <br>
+                     <div th:utext="|코스이름: ${course[0].courseName}, 지역: ${course[0].region}|"> </div>
+                     
+                     <div class="container py-7 py-lg-12">
+                        <div class="accordion accordion-custom" id="accordionCustomExample">
+                           <!--accordion item-->
+                           <div th:each="c : ${course}" class="d-flex justify-content-between">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="headingCustomOne">
+                                    <button class="accordion-button collapsed" th:text="${c.placeName}" type="button"
+                                       data-bs-toggle="collapse" th:data-bs-target="|#${c.placeName}|"
+                                       aria-expanded="false" aria-controls="collapseCustomOne">
+
+                                    </button>
+                                 </h2>
+                                 <div th:id="${c.placeName}" class="accordion-collapse collapse"
+                                    aria-labelledby="headingCustomOne" data-bs-parent="#accordionCustomExample"
+                                    style="">
+                                    <div class="accordion-body">
+                                       <strong th:text="${c.avgCost}">.</strong>
+                                       <p th:text="${c.address}"></p>
+                                       <img th:src="${c.thumbnailHref}" alt="">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </div>
+                        <!-- <div th:each="c : ${course}" class="d-flex justify-content-between">
+                           <div th:text="${c.placeName}"></div>
+                           <div th:text="${c.avgCost}"></div>
+                           <img th:src="${c.thumbnailHref}" alt="코스 사진">
+                           <br>
+                        </div> -->
+                     </div>
+                     <br>
                   </th:block>
+                  <hr>
                   <!-- 글 내용 here-->
                   <th:block th:utext="${list.postContent}" class="mx-auto text-center"></th:block>
                   <!-- <textarea name="postContent" class="form-control" id="ckcontents" th:text="${list.postContent}" disabled></textarea> -->
@@ -396,6 +425,9 @@
          let markers = new Array(); // 마커 담는 배열 
          let infoWindows = new Array(); //정보창을 담는 배열
 
+         let highGap = 0;
+		 let zoomNum = 0;
+         
          //코스 있으면 네이버지도에서 해주기!
          if (course != null) {
             for (let item of course) {
@@ -414,10 +446,78 @@
             centerLng = centerLng / course.length;
             console.log(locations);
             console.log(centerLat, centerLng);
-
+			
+         	// 줌 계산
+			
+			if(course.length == 1) {
+				zoomNum = 12;
+			} else if (course.length == 2){
+				let courseOne = {
+					lat: parseFloat(course[0].latitude),
+					lng: parseFloat(course[0].longtitude)
+				};
+				let courseTwo = {
+					lat: parseFloat(course[1].latitude),
+					lng: parseFloat(course[1].longtitude)
+				};
+				let resultCourse = {
+					lat: courseOne.lat - courseTwo.lat,
+					lng: courseOne.lng - courseTwo.lng
+				}
+				
+				if(resultCourse.lat < 0) {
+					resultCourse.lat = -(resultCourse.lat)
+				}
+				if(resultCourse.lng < 0) {
+					resultCourse.lng = -(resultCourse.lng)
+				}
+				
+				let result = Math.sqrt(
+					Math.pow(resultCourse.lng, 2) + 
+					Math.pow(resultCourse.lat, 2)
+				)
+				highGap = result;
+				zoomNum = 12 - Math.round(highGap);
+			} else {
+				
+				for(let i=0; i<course.length; i++) {
+					for(let j=0; j<i; j++) {
+						let courseOne = {
+							lat: parseFloat(course[i].latitude),
+							lng: parseFloat(course[i].longtitude)
+						};
+						let courseTwo = {
+							lat: parseFloat(course[j].latitude),
+							lng: parseFloat(course[j].longtitude)
+						};
+						let resultCourse = {
+							lat: courseOne.lat - courseTwo.lat,
+							lng: courseOne.lng - courseTwo.lng
+						}
+						
+						if(resultCourse.lat < 0) {
+							resultCourse.lat = -(resultCourse.lat)
+						}
+						if(resultCourse.lng < 0) {
+							resultCourse.lng = -(resultCourse.lng)
+						}
+						
+						let result = Math.sqrt(
+							Math.pow(resultCourse.lng, 2) + 
+							Math.pow(resultCourse.lat, 2)
+						)
+						
+						if(highGap < result) {
+							highGap = result;
+							zoomNum = 12 - Math.ceil(highGap);
+						}
+					}
+				}
+			}
+            
             var map = new naver.maps.Map('map', {
                center: new naver.maps.LatLng(centerLat, centerLng),
-               zoom: 10
+               zoom: zoomNum
             });
 
 
