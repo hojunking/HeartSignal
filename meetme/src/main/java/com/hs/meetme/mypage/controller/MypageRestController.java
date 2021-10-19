@@ -90,6 +90,7 @@ public class MypageRestController {
 	}
 
 	@DeleteMapping("/deleteCourse")
+	@Transactional
 	public boolean deleteCourse(@RequestBody MyPageCourseVO myPageCourseVO, HttpServletRequest request) {
 
 		// 세션 쓰는법
@@ -101,7 +102,7 @@ public class MypageRestController {
 		int r = 0;
 		if (userId.equals(courseUserId)) {
 			r = mypageService.deleteCourse(myPageCourseVO);
-			r = mypageService.deleteCourseLike2(myPageCourseVO);
+			mypageService.deleteCourseLike2(myPageCourseVO);
 		} else {
 			myPageCourseVO.setUserId(userId);
 			r = mypageService.deleteCourseLike(myPageCourseVO);

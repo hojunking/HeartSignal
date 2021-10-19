@@ -1,5 +1,7 @@
 package com.hs.meetme.mypage.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -7,6 +9,8 @@ public class MyPageCourseVO {
 	
 	private String nickName;
 	private String imgUrl;
+	
+	private Date courseCreated;
 	
 	private String userId;
 	private String courseId;
