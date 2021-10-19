@@ -15,5 +15,6 @@ public class DetailVO {
 	private String thumbnailHref;
 	private String courseOrder;
 	private String nickname;
+	private String description;
 
 }
