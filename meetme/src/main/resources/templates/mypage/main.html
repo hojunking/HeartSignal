@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="~{layout/layout}">
-
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
 	<style>
@@ -20,6 +20,14 @@
 			text-align: center;
 			font-family: 'Nanum Gothic', sans-serif;
 			font-weight: bold;
+		}
+		.custom {
+			transition: filter .5s;
+		}
+		
+		.custom:hover {
+			filter: brightness(80%);
+			cursor: Pointer;
 		}
 	</style>
 </th:block>
@@ -88,7 +96,7 @@
 												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
 													<li class="d-flex justify-content-between align-items-center mb-2">
 														<span class="small">구독권 이용기간</span>
-														<span class="small">3개월</span>
+														<span class="small" id="endDate">3개월</span> 
 													</li>
 												</th:block>
 											</ul>
@@ -185,7 +193,6 @@
 													</div>
 													<!-- 모달 끝 -->
 
-
 													<div class="d-flex align-items-center mb-3 mb-lg-3">
 														<div class="flex-grow-1 border-bottom"></div>
 														<h5 class="mb-0 flex-grow-0 px-3">알림내역</h5>
@@ -197,14 +204,16 @@
 																<th:block th:each="notice : ${userNotice}">
 																	<li class="step-item" data-aos="fade-left">
 																		<div class="step-row">
-																			<span class="step-icon bg-tint-primary text-primary">
+																			<span class="step-icon bg-tint-primary text-primary custom" >
 																				<!--ICON-DOT--> <i th:if="${notice.postId}!=null"
-																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-postid="${notice.postId}"></i>
+																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-postid="${notice.postId}" onclick=""></i>
 																				
 																				<i th:if="${notice.postId}==null"
-																				class="bi bi-heart-fill text-primary align-middle lh-1"></i>
+																				class="bi bi-heart-fill text-primary align-middle lh-1" onclick=""></i>
 																			</span>
 																			<div class="step-content">
+																				<span th:if="${notice.noticeConfirmed=='n'}" class="badge bg-success">읽지않음</span>
+																				<br th:if="${notice.noticeConfirmed=='n'}">
 																				<small class="mb-2 text-muted">[[${#dates.format(notice.noticeDate,'MM월
 																					dd일, yyyy aaHH:mm')}]]</small>
 																				<button type="button" class="btn-close"
@@ -218,10 +227,10 @@
 																	</li>
 																</th:block>
 																<!--/.step-item-->
-																<li class="step-item">
+                                                                <!--<li class="step-item">
 																	<div class="step-row">
 																		<span class="step-icon bg-tint-primary text-primary">
-																			<!--ICON-DOT--> <i
+																			ICON-DOT <i
 																			class="bi bi-calendar3 text-primary align-middle lh-1 fs-6"></i>
 																		</span>
 
@@ -238,12 +247,12 @@
 																		</div>
 																	</div>
 
-																</li>
+																</li> -->
 																<!--/.step-item-->
-																<li class="step-item">
+																<!-- <li class="step-item">
 																	<div class="step-row">
 																		<span class="step-icon bg-tint-primary text-primary">
-																			<!--ICON-DOT--> <i
+																			ICON-DOT <i
 																			class="bi bi-gear text-primary align-middle lh-1"></i>
 																		</span>
 
@@ -265,7 +274,7 @@
 																		</div>
 																	</div>
 
-																</li>
+																</li> -->
 																<!--/.step-item-->
 															</ul>
 														</div>
@@ -320,6 +329,7 @@
 		const showMyTags = $('.showMyTags');
 
 		$(function(){
+			endDate();
 			for(let m of $(myTags).find('button')){
 				for(let a of $(allTags).find('button')){
 					if($(a).text() == $(m).text()){
@@ -367,7 +377,9 @@
 								$(showMyTags)
 									.append($('<a href="#!" class="badge bg-primary mb-1" style="padding: 7px; margin: 3px;"/>')
 									.text(l.tagId));
-							}	
+							}
+							$(showMyTags)
+							  .append($('<a href="#modalBasic" data-bs-toggle="modal" aria-expanded="false" class="btn btn-outline-secondary pencil"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v2.png"/></a>'))
 							console.log(data);
 							$('#modalBasic').modal('hide');
 						});
@@ -377,6 +389,22 @@
 					}
 				});	//아작스 끝
 			});
+			
+			function endDate(){
+				$.ajax({
+					url:"../endDate",
+					method:"GET",
+					data: {
+						coupleId: Number(userSession.coupleId)
+					},
+					success: (data)=>{
+						$('#endDate').text(data.endDate)
+					},
+					error: (err)=>{
+						console.log(err);
+					}
+				});	//아작스 끝
+			}
 		}); // function 끝
 		
 	</script>

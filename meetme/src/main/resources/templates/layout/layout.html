@@ -32,6 +32,9 @@
         .swal-button:hover {
             background-color: #d23559 !important;
         }
+        .btn-circle-ripple::after, .btn-circle-ripple::before{
+	z-index: 1;
+}
     </style>
 
     <!-- load stylesheets -->
@@ -247,7 +250,7 @@
                             }
                         }).then(() => {
                             $('#receiveLove').hide(); //모달창 닫기
-                            location.href ="coupleMain?coupleStatus=y";
+                            location.href ="/coupleMain?coupleStatus=y";
                         });
 
                     },

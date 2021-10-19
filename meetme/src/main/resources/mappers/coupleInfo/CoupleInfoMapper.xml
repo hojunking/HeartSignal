@@ -105,6 +105,7 @@
 	SELECT *
 	FROM COUPLE_INFO
 	WHERE COUPLE_ID =#{coupleId}
+	OR USER_REQUEST =#{userRequest}
 </select>
 <update id="userCoupleStatusUpdate"> <!-- 유저 커플상태 수정 -->
     UPDATE USER_INFO 

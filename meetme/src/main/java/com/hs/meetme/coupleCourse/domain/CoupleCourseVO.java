@@ -25,5 +25,10 @@ public class CoupleCourseVO {
 	private String avg_cost;
 	private String description;
 	private String thumbnailHref;
+	
+	private String userRequest;
+	private String userRequestImg;
+	private String userReceived;
+	private String userReceivedImg;
 
 }
