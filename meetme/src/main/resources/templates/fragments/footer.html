@@ -95,29 +95,34 @@
  data-bs-backdrop="static" >
      <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content border-0 ">
-             <div class="modal-header border-0 bg-white">
+             <div class="modal-header border-0 bg-gradient-tint">
                  <button type="button" class="btn-close text-reset p-0 m-0 size-20 center-both ms-auto"
                             data-bs-dismiss="modal" aria-label="Close">
-                           <i class="bi bi-x fs-5" style="color:black;"></i>
+                           <i class="bi bi-x fs-5 text-dark"></i>
                         </button>
              </div>
-             <div class="modal-body">
-                 <div class="mb-5 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+             <div class="modal-body bg-gradient-tint">
+                 <div class=" mt-auto text-center aos-init aos-animate " data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                             <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
-                                <img src="assets/img/team/3.jpg" alt="" class="img-fluid" id="requesterImg">
+                                <img src="/img/user1" alt="" class="img-fluid" id="requesterImg">
                             </div>
                             <div>
-                                <h5 class="mb-1" style="color:black;" id="requester">
+                                <h4 class="mb-2 text-dark"  id="requester">
                                     Aarav Lynn
-                                </h5>
-                                <p class="w-lg-80 mx-auto mb-2" style="color:black;" id="noticeContent">
+                                </h4>
+                                <p class="w-lg-80 mx-auto mb-1 text-dark"  id="noticeContent">
                                     Duis aute irure dolor in velit esse cillum fugiat nulla pariatur.
                                 </p>
                             </div>
                         </div>
              </div>
-             <div class="modal-footer bg-white border-0" >
-                 <button type="button" class="btn btn-primary btn-sm" id="accept">커플수락</button>
+             <div class="modal-footer border-0 justify-content-center bg-gradient-tint" >
+             <span id="accept">
+                 <a href="#"
+                     class="btn btn-danger btn-circle-ripple p-0 size-50 rounded-pill fs-3 lh-1 center-both  mb-3">
+                     <i class="icon-Heart  align-middle"></i>
+                 </a>
+			</span>
              </div>
          </div>
      </div>
