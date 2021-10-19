@@ -3,7 +3,8 @@
 <mapper namespace="com.hs.meetme.useraccess.mapper.AccountMapper">
 	<select id="findByEmail" parameterType="String" resultType="AccountVO">
 		SELECT
-		    a.*, 
+		    a.*,
+            i.img_url,
 		    b.couple_id,
 		    b.user_request,
 		    b.user_received,
@@ -17,6 +18,10 @@
 		    a.user_id = b.user_request
 		OR
 		    a.user_id = b.user_received
+        LEFT OUTER JOIN
+            img i
+        ON
+            a.img_id = i.img_id
 		WHERE
 		    a.email = #{email}
 	</select>
@@ -78,6 +83,12 @@
 			 #{birthDay},
 			 #{imgId},
 			 'USER')
+		<selectKey keyProperty="userId" order="AFTER" resultType="String">
+			SELECT 
+				seq_user_info.CURRVAL 
+			FROM 
+				DUAL
+		</selectKey>
 	</insert>
 	
 	<update id="updatePwd">

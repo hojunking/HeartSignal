@@ -16,10 +16,14 @@ public interface PlaceMapper {
 	
 	PlaceVO getPlaceById(String placeId);
 	
+	int getPlaceAllCount();
+	
 	List<TagVO2> getTagList();
 	
 	List<TagVO2> getTagsSelected(int placeId); // 정한 장소의 태그들
 	
 	List<PlaceVO> getListBySearched(String[] keywords); // 검색 결과
+	
+	List<PlaceVO> getListByCourseId(String courseId);
 	
 }

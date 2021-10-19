@@ -24,4 +24,19 @@ public class CourseCreateServiceImpl implements CourseCreateService {
 		return courseCreateMapper.createCourseOrder(list);
 	}
 
+	@Override
+	public int createCoupleCourse(CourseCreateVO vo) {
+		return courseCreateMapper.createCoupleCourse(vo);
+	}
+
+	@Override
+	public int deleteCourseOrder(String courseId) {
+		return courseCreateMapper.deleteCourseOrder(courseId);
+	}
+	
+	@Override
+	public int updateCourse(CourseCreateVO vo) {
+		return courseCreateMapper.updateCourse(vo);
+	}
+	
 }

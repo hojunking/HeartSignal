@@ -1,9 +1,9 @@
 <template>
-    <div class="mx-auto my-5">
+    <div class="mx-auto">
         <div class="container p-5">
             <div class="row">
                 <div class="col-12 px-4">
-                    <h1 class="display-4">코스 만들기</h1>
+                    <h1 class="display-4">함께 코스 만들기 💕</h1>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -256,10 +256,13 @@
             <ul class="dropdown-menu fs-6">
                 <div id="chatDiv" style="overflow:auto; width:17rem; height:20rem;">
                     <div v-for="(item, idx) in recvList" :key="idx" >
-                        <li>
+                        <li :class="{'text-end' : item.email == userEmail}">
                             <small class="dropdown-item-text">
-                                <span class="rounded shadow bg-primary text-white p-1 px-2">
-                                    {{ item.userName }}: {{ item.content }}
+                                <span class="rounded shadow text-white p-1 px-2"
+                                    :class="{'bg-primary' : item.email == userEmail, 
+                                    'bg-secondary' : item.email != userEmail}">
+                                    {{ item.email == userEmail ? '' : item.userName + ' : '}}
+                                    {{ item.content }}
                                 </span> 
                             </small>
                         </li>
@@ -305,8 +308,8 @@ export default defineComponent ({
             console.log("Send message:" + message.value);
             if (stompClient && stompClient.connected) {
                 const msg = {
-                    userName: userEmail,
-                    content: message.value 
+                    email: userEmail.value,
+                    content: message.value
                 };
                 console.log(JSON.stringify(msg))
                 stompClient.send("/chatReceive", JSON.stringify(msg), {});
@@ -761,7 +764,7 @@ export default defineComponent ({
             var formData = new FormData();
             formData.append("courseName", sendTitleText);
             formData.append("list", JSON.stringify(sendList))
-            fetch('api/course/register', {
+            fetch('api/course/registerCouple', {
                 credentials: 'include',
                 method: 'POST',
                 body: formData
@@ -819,7 +822,7 @@ export default defineComponent ({
 
         // 스프링 부트 웹소켓 연결
         let stompClient = null;
-        let userEmail = null;
+        const userEmail = ref(null);
         const connect = () => {
             const serverURL = "http://192.168.0.75:8000/ws"
             let socket = new SockJS(serverURL);
@@ -831,7 +834,7 @@ export default defineComponent ({
                 // 소켓 연결 성공
                     stompClient.connected = true;
                     console.log('소켓 연결 성공', frame);
-                    userEmail = frame.headers["user-name"];
+                    userEmail.value = frame.headers["user-name"];
                     // 서버의 메시지 전송 endpoint를 구독합니다.
                     // 이런형태를 pub sub 구조라고 합니다.
                     stompClient.subscribe("/send", res => {
@@ -941,6 +944,7 @@ export default defineComponent ({
             subList,
             
             // 스프링 부트 웹소캣 연결
+            userEmail,
             connect
         };
     },

@@ -66,12 +66,11 @@
 			#{subTerm},
 			default)
 </insert>
-<update id="updateCoupleImage"> <!-- 커플정보 사용자 insert -->
-	UPDATE COUPLE_INFO SET COUPLE_DATE=#{coupleDate},
-									IMG_ID=#{imgId}
-	WHERE IMG_ID =(SELECT IMG_ID
-                   FROM IMG
-                   WHERE IMG_URL=#{imgUrl})
+<update id="updateCoupleImage"> <!-- 커플 대문이미지 넣기 -->
+	UPDATE COUPLE_INFO SET IMG_ID=(SELECT IMG_ID
+								    FROM IMG
+								    WHERE IMG_URL=#{imgUrl})
+	WHERE COUPLE_ID=#{coupleId}
 </update>
 <update id="couplePhotoDefault"> <!-- 대문이미지 초기화 -->
 	UPDATE COUPLE_INFO SET IMG_ID=default
@@ -131,7 +130,7 @@
 
 <select id="findLove" resultType="CoupleInfoVO">
 	SELECT U.EMAIL,
-			U.USER_ID
+			U.USER_ID,
 			U.NICKNAME,
 			U.COUPLE_STATUS,
 			I.IMG_URL AS userImg

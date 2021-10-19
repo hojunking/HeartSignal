@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,12 +19,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hs.meetme.coupleinfo.domain.CoupleInfoVO;
 import com.hs.meetme.coupleinfo.service.CoupleInfoService;
 import com.hs.meetme.image.service.ImageService;
+import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.service.NoticeService;
 
 @RestController
 
 public class RestCoupleInfoController {
 	@Autowired CoupleInfoService coupleService;
 	@Autowired ImageService imageService;
+	@Autowired NoticeService noticeService;
 	
 	File fileDir = new File("src/main/resources/static/img/");
 
@@ -77,9 +81,25 @@ public class RestCoupleInfoController {
 		return "기본사진으로 변경되었습니다";
 	}
 
-	@GetMapping("/matching/{id}")
-	public String matchingUpdate(@PathVariable int id) {
-		return null;
+	@PutMapping("/matching")
+	public String matchingUpdate(CoupleInfoVO vo) {
+		System.out.println("매칭하는 중 "+ vo);
+		
+		coupleService.coupleMatching(vo); //received 커플창에 업데이트
+		
+		vo.setUserId(vo.getUserReceived()); 
+		vo.setCoupleStatus("y");
+		coupleService.userCoupleStatusUpdate(vo); //유저들 상태 y로 업데이트
+		
+		NoticeVO nvo =new NoticeVO();
+		
+		String coupleId= String.valueOf(vo.getCoupleId());
+		
+		System.out.println("커플아이디는 "+coupleId);
+		nvo.setCoupleId(coupleId);
+		noticeService.deleteNotice(nvo);
+		
+		return "커플매칭이 되었습니다 축하합니다!";
 	}
 
 	@GetMapping("/coupleInfo/{id}") // 커플테이블정보와 나의 정보 불러오기
@@ -118,7 +138,7 @@ public class RestCoupleInfoController {
 			File file = new File(path, imgUrl);
 			ufile.transferTo(file); //파일 옮기기
 			vo.setImgUrl(imgUrl);
-			System.out.println("이미지URL=" + vo.getImgUrl());
+			System.out.println("vo 확인하기 " + vo);
 			imageService.insertImage(vo);  // 이미지 테이블에 등록
 			coupleService.updateCoupleImage(vo); //이미지 커플테이블에 업뎃
 		}

@@ -16,7 +16,7 @@ public class PaymentVO {
 	private int subTerm;
 	private String token;
 	//공동
-	private long merchantUid;
+	private String merchantUid;
 	private int userId;
 	//환불VO
 	private String email;

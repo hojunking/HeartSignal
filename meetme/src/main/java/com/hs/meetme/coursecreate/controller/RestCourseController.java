@@ -76,6 +76,12 @@ public class RestCourseController {
 		return placeService.getPlace(placeName);
 	}
 	
+	// 장소 한개 가져오기
+	@GetMapping("/place/searchOneById/{placeId}")
+	public PlaceVO getPlaceOneById(@PathVariable("placeId") String placeId) {
+		return placeService.getPlaceById(placeId);
+	}
+	
 	/**
 	 * @apiNote 네이버 검색 api
 	 * @param placeName
@@ -153,6 +159,123 @@ public class RestCourseController {
 			result = "error";
 		} else {
 //			result = "success";
+			result = vo.getCourseId();
+		}
+		
+		return result;
+	}
+	
+	// 커플 코스 등록
+	@PostMapping("/registerCouple")
+	@Transactional
+	public String registerCoupleCourse(String courseName, String list, HttpServletRequest request) throws JsonProcessingException {
+		System.out.println(list);
+		HttpSession session = request.getSession();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		
+		if(user == null) {
+			return "error";
+		}
+		
+		CourseCreateVO vo = new CourseCreateVO();
+		vo.setCourseName(courseName);
+		vo.setUserId(user.getUserId());
+		vo.setCoupleId(user.getCoupleId());
+		
+		courseCreateService.createCoupleCourse(vo);
+		System.out.println(vo.getCourseId());
+		
+		// jackson
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		// List
+		ArrayList<String[]> newList = new ArrayList<String[]>();
+		CourseTempVO[] arr = objectMapper.readValue(list, CourseTempVO[].class);
+		for (CourseTempVO item : arr) {
+			System.out.println(item.getPlaceId());
+			String[] inArray = {
+					item.getPlaceId(),
+					item.getCourseOrder(),
+					item.getCourseComment(),
+					item.getAvgCost(),
+					vo.getCourseId()
+			};
+			
+			newList.add(inArray);
+		}
+		// 등록
+		int resultNum = courseCreateService.createCourseOrder(newList);
+		
+		String result = "";
+		if(resultNum == 0) {
+			result = "error";
+		} else {
+//				result = "success";
+			result = vo.getCourseId();
+		}
+		
+		return result;
+	}
+	
+	
+	
+	//코스 수정 전 리스트 가져오기
+	@GetMapping("/modifyCourseList/{courseId}")
+	@Transactional
+	public List<PlaceVO> modifyCourseForm(@PathVariable String courseId) throws JsonProcessingException {
+		
+		// List
+		List<PlaceVO> placeList = placeService.getListByCourseId(courseId);
+		return placeList;
+	}
+	
+	
+	//코스 수정
+	@PostMapping("/modifyCourse")
+	@Transactional
+	public String modifyCourse(String courseId, String courseName, String list, HttpServletRequest request) throws JsonProcessingException {
+		System.out.println(list);
+		HttpSession session = request.getSession();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		
+		if(user == null) {
+			return "error";
+		}
+		
+		CourseCreateVO vo = new CourseCreateVO();
+		vo.setCourseId(courseId);
+		vo.setCourseName(courseName);
+		vo.setUserId(user.getUserId());
+		
+		courseCreateService.deleteCourseOrder(courseId);
+		courseCreateService.updateCourse(vo);
+		System.out.println(vo.getCourseId());
+		
+		// jackson
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		// List
+		ArrayList<String[]> newList = new ArrayList<String[]>();
+		CourseTempVO[] arr = objectMapper.readValue(list, CourseTempVO[].class);
+		for (CourseTempVO item : arr) {
+			System.out.println(item.getPlaceId());
+			String[] inArray = {
+					item.getPlaceId(),
+					item.getCourseOrder(),
+					item.getCourseComment(),
+					item.getAvgCost(),
+					vo.getCourseId()
+			};
+			
+			newList.add(inArray);
+		}
+		// 등록
+		int resultNum = courseCreateService.createCourseOrder(newList);
+		
+		String result = "";
+		if(resultNum == 0) {
+			result = "error";
+		} else {
 			result = vo.getCourseId();
 		}
 		

@@ -63,11 +63,15 @@
 					data-duration="1200" data-delay="600" data-ease="easeInOutCubic"
 					data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
 					data-position="center" data-masked="false">
-					<div class="text-center">여기에<br>추천코스</div>
+					<div class="text-center">
+						오늘<br>
+						<span class="placeTitle fs-1">여기</span><br>
+						어때?
+					</div>
 				</div>
 
 				<!--Layer-->
-				<a href="#" class="ms-layer ms-btn" data-effect="front(800)" data-duration="1200"
+				<a href="#" class="ms-layer ms-btn placeButton" data-effect="front(800)" data-duration="1200"
 					data-delay="800" data-ease="easeInOutCubic" data-hide-effect="top(long,false)"
 					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
 					data-masked="false"><span class="btn btn-lg btn-primary btn-sm">보러가기</span>
@@ -107,10 +111,14 @@
 					data-effect="skewbottom(-10,150)" data-duration="1000" data-delay="600"
 					data-ease="easeInOutCubic" data-hide-effect="top(long,false)" data-offset-x="0"
 					data-offset-y="-60" data-origin="mc" data-position="center" data-masked="false">
-					<div>여기에<br>추천코스</div>
+					<div>
+						오늘<br>
+						<span class="placeTitle fs-1">여기</span><br>
+						어때?
+					</div>
 				</div>
 				<!--Layer-->
-				<a href="#" class="ms-layer ms-btn" data-effect="skewbottom(-10,150)" data-duration="1000"
+				<a href="#" class="ms-layer ms-btn placeButton" data-effect="skewbottom(-10,150)" data-duration="1000"
 					data-delay="900" data-ease="easeInOutCubic" data-hide-effect="top(long,false)"
 					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
 					data-masked="false">
@@ -152,11 +160,15 @@
 					data-duration="1000" data-delay="900" data-ease="easeInOutSine"
 					data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
 					data-position="center" data-masked="false">
-					<div>여기에<br>추천코스</div>
+					<div>
+						오늘<br>
+						<span class="placeTitle fs-1">여기</span><br>
+						어때?
+					</div>
 				</div>
 
 				<!--Layer-->
-				<a href="#" class="ms-layer ms-btn" data-effect="skewleft(23,500)" data-duration="1000"
+				<a href="#" class="ms-layer ms-btn placeButton" data-effect="skewleft(23,500)" data-duration="1000"
 					data-delay="1200" data-ease="easeInOutSine" data-hide-effect="top(long,false)"
 					data-offset-x="0" data-offset-y="130" data-origin="mc" data-position="center"
 					data-masked="false"><span class="btn btn-lg btn-primary btn-sm">보러가기</span>
@@ -463,38 +475,35 @@
 		
 		// ai 쓰기
 		async function loadModel() {
+			// tensor 모델 불러오기 (await 사용함)
             const model = await tf.loadLayersModel('model/my-model-1.json');    
             console.log(model);
             
+            // 비로그인 대상자 초기값 지정
             nextResultIntList = "46,47,48";
             
             if(userSession != null) {
-            	let userId = userSession.userId;
-                
                 $.ajax({
                 	url : "/api/tensor/userTagAddrYear",
-    				data : {
-    					userId : userId,
-    				},
     				method : "GET",
     				success : function(data) {
     					console.log(data);
     					let cause = [];
     					let causeDetail = [];
-    					causeDetail.push(parseInt(data[0].tagNum));
+    					const randomNum = parseInt(Math.floor(Math.random() * data.length))
+    					causeDetail.push(parseInt(data[randomNum].tagNum));
     					causeDetail.push(parseInt(data[0].addrzonecode));
     					causeDetail.push(parseInt(data[0].birthYear));
     					cause.push(causeDetail);
+    					
+    					// 직접만든 tensorFlow.js model 사용
     					var nextCause = tf.tensor(cause);
     		            var nextResult = model.predict(nextCause).toString();
     		            
     		            nextResult = nextResult.substring(14, nextResult.length-3);
-    		            console.log(nextResult);
-    		            
     		            nextResultList = nextResult.split(", ");
-    		            console.log(nextResultList);
     		            
-    		            // 문자열형으로
+    		            // 문자열형으로 보내기
     		            nextResultIntList = "";
     		            
     		            for(let item of nextResultList) {
@@ -535,6 +544,7 @@
     				}
                 })
             } else {
+            	// 유저세션이 없을경우
             	$.ajax({
 	            	url : "/api/tensor/getPlaceList",
 					data : {
@@ -565,17 +575,37 @@
             }
             
         }
-		
+		// 슬라이드에 정보 수정
 		function drawSlide(data) {
-			let sliderImgs = $('#masterslider').find('img')
-			console.log(sliderImgs)
+			let sliderImgs = $('#masterslider').find('img');
+			let placeTitles = $('#masterslider').find('.placeTitle');
+			let placeButton = $('#masterslider').find('.placeButton');
+			console.log(sliderImgs);
+			console.log(placeTitles);
+			console.log(placeButton);
 			for(let i=0; i<data.length; i++) {
 				console.log(data[i].thumbnailHref);
-				$(sliderImgs).eq(i).attr("data-src", data[i].thumbnailHref)
+				$(sliderImgs).eq(i).attr("data-src", data[i].thumbnailHref);
+				$(placeTitles).eq(i).text(data[i].placeName);
+				$(placeButton).eq(i).attr("btn-num", data[i].placeId);
 			}
+			console.log($(placeButton).attr("btn-num"));
 		}
 		
         loadModel();
+        
+        $(".placeButton").on("click", (e) => {
+        	e.preventDefault();
+        	
+        	let placeId = $(e.target).parent().attr("btn-num");
+			
+        	if(placeId == undefined) {
+				return;
+			}
+			
+        	location.href = "/createCourse/" + placeId;
+			
+        })
 	</script>
 </th:block>
 

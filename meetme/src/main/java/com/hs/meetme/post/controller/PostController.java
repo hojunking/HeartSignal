@@ -64,11 +64,12 @@ public class PostController {
 	public String community_list(Model model, Criteria cri) {
 		cri.setAmount(20);
 		int total = pService.getTotalCmNum(cri);
-		System.out.println("토탈 ==== "+total);
+//		System.out.println("토탈 ==== "+total);
 		model.addAttribute("count", pService.getCmNum());
 
 		List<PostVO> list = new ArrayList<>();
 		list = pService.getCMList(cri);
+//		System.out.println("리스트 넘어온거"+list);
 		model.addAttribute("list", list);
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		return "post/community_list";
@@ -119,10 +120,18 @@ public class PostController {
 		 * return "board/view";
 		 */
 	}
+	
+	
 
 	// 커뮤니티 글 입력
 	@GetMapping("/community_insert")
-	public String community_insert() {
+	public String community_insert(Model model,HttpServletRequest request, MyPageCourseVO vo) {
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		vo.setUserId(accountVO.getUserId());
+		model.addAttribute("places", pService.getPlaceList(vo));
+		model.addAttribute("list", pService.getCourseList(vo));
+
 		return "post/community_insert";
 	}
 
@@ -178,7 +187,8 @@ public class PostController {
 		vo.setNickname(accountVO.getNickname());
 		
 		//notice INSERT 
-		if(vo.getUserId()!=vo.getPostUserId()) { 		//댓글을 작성하면 게시글
+		System.out.println("보낸사람"+vo.getUserId()+"+"+"게시글만든 "+vo.getPostUserId());
+		if(!vo.getUserId().equals(vo.getPostUserId())) { 		//댓글을 작성하면 게시글
 			NoticeVO nVo = new NoticeVO();
 			nVo.setUserSent(vo.getUserId()); 			//댓글 쓴 사람
 			nVo.setUserReceived(vo.getPostUserId()); 	//게시글 쓴 사람
@@ -187,7 +197,6 @@ public class PostController {
 			noticeService.insertNotice(nVo);
 			System.out.println("댓글달고 댓글정보 INSERT"+nVo);
 		}
-		
 		//notice INSERT end
 
 		return vo;
@@ -246,17 +255,7 @@ public class PostController {
 		return pService.scrapCancel(courseId, userId);
 	}
 
-	//내 코스 모달에 불러오기
-	@ResponseBody
-	@GetMapping("/getMyCourse")
-	public List<MyPageCourseVO> getMyCourse(@ModelAttribute MyPageCourseVO vo) {
-
-		/* model.addAttribute("course", pService.getCourseList(vo)); */
-		List<MyPageCourseVO> list = pService.getCourseList(vo);
-		System.out.println(vo);
-		return list;
-	}
-
+	
 	@RequestMapping(value = "/ckeditor/fileUpload", method = RequestMethod.POST)
 	public void imageUpload(HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multiFile, @RequestParam MultipartFile upload) throws Exception {

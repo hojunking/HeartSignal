@@ -9,6 +9,11 @@ public interface CourseCreateService {
 	
 	int createCourse(CourseCreateVO vo);
 	
-	int createCourseOrder(ArrayList<String[]> list);
+	// 커플용 추가
+	int createCoupleCourse(CourseCreateVO vo);
 	
+	int createCourseOrder(ArrayList<String[]> list);
+
+	int deleteCourseOrder(String courseId);
+	int updateCourse(CourseCreateVO vo);
 }

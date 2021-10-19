@@ -41,12 +41,11 @@
     FROM user_tags
     WHERE user_id = #{userId}
   </delete>
+  
   <insert id="insertUserTags">
     INSERT INTO
-    user_tags(
-               user_id, tag_id)
-    VALUES(
-               #{userId}, #{tagId})
+    user_tags(user_id, tag_id)
+    VALUES(#{userId}, #{tagId})
   </insert>
   
 <!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
@@ -384,6 +383,16 @@
 	<update id="userUpdateNickName" parameterType="MypageUserInfoVO">
 		UPDATE user_info
 		SET nickname = #{nickName},
+		    updated=sysdate
+		WHERE user_id = #{userId}
+	</update>
+	
+	<!-- 회원정보 수정 (닉네임) -->
+	<update id="userUpdateBirthDay" parameterType="MypageUserInfoVO">
+		UPDATE user_info
+		SET nickname = #{nickName},
+		    birth_year = #{birthYear},
+		    birth_day = #{birthDay},
 		    updated=sysdate
 		WHERE user_id = #{userId}
 	</update>

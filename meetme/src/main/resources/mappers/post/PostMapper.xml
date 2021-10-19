@@ -12,7 +12,8 @@
 	    (select distinct p.*,
 	    (select count(*) from post_comment a where p.post_id = a.post_id) comments,
 	    (select count(*) from post_like b where p.post_id = b.post_id) likes,
-	    (select nickname from user_info where user_id=p.user_id) "nickname"
+	    (select nickname from user_info where user_id=p.user_id) "nickname",
+	    (select region from course where course_id = p.course_id) "region"
 	    from post p
 	    left outer join
 	    post_comment c
@@ -180,7 +181,7 @@
         c.place_name,
         c.avg_cost,
         c.place_id,
-        (select d.img_url from img_place p join img d on p.img_id = d.img_id where c.place_id=p.place_id) "이미지 위치" 
+        c.region
 		from course a 
 		join (select * from course_order where course_order = 1) b 
 		    on a.course_id = b.course_id 
@@ -188,6 +189,16 @@
 		    on b.place_id = c.place_id
 		where a.user_id=#{userId}
 		order by b.course_id        
+	</select>
+	
+	<!-- 내 코스의 장소 정보들 같이 불러오기 -->
+	<select id="getPlaceList" resultType="MyPageCourseVO">
+		select c.course_id,p.*,  c.course_name, c.region,c.user_id, o.course_order, o.avg_cost
+		from course_order o join place p 
+		on p.place_id = o.place_id
+		join course c on c.course_id = o.course_id
+		where c.user_id =#{userId}
+		order by c.user_id,c.course_id, o.course_order
 	</select>
 	
 	

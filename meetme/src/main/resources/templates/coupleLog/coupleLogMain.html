@@ -32,6 +32,7 @@ img {
 				<div class="col-md-6 col-lg-3 design development grid-item"
 					th:each="c: ${logList}">
 					<a th:href="@{|/coupleLog/logOne?logId=${c.logId}|}"
+						th:data-bigpicture='{"imgSrc": "/img/coupleLog/"+${c.imgUrl}}'
 						class="text-white bg-gradient-dark position-relative d-block overflow-hidden card-hover-2">
 						<!-- <img th:attr="src=@{'/img/coupleLog/' + ${c.imgUrl}}, alt=${c.imgUrl}"
 						class="img-fluid img-zoom"> --> <!-- 오류시 기본 이미지 --> <img
@@ -47,7 +48,7 @@ img {
 									<h6 class="fs-5 mb-2" style="font-weight:bold;" ></h6>
 								</div> -->
 								<p class="mb-0" th:text="${c.logTitle}"></p>
-								<p class="mb-0" ></p>
+								<p class="mb-0" th:text="${c.caption}" style="font-size:12px; font-weight:100;"></p>
 							</div>
 							<div class="card-hover-2-footer w-100 mt-auto">
 								<span class="tags d-block flex-grow-1"></span> 

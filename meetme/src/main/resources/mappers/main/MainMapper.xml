@@ -47,11 +47,20 @@
 	</select>
 	
 	<select id="courseListReco" resultType="MainVO">
-		SELECT p.THUMBNAIL_HREF,c.COURSE_ID,c.COURSE_NAME, c.REGION, o.AVG_COST
+		<!-- SELECT p.THUMBNAIL_HREF,c.COURSE_ID,c.COURSE_NAME, c.REGION, o.AVG_COST
 		FROM course c , (select * from course_order where course_order = 1) o , PLACE p
+        WHERE c.COURSE_ID = o.COURSE_ID AND o.PLACE_ID = p.PLACE_ID 
+        ORDER BY c.COURSE_ID DESC -->
+        
+        SELECT p.THUMBNAIL_HREF,c.COURSE_ID,c.COURSE_NAME,
+				(SELECT avg_cost FROM 
+        		(SELECT course_id,
+        		 SUM(avg_cost) avg_cost
+        FROM course_order GROUP BY course_id) c 
+        WHERE c.course_id = o.course_id) avg_cost
+		FROM course c ,(select * from course_order where course_order = 1) o, PLACE p
         WHERE c.COURSE_ID = o.COURSE_ID AND o.PLACE_ID = p.PLACE_ID 
         ORDER BY c.COURSE_ID DESC
 	</select>
-	
 	
 </mapper>

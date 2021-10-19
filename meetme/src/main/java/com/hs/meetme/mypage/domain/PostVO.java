@@ -27,5 +27,6 @@ public class PostVO{
 	private String nickname;
 	private String postCount;      //게시글 갯수
 	private String imgUrl; //프로필 사진 이미지
+	private String region;
   
 }

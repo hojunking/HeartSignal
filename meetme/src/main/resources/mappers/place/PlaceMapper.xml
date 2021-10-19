@@ -20,6 +20,13 @@
 		WHERE PLACE_ID = #{placeId}
 	</select>
 	
+	<!-- 전체 장소 갯수 -->
+	<select id="getPlaceAllCount" resultType="int">
+		SELECT MAX(PLACE_ID)
+		FROM PLACE
+	</select>
+	
+	<!-- 모든 태그 가져오기 -->
 	<select id="getTagList" resultType="com.hs.meetme.coursecreate.domain.TagVO2">
 		SELECT * FROM tags
 	</select>
@@ -47,6 +54,16 @@
 			description like '%' || #{arr} || '%'
 		</foreach>
 		ORDER BY DBMS_RANDOM.RANDOM()
+	</select>
+	
+	<select id="getListByCourseId" resultType="PlaceVO">
+		SELECT P.*
+		FROM COURSE C JOIN COURSE_ORDER CO
+		ON(C.COURSE_ID = CO.COURSE_ID)
+		JOIN PLACE P
+		ON(CO.PLACE_ID = P.PLACE_ID)
+		WHERE C.COURSE_ID = #{courseId}
+		ORDER BY CO.COURSE_ORDER
 	</select>
 	
 </mapper>

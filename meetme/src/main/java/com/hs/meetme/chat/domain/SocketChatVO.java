@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SocketChatVO {
+	private String email;
+	
     // 유저의 이름을 저장하기 위한 변수
     private String userName;
 

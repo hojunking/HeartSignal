@@ -16,7 +16,7 @@
 
 .photo_them{position:relative;width:100%;height:420px;background:#eee;margin :10px 0;}
 
-.them_img, .result_box{position:absolute;top:0;left:0;width:100%;height:100%;}
+.them_img, .result_box{position:absolute;top:0;left:0;width     :100%;height:100%;}
 .them_img img, .result_box img{display:block;margin:0 auto;height:100%;}
 
 .btn-circle-ripple::after, .btn-circle-ripple::before{
@@ -26,10 +26,9 @@
 </th:block>
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
-		<br>
 		<!-- header section -->
-		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3" style="background-image: none;height: 720px;">
-                <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" alt="" class="jarallax-img opacity-80">
+		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3" style="background-image: none; height: 720px; top:-26px;">
+                <img src="" alt="" class="jarallax-img opacity-80" id="coupleImg">
                  <svg class="position-absolute start-0 bottom-0 w-100" preserveAspectRatio="none" width="900"
                     height="50" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -43,7 +42,7 @@
                             <br><br><br><br><br>
                             <h1 class="mb-4 display-2">우리는<br>
                                 <span class="d-inline-block"
-                                    data-typed='{"strings": ["귀염둥이", "방구쟁이", "songhojun", "Agencies", "Creatives"]}'></span>
+                                    data-typed='{"strings": ["귀염둥이", "방구쟁이", "개구쟁이", "천생연분", "영원히"]}'></span>
                             </h1>
                             <!--offcanvas-btn-trigger-->
                             <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasEnd" role="button"
@@ -59,7 +58,7 @@
             
             <!-- section 2-->
             <section class="position-relative bg-white">
-                <div class="container py-2 py-lg-3">
+                <div class="container py-2 py-lg-3 px-4">
                         <div class="col-lg-7 mb-4 mx-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
                             <h2 class="display-2">D+<b class="text-warning" id="coupleDate"></b></h2><br>
                             <h6 class="display-6">우리 사랑한지</h6>
@@ -67,7 +66,7 @@
                     <div class="row">
                         <div class="col-lg-5 my-5 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                             <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle">
-                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid" id="user1Img"> 
+                                <img src="" alt="" class="img-fluid" id="user1Img"> 
                             </div>
                             <div>
                                 <h5 class="mb-1" id="nickName1">
@@ -97,7 +96,7 @@
                         	
                         <div class="col-lg-5 my-5 text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                             <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle" id="loveInfo">
-                                <img th:src="@{/img/coupleImage1.jpg}" alt="" class="img-fluid" id="user2Img">
+                                <img src="" alt="" class="img-fluid" id="user2Img">
                             </div>
                             	<div>
                                 <h5 class="mb-1"  id="nickName2">
@@ -112,7 +111,7 @@
                         
             <section class="bg-dark text-white jarallax" data-jarallax=".3">
                 <!--Parallax image-->
-                <img th:src="@{/img/873fda76-e9e4-4bac-b497-4743f8e42b4fblob.jpg}" class="jarallax-img" alt="">
+                <img src="" class="jarallax-img" alt="" id="coupleImg2">
                 <!--Overlay background-->
                 <div class="position-absolute w-100 h-100 start-0 top-0 flip-x bg-gradient-secondary opacity-60"></div>
                 <!--Divider shape-top-->
@@ -130,14 +129,15 @@
                             <h2 class="display-4 mb-4 mb-md-0">
                                 함께 그리는 <br>
                                 우리의 이야기 <br>
-                                우리 오늘 뭐해?
+                                오늘우리뭐해
                             </h2>
                         </div>
                         <div class="col-md-6 ms-md-auto" data-aos="fade-up" data-aos-delay="100"
                             data-aos-duration="400">
                             <p class="lead w-lg-85 mb-5">
-                                D+DAY와 커플 대문사진을 수정할 수 있어요!<br>
-                                아래 버튼 누르기
+                                디데이를 설정해 보세요!<br>
+                                커플 대문사진을 수정할 수 있어요!<br>
+                                아래 버튼을 통해서 우리만의 배경사진과 디데이를 설정해보세요!
                             </p>
                             <a href="#updateCouple" class="btn btn-rise rounded-pill hover-lift btn-outline-white" data-bs-toggle="modal">
                                 <div class="btn-rise-bg bg-white"></div>
@@ -228,24 +228,24 @@ style="display: none;" data-bs-backdrop="static">
                      </div>
                      <div class="px-2 bg-white position-relative pt-2 mb-2">
                          <h4 class="mb-4 text-center" id="nickFind">커플이메일을 입력해주세요</h4>
-                         
-                             <div class="mb-3">
-                                 <input type="email" name="email" placeholder="Email address" class="form-control rounded-pill px-4">
-                             		<small class="d-block text-danger my-2" id="noFind"></small>
+                         	
+                             <div class="input-group mb-3">
+                                 <input type="email" name="email" class="form-control "aria-describedby="basic-addon2">
+                             		<span class="input-group-text" id="basic-addon2">
+                         	<button type="button" class="btn btn-primary-secondary  btn-hover-arrow hover-lift"
+                                 id="search">
+                                 <span>검색</span></button></span>
                              		
                              </div>
+                                 <small class="d-block text-danger my-2" id="noFind"></small>
                              <div class="d-grid">
-                                 <button type="button" class="btn btn-primary rounded-pill hover-shadow btn-hover-arrow hover-lift"
-                                 id="search">
-                                 <span>검색</span></button>
+                                 
+                                 <button type="button" class="btn btn-primary btn-hover-arrow hover-lift" id="request">
+                                 <span>커플신청</span></button>
                              </div>
                              <br> 
                      </div>
                  </div>
-             </div>
-             <div class="modal-footer bg-white border-0" >
-                 <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>&nbsp;
-                 <button type="button" class="btn btn-primary btn-sm" id="request">커플신청</button>
              </div>
          </div>
      </div>
@@ -265,23 +265,19 @@ style="display: none;" data-bs-backdrop="static">
              <div class="modal-body"style="padding: 0px;">
                  <div class="position-relative  bg-white shadow-lg overflow-hidden">
                      <div class="px-2 bg-white position-relative pt-2">
-                         <h4 class="mb-4 text-center" id="nickFind">우리가 시작한 날</h4>
-                             <div class="mb-3">
-                                 <input type="date" name="date"class="form-control rounded-pill px-4">
-                             		<small class="d-block text-danger my-2" id=""></small>
-                             </div>
-                             <div class="d-grid">
-                                 <button type="button" class="btn btn-primary rounded-pill hover-shadow btn-hover-arrow hover-lift"
+                         <h4 class="mb-4 text-center" id="nickFind">사랑이 시작된 날이 언제인가요?</h4>
+                             <div class="input-group mb-3">
+                                 <input type="date" name="date"class="form-control" aria-describedby="basic-addon2">
+                                	<span class="input-group-text" id="basic-addon2">
+                                	<button type="button" class="btn btn-primary-secondary  btn-hover-arrow hover-lift"
                                  id="updateDday">
-                                 <span>업데이트</span></button>
+                                 <span>업데이트</span></button></span>
                              </div>
-                             <br>
                      </div>
                  </div>
              </div>
-             <div class="modal-footer bg-white border-0">
-             <br>
-             </div>
+                          <br>
+             
          </div>
      </div>
  </div>
@@ -412,6 +408,10 @@ style="display: none;" data-bs-backdrop="static">
 					console.log(datas);
 					$('#nickName1').text(datas.nickName);
 					$('#birthDate1').text(datas.birthDay);
+					$('#user1Img').attr('src',"/img/user/"+datas.userImg);
+					$('#coupleImg').attr('src',"/img/couple/"+datas.coupleImg);
+					$('#coupleImg2').attr('src',"/img/couple/"+datas.coupleImg);
+					
 					var today = new Date();
 					var coupleDate = new Date(datas.coupleDate);
 					var gap = today.getTime() - coupleDate.getTime();
@@ -449,6 +449,7 @@ style="display: none;" data-bs-backdrop="static">
 					success : function(datas) {
 						$('#nickName2').text(datas.nickName);
 						$('#birthDate2').text(datas.birthDay);
+						$('#user2Img').attr('src',"/img/user/"+datas.userImg);
 						console.log(datas);
 					}
 				});//ajax 끝
@@ -507,6 +508,8 @@ style="display: none;" data-bs-backdrop="static">
 									data : {
 										userSent : userId,
 										userReceived : datas.userId,
+										coupleId : coupleId
+									
 									},
 									method : "POST",
 									success : function(data) {
@@ -615,7 +618,7 @@ style="display: none;" data-bs-backdrop="static">
 				canvas.toBlob(function(blob) {
 				var formData = new FormData();
 				formData.append('uploadFile', blob/*, 'example.png' */);
-				
+				formData.append('coupleId',coupleId);
 				console.log($('input[type="date"]').val());
 				console.log(result);
 				console.log(canvas);

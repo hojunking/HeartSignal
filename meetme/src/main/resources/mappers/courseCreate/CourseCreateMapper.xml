@@ -18,6 +18,24 @@
 		)
 	</insert>
 	
+	<insert id="createCoupleCourse" >
+		<selectKey keyProperty="courseId" resultType="string" order="BEFORE">
+        	SELECT SEQ_COURSE.NEXTVAL FROM dual
+    	</selectKey>	
+		INSERT INTO COURSE(
+			COURSE_ID,
+			COURSE_NAME,
+			USER_ID,
+			COUPLE_ID
+		) VALUES (
+			#{courseId},
+			#{courseName},
+			<!-- userId -->
+			#{userId},
+			#{coupleId}
+		)
+	</insert>
+	
 	<insert id="createCourseOrder">
 		INSERT INTO COURSE_ORDER(
 		    PLACE_ID,
@@ -32,5 +50,18 @@
 			</foreach>
 		</foreach>
 	</insert>
+	
+	<update id="updateCourse">
+		update course
+		set
+		course_name = #{courseName}
+		where
+		course_id = #{courseId}
+	</update>
+	
+	<delete id="deleteCourseOrder">
+		delete from course_order
+		where course_id = #{courseId}
+	</delete>
 	
 </mapper>
