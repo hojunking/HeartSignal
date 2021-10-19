@@ -1,124 +1,114 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css"> -->
-  <style>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css"> -->
+	<style>
 
-  </style>
+	</style>
 </th:block>
 
 <th:block layout:fragment="content">
+	<!--Main content-->
+	<main class="main-content" id="main-content">
+		<section class="position-relative pt-7">
+			<div class="container position-relative">
+				<div class="overflow-hidden">
+					<!--Profile info header-->
+					<div class="position-relative pb-7 pb-lg-12">
+						<div class="row">
+							<div class="col-lg-3 mb-5 mb-lg-0">
+								<div class="h-lg-100">
+									<div class="card bg-gradient-light p-3">
+										<div>
+											<!--profile image-->
+											<div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+												th:style="'background-position: center center; background-image: url(/img/user/'+${userInfo.imgUrl}+');'">
+											</div>
+											<h4 class="mb-2">[[${userInfo.name}]]</h4>
+											<small class="d-block mb-3">[[${userInfo.nickName}]]</small>
+											<ul class="list-unstyled border-bottom pb-3 mb-3">
+												<li class="d-flex align-items-stretch mb-2"><i
+														class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
+													<span class="small">[[${myAddress}]]</span></li>
+												<li class="d-flex align-items-stretch mb-2"><i
+														class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
+													<span
+														class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
+												</li>
+												<li class="d-flex align-items-stretch mb-2"><i
+														class="bi bi-envelope me-2 align-middle text-muted"></i> <a
+														href=""
+														class="small link-hover-decoration">[[${userInfo.email}]]</a>
+												</li>
 
-<!--Main content-->
-<main class="main-content" id="main-content">
-    <section class="position-relative bg-white">
-        <div class="container position-relative pt-3 pb-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <nav class="d-md-flex" aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item">
-                                <a href="#!">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active">
-                                Profile
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-            <!--/.row-->
+											</ul>
+											<ul class="list-unstyled border-bottom pb-3 mb-3">
+												<li class="d-flex justify-content-between align-items-center mb-2">
+													<span class="small">현재 상태</span>
+													<span th:if="${userInfo.coupleStatus.toString().equals('n')}"
+														class="small" th:text="솔로"></span>
+													<span th:unless="${userInfo.coupleStatus.toString().equals('n')}"
+														class="small" th:text="커플"></span>
 
-        </div>
-    </section>
-    <section class="position-relative">
-                <div class="container position-relative">
-                
-                    <div class="overflow-hidden">
-                        <!--Profile info header-->
-                        <div class="position-relative pb-7 pb-lg-12">
-                            <div class="row">
-	                           <div class="col-lg-3 mb-5 mb-lg-0">
-								  <div class="h-lg-100">
-										<div class="card bg-gradient-light h-lg-100 p-3">
-											<div>
-												<!--profile image-->
-												<div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
-													th:style="'background-position: center center; background-image: url(/img/user/'+${userInfo.imgUrl}+');'">
-												</div>
-												<h4 class="mb-2">[[${userInfo.name}]]님</h4>
-												<small class="d-block mb-3">[[${userInfo.nickName}]]</small>
-												<ul class="list-unstyled border-bottom pb-3 mb-3">
-													<li class="d-flex align-items-stretch mb-2"><i
-															class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
-														<span class="small">[[${myAddress}]]</span></li>
-													<li class="d-flex align-items-stretch mb-2"><i
-															class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
-														<span
-															class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
-													</li>
-													<li class="d-flex align-items-stretch mb-2"><i
-															class="bi bi-envelope me-2 align-middle text-muted"></i> <a
-															href=""
-															class="small link-hover-decoration">[[${userInfo.email}]]</a>
-													</li>
-											
-												</ul>
-												<ul class="list-unstyled border-bottom pb-3 mb-3">
+												</li>
+												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
 													<li class="d-flex justify-content-between align-items-center mb-2">
-													  <span class="small">현재 상태</span>
-													  <span th:if="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="솔로"></span>
-													  <span th:unless="${userInfo.coupleStatus.toString().equals('n')}" class="small" th:text="커플"></span>
-	
+														<span class="small">구독권 이용기간</span>
+														<span class="small">3개월</span>
 													</li>
-													<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
-														<li class="d-flex justify-content-between align-items-center mb-2">
-															<span class="small">구독권 이용기간</span>
-															<span class="small">3개월</span>
-														</li>
-													</th:block>
-												</ul>
-												<div class="d-grid">
-													<button class="btn btn-primary border shadow-sm mb-2 py-1"
-														type="button" onclick="goCoupleMain(userSession)">
-														<i class="bi bi-person-plus fs-6 align-middle lh-1"></i>
-														커플로그 이용하기
-													</button>
-												</div>
+												</th:block>
+											</ul>
+											<div class="d-grid">
+												<button class="btn btn-primary border shadow-sm mb-2 py-1" type="button"
+													onclick="goCoupleMain(userSession)">
+													<i class="bi bi-person-plus fs-6 align-middle lh-1"></i>
+													커플로그 이용하기
+												</button>
 											</div>
 										</div>
 									</div>
-								</div>                           
-                                <div class="col-lg-9 mx-auto">
-                                    <div class="d-flex flex-column h-100">
-                                        <nav class="nav mb-3 nav-pills">
-                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="myinfo_my_course_list" class="nav-link active"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
-                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
-                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo_my_payment_list" class="nav-link"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
-                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
-                                        </nav>
-                                        <div class="card border-light p-3 mb-3">
-                                                      <section class="position-relative">
-                <div class="container py-3 ">
-                    <div class="row">
-                            
-                        <div class="col-12">
-                            <div class="pe-lg-4 pe-md-2">
-	
-								<form id ="actionForm" action="" method="get">
-							
-							<!--  <select name="category" class="custom-select">
+								</div>
+							</div>
+							<div class="col-lg-9 mx-auto">
+								<div class="d-flex flex-column h-100">
+									<nav class="nav mb-3 nav-pills">
+										<a href="main" class="nav-link"><i
+												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+										<a href="myinfo_my_course_list" class="nav-link active"><i
+												class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+										<a href="myinfo_my_write_list" class="nav-link"><i
+												class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+										<a href="myinfo_my_comment_list" class="nav-link"><i
+												class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+										<a href="myinfo_my_payment_list" class="nav-link"><i
+												class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+										<a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보
+											수정</a>
+									</nav>
+									<div class="card border-light p-3 mb-3">
+										<section class="position-relative">
+											<div class="container py-3 ">
+												<div class="row">
+
+													<div class="col-12">
+														<div class="pe-lg-4 pe-md-2">
+
+															<form id="actionForm" action="" method="get">
+
+																<!--  <select name="category" class="custom-select">
 								    <option value="A" th:selected="${#strings.equals(pageMaker.cri.category,'A')}">전체보기</option>
 								    <option value="B" th:selected="${#strings.equals(pageMaker.cri.category,'B')}">내가만든</option>
 								    <option value="C" th:selected="${#strings.equals(pageMaker.cri.category,'C')}">넘이만든</option>
 								  </select> -->
-								  
-							    <input type="radio" class="btn-check" id="plan-1" name="category" value="A" checked="">
-							    <label class="btn btn-outline-primary" for="plan-1">전체보기</label>
-							    <input type="radio" class="btn-check" id="plan-2" name="category" value="B" th:checked="${#strings.equals(pageMaker.cri.category,'B')}">
+
+																<input type="radio" class="btn-check" id="plan-1"
+																	name="category" value="A" checked="">
+																<label class="btn btn-outline-primary"
+																	for="plan-1">전체보기</label>
+																<input type="radio" class="btn-check" id="plan-2"
+																	name="category" value="B" th:checked="${#strings.equals(pageMaker.cri.category,'B')}">
 							    <label class="btn btn-outline-primary" for="plan-2">나의코스</label>
 							    <input type="radio" class="btn-check" id="plan-3" name="category" value="C" th:checked="${#strings.equals(pageMaker.cri.category,'C')}">
 							    <label class="btn btn-outline-primary" for="plan-3">스크랩</label>
@@ -141,8 +131,8 @@
 							            </select>
 							        </div>
 							                            
-							        <input class="form-control" name="keyword" th:value="${pageMaker.cri.keyword}" placeholder="검색어를 입력해주세요">
-							          <button class="input-group-text py-0" onclick="$('[name=pageNum]').val(1)">
+							        <input class="form-control rounded-start" name="keyword" th:value="${pageMaker.cri.keyword}" placeholder="검색어를 입력해주세요">
+							          <button class="input-group-text py-0 rounded-end" onclick="$('[name=pageNum]').val(1)">
 							            <i class="fs-3 bi bi-search"></i>
 							          </button>
 							        <input type="hidden" name="pageNum" th:value="${pageMaker.cri.pageNum}">

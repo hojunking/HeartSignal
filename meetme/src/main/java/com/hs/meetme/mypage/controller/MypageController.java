@@ -216,19 +216,6 @@ public class MypageController {
 		return "mypage/myinfo_my_payment_list";
 	}
 	
-	//메인 유저정보 
-	@GetMapping("/mainMyinfo")
-	public String mainMyinfo(Model model, MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
-		String userId = accountVO.getUserId();
-		
-		myPageUserInfoVO.setUserId(userId);
-		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
-		return "mypage/myinfo_main";
-	}
-	
 	@GetMapping("/getNoticeList")
 	@ResponseBody
 	public List<NoticeVO> getMynotice(NoticeVO vo){
