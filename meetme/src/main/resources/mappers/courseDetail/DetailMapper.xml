@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.hs.meetme.coursedetail.mapper.DetailMapper">
-
-	<!-- <select id="getCourse" resultType="DetailVO">
-		SELECT c.COURSE_NAME,
-		c.REGION, o.AVG_COST
-		FROM course c JOIN course_order o
-		ON c.COURSE_ID =
-		o.COURSE_ID
-	</select> -->
-
-	<!-- <select id="getCourse" resultType="DetailVO"> SELECT PLACE_NAME, REGION, 
-		AVG_COST FROM PLACE WHERE REGION = (SELECT DISTINCT REGION FROM COURSE ) 
-		</select> -->
+<mapper namespace="com.hs.meetme.coursedetail.mapper.DetailMapper">
 
 	<!-- 코스 상세보기 누르면 나오는 것 -->
 	<select id="getCourse" parameterType="int" resultType="DetailVO">
@@ -22,8 +9,13 @@
 	        u.nickname,
 	        co.course_comment,
 			SUBSTR(P.ADDRESS,'1',INSTR(P.ADDRESS,' ',1,1)-1) ADDRESS,
-			P.PLACE_NAME, P.AVG_COST, P.THUMBNAIL_HREF, CO.COURSE_ORDER,
-			p.latitude, p.longtitude
+			P.PLACE_NAME, 
+			P.AVG_COST, 
+			P.THUMBNAIL_HREF, 
+			CO.COURSE_ORDER,
+			p.latitude, 
+			p.longtitude, 
+			p.description
 	    FROM 
 	        COURSE C 
 	    JOIN 
