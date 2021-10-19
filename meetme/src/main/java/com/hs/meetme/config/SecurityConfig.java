@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.ignoringAntMatchers("/post/ckeditor/**")
         	.ignoringAntMatchers("/vue/**")
         	.ignoringAntMatchers("/api/course/register")
+        	.ignoringAntMatchers("/api/course/registerCouple")
+        	.ignoringAntMatchers("/api/course/modifyCourse")
 //        http.csrf().disable()
         ;
     }

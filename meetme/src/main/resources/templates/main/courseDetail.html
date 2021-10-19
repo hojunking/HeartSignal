@@ -123,11 +123,81 @@
 			centerLat = centerLat / detail.length;
 			centerLng = centerLng / detail.length;
 			// 중심 좌표 계산
-
+			
+			// 줌 계산
+			let highGap = 0;
+			let zoomNum = 0;
+			if(detail.length == 1) {
+				zoomNum = 12;
+			} else if (detail.length == 2){
+				let courseOne = {
+					lat: parseFloat(detail[0].latitude),
+					lng: parseFloat(detail[0].longtitude)
+				};
+				let courseTwo = {
+					lat: parseFloat(detail[1].latitude),
+					lng: parseFloat(detail[1].longtitude)
+				};
+				let resultCourse = {
+					lat: courseOne.lat - courseTwo.lat,
+					lng: courseOne.lng - courseTwo.lng
+				}
+				
+				if(resultCourse.lat < 0) {
+					resultCourse.lat = -(resultCourse.lat)
+				}
+				if(resultCourse.lng < 0) {
+					resultCourse.lng = -(resultCourse.lng)
+				}
+				
+				let result = Math.sqrt(
+					Math.pow(resultCourse.lng, 2) + 
+					Math.pow(resultCourse.lat, 2)
+				)
+				highGap = result;
+				zoomNum = 12 - Math.round(highGap);
+			} else {
+				
+				for(let i=0; i<detail.length; i++) {
+					for(let j=0; j<i; j++) {
+						let courseOne = {
+							lat: parseFloat(detail[i].latitude),
+							lng: parseFloat(detail[i].longtitude)
+						};
+						let courseTwo = {
+							lat: parseFloat(detail[j].latitude),
+							lng: parseFloat(detail[j].longtitude)
+						};
+						let resultCourse = {
+							lat: courseOne.lat - courseTwo.lat,
+							lng: courseOne.lng - courseTwo.lng
+						}
+						
+						if(resultCourse.lat < 0) {
+							resultCourse.lat = -(resultCourse.lat)
+						}
+						if(resultCourse.lng < 0) {
+							resultCourse.lng = -(resultCourse.lng)
+						}
+						
+						let result = Math.sqrt(
+							Math.pow(resultCourse.lng, 2) + 
+							Math.pow(resultCourse.lat, 2)
+						)
+						
+						if(highGap < result) {
+							highGap = result;
+							zoomNum = 12 - Math.ceil(highGap);
+						}
+					}
+				}
+			}
+			// 줌계산 끝
+			
 			// 지도 생성
 			let map = new naver.maps.Map('map', {
 				center: new naver.maps.LatLng(centerLat, centerLng),
-				zoom: 10
+				zoom: zoomNum // 줌계산 후
 			});
 			// 지도 생성
 

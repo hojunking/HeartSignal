@@ -20,5 +20,7 @@ public interface PlaceService {
 	List<TagVO2> getTagsSelected(int placeId);
 	
 	List<PlaceVO> getListBySearched(String[] keywords); // 검색 결과
+	
+	List<PlaceVO> getListByCourseId(String courseId);
 
 }
