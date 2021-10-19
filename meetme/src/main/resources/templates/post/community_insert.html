@@ -17,9 +17,13 @@
 			height: 100%;
 			overflow-y: auto;
 		}
-		.modal-dialog { width: 100%; height: 100%; margin: 0; padding: 0; }
 
-
+		.modal-dialog {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
 	</style>
 </th:block>
 
@@ -29,8 +33,7 @@
 	<div class="container  bg-tint-primary" align="center">
 		<br>
 		<div>
-			<br><br><br><br>
-			<h2>게시판 글쓰기</h2>
+			<h2>게시판 글쓰기</h2> 
 		</div>
 		<br>
 		<div class="card-content">
@@ -39,17 +42,17 @@
 				<div class="form-group">
 
 					<div class="row mt-3 justify-content-end d-flex mr-100">
-						<div class="col-lg-9-10"></div>
+						<div class="col-lg-9"></div>
 						<div class="col-lg-1  d-flex">
 							<button href="#" id="btnCancel" style="background-color: white;"
-								class="btn btn-rise btn-outline-light p-0 size-50 d-flex rounded-circle"
+								class="btn btn-rise btn-outline-primary p-0 size-50 d-flex rounded-circle mx-1"
 								data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="취소">
 								<div class="btn-rise-bg bg-primary"></div>
 								<div class="btn-rise-text"><i class="fs-3 icon-Repeat-6"></i></div>
 							</button>
-
+							
 							<button href="#" id="btnSave" style="background-color: white;"
-								class="btn btn-rise btn-outline-light p-0 size-50 d-flex rounded-circle"
+								class="btn btn-rise btn-outline-primary p-0 size-50 d-flex rounded-circle"
 								data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="저장">
 								<div class="btn-rise-bg bg-primary"></div>
 								<div class="btn-rise-text"><i class="fs-3 bi bi-check"></i></div>
@@ -83,13 +86,14 @@
 					<!-- <label for="inp-type-5" class="col-sm-2 control-label">코스 가져오기</label> -->
 					<br>
 					<div class="courseShow d-flex justify-content-center"></div>
+					<br>
 					<div class="col-sm-10" id="modalShow">
 						<span>
 							<a href="#modalBasic" id="courseBtn" data-bs-toggle="modal" aria-expanded="false"
 								class="courseBtn btn btn-outline-danger mb-2 me-1">내 코스 가져오기</a>
 						</span>
 					</div>
-					
+
 					<br>
 				</div>
 
@@ -101,46 +105,54 @@
 			<!-- 코스 가져오기 모달 -->
 			<!--Modal basic-->
 			<div class="modal fade" id="modalBasic" tabindex="-1" aria-labelledby="modalBasicLabel" aria-hidden="true">
-				<div class="modal-dialog" style="max-width: 100%; width: 80%; display: table;">
+				<div class="modal-dialog" style="max-width: 100%; width: 65%; display: table;">
 					<div class="modal-content border-0">
 						<div class="modal-header border-0 bg-gradient-tint justify-content-center">
-							<h5 class="modal-title">내 코스 가져오기</h5>
+							<h5 class="modal-title fs-3">내 코스 가져오기</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 								<i class="bi bi-x fs-5 lh-1"></i>
 							</button>
 						</div>
 
 						<div class="modal-body py-5 border-0 " id="modalBody">
+							<!--선택 되어있을 때-->
+							<div class="justify-content-between courseWrap1 d-none">코스는 한 번에 <mark>하나만</mark> 입력할 수 있어요! <br> 삭제하고 다시
+								선택하시겠어요?</div>
 							<!-- <section class="min-height-100">
 								<div class="container py-7 py-lg-12"> -->
-									<div class="row">
-										<!--저장된 코스 없는 사람일때-->
-										<div th:if="${#lists.isEmpty( list )}" >
+							<div class="row courseNo">
+								<!--저장된 코스 없는 사람일때-->
+								<div th:if="${#lists.isEmpty( list )}" >
 											아직 생성한 코스가 없어요~
 										</div>
-										<div class="col-md-5 col-lg-4 mb-5 mb-md-0">
+										<div class="col-md-5 col-lg-5 mb-5 mb-md-0">
 											<div class="nav nav-indicator nav-indicator-dark d-flex flex-md-column  me-md-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 												<th:block th:if="${not #lists.isEmpty( list )}" th:each="row : ${list}">
 													<a class="nav-link px-4 py-3 mb-md-3" th:href="|#course-${row.courseId}|" data-bs-toggle="pill" th:data-bs-target="|#course-${row.courseId}|" role="tab" th:aria-controls="|course-${row.courseId}|" aria-selected="false">
-														<h5 class="text-reset" th:text="${row.courseName}"></h5>
+														<h5 class="text-reset fs-4" th:text="${row.courseName}"></h5>
 														<span th:text="${row.region}"></span>
 													</a>
 												</th:block>
-												<span class="nav-indicator-bg bg-gradient-tint rounded-3 position-absolute d-block" style="width: 280px; height: 90px; left: 85px; top: 3002px;"></span>
+												<span class="nav-indicator-bg bg-gradient-tint rounded-3 position-absolute d-block" style="width: 200px; height: 90px; left: 85px; top: 3002px;"></span>
 											</div>
 										</div>
 
-										<div class="col-md-7 col-xl-6">
-											<div class="tab-content" id="tab-panel" width="100%">
+										<div class="col-md-7">
+											<div class="tab-content card-hover" id="tab-panel" width="100%">
 												<th:block th:if="${not #lists.isEmpty( list )}" th:each="row : ${list}">
-													<div class="tab-pane fade" th:id="|course-${row.courseId}|" role="tabpanel" th:aria-labelledby="|course-${row.courseId}-tab|">
+													<div class="tab-pane fade card-body" th:id="|course-${row.courseId}|" role="tabpanel" th:aria-labelledby="|course-${row.courseId}-tab|">
 														<th:block th:each="place : ${places}">
 															<th:block th:if="${place.courseId} == ${row.courseId}">
-																<img th:src="${place.thumbnailHref}" alt="" class="img-fluid w-md-50 mb-4">
-																<p class="mb-5 w-md-75 lead" th:text="${place.placeName}"></p>
+																<div class="d-block position-relative overflow-hidden mb-2">
+																	<img th:src="${place.thumbnailHref}" alt="" class="img-fluid rounded img-zoom  w-md-50 mb-4">
+																	<p class="mb-2 w-md-75 lead fs-3 text-secondary"  th:text="${place.placeName}"></p>
+																	<p class="mb-3 w-md-75 lead text-muted" th:text="${place.description}"></p>
+																</div>
+																<hr class="m-3">
+									
 															</th:block>
 														</th:block>
-														<a href="#!" th:id="|courseInsertBtn${row.courseId}|" style="color: #e45858;" class="text-dark fw-semibold link-hover-underline" th:data-id="${row.courseId}" th:data-name="${row.courseName}">이 코스 추천하기
+														<a href="#!" th:id="|courseInsertBtn${row.courseId}|" style="color: #e45858;" class="text-dark fw-semibold link-hover-underline fs-4" th:data-id="${row.courseId}" th:data-name="${row.courseName}">이 코스 추천하기
 															<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right ms-1" viewBox="0 0 16 16">
 																<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
 															</svg>
@@ -152,11 +164,11 @@
 									</div>
 								<!--</div>
 							 </section> -->
+							</div>
                             <div class="modal-footer bg-gradient-tint border-0">
                                 <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">닫기</button>
                                 <!-- <button type="submit" class="btn btn-primary btn-sm" id="courseInsertBtn">입력하기</button> -->
                             </div>
-                        </div>
                     </div>
                 </div>
 			
@@ -292,7 +304,7 @@
 
 		function getCourse(data) {
 
-			if($('.courseShow').html()==""){
+			if($('.courseShow').html()==''){
 				//선택된게 없을 때
 				$.ajax({
 					url: "/post/getMyCourse?userId="+data,
@@ -316,10 +328,10 @@
 
 		//선택되어있을 경우 경고창!
 		function getAlert(){
-			$('#modalBody').empty();
-			let courseWrap = $("<div />").addClass(" justify-content-between courseWrap").html("코스는 한 번에 하나만 입력할 수 있어요! <br> 삭제하고 다시 선택하시겠어요?");
-
-			$('#modalBody').append(courseWrap);
+			$('.courseNo').addClass("d-none");
+			$(".courseWrap1").removeClass("d-none")
+			
+		
 		}
 
 		//https://bootstraplovers.com/assan/4.3/demo/src/component-tabbbed-content.html 이거 맨 밑에꺼 써보기~
@@ -363,7 +375,7 @@
 		function showTitle(id, name){
 			$('#modalBasic').modal("hide");
 			
-			let showTitle = $('<div />').addClass('showTitle').text("선택하신 코스: "+name);
+			let showTitle = $('<div />').addClass('showTitle fs-4').text("선택하신 코스: "+name);
 			let closeBtn = $('<button />').addClass("btn-close")
 										  .attr({'type':'button'},{"data-bs-dismiss":"toast"},{"aria-label":"Close"})
 										  .on("click", function(){
@@ -378,6 +390,8 @@
 
 		function deleteCourse(){
 			$('.courseShow').empty();
+			$('.courseNo').removeClass("d-none");
+			$(".courseWrap1").addClass("d-none")
 		}
 	</script>
 
