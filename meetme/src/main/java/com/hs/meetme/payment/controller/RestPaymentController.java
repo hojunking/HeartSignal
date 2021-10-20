@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.meetme.coupleinfo.domain.CoupleInfoVO;
 import com.hs.meetme.coupleinfo.service.CoupleInfoService;
+import com.hs.meetme.notice.domain.NoticeVO;
+import com.hs.meetme.notice.service.NoticeService;
 import com.hs.meetme.payment.api.GetTokenAPI;
 import com.hs.meetme.payment.api.RefundAPI;
 import com.hs.meetme.payment.domain.PaymentVO;
@@ -27,7 +29,8 @@ import com.hs.meetme.useraccess.domain.AccountVO;
 public class RestPaymentController {
 	@Autowired PaymentService payService;
 	@Autowired CoupleInfoService coupleService;
-	
+	@Autowired NoticeService noticeService;
+	//Account VO는 다 session update
 	@PostMapping("/payment") //결제
 	public String paymentInsert(PaymentVO vo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -54,6 +57,7 @@ public class RestPaymentController {
 				System.out.println("사용자 상태변경:"+oc);
 				oc.setUserId(oc.getUserRequest()); //userId에 req를 넣느다.
 				coupleService.userCoupleStatusUpdate(oc); //유저테이블의 coupleStatus 둘 다 y변경
+				accountVO.setCoupleStatus(oc.getCoupleStatus());
 				result="커플로그기간이 새롭게 갱신되었습니다.\n"
 						+ "감사합니다.";
 									//커플테이블의 상태가 n일 때 기존커플테이블 갱신
@@ -82,17 +86,21 @@ public class RestPaymentController {
 			
 			oc =coupleService.read(oc);
 			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
+			accountVO.setCoupleStatus(oc.getCoupleStatus());
 			result="커플로그가 시작되었습니다. \n"
 					+ "감사합니다.";
 		}	//커플테이블에 대한 정보가 없을 때 신규테이블 생성
+		
 		return result;
 	}
 	
 	
 	@PostMapping("/refund") //환불하기
-	public String refund(PaymentVO vo) { //결제정보 merchantUid를 들고 옵니다
+	public String refund(PaymentVO vo, HttpServletRequest request) { //결제정보 merchantUid를 들고 옵니다
 		GetTokenAPI getToken =new GetTokenAPI();
 		RefundAPI refund = new RefundAPI();
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		
 		System.out.println("가장최근결제정보:"+vo);
 		String json=getToken.getToken(); //토큰 받아오기 API 메소드 실행
@@ -134,25 +142,36 @@ public class RestPaymentController {
         
         //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
+        NoticeVO nvo =new NoticeVO();
         cvo.setUserId(vo.getUserId());
         cvo= coupleService.userCoupleStatusRead(cvo); 
         String message ="";
 	        if(cvo.getCoupleStatus().equals("w")) { //결제를 하고 커플 매칭에 실패하여 환불
+	        	
 	        	coupleService.deleteCoupleInfo(cvo); //커플 테이블을 삭제해줌
 	        	
 	        	cvo.setCoupleStatus("n"); //커플 상태를 w->n으로 다시 변경
+	        	accountVO.setCoupleStatus("n");
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	
-	        	
 	        	message="환불되었습니다!";
+	        }else if(cvo.getCoupleStatus().equals("s")) {
+	        	 nvo.setUserSent(String.valueOf(cvo.getUserId()));
+	        	noticeService.deleteNotice(nvo); //커플 신청한 정보까지 제거
+	        	
+	        	coupleService.deleteCoupleInfo(cvo); //커플 테이블을 삭제해줌
+	        	cvo.setCoupleStatus("n"); //커플 상태를 w->n으로 다시 변경
+	        	accountVO.setCoupleStatus("n");
+	        	coupleService.userCoupleStatusUpdate(cvo);
 	        }else{  //구독 중 커플의 환불
 	        	cvo.setSubTerm(0); //구독기간 초기화
 	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
+	        	accountVO.setCoupleStatus("e");
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	message="환불되었습니다! \n"
 	        			+ "더 나은 우리 오늘 뭐해?가 되도록 노력하겠습니다.";
 	        }
-        
+	        
 		return message;
 	}
 	

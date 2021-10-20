@@ -23,7 +23,7 @@
       <section class="position-relative bg-tint-primary overflow-hidden p-5">
          <div class="col-lg-8 col-xl-7 mx-auto text-center">
             <h2 class=" display-6 aos-init" data-aos="fade-down" data-aos-duration="100"
-               th:text="${list.postTitle}"></h2>
+               th:text="${list.postTitle}" id="postTitle"></h2>
          </div>
 
          <!-- <div id="userCheck" class="row mt-3 d-flex justify-content-end"> -->
@@ -862,7 +862,9 @@
 
       // 댓글 입력
       function confirmIns(data) {
-         $.ajax({
+    	  let postTitle=$('#postTitle').text(); //댓글 알림에 게시글 제목을 넣기위한 작업입니당.
+    	  data.postTitle=postTitle;
+    	  $.ajax({
             url: "/post/insertCMComment",
             method: "post",
             data: JSON.stringify(data),

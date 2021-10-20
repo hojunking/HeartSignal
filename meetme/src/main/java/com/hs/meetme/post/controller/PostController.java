@@ -193,7 +193,7 @@ public class PostController {
 			nVo.setUserSent(vo.getUserId()); 			//댓글 쓴 사람
 			nVo.setUserReceived(vo.getPostUserId()); 	//게시글 쓴 사람
 			nVo.setPostId(vo.getPostId()); 				// 게시글 번호 넣기
-			nVo.setNoticeContent(accountVO.getNickname()+"님이 게시글에 댓글을 달았습니다.");
+			nVo.setNoticeContent("\""+vo.getPostTitle()+"\"에 "+accountVO.getNickname()+"님이 댓글을 달았습니다.");
 			noticeService.insertNotice(nVo);
 			System.out.println("댓글달고 댓글정보 INSERT"+nVo);
 		}
