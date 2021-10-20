@@ -106,7 +106,8 @@
 				.append($('<i class="fs-3 text-white bi bi-x"/>'));
 			// lightbox 닫기 버튼 위치 설정
 			
-			const lbContents = $('.lb-contents');
+			const lbContents = $('<div class="lb-contents"/>');
+			
 
 			$(lbContainer).click(()=>{
 				$(lbContainer).append(lbContents);
