@@ -104,7 +104,7 @@
    <!-- 수정하기 -->
    <update id="postUpdate">
       update post set post_title=#{postTitle},
-      post_content=#{postContent}, post_updated=sysdate where
+      post_content=#{postContent}, post_updated=sysdate, course_id=#{courseId} where
       post_id=#{postId}
    </update>
 

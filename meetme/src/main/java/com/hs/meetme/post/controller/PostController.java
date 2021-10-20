@@ -144,17 +144,29 @@ public class PostController {
 
 	// 커뮤니티 수정 할 페이지
 	@GetMapping("/updateCommunity")
-	public String updateCommunity(Model model, PostVO vo) {
-		model.addAttribute("list", pService.getPost(Long.parseLong(vo.getPostId())));
+	public String updateCommunity(Model model, PostVO vo,  MyPageCourseVO pVo) {
+		PostVO list = pService.getPost(Long.parseLong(vo.getPostId()));
+		model.addAttribute("list", list);
+		String courseId = list.getCourseId();
+		
+		if (courseId != null) {
+			model.addAttribute("course", pService.getCourse(courseId));
+		}
+		String userId = list.getUserId();
+		pVo.setUserId(userId);
+		model.addAttribute("cList", pService.getCourseList(pVo));
+		model.addAttribute("places", pService.getPlaceList(pVo));
+		
 		return "post/community_update";
 	}
 
 	// 커뮤니티 수정
 	@PostMapping("/updateCommunity")
-	public String update_community(@ModelAttribute PostVO vo) {
-
+	public String update_community(@ModelAttribute PostVO vo, HttpServletResponse update/* , HttpSession session */) {
+		System.out.println("vo =="+vo);
 		pService.postUpdate(vo);
 		int postId = Integer.parseInt(vo.getPostId());
+		System.out.println("postId == "+postId);
 		String page = "redirect:/post/get_community/"+postId;
 		return page;
 	}
@@ -193,7 +205,7 @@ public class PostController {
 			nVo.setUserSent(vo.getUserId()); 			//댓글 쓴 사람
 			nVo.setUserReceived(vo.getPostUserId()); 	//게시글 쓴 사람
 			nVo.setPostId(vo.getPostId()); 				// 게시글 번호 넣기
-			nVo.setNoticeContent(accountVO.getNickname()+"님이 게시글에 댓글을 달았습니다.");
+			nVo.setNoticeContent("\""+vo.getPostTitle()+"\"에 "+accountVO.getNickname()+"님이 댓글을 달았습니다.");
 			noticeService.insertNotice(nVo);
 			System.out.println("댓글달고 댓글정보 INSERT"+nVo);
 		}

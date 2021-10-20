@@ -22,13 +22,6 @@ div{
 </th:block>
 
 <th:block layout:fragment="content">
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<!-- 임시로 헤더 밑에가게 -->
-
 	<div class="container">
 		<form class="form-horizontal form-view"
 			th:action="@{/coupleLog/coupleLogUpdate}" th:object="${log}"
@@ -119,7 +112,7 @@ div{
 	$(document).ready(
 			function() {
 				$("#updateBtn").on("click",function(){
-					alert("수정되었습니다");
+					("수정되었습니다");
 				});
 				
 				

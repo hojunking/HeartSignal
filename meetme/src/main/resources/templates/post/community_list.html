@@ -60,7 +60,7 @@
              </div>
                <br>
            <!--로그인 했을 때만 글쓰기 버튼 보이도록!-->
-            <li class="align-items-end" th:if="${session.userSession.userId} !=null">
+            <li class="align-items-end" th:if="${session.userSession} !=null">
                <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="300" class="btn_wrap text-right  position-relative aos-init" align="right" >
                   <a th:href="@{/post/community_insert}" class="btn btn-secondary btn-hover-arrow">글쓰기</a>
                </div>

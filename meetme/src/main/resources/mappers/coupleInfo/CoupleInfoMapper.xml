@@ -120,7 +120,7 @@
                 OR USER_RECEIVED =#{userId})
 </update>
 <select id="userCoupleStatusRead" resultType="CoupleInfoVO"> <!-- 유저의 커플상태 불러오기 -->
-	SELECT COUPLE_STATUS
+	SELECT COUPLE_STATUS,USER_ID
 	FROM USER_INFO
 	WHERE USER_ID =#{userId}
 </select>

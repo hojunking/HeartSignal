@@ -68,7 +68,7 @@
 												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
 													<li class="d-flex justify-content-between align-items-center mb-2">
 														<span class="small">구독권 이용기간</span>
-														<span class="small" id="endDate">3개월</span>
+														<span class="small" id="endDate"></span>
 													</li>
 												</th:block>
 											</ul>
@@ -87,9 +87,9 @@
 								<div class="d-flex flex-column h-100">
 									<nav class="nav mb-3 nav-pills">
 										<a href="main" class="nav-link active"><i
-												class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+												class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
 										<a href="myinfo_my_course_list" class="nav-link"><i
-												class="bi bi-people me-2 align-middle"></i>저장된 코스</a> <a
+												class="bi bi-geo-alt me-2 align-middle"></i>저장된 코스</a> <a
 											href="myinfo_my_write_list" class="nav-link"><i
 												class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a> <a
 											href="myinfo_my_comment_list" class="nav-link"><i
@@ -181,17 +181,18 @@
 																	<li class="step-item" data-aos="fade-left">
 																		<div class="step-row">
 																			<span class="step-icon bg-tint-primary text-primary custom" >
-																				<!--ICON-DOT--> <i th:if="${notice.postId}!=null"
-																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-postid="${notice.postId}" onclick=""></i>
+																				<!--ICON-DOT--> 
+																				<i th:if="${notice.postId}!=null"
+																				class="bi bi-reply-fill text-primary align-middle lh-1" th:data-noticeId="${notice.noticeId}" th:data-postId="${notice.postId}" onclick="noticeCommentFunc(this)"></i>
 																				
-																				<i th:if="${notice.postId}==null"
+																				<i th:if="${notice.postId}==null" 
 																				class="bi bi-heart-fill text-primary align-middle lh-1" onclick=""></i>
 																			</span>
 																			<div class="step-content">
 																				<span th:if="${notice.noticeConfirmed=='n'}" class="badge bg-success">읽지않음</span>
 																				<br th:if="${notice.noticeConfirmed=='n'}">
 																				<small class="mb-2 text-muted">[[${#dates.format(notice.noticeDate,'MM월
-																					dd일, yyyy aaHH:mm')}]]</small>
+																					dd일, yyyy aahh:mm')}]]</small>
 																				<button type="button" class="btn-close"
 																					th:data-noticeId="${notice.noticeId}"
 																					onclick="noticeDelFunc(this)">
@@ -226,8 +227,14 @@
 		function noticeDelFunc(obj) {
 			let noticeId = $(obj).attr('data-noticeId');
 			let li = $(obj).closest("li");
-			let result = confirm("삭제하시겠습니까?");
-			if (result) {
+			//let result = confirm("삭제하시겠습니까?");
+			swal({
+				title: "알림을 삭제하시겠습니까?",
+				text: "",
+				icon: "info", //"info,success,warning,error" 중 택1
+				buttons: ["아니요", "네"],
+			}).then((네) =>{
+			if(네) {
 				$.ajax({
 					url : "deleteNotice",
 					type : 'DELETE',
@@ -238,7 +245,8 @@
 					//contentType:'application/json;charset="UTF-8"',
 					success : function(result) {
 						if (result == true) {
-							alert("알림이 삭제 되었습니다.")
+							//alert("알림이 삭제 되었습니다.")
+							swal("알림이 삭제 되었습니다","","success");
 							$(li).remove();
 						}
 					},
@@ -246,7 +254,25 @@
 					}
 				})//ajax end==
 			}
-		}
+		});
+		}//알림내역함수 끝
+		//게시물 댓글 알림 함수 (업데이트 및 페이지 이동)
+        function noticeCommentFunc(obj) {
+                let noticeId = $(obj).attr('data-noticeId');
+                let postId = $(obj).attr('data-postId');
+                
+                    $.ajax({
+                    url: "/updateConfirmed/"+noticeId,
+                    method: "put",
+                    success: function() {
+                        location.href="/post/get_community/"+postId;
+                    },
+                    error: function(e){
+                    	console.error(e);
+                    }
+
+                });
+        } //function 종료
 		
 		const btnTags = $('.btn-tag');
 		const myTags = $('.myTags');
@@ -270,12 +296,13 @@
 
 			// 태그 클릭 이벤트
 			$(btnTags).on("click", (e)=>{
-				if($(origin).parent().hasClass('showMyTags')){
-					return;
-				}
 				let origin = e.target; // $('.btn-tag')
 				let clone = $(origin).clone();
 				let condition = $(origin).parent().hasClass('myTags');
+				
+				if($(origin).parent().hasClass('showMyTags')){
+					return;
+				}
 				
 				if(!condition){
 					if($(myTags).children().length >= 5){
@@ -345,7 +372,7 @@
 						coupleId: Number(userSession.coupleId)
 					},
 					success: (data)=>{
-						$('#endDate').text(data.endDate)
+						$('#endDate').text('~'+data.endDate)
 					},
 					error: (err)=>{
 						console.log(err);

@@ -496,7 +496,7 @@
 			//새 비밀번호 유효성 검사
 			$("#pass2").on('keyup', function () {
 				if (false === reg.test($("#pass2").val())) {
-					$("#pass2").attr("class", "form-control is-invalid");
+					$("#pass2").attr("class", "form-control mb-3 is-invalid");
 					$("#password_message3").attr("class", "invalid-feedback");
 					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
 					isPassword2 = false;
@@ -587,8 +587,8 @@
 			//현재 닉네임 중복 확인
 			$("#nick1").on('keyup', function () {
 
-				if ($("#nick1").val().search(/\s/) != -1 || $("#nick1").val().search(
-					/[~!@#$%^&*()_+|<>?:{}]/) != -1) {
+				if ($("#nick1").val().search(/\s/) != -1 ||
+					$("#nick1").val().search(/[~!@#$%^&*()_+|<>?:{}]/) != -1) {
 					$("#nick1").attr("class", "form-control is-invalid");
 					$("#nickName_message").attr("class", "invalid-feedback");
 					$("#nickName_message").text("특수문자 또는 공백을 입력할 수 없습니다");

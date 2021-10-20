@@ -23,7 +23,7 @@
       <section class="position-relative bg-tint-primary overflow-hidden p-5">
          <div class="col-lg-8 col-xl-7 mx-auto text-center">
             <h2 class=" display-6 aos-init" data-aos="fade-down" data-aos-duration="100"
-               th:text="${list.postTitle}"></h2>
+               th:text="${list.postTitle}" id="postTitle"></h2>
          </div>
 
          <!-- <div id="userCheck" class="row mt-3 d-flex justify-content-end"> -->
@@ -65,10 +65,12 @@
                               <div class="order-last order-lg-1 col-lg-7">
                                  <h2 class="mb-3 display-5 aos-init aos-animate fs-3" data-aos="fade-up">코스 추천
                                  </h2>
+                                 <br>
                                  <div style="margin-left: 20px; ">
-                                    <span class="icon-Air-Balloon" th:utext="| 코스 이름 : ${course[0].courseName}|"></span>
-                                    <span class="icon-Compass-4" th:utext=" | 지역 : ${course[0].region}|"></span>
+                                    <span class="icon-Air-Balloon fs-6" th:utext="| 코스 이름 : ${course[0].courseName}|"></span><br>
+                                    <span class="icon-Compass-4 fs-6" th:utext=" | 지역 : ${course[0].region}|"></span>
                                  </div>
+                                 <br>
                                  <!--Accordions-->
                                  <div class="accordion accordion-custom mb-5 aos-init aos-animate"
                                     id="accordionCustomExample" data-aos="fade-right" data-aos-delay="150">
@@ -91,7 +93,7 @@
                                                    <p th:text="|설명 : ${c.description}|"></p>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                  <img th:src="${c.thumbnailHref}" alt="">
+                                                  <img class="img-thumbnail rounded " th:src="${c.thumbnailHref}" alt="">
                                                 </div>
                                              </div>
                                           </div>
@@ -862,7 +864,9 @@
 
       // 댓글 입력
       function confirmIns(data) {
-         $.ajax({
+    	  let postTitle=$('#postTitle').text(); //댓글 알림에 게시글 제목을 넣기위한 작업입니당.
+    	  data.postTitle=postTitle;
+    	  $.ajax({
             url: "/post/insertCMComment",
             method: "post",
             data: JSON.stringify(data),

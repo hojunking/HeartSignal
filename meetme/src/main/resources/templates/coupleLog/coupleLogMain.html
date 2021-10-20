@@ -1,39 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{/css/lightbox.min.css}">
 	<style>
-		.fontCus {
-			text-align: center;
-		}
+.fontCus {
+	text-align: center;
+}
 
-		img {
-			background-size: cover;
-		}
+img {
+	background-size: cover;
+}
 
-		.dodamFont,
-		h6,
-		.cusRec {
-			font-family: 'Nanum Gothic', sans-serif;
-			font-weight: 600;
-		}
+.dodamFont, h6, .cusRec {
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: 600;
+}
 
-		.lightbox{
-			top: 50% !important;
-			transform: translateY(-50%);
-		}
+.lightbox {
+	top: 50% !important;
+	transform: translateY(-50%);
+}
 
-		.lb-contents{
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
-		}
-	</style>
+.lb-contents {
+	color: blue !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+
+.lb-contents h1{
+	color: blue !important;
+}
+</style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -41,40 +45,48 @@
 		<div style="text-align: right;">
 			<button class="btn btn-primary cusRec" style="font-size: 13px;"
 				onclick="location.href='./coupleLogRecord'">기록하기</button>
-		</div> <!-- END OF 버튼 -->
+		</div>
+		<!-- END OF 버튼 -->
 		<br>
-		<div id="projects" data-isotope='{"layoutMode": "masonry"}' class="row g-2">
+		<div id="projects" data-isotope='{"layoutMode": "masonry"}'
+			class="row g-2">
 			<th:block th:if="${logList} != null">
-				<div class="col-md-6 col-lg-3 design development grid-item" th:each="c: ${logList}">
-					<a th:attr="href=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}"
+				<div class="col-md-6 col-lg-3 design development grid-item"
+					th:each="c: ${logList}">
+					<a
+						th:href="@{|/coupleLog/logOne?logId=${c.logId}|}"
 						th:data-lightbox="${c.imgUrl}" th:data-title="${c.caption}"
 						class="text-white bg-gradient-dark position-relative d-block overflow-hidden card-hover-2">
-						<img th:attr="src=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}, alt=${c.imgUrl}"
-						class="img-fluid img-zoom cusImg"> 
-						<div class="card-hover-2-overlay position-absolute start-0 top-0 w-100 h-100 d-flex px-4 py-5 flex-column justify-content-between dodamFont">
+						<img
+						th:attr="src=@{'/img/coupleLog/' + ${#strings.isEmpty(c.imgUrl) ? 'lavender.jpg' : c.imgUrl}}, alt=${c.imgUrl}"
+						class="img-fluid img-zoom cusImg">
+						<div
+							class="card-hover-2-overlay position-absolute start-0 top-0 w-100 h-100 d-flex px-4 py-5 flex-column justify-content-between dodamFont">
 							<div class="card-hover-2-header w-100">
 								<p class="mb-0" th:text="${c.logTitle}"></p>
-								<p class="mb-0" th:text="${c.caption}" style="font-size:12px; font-weight:100;"></p>
+								<p class="mb-0" th:text="${c.caption}"
+									style="font-size: 12px; font-weight: 100;"></p>
 							</div>
 							<div class="card-hover-2-footer w-100 mt-auto">
-								<span class="tags d-block flex-grow-1"></span> 
-								<span class="card-hover-2-footer-link"> 
-								<span th:text="${c.logUpdated}"></span>
+								<span class="tags d-block flex-grow-1"></span> <span
+									class="card-hover-2-footer-link"> <span
+									th:text="${c.logUpdated}"></span>
 								</span>
 							</div>
 						</div>
 					</a>
 					<!-- A 태그 끝-->
-				</div>	<!-- LOG LIST 끝 -->
+				</div>
+				<!-- LOG LIST 끝 -->
 			</th:block>
 		</div>
 	</div>
 	<!-- container-fluid -->
 </th:block>
 <th:block layout:fragment="script">
-	<script th:src="@{/js/lightbox/lightbox.min.js}"></script>
+	<!-- <script th:src="@{/js/lightbox/lightbox.min.js}"></script> -->
 	<script>
-		$(function(){
+		/* $(function(){
 			// lightbox 기본 설정
 			lightbox.option({
 				'resizeDuration': 400,
@@ -106,16 +118,24 @@
 				.append($('<i class="fs-3 text-white bi bi-x"/>'));
 			// lightbox 닫기 버튼 위치 설정
 			
-			const lbContents = $('.lb-contents');
-
-			$(lbContainer).click(()=>{
-				$(lbContainer).append(lbContents);
-			});
-
-			// 커플로그 상세 내용 (=> lbContents에 태그를 추가하는 방식으로)
-
+			let lbContents = $('<div class="lb-contents"/>');
+			$(lbContents).css("color","blue");
 			
-		});
+			//$(lbContainer).click(()=>{});
+			
+			$(lbContainer).append(lbContents);
+			
+			
+			// 커플로그 상세 내용 (=> lbContents에 태그를 추가하는 방식으로)			
+			let contentIn = '';
+			contentIn += '<h1>'+'제목' +'</h1>'
+					  +'<h2>'+'내용' + '</h2>'
+					  +'<h2>'+'날짜'+'</h2>';
+					  
+			console.log("contentIn="+contentIn);
+			$(lbContents).html(contentIn);
+						 
+		}); */
 	</script>
 </th:block>
 </html>
