@@ -144,17 +144,29 @@ public class PostController {
 
 	// 커뮤니티 수정 할 페이지
 	@GetMapping("/updateCommunity")
-	public String updateCommunity(Model model, PostVO vo) {
-		model.addAttribute("list", pService.getPost(Long.parseLong(vo.getPostId())));
+	public String updateCommunity(Model model, PostVO vo,  MyPageCourseVO pVo) {
+		PostVO list = pService.getPost(Long.parseLong(vo.getPostId()));
+		model.addAttribute("list", list);
+		String courseId = list.getCourseId();
+		
+		if (courseId != null) {
+			model.addAttribute("course", pService.getCourse(courseId));
+		}
+		String userId = list.getUserId();
+		pVo.setUserId(userId);
+		model.addAttribute("cList", pService.getCourseList(pVo));
+		model.addAttribute("places", pService.getPlaceList(pVo));
+		
 		return "post/community_update";
 	}
 
 	// 커뮤니티 수정
 	@PostMapping("/updateCommunity")
-	public String update_community(@ModelAttribute PostVO vo) {
-
+	public String update_community(@ModelAttribute PostVO vo, HttpServletResponse update/* , HttpSession session */) {
+		System.out.println("vo =="+vo);
 		pService.postUpdate(vo);
 		int postId = Integer.parseInt(vo.getPostId());
+		System.out.println("postId == "+postId);
 		String page = "redirect:/post/get_community/"+postId;
 		return page;
 	}

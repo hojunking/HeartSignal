@@ -65,10 +65,12 @@
                               <div class="order-last order-lg-1 col-lg-7">
                                  <h2 class="mb-3 display-5 aos-init aos-animate fs-3" data-aos="fade-up">코스 추천
                                  </h2>
+                                 <br>
                                  <div style="margin-left: 20px; ">
-                                    <span class="icon-Air-Balloon" th:utext="| 코스 이름 : ${course[0].courseName}|"></span>
-                                    <span class="icon-Compass-4" th:utext=" | 지역 : ${course[0].region}|"></span>
+                                    <span class="icon-Air-Balloon fs-6" th:utext="| 코스 이름 : ${course[0].courseName}|"></span><br>
+                                    <span class="icon-Compass-4 fs-6" th:utext=" | 지역 : ${course[0].region}|"></span>
                                  </div>
+                                 <br>
                                  <!--Accordions-->
                                  <div class="accordion accordion-custom mb-5 aos-init aos-animate"
                                     id="accordionCustomExample" data-aos="fade-right" data-aos-delay="150">
@@ -91,7 +93,7 @@
                                                    <p th:text="|설명 : ${c.description}|"></p>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                  <img th:src="${c.thumbnailHref}" alt="">
+                                                  <img class="img-thumbnail rounded " th:src="${c.thumbnailHref}" alt="">
                                                 </div>
                                              </div>
                                           </div>
