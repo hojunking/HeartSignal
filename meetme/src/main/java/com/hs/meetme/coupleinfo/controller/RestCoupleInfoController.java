@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ import com.hs.meetme.coupleinfo.service.CoupleInfoService;
 import com.hs.meetme.image.service.ImageService;
 import com.hs.meetme.notice.domain.NoticeVO;
 import com.hs.meetme.notice.service.NoticeService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 @RestController
 
@@ -36,12 +40,11 @@ public class RestCoupleInfoController {
 		CoupleInfoVO cvo = new CoupleInfoVO();
 		cvo = coupleService.read(vo); // 커플정보 들고오기
 		SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(cvo.getStartDate());
 		cal.add(Calendar.MONTH, cvo.getSubTerm()); // 시작일에 구독기간(월) 더하기 => 만료일
 		Date endDate = cal.getTime();
-
 		Date sysdate = new Date(); // 현재 날짜
 
 		System.out.println("커플로그 만료기간은" + simpleDate.format(endDate) + "입니다");
@@ -72,7 +75,20 @@ public class RestCoupleInfoController {
 		System.out.println("정상적인 입장");
 		return cvo;
 	}
-
+	@GetMapping("/endDate")
+	public CoupleInfoVO readEndDate(CoupleInfoVO vo) {
+		vo =coupleService.read(vo);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(vo.getStartDate());
+		cal.add(Calendar.MONTH, vo.getSubTerm()); // 시작일에 구독기간(월) 더하기 => 만료일
+		Date endDate = cal.getTime();
+		vo.setEndDate(endDate);
+		
+		return vo;
+	}
+	
+	
 	// 커플 디폴트 이미지로 바꾸기
 	@GetMapping("/defaultImage")
 	public String defaultImage(@RequestParam int coupleId) {
@@ -82,10 +98,19 @@ public class RestCoupleInfoController {
 	}
 
 	@PutMapping("/matching")
-	public String matchingUpdate(CoupleInfoVO vo) {
+	public String matchingUpdate(CoupleInfoVO vo, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		
 		System.out.println("매칭하는 중 "+ vo);
 		
-		coupleService.coupleMatching(vo);
+		coupleService.coupleMatching(vo); //received 커플창에 업데이트
+		
+		vo.setUserId(vo.getUserReceived()); 
+		vo.setCoupleStatus("y");
+		coupleService.userCoupleStatusUpdate(vo); //유저들 상태 y로 업데이트
+		
 		NoticeVO nvo =new NoticeVO();
 		
 		String coupleId= String.valueOf(vo.getCoupleId());
@@ -94,7 +119,9 @@ public class RestCoupleInfoController {
 		nvo.setCoupleId(coupleId);
 		noticeService.deleteNotice(nvo);
 		
-		return "커플매칭이 되었습니다 축하합니다!";
+		accountVO.setCoupleId(coupleId); //세션아이디 최신화
+		
+		return "커플매칭이 되었습니다!";
 	}
 
 	@GetMapping("/coupleInfo/{id}") // 커플테이블정보와 나의 정보 불러오기

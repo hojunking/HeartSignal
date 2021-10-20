@@ -3,6 +3,9 @@ package com.hs.meetme.payment.controller;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,6 +20,7 @@ import com.hs.meetme.payment.api.GetTokenAPI;
 import com.hs.meetme.payment.api.RefundAPI;
 import com.hs.meetme.payment.domain.PaymentVO;
 import com.hs.meetme.payment.service.PaymentService;
+import com.hs.meetme.useraccess.domain.AccountVO;
 
 
 @RestController
@@ -25,8 +29,9 @@ public class RestPaymentController {
 	@Autowired CoupleInfoService coupleService;
 	
 	@PostMapping("/payment") //결제
-	public String paymentInsert(PaymentVO vo) {
-		
+	public String paymentInsert(PaymentVO vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		payService.paymentInsert(vo); //결제정보 DB입력/
 		System.out.println("결제정보 :"+vo);
 		CoupleInfoVO oc = new CoupleInfoVO(); //커플정보 들고오기
@@ -39,7 +44,7 @@ public class RestPaymentController {
 		oc =coupleService.read(oc);  //커플의 기본정보 다 들고오기
 		System.out.println("커플정보 :"+oc);
 		
-			if(oc.getCoupleStatus().equals("n")) { //기존 커플의 상태확인
+			if(oc.getCoupleStatus().equals("n")) { //커플의 상태확인
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
 				oc.setCoupleStatus("y");		//커플의 상태 변경
 				
@@ -49,13 +54,14 @@ public class RestPaymentController {
 				System.out.println("사용자 상태변경:"+oc);
 				oc.setUserId(oc.getUserRequest()); //userId에 req를 넣느다.
 				coupleService.userCoupleStatusUpdate(oc); //유저테이블의 coupleStatus 둘 다 y변경
-				result="기존커플갱신되었습니다.";
+				result="커플로그기간이 새롭게 갱신되었습니다.\n"
+						+ "감사합니다.";
 									//커플테이블의 상태가 n일 때 기존커플테이블 갱신
 			
 			}else if(oc.getCoupleStatus().equals("y")){ //커플 연장하기
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(oc.getStartDate());
-				cal.add(Calendar.MONTH, oc.getSubTerm());
+				cal.add(Calendar.MONTH, oc.getSubTerm()); //연장 기간 더하기
 				Date endDate= cal.getTime();
 				
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
@@ -63,7 +69,8 @@ public class RestPaymentController {
 				coupleService.coupleInfoUpdate(oc); //커플테이블 최신화
 				
 			
-				result="기존커플 연장되었습니다."; //기존 커플의 연장 성공
+				result="커플로그기간 연장되었습니다.\n"
+						+ "감사합니다."; //기존 커플의 연장 성공
 			}else {
 				result="비정상적인 접근입니다.";
 			}
@@ -72,18 +79,20 @@ public class RestPaymentController {
 			oc.setUserRequest(vo.getUserId());
 			oc.setSubTerm(vo.getSubTerm());
 			coupleService.coupleInfoInsert(oc); //커플테이블에 신규등록
-			result="신규커플등록되었습니다.";
+			
+			oc =coupleService.read(oc);
+			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
+			result="커플로그가 시작되었습니다. \n"
+					+ "감사합니다.";
 		}	//커플테이블에 대한 정보가 없을 때 신규테이블 생성
 		return result;
 	}
 	
 	
-	@GetMapping("/refund") //환불하기
-	public String refund(PaymentVO vo) {
+	@PostMapping("/refund") //환불하기
+	public String refund(PaymentVO vo) { //결제정보 merchantUid를 들고 옵니다
 		GetTokenAPI getToken =new GetTokenAPI();
 		RefundAPI refund = new RefundAPI();
-		PaymentVO pvo = new PaymentVO();
-		vo= payService.latestpaid(vo);
 		
 		System.out.println("가장최근결제정보:"+vo);
 		String json=getToken.getToken(); //토큰 받아오기 API 메소드 실행
@@ -94,6 +103,7 @@ public class RestPaymentController {
 		+"아임포트 : "+vo.getMerchantUid());
 		
 		String refundDb= refund.Refund(vo); //환불 API 실행 후 결과 저장
+		// 환불할 때 필요한 정보는 merchantUid랑 tokken이다
 		//파싱 두번, response에서 또 get해서 value값 추출하면 db에 저장가능
 		
 		JSONParser parser = new JSONParser();
@@ -110,8 +120,8 @@ public class RestPaymentController {
             vo.setEmail(refundParsing.get("buyer_email").toString());
             vo.setUserName(refundParsing.get("buyer_name").toString());
             vo.setCancelAmount(Integer.parseInt(refundParsing.get("cancel_amount").toString()) );
-            vo.setMerchantUid(Integer.parseInt(refundParsing.get("merchant_uid").toString()));
-            System.out.println("들고온 친구들="+pvo);
+            vo.setMerchantUid(refundParsing.get("merchant_uid").toString());
+            System.out.println("들고온 친구들="+vo);
              
             //vo객체 안에 바로 넣어서 DB로 넘기면 된다.
              //cancel_amount,buyer_name,buyer_email,merchant_uid
@@ -119,25 +129,28 @@ public class RestPaymentController {
              System.out.println("변환에 실패");
              e.printStackTrace();
         }
-        payService.insertRefundInfo(pvo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
+        payService.insertRefundInfo(vo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
         
         
         //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
         cvo.setUserId(vo.getUserId());
-        coupleService.userCoupleStatusRead(cvo); 
+        cvo= coupleService.userCoupleStatusRead(cvo); 
         String message ="";
 	        if(cvo.getCoupleStatus().equals("w")) { //결제를 하고 커플 매칭에 실패하여 환불
 	        	coupleService.deleteCoupleInfo(cvo); //커플 테이블을 삭제해줌
+	        	
 	        	cvo.setCoupleStatus("n"); //커플 상태를 w->n으로 다시 변경
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	
-	        	message="커플매칭 실패 후 환불";
+	        	
+	        	message="환불되었습니다!";
 	        }else{  //구독 중 커플의 환불
 	        	cvo.setSubTerm(0); //구독기간 초기화
 	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
 	        	coupleService.userCoupleStatusUpdate(cvo);
-	        	message="커플구독 중 환불";
+	        	message="환불되었습니다! \n"
+	        			+ "더 나은 우리 오늘 뭐해?가 되도록 노력하겠습니다.";
 	        }
         
 		return message;

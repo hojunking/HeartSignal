@@ -1,152 +1,131 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout}">
 
 <th:block layout:fragment="css">
-  <style>
+    <style>
 
-  </style>
+    </style>
 </th:block>
 
 <th:block layout:fragment="content">
-<br>
-<br>
-<br>
-<br>
-        <!--Main content-->
 
-        <main class="main-content" id="main-content">
-            <section class="position-relative bg-white">
-                <div class="container position-relative pt-3 pb-4">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <nav class="d-md-flex" aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="#!">Home</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">
-                                        Profile
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <!--/.row-->
+    <!--Main content-->
 
-                </div>
-            </section>
-            <section class="position-relative">
-                <div class="container position-relative">
-                    <div class="overflow-hidden">
-                        
-                        <!--Profile info header-->
-                        <div class="position-relative pb-7 pb-lg-12">
-                            <div class="row">
-                                <div class="col-lg-3 mb-5 mb-lg-0">
-                                    <div class="h-lg-100">
-                                        <div class="card bg-gradient-light h-lg-100 p-3">
-                                            <div>
-                                                <!--profile image-->
-                                                <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
-                                                    style="background-image: url(/assets/img/avatar/4.jpg);">
-                                                </div>
-                                                <h4 class="mb-2">[[${userInfo.name}]]</h4>
-                                                <small class="d-block mb-3">[[${userInfo.nickName}]]</small>
-                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
-                                                        <span class="small">[[${myAddress}]]</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-globe me-2 align-middle text-muted"></i>
-                                                        <a href="#!"
-                                                            class="small link-hover-decoration">https://emilydoe.com/</a>
-                                                    </li>
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i
-                                                            class="bi bi-check fs-5 lh-1 text-success me-2 align-middle"></i>
-                                                        <span class="small">Available for hire</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-twitter me-2 align-middle text-muted"></i>
-                                                        <a href="#!" class="small link-hover-decoration">@emily.dev</a>
-                                                    </li>
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-linkedin me-2 align-middle text-muted"></i>
-                                                        <a href="#!" class="small link-hover-decoration">emilyatin</a>
-                                                    </li>
-                                                    <li class="d-flex align-items-stretch mb-2">
-                                                        <i class="bi bi-instagram me-2 align-middle text-muted"></i>
-                                                        <a href="#!" class="small link-hover-decoration">emily93</a>
-                                                    </li>
-                                                </ul>
-                                                <ul class="list-unstyled border-bottom pb-3 mb-3">
+    <main class="main-content" id="main-content">
+
+        <section class="position-relative pt-7">
+            <div class="container position-relative">
+                <div class="overflow-hidden">
+
+                    <!--Profile info header-->
+                    <div class="position-relative pb-7 pb-lg-12">
+                        <div class="row">
+                            <div class="col-lg-3 mb-5 mb-lg-0">
+                                <div class="h-lg-100">
+                                    <div class="card bg-gradient-light p-3">
+                                        <div>
+                                            <!--profile image-->
+                                            <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+                                                th:style="'background-position: center center; background-image: url(/img/user/'+${userInfo.imgUrl}+');'">
+                                            </div>
+                                            <h4 class="mb-2">[[${userInfo.name}]]</h4>
+                                            <small class="d-block mb-3">[[${userInfo.nickName}]]</small>
+                                            <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                <li class="d-flex align-items-stretch mb-2"><i
+                                                        class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
+                                                    <span class="small">[[${myAddress}]]</span></li>
+                                                <li class="d-flex align-items-stretch mb-2"><i
+                                                        class="bi bi-star fs-5 lh-1 text-muted me-2 align-middle"></i>
+                                                    <span
+                                                        class="small">[[${userInfo.birthYear}]]-[[${userInfo.birthDay}]]</span>
+                                                </li>
+                                                <li class="d-flex align-items-stretch mb-2"><i
+                                                        class="bi bi-envelope me-2 align-middle text-muted"></i> <a
+                                                        href=""
+                                                        class="small link-hover-decoration">[[${userInfo.email}]]</a>
+                                                </li>
+
+                                            </ul>
+                                            <ul class="list-unstyled border-bottom pb-3 mb-3">
+                                                <li class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="small">현재 상태</span>
+                                                    <span th:if="${userInfo.coupleStatus.toString().equals('n')}"
+                                                        class="small" th:text="솔로"></span>
+                                                    <span th:unless="${userInfo.coupleStatus.toString().equals('n')}"
+                                                        class="small" th:text="커플"></span>
+
+                                                </li>
+                                                <th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
                                                     <li class="d-flex justify-content-between align-items-center mb-2">
-                                                        <span class="small">Followers</span>
-                                                        <span class="fs-5">134</span>
+                                                        <span class="small">구독권 이용기간</span>
+                                                        <span class="small">3개월</span>
                                                     </li>
-                                                    <li class="d-flex justify-content-between align-items-center mb-2">
-                                                        <span class="small">Following</span>
-                                                        <span class="fs-5">23</span>
-                                                    </li>
-                                                </ul>
-                                                <div class="d-grid">
-                                                    <button class="btn btn-light border shadow-sm mb-2 py-1"
-                                                        type="button"><i
-                                                            class="bi bi-person-plus fs-6 align-middle lh-1"></i>
-                                                        Follow</button>
-                                                    <button class="btn btn-primary shadow-sm py-1" type="button"><i
-                                                            class="bi bi-envelope fs-6 align-middle lh-1"></i>
-                                                        Message</button>
-                                                </div>
+                                                </th:block>
+                                            </ul>
+                                            <div class="d-grid">
+                                                <button class="btn btn-primary border shadow-sm mb-2 py-1" type="button"
+                                                    onclick="goCoupleMain(userSession)">
+                                                    <i class="bi bi-person-plus fs-6 align-middle lh-1"></i>
+                                                    커플로그 이용하기
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9">
-                                    <div class="d-flex flex-column h-100">
-                                        <nav class="nav mb-3 nav-pills">
-                                            <a href="main" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
-                                            <a href="myinfo_my_course_list" class="nav-link"><i class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
-                                            <a href="myinfo_my_write_list" class="nav-link"><i class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
-                                            <a href="myinfo_my_comment_list" class="nav-link"><i class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
-                                            <a href="myinfo_my_payment_list" class="nav-link active"><i class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
-                                            <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보 수정</a>
-                                        </nav>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="d-flex flex-column h-100">
+                                    <nav class="nav mb-3 nav-pills">
+                                        <a href="main" class="nav-link"><i
+                                                class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                        <a href="myinfo_my_course_list" class="nav-link"><i
+                                                class="bi bi-people me-2 align-middle"></i>저장된 코스</a>
+                                        <a href="myinfo_my_write_list" class="nav-link"><i
+                                                class="bi bi-layers me-2 align-middle"></i>내가 쓴 글</a>
+                                        <a href="myinfo_my_comment_list" class="nav-link"><i
+                                                class="bi bi-credit-card me-2 align-middle"></i>내가 쓴 코멘트</a>
+                                        <a href="myinfo_my_payment_list" class="nav-link active"><i
+                                                class="bi bi-diagram-2 me-2 align-middle"></i>결제 내역</a>
+                                        <a href="myinfo" class="nav-link"><i class="bi bi-gear me-2 align-middle"></i>정보
+                                            수정</a>
+                                    </nav>
 
-                                        <div class="card shadow-sm p-3 h-100">
-                                            <div class="row align-items-center">
-									            
-									            
-									            <section class="position-relative">
-									                <div class="container py-3">
-									                    <table class="table" id="payment">
-															<thead>
-													            <tr>
-													                <th>결제번호</th>
-													                <th>구독권</th>
-													                <th>결제금액</th>
-													                <th>환불금액</th>
-													                <th>처리상태</th>
-													                <th>결제일자</th>
-													                <th>환불일자</th>
-													                <th></th>
-													                <!-- <th></th> -->
-													            </tr>
-													        </thead>
-															<tbody>
-													          <th:block th:each="pinfo : ${payInfo}">
-													            <tr>
-													              <td th:text="${pinfo.merchantUid}"></td>
-													              <td th:text="${pinfo.subTerm}+'개월권'"></td>
-													              <td th:text="${pinfo.payCost}"></td>
-													              <td th:if="${pinfo.cancelAmount!=null}" th:text="${pinfo.cancelAmount}"></td>
-								                                  <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}"></td>
-													              <td th:text="${#dates.format(pinfo.payDate,'yyyy.MM.dd')}"></td>
+                                    <div class="card shadow-sm p-3 h-100">
+                                        <div class="row align-items-center">
+
+
+                                            <section class="position-relative">
+                                                <div class="container py-3">
+                                                    <table class="table" id="payment">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>결제번호</th>
+                                                                <th>구독권</th>
+                                                                <th>결제금액</th>
+                                                                <th>환불금액</th>
+                                                                <th>처리상태</th>
+                                                                <th>결제일자</th>
+                                                                <th>환불일자</th>
+                                                                <th></th>
+                                                                <!-- <th></th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <th:block th:each="pinfo : ${payInfo}">
+                                                                <tr>
+                                                                    <td th:text="${pinfo.merchantUid}"></td>
+                                                                    <td th:text="${pinfo.subTerm}+'개월권'"></td>
+                                                                    <td th:text="${pinfo.payCost}"></td>
+                                                                    <td th:if="${pinfo.cancelAmount!=null}"
+                                                                        th:text="${pinfo.cancelAmount}"></td>
+                                                                    <td th:text="${pinfo.cancelAmount==0 ? '결제완료':'환불완료'}"
+                                                                        class="cancelStatus"></td>
+                                                                    <td th:text="${#dates.format(pinfo.payDate,'yyyy.MM.dd')}"></td>
 													              <td th:text="${#dates.format(pinfo.cancelDate,'yyyy.MM.dd')}"></td>
-													              <td th:if="${#calendars.createNow().getTimeInMillis() - pinfo.payDate.getTime() < 345600000}">
+													              <td th:if="${#calendars.createNow().getTimeInMillis() - pinfo.payDate.getTime() < 345600000 and pinfo.cancelDate==null}" >
 													              
-													              <a href="#refunding" data-bs-toggle="modal" class="btn btn-sm btn-outline-light border text-secondary shadow-sm">
+													              <a href="#refunding" data-bs-toggle="modal" class="btn btn-sm btn-outline-light border text-secondary shadow-sm refund">
 													              
 													              <i class="me-1 bi bi-check fs-6 lh-1"></i>환불하기</a></td>
 													              <!--  <td th:text ="${#calendars.format(#calendars.)}"></td> -->
@@ -206,32 +185,26 @@
                                             <div class="position-relative">
                                             	<div class="col-lg-12 mb-12 mb-lg-0 aos-init aos-animate" data-aos="fade-up"
                                 data-aos-delay="100">
-                                <div
-                                    class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
-                                    <span
-                                        class="p-3 width-220 height-20 d-flex align-items-center justify-content-center bg-tint-info text-info position-absolute end-0 top-0 rotate-45 mt-5 me-n7">
-                                        이벤트</span>
+                                <div class="card card-body p-4 z-index-1 rounded-xl border-0 shadow-lg d-flex flex-column overflow-hidden h-100">
                                     <div class="position-relative overflow-hidden">
-                                        <h6 id="subterm"></h6>
-                                        <div class="price display-4" id="subprice">
+                                        <h6 id="subTerm"></h6>
+                                        <div class="price display-4" id="payAmount">
                                             </div>
                                     </div>
                                     <!--/.price-card-header-->
                                     <ul class="d-flex flex-column list-unstyled py-4 mb-0 flex-grow-1">
                                         <li class="mb-2 border-dashed border-bottom d-table pb-2" id="use"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-primary text-white rounded-circle"></i>
+                                                <span id="payDate"></span></li>
                                         <li class="mb-2 border-dashed border-bottom d-table pb-2" id="off"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
-                                        <li class="mb-2 border-dashed border-bottom d-table pb-2" id="store"><i
-                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-info text-white rounded-circle"></i></li>
+                                                class="bi bi-check me-2 fs-5 align-middle size-20 center-both bg-primary text-white rounded-circle"></i>
+                                                <span id="merchantUid"></span></li>
                                     </ul>
                                 </div>
                             </div>
-             
-            <br>
                                             </div>
 			                            <div class="d-grid">
-			                               	<button class="btn btn-primary" type="button" id="refund">환불</button>
+			                               	<button class="btn btn-primary" type="button" id="goRefund">환불</button>
 			                   			</div>
                                         </div>
                                     </div>
@@ -244,20 +217,62 @@
 
 <th:block layout:fragment="script">
   <script>
+  
 	
   </script>
   <script th:inline="javascript">
   $(function() {
-    $('#refund').on('click',function(){
+	 cancelButton();
+	 function cancelButton(){
+			if($('.cancelStatus').text()=="환불완료"){
+				$('.refund').remove();
+			}
+		} 
+	 
+	 
+	 
+    $('.refund').on('click',function(){
+    	var tr= $(this).closest('tr');
+    	let merchantUid= $(tr).find('td').eq(0).text();
+    	let userId=userSession.userId;
+    	let subTerm =$(tr).find('td').eq(1).text();
+    	let payAmount =$(tr).find('td').eq(2).text();
+    	let payDate = $(tr).find('td').eq(5).text();
     	
-    })
+    	$('#payAmount').text(payAmount);
+    	$('#subTerm').text(subTerm);
+    	$('#payDate').text("결제일자 : "+payDate);
+    	$('#merchantUid').text("결제번호 : " +merchantUid);
+    	
+    	$('#goRefund').on('click',function(){
+      		
+    		$.ajax({
+    			url : '../refund', //'../AddItemServlet.do'
+    			method : 'post',
+    			data : {
+    				userId : userId,
+    				merchantUid : merchantUid,
+    			},
+    			success : function(result) {
+    				console.log(result);
+    				swal(result,"", "success",
+   						{button : {text : "확인",className : "btn btn-primary"}
+    				}).then(()=>{
+			        	window.location.reload();
+						console.log("응애!");
+					});
+    			},
+    			error : function(error) {
+    				console.log("문제발생");
+    				console.log(error);
+    			}
+    		});
+      		
+      	})
   }); //ajax 끝
-	var refunding = document.getElementById('refunding')
-      	refunding.addEventListener('show.bs.modal', function (event) {
-      	var button = event.relatedTarget
-      	var item =$(button).data("payInfo")
-      	console.log(item.merchantUid);
-        })  
+  
+  	
+	});
   </script>
 </th:block>
 

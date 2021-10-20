@@ -13,4 +13,6 @@ public class CourseCreateVO {
 	private String courseOpen;
 	private String region;
 	
+	// 커플용 추가
+	private String coupleId;
 }

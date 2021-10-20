@@ -26,9 +26,10 @@ public class SocketController {
 	@MessageMapping("/registerReceive")
     @SendTo("/send")
     public SocketRegisterVO SocketChangedListHandler(SocketRegisterVO vo) {
+		String email = vo.getEmail();
 		String registerConfirmValue = vo.getRegisterConfirmValue();
  
-        SocketRegisterVO result = new SocketRegisterVO(registerConfirmValue);
+        SocketRegisterVO result = new SocketRegisterVO(email, registerConfirmValue);
         return result;
     }
 	

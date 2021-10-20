@@ -120,10 +120,18 @@ public class PostController {
 		 * return "board/view";
 		 */
 	}
+	
+	
 
 	// 커뮤니티 글 입력
 	@GetMapping("/community_insert")
-	public String community_insert() {
+	public String community_insert(Model model,HttpServletRequest request, MyPageCourseVO vo) {
+		HttpSession session = request.getSession();
+		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
+		vo.setUserId(accountVO.getUserId());
+		model.addAttribute("places", pService.getPlaceList(vo));
+		model.addAttribute("list", pService.getCourseList(vo));
+
 		return "post/community_insert";
 	}
 
@@ -247,17 +255,7 @@ public class PostController {
 		return pService.scrapCancel(courseId, userId);
 	}
 
-	//내 코스 모달에 불러오기
-	@ResponseBody
-	@GetMapping("/getMyCourse")
-	public List<MyPageCourseVO> getMyCourse(@ModelAttribute MyPageCourseVO vo) {
-
-		/* model.addAttribute("course", pService.getCourseList(vo)); */
-		List<MyPageCourseVO> list = pService.getCourseList(vo);
-		System.out.println(vo);
-		return list;
-	}
-
+	
 	@RequestMapping(value = "/ckeditor/fileUpload", method = RequestMethod.POST)
 	public void imageUpload(HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multiFile, @RequestParam MultipartFile upload) throws Exception {

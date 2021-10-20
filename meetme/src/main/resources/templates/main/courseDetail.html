@@ -40,8 +40,6 @@
 					<div class="position-relative">
 						<img src="assets/img/vectors/pattern-dots.svg" data-inject-svg alt=""
 							class="width-60 h-auto position-absolute start-0 bottom-0 fill-primary ms-n4 mb-n4">
-						<!-- <img src="assets/img/projects/case1.jpg" alt=""
-							class="img-fluid mt-lg-n12 mt-n7 position-relative"> -->
 						<div id="map" class="mt-lg-n12 mt-n7 position-relative"
 							style="width:100%; max-width: 1920px; max-height:1080px"></div>
 					</div>
@@ -68,7 +66,13 @@
 								</p>
 								<div>
 									<h6 class="text-muted" th:text="${course.placeName}">
-										Gunjan Sharma
+										placeName
+									</h6>
+									<h6 class="text-muted" th:text="${course.description}">
+										description
+									</h6>
+									<h6 class="text-muted" th:text="${course.avgCost}">
+										avgCost
 									</h6>
 								</div>
 								<img th:src="${course.thumbnailHref}" alt="Image"
@@ -123,28 +127,90 @@
 			centerLat = centerLat / detail.length;
 			centerLng = centerLng / detail.length;
 			// 중심 좌표 계산
-
+			
+			// 줌 계산
+			let highGap = 0;
+			let zoomNum = 0;
+			if(detail.length == 1) {
+				zoomNum = 12;
+			} else if (detail.length == 2){
+				let courseOne = {
+					lat: parseFloat(detail[0].latitude),
+					lng: parseFloat(detail[0].longtitude)
+				};
+				let courseTwo = {
+					lat: parseFloat(detail[1].latitude),
+					lng: parseFloat(detail[1].longtitude)
+				};
+				let resultCourse = {
+					lat: courseOne.lat - courseTwo.lat,
+					lng: courseOne.lng - courseTwo.lng
+				}
+				
+				if(resultCourse.lat < 0) {
+					resultCourse.lat = -(resultCourse.lat)
+				}
+				if(resultCourse.lng < 0) {
+					resultCourse.lng = -(resultCourse.lng)
+				}
+				
+				let result = Math.sqrt(
+					Math.pow(resultCourse.lng, 2) + 
+					Math.pow(resultCourse.lat, 2)
+				)
+				highGap = result;
+				zoomNum = 12 - Math.round(highGap);
+			} else {
+				
+				for(let i=0; i<detail.length; i++) {
+					for(let j=0; j<i; j++) {
+						let courseOne = {
+							lat: parseFloat(detail[i].latitude),
+							lng: parseFloat(detail[i].longtitude)
+						};
+						let courseTwo = {
+							lat: parseFloat(detail[j].latitude),
+							lng: parseFloat(detail[j].longtitude)
+						};
+						let resultCourse = {
+							lat: courseOne.lat - courseTwo.lat,
+							lng: courseOne.lng - courseTwo.lng
+						}
+						
+						if(resultCourse.lat < 0) {
+							resultCourse.lat = -(resultCourse.lat)
+						}
+						if(resultCourse.lng < 0) {
+							resultCourse.lng = -(resultCourse.lng)
+						}
+						
+						let result = Math.sqrt(
+							Math.pow(resultCourse.lng, 2) + 
+							Math.pow(resultCourse.lat, 2)
+						)
+						
+						if(highGap < result) {
+							highGap = result;
+							zoomNum = 12 - Math.ceil(highGap);
+						}
+					}
+				}
+			}
+			// 줌계산 끝
+			
 			// 지도 생성
 			let map = new naver.maps.Map('map', {
 				center: new naver.maps.LatLng(centerLat, centerLng),
-				zoom: 10
+				zoom: zoomNum // 줌계산 후
 			});
 			// 지도 생성
 
-			// // 마커 옵션
-			// let markerOptions = {
-			// 	map: map,
-			// 	icon: {
-			// 		url: "https://img.icons8.com/plasticine/100/000000/marker.png",
-			// 		size: new naver.maps.Size(50, 52),
-			// 		origin: new naver.maps.Point(0, 0),
-			// 		anchor: new naver.maps.Point(25, 26)
-			// 	}
-			// };
-			// // 마커 옵션
-
 			// 마커 생성
 			let marker;
+			let loc;
+			let infowindow;
+			let markerGroups = [];
+			let markerGroup = {};
 
 			for (let c of locations) {
 				marker = new naver.maps.Marker({
@@ -158,16 +224,50 @@
 						anchor: new naver.maps.Point(25, 26)
 					}
 				});
-				naver.maps.Event.addListener(marker, 'click', () => {
-					let loc = $('blockquote[data-lat="' + c.lat + '"][data-lng="' + c.lng + '"]');
-					let offset = $(loc).offset();
-					$('html, body').animate({
-						scrollTop: (offset.top - ($(window).height())/3)
-					},'fast', 'linear');
-				});
+
+				loc = $('blockquote[data-lat="' + c.lat + '"][data-lng="' + c.lng + '"]');
+
+				markerGroup = {
+					marker: marker,
+					loc: loc
+				}
+
+				markerGroups.push(markerGroup);
 			}
 			// 마커 생성
 
+			// 마커 이벤트
+			for (let m of markerGroups) {
+				// 마커 클릭 이벤트
+				naver.maps.Event.addListener(m.marker, 'click', () => {
+					let offset = $(m.loc).offset();
+					$('html, body').animate({
+						scrollTop: (offset.top - ($(window).height()) / 3)
+					}, 'fast', 'linear');
+				});
+				// 마커 클릭 이벤트
+
+				// 마커와 짝 지어진 blockquata 태그 클릭 이벤트
+				$(m.loc).on('click', () => {
+
+					infowindow = new naver.maps.InfoWindow({
+						content: $(m.loc).find('h6').eq(0).text()
+					});
+
+					if (infowindow.getMap()) {
+						infowindow.close();
+					}
+					infowindow.open(map, m.marker);
+
+					map.setCenter(new naver.maps.LatLng($(m.loc).attr('data-lat'), $(m.loc).attr('data-lng')));
+
+					$('html, body').animate({
+						scrollTop: ($('#map').offset().top - ($(window).height()) / 5)
+					}, 'fast', 'linear');
+				});
+				// 마커와 짝 지어진 blockquata 태그 클릭 이벤트
+			}
+			// 마커 이벤트
 		});
 		// 페이지 로드
 	</script>

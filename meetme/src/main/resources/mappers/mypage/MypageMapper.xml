@@ -41,6 +41,7 @@
     FROM user_tags
     WHERE user_id = #{userId}
   </delete>
+  
   <insert id="insertUserTags">
     INSERT INTO
     user_tags(user_id, tag_id)
@@ -67,7 +68,7 @@
     FROM course_like
     WHERE course_id = #{courseId}
   </delete>
-
+<!-- ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ -->
   <!-- 저장된 코스 보기 -->
   	<!-- 코스 검색기능 -->
     <sql id = "courseSearch">
@@ -129,6 +130,7 @@
 			  x.course_state,
 			  x.course_open,
 			  x.region,
+			  x.course_created,
 			  x.sum_cost
 			FROM
 			(SELECT
@@ -141,10 +143,11 @@
 			  a.course_state,
 			  a.course_open,
 			  a.region,
+			  a.course_created,
 			  (SELECT sum_cost FROM (SELECT course_id, SUM(avg_cost) sum_cost FROM course_order GROUP BY course_id) c WHERE c.course_id = b.course_id) sum_cost
 			FROM course a, course_order b
 			WHERE a.course_id IN (SELECT course_id FROM course_like WHERE user_id = #{userId}) AND a.course_id=b.course_id
-			UNION ALL
+			UNION
 			SELECT
 			  DISTINCT
 			  a.user_id,
@@ -155,6 +158,7 @@
 			  a.course_state,
 			  a.course_open,
 			  a.region,
+			  a.course_created,
 			  (SELECT sum_cost FROM (SELECT course_id, SUM(avg_cost) sum_cost FROM course_order GROUP BY course_id) c WHERE c.course_id = b.course_id) sum_cost
 			FROM course a, course_order b
 			WHERE a.user_id=#{userId} AND a.course_id=b.course_id AND a.course_open='y') x
@@ -382,6 +386,16 @@
 	<update id="userUpdateNickName" parameterType="MypageUserInfoVO">
 		UPDATE user_info
 		SET nickname = #{nickName},
+		    updated=sysdate
+		WHERE user_id = #{userId}
+	</update>
+	
+	<!-- 회원정보 수정 (닉네임) -->
+	<update id="userUpdateBirthDay" parameterType="MypageUserInfoVO">
+		UPDATE user_info
+		SET nickname = #{nickName},
+		    birth_year = #{birthYear},
+		    birth_day = #{birthDay},
 		    updated=sysdate
 		WHERE user_id = #{userId}
 	</update>

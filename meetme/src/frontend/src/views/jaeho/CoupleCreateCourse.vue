@@ -1,9 +1,9 @@
 <template>
-    <div class="mx-auto my-5">
+    <div class="mx-auto">
         <div class="container p-5">
             <div class="row">
                 <div class="col-12 px-4">
-                    <h1 class="display-4">코스 만들기</h1>
+                    <h1 class="display-4">함께 코스 만들기 💕</h1>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -131,6 +131,7 @@
                                     <a type="button" class="icon-Close-Window fs-3" @click="deletePlaceInCourse(element.placeId)"
                                     ></a>
                                 </div>
+                                <small class="text-muted">{{ element.address }}</small>
                                 <div>
                                     <span class="text-muted mx-2">{{element.subTitle}}</span>
                                     <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
@@ -167,7 +168,7 @@
                             </span>
                         </div>
                     </div>
-                    <div v-if="!(modalLoading && modalImagesLoading) == true">
+                    <div v-if="(modalLoading || modalImagesLoading) == false">
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -276,6 +277,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 import { ref, onMounted, defineComponent } from 'vue'
@@ -561,6 +563,16 @@ export default defineComponent ({
             })
             .then(() => {
                 insertLoading.value = false;
+                for (let item of list.value) {
+                    if (item.placeId == insertPlaceData.value.placeId){
+                        Swal.fire({
+                            icon: 'error', // success
+                            title: '이런...',
+                            text: '이미 같은 장소가 있습니다!',
+                        })
+                        return;
+                    }
+                }
                 insertPlaceData.value.subTitle = "소제목";
                 list.value.push(insertPlaceData.value)
             });
@@ -674,7 +686,13 @@ export default defineComponent ({
             // you can use use axios as an alternative
             console.log(1);
             if(keywords == '') {
-                alert('검색어를 입력해주세요!')
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '검색어를 입력해 주세요!',
+                });
+                searched.value = false;
+                loadingSearch.value = false;
                 return
             }
             fetch('api/course/place/search?keywords=' + keywords, {
@@ -729,7 +747,11 @@ export default defineComponent ({
             console.log(titleTextx);
 
             if(list.value.length == 0) {
-                alert('장소를 등록해 주세요!')
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '장소를 등록해 주세요!',
+                })
                 return;
             }
             
@@ -764,7 +786,7 @@ export default defineComponent ({
             var formData = new FormData();
             formData.append("courseName", sendTitleText);
             formData.append("list", JSON.stringify(sendList))
-            fetch('api/course/register', {
+            fetch('api/course/registerCouple', {
                 credentials: 'include',
                 method: 'POST',
                 body: formData
@@ -796,15 +818,26 @@ export default defineComponent ({
             })
             .then(() => {
                 if ((registerConfirm.value) && (registerConfirm.value != "error")) {
-                    alert('등록이 되었습니다.');
-                    location.href = "/courseDetail?courseId=" + registerConfirm.value;
-                    sendRegisterConfirm(registerConfirm.value);
-                }
-                else if(registerConfirm.value == "error"){
-                    alert('등록에 실패하였습니다.');
-                }
-                else {
-                    alert('알 수 없는 문제가 발생 하였습니다.');
+                    Swal.fire({
+                        icon: 'success', // success
+                        title: '성공!',
+                        text: '코스 등록이 완료 되었습니다!',
+                    }).then(() => {
+                        sendRegisterConfirm(registerConfirm.value);
+                        location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                    })
+                } else if (registerConfirm.value == "error"){
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '코스 등록에 실패 하였습니다.',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '알 수 없는 문제가 발생했습니다.',
+                    })
                 }
             });
         }
@@ -813,6 +846,7 @@ export default defineComponent ({
             console.log("Send sendRegister:" + " 검색");
             if (stompClient && stompClient.connected) {
                 const msg = { 
+                    email: userEmail.value,
                     registerConfirmValue : regValue
                 };
                 console.log(JSON.stringify(msg))
@@ -824,7 +858,7 @@ export default defineComponent ({
         let stompClient = null;
         const userEmail = ref(null);
         const connect = () => {
-            const serverURL = "http://192.168.0.37:8000/ws"
+            const serverURL = "http://192.168.0.75:8000/ws"
             let socket = new SockJS(serverURL);
             stompClient = Stomp.over(socket);
             console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
@@ -862,7 +896,16 @@ export default defineComponent ({
                         // 코스 끝나면 보내버리기
                         } else if (JSON.parse(res.body).registerConfirmValue) {
                             console.log(JSON.parse(res.body).registerConfirmValue);
-                            location.href = "/courseDetail?courseId=" + JSON.parse(res.body).registerConfirmValue;
+                            if (JSON.parse(res.body).email != userEmail.value) {
+                                Swal.fire({
+                                    icon: 'success', // success
+                                    title: '성공!',
+                                    text: '코스 등록이 이미 완료 되었습니다!',
+                                })
+                                .then(() => {
+                                    location.href = "/courseDetail?courseId=" + JSON.parse(res.body).registerConfirmValue;
+                                })
+                            }
                         } else {
                             console.error(JSON.parse(res.body));
                         }

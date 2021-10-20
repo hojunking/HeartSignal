@@ -26,7 +26,7 @@ public interface MypageMapper {
 	//나의 취향 태그 가져 오기
 	public List<UserTagsVO> getUserTags(UserTagsVO userTagsVO);
 	//나의 취향 태그 삭제
-	public int deleteUserTags(UserTagsVO userTagsVO);
+	public int deleteUserTags(String userId);
 	//나의 취향 태그 인서트
 	public int insertUserTags(UserTagsVO userTagsVO);
 // --------------------------------------------------------
@@ -70,7 +70,8 @@ public interface MypageMapper {
 	public MyPageUserInfoVO userSelectNickName(MyPageUserInfoVO myPageUserInfoVO);
 	//회원정보 수정(닉네임)
 	public int userUpdateNickName(MyPageUserInfoVO myPageUserInfoVO);
-	
+	//회원정보 수정(생년월일)
+	public int userUpdateBirthDay(MyPageUserInfoVO myPageUserInfoVO);
 	
 	
 	

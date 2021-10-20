@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto my-5">
+    <div class="mx-auto">
         <div class="container p-5">
             <div class="row">
                 <div class="col-12 px-4">
@@ -131,6 +131,7 @@
                                     <a type="button" class="icon-Close-Window fs-3" @click="deletePlaceInCourse(element.placeId)"
                                     ></a>
                                 </div>
+                                <small class="text-muted">{{ element.address }}</small>
                                 <div>
                                     <span class="text-muted mx-2">{{element.subTitle}}</span>
                                     <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
@@ -167,7 +168,7 @@
                             </span>
                         </div>
                     </div>
-                    <div v-if="!(modalLoading && modalImagesLoading) == true">
+                    <div v-if="(modalLoading || modalImagesLoading) == false">
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -251,7 +252,9 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { ref, onMounted, defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 import TagInput from '@mayank1513/vue-tag-input'
 import { VueDraggableNext } from 'vue-draggable-next'
 /**
@@ -279,7 +282,7 @@ export default defineComponent ({
             loading.value = true;
             // I prefer to use fetch
             // you can use use axios as an alternative
-            return fetch('api/course/place/tags', {
+            return fetch('/api/course/place/tags', {
                 method: 'get',
                 headers: {
                 'content-type': 'application/json'
@@ -318,15 +321,6 @@ export default defineComponent ({
             });
         }
 
-        // function securityFetch() {
-        //     var token = $("meta[name='_csrf']").attr("content");
-        //     var header = $("meta[name='_csrf_header']").attr("content");
-        //     $(document).ajaxSend(function(e, xhr) {
-        //         console.log(e)
-        //         xhr.setRequestHeader(header, token);
-        //     });
-        // }
-
         // 클릭한 태그 가져오기
         const pushTag = (tagId) => {
             for(let i=0; i<tags.value.length; i++) {
@@ -341,10 +335,61 @@ export default defineComponent ({
         // 페이지 진입하자마자 실행.
         onMounted(() => {
             fetchData();
-            // securityFetch();
         });
         
-
+        /**
+         * 만약 동적으로 들어왔다면 바로 추가하기.
+         */
+        // 장소 바로 추가하기
+        const route = useRoute();
+        function insertCourseByRouter(num) {
+            if(num == null) {
+                return;
+            }
+            fetch('/api/course/place/searchOneById/' + num, {
+                method: 'get',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                // a non-200 response code
+                if (!res.ok) {
+                    // create error instance with HTTP status text
+                    const error = new Error(res.statusText);
+                    error.json = res.json();
+                    throw error;
+                }
+                return res.json()
+            })
+            .then(json => {
+                // set the response data
+                console.log(json)
+                insertPlaceData.value = json;
+            })
+            .catch(err => {
+                searchError.value = err;
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '코스입력 문제 발생!',
+                })
+                // In case a custom JSON error response was provided
+                if (err.json) {
+                    return err.json.then(json => {
+                        // set the JSON response message
+                        insertError.value.message = json.message;
+                    });
+                }
+            })
+            .then(() => {
+                insertLoading.value = false;
+                insertPlaceData.value.subTitle = "소제목";
+                list.value.push(insertPlaceData.value)
+            });
+        }
+        console.log(route.params.placeId)
+        insertCourseByRouter(route.params.placeId);
         /**
          *  세부적인 장소 보여주기
          */
@@ -458,7 +503,7 @@ export default defineComponent ({
         
             // 장소 디테일 가져오기
             insertLoading.value = true;
-            fetch('api/course/place/searchOne/' + placeName, {
+            fetch('/api/course/place/searchOne/' + placeName, {
                 method: 'get',
                 headers: {
                     'content-type': 'application/json'
@@ -481,7 +526,11 @@ export default defineComponent ({
             })
             .catch(err => {
                 searchError.value = err;
-                alert("코스입력 문제 발생")
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '코스입력 문제 에러!',
+                })
                 // In case a custom JSON error response was provided
                 if (err.json) {
                     return err.json.then(json => {
@@ -492,6 +541,16 @@ export default defineComponent ({
             })
             .then(() => {
                 insertLoading.value = false;
+                for (let item of list.value) {
+                    if (item.placeId == insertPlaceData.value.placeId){
+                        Swal.fire({
+                            icon: 'error', // success
+                            title: '이런...',
+                            text: '이미 같은 장소가 있습니다!',
+                        })
+                        return;
+                    }
+                }
                 insertPlaceData.value.subTitle = "소제목";
                 list.value.push(insertPlaceData.value)
             });
@@ -565,10 +624,16 @@ export default defineComponent ({
             // you can use use axios as an alternative
             console.log(1);
             if(keywords == '') {
-                alert('검색어를 입력해주세요!')
-                return
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '검색어를 입력해 주세요!',
+                });
+                searched.value = false;
+                loadingSearch.value = false;
+                return;
             }
-            fetch('api/course/place/search?keywords=' + keywords, {
+            fetch('/api/course/place/search?keywords=' + keywords, {
                 method: 'get',
                 headers: {
                     'content-type': 'application/json'
@@ -620,7 +685,11 @@ export default defineComponent ({
             console.log(titleTextx);
 
             if(list.value.length == 0) {
-                alert('장소를 등록해 주세요!')
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '장소를 등록해 주세요!',
+                })
                 return;
             }
             
@@ -655,7 +724,7 @@ export default defineComponent ({
             var formData = new FormData();
             formData.append("courseName", sendTitleText);
             formData.append("list", JSON.stringify(sendList))
-            fetch('api/course/register', {
+            fetch('/api/course/register', {
                 credentials: 'include',
                 method: 'POST',
                 body: formData
@@ -687,14 +756,25 @@ export default defineComponent ({
             })
             .then(() => {
                 if ((registerConfirm.value) && (registerConfirm.value != "error")) {
-                    alert('등록이 되었습니다.');
-                    location.href = "/courseDetail?courseId=" + registerConfirm.value;
-                }
-                else if(registerConfirm.value == "error"){
-                    alert('등록에 실패하였습니다.');
-                }
-                else {
-                    alert('알 수 없는 문제가 발생 하였습니다.');
+                    Swal.fire({
+                        icon: 'success', // success
+                        title: '성공!',
+                        text: '코스 등록이 완료 되었습니다!',
+                    }).then(() => {
+                        location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                    })
+                } else if (registerConfirm.value == "error"){
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '코스 등록에 실패 하였습니다.',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '알 수 없는 문제가 발생했습니다.',
+                    })
                 }
             });
         }

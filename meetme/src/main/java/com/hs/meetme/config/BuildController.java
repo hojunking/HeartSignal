@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.hs.meetme.useraccess.domain.AccountVO;
 
@@ -28,6 +29,20 @@ public class BuildController {
 		
 		return "index";
 	}
+	
+	@GetMapping("/createCourse/{placeId}")
+	public String createCourse(HttpServletRequest request, @PathVariable String placeId) {
+		HttpSession session = request.getSession();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		System.out.println(user);
+		
+		if(user == null) {
+			return "redirect:/login";
+		}
+		
+		return "index";
+	}
+	
 	@GetMapping("/coupleCreateCourse")
 	public String coupleCreateCourse(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -36,6 +51,19 @@ public class BuildController {
 		
 		// 조건을 좀 더 확인 해야함.
 		if(user == null || !coupleStatus.equals("y")) {
+			return "redirect:/login";
+		}
+		
+		return "index";
+	}
+	
+	@GetMapping("/updateCourse/{courseId}")
+	public String updateCourse(HttpServletRequest request, @PathVariable String courseId) {
+		HttpSession session = request.getSession();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
+		System.out.println(user);
+		
+		if(user == null) {
 			return "redirect:/login";
 		}
 		

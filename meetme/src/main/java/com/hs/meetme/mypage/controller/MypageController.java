@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hs.meetme.mypage.domain.Criteria;
 import com.hs.meetme.mypage.domain.MyPageUserInfoVO;
@@ -215,19 +216,6 @@ public class MypageController {
 		return "mypage/myinfo_my_payment_list";
 	}
 	
-	//메인 유저정보 
-	@GetMapping("/mainMyinfo")
-	public String mainMyinfo(Model model, MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
-		String userId = accountVO.getUserId();
-		
-		myPageUserInfoVO.setUserId(userId);
-		model.addAttribute("userInfo", mypageService.getMyinfo(myPageUserInfoVO));
-		return "mypage/myinfo_main";
-	}
-	
 	@GetMapping("/getNoticeList")
 	@ResponseBody
 	public List<NoticeVO> getMynotice(NoticeVO vo){
@@ -253,9 +241,6 @@ public class MypageController {
 			System.out.println(tagList);
 		}
 		mypageService.insertUserTags(tagList);
-		
-		System.out.println(list);
-		System.out.println(userId);
 		
 		return "redirect:/login";
 	}

@@ -26,6 +26,7 @@ public class AccountVO implements UserDetails{
 	private String addrzonecode;
 	private String coupleStatus;
 	private String imgId;
+	private String imgUrl;
 	
 	private String role;
 	private String addrfull;

@@ -26,9 +26,8 @@
 </th:block>
 <th:block layout:fragment="content">
 	<!-- 여기에 body에 들어갈 내용을 적어주세요 -->
-		<br>
 		<!-- header section -->
-		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3" style="background-image: none;height: 720px;">
+		 <section class="position-relative bg-gradient-secondary text-white jarallax" data-jarallax=".3" style="background-image: none; height: 720px; top:-26px;">
                 <img src="" alt="" class="jarallax-img opacity-80" id="coupleImg">
                  <svg class="position-absolute start-0 bottom-0 w-100" preserveAspectRatio="none" width="900"
                     height="50" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,8 +60,10 @@
             <section class="position-relative bg-white">
                 <div class="container py-2 py-lg-3 px-4">
                         <div class="col-lg-7 mb-4 mx-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-                            <h2 class="display-2">D+<b class="text-warning" id="coupleDate"></b></h2><br>
-                            <h6 class="display-6">우리 사랑한지</h6>
+                            <h2 class="display-2" ><span id="dPlus">D+</span><a href="#updateDay" data-bs-toggle="modal">
+                            <b class="text-warning" id="coupleDate" data-bs-toggle="tooltip"
+                            data-bs-placement="top" data-bs-original-title="디데이설정하기"></b></a></h2><br>
+                            <h6 class="display-6">우리가 함께했던 시간</h6>
                         </div>
                     <div class="row">
                         <div class="col-lg-5 my-5 mt-auto text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
@@ -83,11 +84,10 @@
                         	<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
                         	<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
 							<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
-							<div class="spinner-grow text-danger spinner-grow-sm" role="status"></div>&nbsp;&nbsp;
                             </span>
                             
                             <span id="heart">
-                            <a href="#findLove"data-bs-toggle="modal"
+                            <a href="#"
                                 class="btn btn-danger btn-circle-ripple p-0 size-70 rounded-pill fs-3 lh-1 center-both  mb-3">
                                 <i class="icon-Heart  align-middle"></i>
                             </a>
@@ -97,7 +97,10 @@
                         	
                         <div class="col-lg-5 my-5 text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                             <div class="position-relative mb-4 overflow-hidden size-220 mx-auto rounded-circle" id="loveInfo">
-                                <img src="" alt="" class="img-fluid" id="user2Img">
+                                <a href="#findLove"data-bs-toggle="modal">
+                                
+                                <img src="/img/001.jpg" alt="" class="img-fluid" id="user2Img">
+                                </a>
                             </div>
                             	<div>
                                 <h5 class="mb-1"  id="nickName2">
@@ -233,16 +236,13 @@ style="display: none;" data-bs-backdrop="static">
                              <div class="input-group mb-3">
                                  <input type="email" name="email" class="form-control "aria-describedby="basic-addon2">
                              		<span class="input-group-text" id="basic-addon2">
-                         	<button type="button" class="btn btn-primary-secondary  btn-hover-arrow hover-lift"
-                                 id="search">
+                         	<button type="button" class="btn btn-primary-secondary search btn-hover-arrow hover-lift"
+                                 >
                                  <span>검색</span></button></span>
                              		
                              </div>
                                  <small class="d-block text-danger my-2" id="noFind"></small>
                              <div class="d-grid">
-                                 
-                                 <button type="button" class="btn btn-primary btn-hover-arrow hover-lift" id="request">
-                                 <span>커플신청</span></button>
                              </div>
                              <br> 
                      </div>
@@ -340,23 +340,21 @@ style="display: none;" data-bs-backdrop="static">
 	
 	
 	$(function() {
-		let userId=userSession.userId;
-		let coupleId=userSession.coupleId;
+		let userId=Number(userSession.userId);
+		let coupleId=Number(userSession.coupleId);
 		let name=userSession.name;
 		let coupleStatus= userSession.coupleStatus;
-
+		
 		
 		console.log('유저아이디:'+userId);
+			expirationValidation();
 			coupleInfo();
 			myloveInfo();
-			expirationValidation();
 			//  session의 아이디값 여기 넣기
 			// ${session.userSession.coupleStatus}  session의 커플상태 여기 넣기
 			// ${session.userSession.coupleId}  session의 커플아이디 여기 넣기
 			
 			//;
-			
-			
 		//커플로그 만료기간 검증
 		function expirationValidation() {
 		$.ajax({
@@ -413,12 +411,19 @@ style="display: none;" data-bs-backdrop="static">
 					$('#coupleImg').attr('src',"/img/couple/"+datas.coupleImg);
 					$('#coupleImg2').attr('src',"/img/couple/"+datas.coupleImg);
 					
+					if(datas.coupleDate!=null){
 					var today = new Date();
 					var coupleDate = new Date(datas.coupleDate);
 					var gap = today.getTime() - coupleDate.getTime();
 					var result = Math.ceil(gap / (1000 * 60 * 60 * 24));
 					$('#coupleDate').text(result);
-
+					}else{
+						let coupleDate= $('#coupleDate');
+						$('#dPlus').text('');
+						$('.display-6').text('');
+						coupleDate.text('처음만난날은 언제인가요?').css( "font-size", "35px" );
+						
+					}
 					}
 				});
 			}; //ajax 끝
@@ -428,32 +433,41 @@ style="display: none;" data-bs-backdrop="static">
 			function myloveInfo() {
 				
 				//커플매칭이 안 된 상태의 커플메인페이지
-				  if(coupleStatus=='w'){
-					let imgUrl =""; 
-					$('#user2Img').attr("src","/img/"+imgUrl);
-					$('#nickName2').text("커플정보가 없습니다");
-					$('#birthDate2').text("커플매칭을 해주세요");
+				  if(coupleStatus=="w"){
+					
+					$('#nickName2').text("커플정보가 없어요");
+					$('#birthDate2').text("커플매칭을 해주세요...");
 					$('#dot').removeClass("d-none");
 					$('#heart').addClass("d-none");
-				};
 				
-				//user 세션에 태워서합니다.
-				$.ajax({
-					url : "myloveInfo",
-					data : {
-						userId : userId,
-						coupleId : coupleId,
-						coupleStatus : coupleStatus
-					},
-					method : "GET",
-					dataType : "json",
-					success : function(datas) {
-						$('#nickName2').text(datas.nickName);
-						$('#birthDate2').text(datas.birthDay);
-						$('#user2Img').attr('src',"/img/user/"+datas.userImg);
-						console.log(datas);
-					}
-				});//ajax 끝
+				  }else if(coupleStatus=="s"){ //커플 신청 중인 상태
+					
+					$('#nickName2').text("상대방에게 시그널을 보냈어요!");
+					$('#birthDate2').text("조금만 기다려 주세요...");
+					$('#dot').removeClass("d-none");	
+					$('#user2Img').unwrap(); //클릭 이벤트 없애기
+					
+				}else{
+					
+				//coupleStatus=="y,e,n"일 경우
+					$.ajax({
+						url : "myloveInfo",
+						data : {
+							userId : userId,
+							coupleId : coupleId,
+							coupleStatus : coupleStatus
+						},
+						method : "GET",
+						dataType : "json",
+						success : function(datas) {
+							$('#nickName2').text(datas.nickName);
+							$('#birthDate2').text(datas.birthDay);
+							$('#user2Img').attr('src',"/img/user/"+datas.userImg);
+							$('#user2Img').unwrap(); //클릭 이벤트 없애기
+							console.log(datas); 
+						}
+					});//ajax 끝
+				}
 			};
 			
 			//기본이미지버튼 클릭 시 이벤트
@@ -478,7 +492,7 @@ style="display: none;" data-bs-backdrop="static">
 			});
 			
 			//상대방 이메일 찾기
-			$("#search").on('click',function(){
+			$(".search").on('click',function(){
 				if ($('input[type="email"]').val() =="") {
 					$('#noFind').text("이메일을 입력해주세요.");			
 					$('input[type="email"]').focus();
@@ -499,37 +513,39 @@ style="display: none;" data-bs-backdrop="static">
 							$('input[type="email"]').focus();
 						}else{
 							if(datas.coupleStatus=='n'){
-							$('#noFind').remove();		//커플검색 알림메시지
-							$('#nickFind').text(datas.nickName); //검색결과 닉네임
-							$('#findLoveInfo').css("display","block"); //사진까지 보여줌
-							
-							$('#request').on('click',function(){ //커플신청버튼 클릭 시 이벤트
-								$.ajax({
-									url : "request",
-									data : {
-										userSent : userId,
-										userReceived : datas.userId,
-										coupleId : coupleId
+								$('#noFind').remove();		//커플검색 알림메시지
+								$('#nickFind').text(datas.nickName); //검색결과 닉네임
+								$('#findLoveInfo').css("display","block"); //사진까지 보여줌
+								
+								let search= $('.search');
+								search.children('span:eq(0)').text('커플신청하기');
+								search.off('click');
+								
+								$('.search').on('click',function(){ //커플신청버튼 클릭 시 이벤트
 									
-									},
-									method : "POST",
-									success : function(data) {
-										console.log(data);
-										$('#heart').removeClass("d-none"); //숨겨진 하트 개봉
-										
-										swal(data,"", "success",
-										{button : {text : "확인",className : "btn btn-primary"}
-										}).then(()=>{
-											$('#findLove').hide(); //모달창 닫기
-								        	window.location.reload();
-											console.log("응애!");
-										});
-									}
-									});//ajax 끝
-							
-							})
+									$.ajax({
+										url : "request",
+										data : {
+											userSent : userId,
+											userReceived : datas.userId,
+											coupleId : coupleId
+										},
+										method : "POST",
+										success : function(data) {
+											console.log(data);
+											
+											swal(data,"", "success",
+											{button : {text : "확인",className : "btn btn-primary"}
+											}).then(()=>{
+												$('#findLove').hide(); //모달창 닫기
+									        	window.location.reload();
+												console.log("응애!");
+											});
+										}
+										});//ajax 끝
+								})
 							}else{
-							$('#noFind').text("이미 커플이 있습니다."); //커플상태가 n 이외는 커플상대 검색불가
+								$('#noFind').text("대상은 이미 커플이 있습니다."); //커플상태가 n 이외는 커플상대 검색불가
 							}
 						}
 					},
@@ -612,7 +628,7 @@ style="display: none;" data-bs-backdrop="static">
 			if ($('input[type="file"]').val() != "") {
 				canvas = image.cropper('getCroppedCanvas',
 				{
-					height : 840
+					height : 1024
 				});
 				result.attr('src', canvas.toDataURL("image/jpg"));
 
@@ -666,8 +682,9 @@ style="display: none;" data-bs-backdrop="static">
 				if ($('input[type="date"]').val() != ""){
 					var formData = new FormData();
 					//formData.append('coupleId',)
+					
 					formData.append('coupleDate',$('input[type="date"]').val());
-					formData.append('coupleId', 1);
+					formData.append('coupleId', coupleId);
 					$.ajax({
 						url : "updateDday",
 						method : 'POST',
@@ -702,12 +719,6 @@ style="display: none;" data-bs-backdrop="static">
 			
 			
 			//커플찾기 모달창 초기화
-			 $('#updateDay').on('hidden.bs.modal', function () {
-	               // 실행 할 내용
-	               console.log("응애!");
-	           });
-			
-			//커플찾기 모달창 초기화
 			 $('#findLove').on('hidden.bs.modal', function () {
 	               // 실행 할 내용
 	             $('#noFind').text("");
@@ -717,12 +728,6 @@ style="display: none;" data-bs-backdrop="static">
 	               console.log("응애!");
 	           });
 			
-			
-			
-			$("#refund").on('click',function(){
-				
-			})
-
 		}); //function 끝
 	</script>
 </th:block>

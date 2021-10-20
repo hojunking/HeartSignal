@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-//        		.antMatchers("/createCourse").authenticated()
+//        		.antMatchers("/mypage/userTags").authenticated()
                 .antMatchers("/**").permitAll()
                 ;
 
@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.ignoringAntMatchers("/post/ckeditor/**")
         	.ignoringAntMatchers("/vue/**")
         	.ignoringAntMatchers("/api/course/register")
+        	.ignoringAntMatchers("/api/course/registerCouple")
+        	.ignoringAntMatchers("/api/course/modifyCourse")
 //        http.csrf().disable()
         ;
     }

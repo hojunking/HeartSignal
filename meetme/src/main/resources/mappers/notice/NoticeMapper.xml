@@ -9,7 +9,7 @@
 	ORDER BY notice_date DESC
 </select>
 
-<select id="coupleRequest" resultType="NoticeVO">
+<select id="coupleRequest" resultType="NoticeVO"> <!-- 커플요청 뿐만 아니라 댓글도 나옵니다. -->
 	SELECT U.NAME,
 			U.IMG_URL,
 			N.*

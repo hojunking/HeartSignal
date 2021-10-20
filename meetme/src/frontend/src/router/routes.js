@@ -1,4 +1,5 @@
 import CreateCourse from '../views/jaeho/CreateCourse.vue'
+import UpdateCourse from '../views/jaeho/UpdateCourse.vue'
 import Chat from '../views/jaeho/Chat.vue'
 import CoupleCreateCourse from '../views/jaeho/CoupleCreateCourse.vue'
 import HelloWorld from '../components/HelloWorld.vue'
@@ -16,6 +17,17 @@ const routes = [
         name: 'CreateCourse',
         component: CreateCourse
     },
+
+    {
+        path: '/createCourse/:placeId',
+        component: CreateCourse
+    },
+
+    {
+        path: '/updateCourse/:courseId',
+        component: UpdateCourse
+    },
+
 
     {
         path: '/chat',

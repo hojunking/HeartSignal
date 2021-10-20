@@ -17,7 +17,11 @@ public class CoupleInfoController {
 			path="coupleMain/coupleMain";
 		
 		}else if(vo.getCoupleStatus().equals("w")) {
-			System.out.println("커플메인 입장");
+			System.out.println("커플이 없는 커플메인");
+			path="coupleMain/coupleMain";
+		}
+		else if(vo.getCoupleStatus().equals("s")) {
+			System.out.println("커플 신청중 커플메인");
 			path="coupleMain/coupleMain";
 		}
 		else {

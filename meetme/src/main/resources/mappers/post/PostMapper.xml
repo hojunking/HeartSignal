@@ -80,7 +80,7 @@
    </select>
    
    <select id="getCourse" resultType="com.hs.meetme.mypage.domain.MyPageCourseVO">
-   		select a.course_id, a.course_name, b.avg_cost, c.address, c.place_name, c.thumbnail_href, c.region, c.longtitude, c.latitude
+   		select a.course_id, a.course_name,b.course_comment,b.avg_cost,c.description,c.address, c.place_name, c.thumbnail_href, c.region, c.longtitude, c.latitude
 		from course a join course_order b 
 		on a.course_id = b.course_id
         join place c
@@ -181,8 +181,7 @@
         c.place_name,
         c.avg_cost,
         c.place_id,
-        c.region,
-        c.thumbnail_href
+        c.region
 		from course a 
 		join (select * from course_order where course_order = 1) b 
 		    on a.course_id = b.course_id 
@@ -190,6 +189,16 @@
 		    on b.place_id = c.place_id
 		where a.user_id=#{userId}
 		order by b.course_id        
+	</select>
+	
+	<!-- 내 코스의 장소 정보들 같이 불러오기 -->
+	<select id="getPlaceList" resultType="MyPageCourseVO">
+		select c.course_id,p.*,  c.course_name, c.region,c.user_id, o.course_order, o.avg_cost
+		from course_order o join place p 
+		on p.place_id = o.place_id
+		join course c on c.course_id = o.course_id
+		where c.user_id =#{userId}
+		order by c.user_id,c.course_id, o.course_order
 	</select>
 	
 	
