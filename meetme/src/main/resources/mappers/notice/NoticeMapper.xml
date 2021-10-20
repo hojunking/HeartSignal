@@ -18,7 +18,7 @@
 				 I.IMG_URL,
 				 US.USER_ID AS USER_ID
 	        FROM USER_INFO US
-	        JOIN IMG I
+	        LEFT OUTER JOIN IMG I
 	        ON US.IMG_ID = I.IMG_ID) U
 	ON U.USER_ID = N.USER_SENT
 	WHERE N.USER_RECEIVED=#{userReceived}
