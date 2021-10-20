@@ -62,7 +62,6 @@ public class NoticeRestController {
 	
 	@PutMapping("/updateConfirmed/{id}") //클릭 시 confirm으로 변경되는 메소드
 	public void updateConfirmed(NoticeVO vo,@PathVariable String id) {
-		System.out.println("아이디 왕ㅆ나?"+id);
 		vo.setNoticeId(id);
 		noticeService.confirmUpdate(vo);
 	}
