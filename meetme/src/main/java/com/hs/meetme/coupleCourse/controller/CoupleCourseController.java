@@ -24,10 +24,14 @@ public class CoupleCourseController {
 	@GetMapping("/course")
 	public String course(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String coupleId = ((AccountVO) session.getAttribute("userSession")).getCoupleId();
+		AccountVO user = (AccountVO) session.getAttribute("userSession");
 		
-		model.addAttribute("list",service.getList(coupleId));
-		model.addAttribute("detail",service.getCourse(coupleId));
+		if(user==null || user.getCoupleStatus().equals("n")) {
+			return "redirect:/coupleMain?coupleStatus=n";
+		};
+		
+		model.addAttribute("list",service.getList(user.getCoupleId()));
+		model.addAttribute("detail",service.getCourse(user.getCoupleId()));
 		return "coupleCourse/coupleCourse";
 	}
 }

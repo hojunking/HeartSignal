@@ -12,6 +12,7 @@ public class CoupleCourseVO {
 	private String nickName;
 	private String userId;
 	private String courseState;
+	private String coupleState;
 	private String courseOpen;
 	private String region;
 	private String sumCost;
