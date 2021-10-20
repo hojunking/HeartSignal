@@ -47,11 +47,10 @@ public class BuildController {
 	public String coupleCreateCourse(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AccountVO user = (AccountVO) session.getAttribute("userSession");
-		String coupleStatus = user.getCoupleStatus();
 		
 		// 조건을 좀 더 확인 해야함.
-		if(user == null || !coupleStatus.equals("y")) {
-			return "redirect:/login";
+		if(user == null || user.getCoupleStatus().equals("n")) {
+			return "redirect:/coupleMain?coupleStatus=n";
 		}
 		
 		return "index";
