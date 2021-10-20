@@ -17,6 +17,7 @@
     "gitart-vue-dialog": "^1.0.3",
     "jquery": "^3.6.0",
     "sockjs-client": "^1.5.2",
+    "sweetalert2": "^11.1.9",
     "vue": "^3.0.0",
     "vue-draggable-next": "^2.0.1",
     "vue-router": "^4.0.11",

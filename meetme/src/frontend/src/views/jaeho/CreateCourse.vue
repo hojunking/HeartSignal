@@ -131,6 +131,7 @@
                                     <a type="button" class="icon-Close-Window fs-3" @click="deletePlaceInCourse(element.placeId)"
                                     ></a>
                                 </div>
+                                <small class="text-muted">{{ element.address }}</small>
                                 <div>
                                     <span class="text-muted mx-2">{{element.subTitle}}</span>
                                     <a type="button" class="fas fa-pen text-black fs-6 m-2" @click="replaceSubtitle(element.placeId ,element.subTitle)" style="text-decoration: none;"
@@ -167,7 +168,7 @@
                             </span>
                         </div>
                     </div>
-                    <div v-if="!(modalLoading && modalImagesLoading) == true">
+                    <div v-if="(modalLoading || modalImagesLoading) == false">
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -251,6 +252,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { ref, onMounted, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import TagInput from '@mayank1513/vue-tag-input'
@@ -367,7 +369,11 @@ export default defineComponent ({
             })
             .catch(err => {
                 searchError.value = err;
-                alert("코스입력 문제 발생")
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '코스입력 문제 발생!',
+                })
                 // In case a custom JSON error response was provided
                 if (err.json) {
                     return err.json.then(json => {
@@ -520,7 +526,11 @@ export default defineComponent ({
             })
             .catch(err => {
                 searchError.value = err;
-                alert("코스입력 문제 발생")
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '코스입력 문제 에러!',
+                })
                 // In case a custom JSON error response was provided
                 if (err.json) {
                     return err.json.then(json => {
@@ -531,6 +541,16 @@ export default defineComponent ({
             })
             .then(() => {
                 insertLoading.value = false;
+                for (let item of list.value) {
+                    if (item.placeId == insertPlaceData.value.placeId){
+                        Swal.fire({
+                            icon: 'error', // success
+                            title: '이런...',
+                            text: '이미 같은 장소가 있습니다!',
+                        })
+                        return;
+                    }
+                }
                 insertPlaceData.value.subTitle = "소제목";
                 list.value.push(insertPlaceData.value)
             });
@@ -604,8 +624,14 @@ export default defineComponent ({
             // you can use use axios as an alternative
             console.log(1);
             if(keywords == '') {
-                alert('검색어를 입력해주세요!')
-                return
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '검색어를 입력해 주세요!',
+                });
+                searched.value = false;
+                loadingSearch.value = false;
+                return;
             }
             fetch('/api/course/place/search?keywords=' + keywords, {
                 method: 'get',
@@ -659,7 +685,11 @@ export default defineComponent ({
             console.log(titleTextx);
 
             if(list.value.length == 0) {
-                alert('장소를 등록해 주세요!')
+                Swal.fire({
+                    icon: 'error', // success
+                    title: '이런...',
+                    text: '장소를 등록해 주세요!',
+                })
                 return;
             }
             
@@ -726,14 +756,25 @@ export default defineComponent ({
             })
             .then(() => {
                 if ((registerConfirm.value) && (registerConfirm.value != "error")) {
-                    alert('등록이 되었습니다.');
-                    location.href = "/courseDetail?courseId=" + registerConfirm.value;
-                }
-                else if(registerConfirm.value == "error"){
-                    alert('등록에 실패하였습니다.');
-                }
-                else {
-                    alert('알 수 없는 문제가 발생 하였습니다.');
+                    Swal.fire({
+                        icon: 'success', // success
+                        title: '성공!',
+                        text: '코스 등록이 완료 되었습니다!',
+                    }).then(() => {
+                        location.href = "/courseDetail?courseId=" + registerConfirm.value;
+                    })
+                } else if (registerConfirm.value == "error"){
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '코스 등록에 실패 하였습니다.',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error', // success
+                        title: '이런...',
+                        text: '알 수 없는 문제가 발생했습니다.',
+                    })
                 }
             });
         }
