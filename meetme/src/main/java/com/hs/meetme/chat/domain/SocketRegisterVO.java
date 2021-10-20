@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SocketRegisterVO {
 	
+	private String email;
 	private String registerConfirmValue;
 	
 }
