@@ -48,7 +48,7 @@
          <div class="d-flex mb-4 small align-items-center">
             <img th:src="@{|/img/user/${list.imgUrl}|}" alt="사진" class="size-40 rounded-circle me-2">
             <span class="text-muted d-inline-block">
-               By <a href="#!" class="text-dark" th:text="${list.nickname} "></a>
+                 By <a href="#!" class="text-dark" th:text="${list.nickname} "></a>
                <span class="mx-3">|</span>
                Hit <a href="#!" class="text-dark" th:text="${list.hit}"></a>
             </span>
@@ -87,7 +87,7 @@
                                             style="margin-left: 5px;">
                                              <div class="row d-flex accordion-body" style="padding: 25px;">
                                                 <div class="col-lg-8">
-                                                   <strong th:text="|[ ${c.courseComment} ]|"></strong>
+                                                   <strong class="text-success fs-6" th:text="|[ ${c.courseComment} ]|"></strong>
                                                    <p th:text="|평균 비용 : ${c.avgCost}|"></p>
                                                    <p th:text="|주소 : ${c.address}|"></p>
                                                    <p th:text="|설명 : ${c.description}|"></p>
@@ -174,6 +174,7 @@
                   </button>
                </div>
             </form>
+
          <hr>
          <!--로그인 한 사람, 글 주인 아닌 사람만 좋아요 버튼 넣기~ -->
          <li th:if="${session.userSession.userId} !=null">
@@ -207,6 +208,14 @@
                         취소</button>
                   </div>
                </th:block>
+               <br>
+               <div align="right">
+                  <a th:href="@{/post/community_list}" class="btn btn-primary btn-circle-ripple p-0 size-50 rounded-pill fs-3 lh-1 center-both me-4 mb-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="목록으로">
+                              <div class="btn-rise-bg bg-primary"></div>
+                              <div class="btn-rise-text"><i class="fs-3 bi bi-list-ul"></i></div>
+                 </a>
+               </div>   
             </div>
          </div>   
          </li>
@@ -365,13 +374,14 @@
    </script>
    <!-- js here -->
    <script type="text/javascript" th:inline="javascript">
+      /*<![CDATA[*/
+      const course = /*[[${course}]]*/ '';
+      const commentCnt = /*[[${count}]]*/'';
+      /*]]>*/
+      
       // ============ 페이지 로드 ==============
       $(function () {
 
-         /*<![CDATA[*/
-         const course = /*[[${course}]]*/ '';
-         const commentCnt = /*[[${count}]]*/'';
-         /*]]>*/
 
          if (course != null) {
             let courseId = course[0].courseId;
@@ -504,13 +514,15 @@
                   }
                }
             }
-         }
-            
-         var map = new naver.maps.Map('map', {
+            //map 생성
+            var map = new naver.maps.Map('map', {
             center: new naver.maps.LatLng(centerLat, centerLng),
             zoom: zoomNum
          });
 
+         }
+            
+       
          var markerOptions = {
             map: map,
             icon: {
@@ -886,7 +898,7 @@
 
       function insertCallback(result) {
          let commentWrap = $("<div />")
-            .addClass("row d-flex col-lg-12 commentWrap");
+            .addClass("row d-flex col-lg-12 mb-3  commentWrap");
          let Wrap = $("<div />")
          	.addClass("px-3 py-4 border rounded border-end col-lg-10");
          let imgDiv = $('<div />').addClass("me-3 col-lg-2");
@@ -894,17 +906,17 @@
          let profileImg = $("<img />")
             .addClass("size-50 arounded-circle")
             .attr({
-               src: result.imgId,
+               src: "/img/user/"+result.imgUrl,
                alt: "이미지",
                id: "profileImg"
             });
         
-         let nickname = $("<span />").addClass("pl-2").text(  result.nickname);
+         let nickname = $("<span />").addClass("pl-2").text(result.nickname);
          let comContent = $("<span />").addClass("pl-2").attr("id", result.commentId).text(result.comContent);
 		 
          let btnWrap = $("<div />")
          let updBtn = $("<button />")
-            .addClass("cmtUpdBtn1 btn btn-primary btn-sm")
+            .addClass("cmtUpdBtn1 m-1 btn btn-primary btn-sm")
             .attr("data-content", result.comContent)
             .attr("data-commentId", result.commentId)
             .attr("data-toggle", "modal")
