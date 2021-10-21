@@ -197,6 +197,7 @@ public class PostController {
 		pService.insertCMComment(vo);
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		vo.setNickname(accountVO.getNickname());
+		vo.setImgUrl(accountVO.getImgUrl());
 		
 		//notice INSERT 
 		System.out.println("보낸사람"+vo.getUserId()+"+"+"게시글만든 "+vo.getPostUserId());
