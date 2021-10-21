@@ -1,6 +1,6 @@
 package com.hs.meetme.coupleLog.controller;
 
-import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,21 +32,20 @@ public class CoupleLogController {
 		System.out.println(coupleId);
 		return "coupleLog/coupleLogMain";
 	}
-	
+
 	@GetMapping("/logOne")
-	public String getLogOne(Model model,CoupleLogVO vo) {
+	public String getLogOne(Model model, CoupleLogVO vo) {
 		CoupleLogVO log = service.getLog(vo);
 		model.addAttribute("log", log);
-		if(log.getImgId() > 0) {
+		if (log.getImgId() > 0) {
 			model.addAttribute("img", service.getImg(vo));
 		}
 		return "coupleLog/coupleLogOne";
 	}
-	
 
 	@GetMapping("/coupleLogRecord")
 	public void coupleLogRecord() {
-		
+
 	}
 
 	@PostMapping("/coupleLogRecord")
@@ -54,13 +53,16 @@ public class CoupleLogController {
 		HttpSession session = request.getSession();
 		String coupleId = ((AccountVO) session.getAttribute("userSession")).getCoupleId();
 		vo.setCoupleId(Integer.valueOf(coupleId));
-		service.logInsert(vo);
-	
+		int n = service.logInsert(vo);
+
+		if (n == 1) {
+			rttr.addFlashAttribute("record", "done");
+		}
 		System.out.println(vo);
 		/*
 		 * service.logInsertImg(vo); service.logInsertLogImg(vo);
 		 */
-		
+
 		return "redirect:/coupleLog/logList";
 	}
 
@@ -73,12 +75,12 @@ public class CoupleLogController {
 
 		return "redirect:/coupleLog/logList";
 	}
-	
+
 	@PostMapping("/coupleLogDelete")
 	public String delete(CoupleLogVO vo, RedirectAttributes rttr) {
 		int result = service.logDelete(vo);
 		int resultImg = service.imgDelete(vo);
-		if (result ==1  && resultImg == 1) {
+		if (result == 1 && resultImg == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
 

@@ -29,31 +29,24 @@ div {
 			th:action="@{/coupleLog/coupleLogUpdate}" th:object="${log}"
 			method="post">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12"><br>
 					<h1 class="page-header mainTitle">커플로그</h1>
 					<br>
 				</div>
-			</div>
+			</div> <!--커플로그 헤더 -->
 
-<!-- 			<div class="form-group">
+			<div class="form-group">
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-lg-6">
-							<input type="hidden" id="logId" name="logId"
-								th:value="${log.logId}"> 제목 <input type="text"
-								class="form-control" name="logTitle" th:value="${log.logTitle}"
-								placeholder="내용을 입력해주세요"> 내용 <input type="text"
-								name="logContent" th:value="${log.logContent}"
-								class="form-control" placeholder="내용을 입력해주세요">
-
+							<input type="hidden" id="logId" name="logId" th:value="${log.logId}"> 
+							제목 <input type="text" name="logTitle" th:value="${log.logTitle}" class="form-control"> 
+							내용 <input type="text" name="logContent" th:value="${log.logContent}" class="form-control">
+ 							캡션 <input type="text" name="caption" th:value="${log.caption}" class="form-control">
 						</div>
 						<div class="col-lg-6">
-							날짜 <input type="date" name="logDate" class="form-control"
-								th:value="${log.logDate}" placeholder="내용을 입력해주세요">
-							th:value="${#dates.format(logList.logDate,'yyyy.MM.dd)}"
-
-							위치 <input type="text" class="form-control" name="logLoc"
-								th:value="${log.logLoc}" placeholder="내용을 입력해주세요">
+							날짜 <input type="date" name="logDate" class="form-control" th:value="${log.logDate}" placeholder="내용을 입력해주세요">
+							위치 <input type="text" class="form-control" name="logLoc" th:value="${log.logLoc}" placeholder="내용을 입력해주세요">
 						</div>
 					</div>
 				</div>
@@ -62,7 +55,6 @@ div {
 			<div class="form-group">
 				<div class="col-md-12">
 					<div class="row">
-
 						<div class="card-columns" th:if="${img} != null" data-aos="fade-">
 							<div style="text-align: center;">
 								<span class="badge cusBadge" style="background-color: #f73e69;">Photo</span><br>
@@ -74,84 +66,30 @@ div {
 					</div>
 				</div>
 			</div>
-			<hr> -->
-
-
-
-
-
-			<div
-				class="col-lg-8 col-xl-6 me-auto mb-6 mb-lg-0 position-relative z-index-1">
-					<input type="hidden" id="logId" name="logId"
-								th:value="${log.logId}"> 제목 <input type="text"
-								class="form-control" name="logTitle" th:value="${log.logTitle}"
-								placeholder="내용을 입력해주세요"> 내용 <input type="text"
-								name="logContent" th:value="${log.logContent}"
-								class="form-control" placeholder="내용을 입력해주세요">
-								날짜 <input type="date" name="logDate" class="form-control"
-								th:value="${log.logDate}" placeholder="내용을 입력해주세요">
-							<!-- th:value="${#dates.format(logList.logDate,'yyyy.MM.dd)}" -->
-
-							위치 <input type="text" class="form-control" name="logLoc"
-								th:value="${log.logLoc}" placeholder="내용을 입력해주세요">
-								
-								
-				<div>
-				</div>
-				<div class="pt-5 d-flex">
-					<a href="#!" class="btn btn-primary me-1"> Read story <svg
-							class="ms-2" xmlns="http://www.w3.org/2000/svg" width="16"
-							height="16" viewBox="0 0 16 16" fill="none">
-                                        <path fill-rule="evenodd"
-								clip-rule="evenodd"
-								d="M0.937531 2.06247L13.0312 1.98959L12.9583 14.0833L11.3183 14.1006L11.3746 4.7957L1.58515 14.5852L0.435662 13.4357L10.2251 3.64621L0.920252 3.70256L0.937531 2.06247Z"
-								fill="currentColor" />
-                                    </svg>
-					</a> <a href="#stories" class="btn btn-light border ms-1"> More
-						stories
-						 <svg class="ms-2 flip-y"
-							xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-							viewBox="0 0 16 16" fill="none">
-                         <path fill-rule="evenodd"
-								clip-rule="evenodd"
-								d="M0.937531 2.06247L13.0312 1.98959L12.9583 14.0833L11.3183 14.1006L11.3746 4.7957L1.58515 14.5852L0.435662 13.4357L10.2251 3.64621L0.920252 3.70256L0.937531 2.06247Z"
-								fill="currentColor" />
-                                    </svg>
-					</a>
-				</div>
-			</div>
-
-
-
-
-			<br>
+			<hr>
 
 			<div style="text-align: center;">
-
-
 				<button type="button" class="btn btn-primary"
 					onclick="location.href='./logList'">리스트</button>
-				<button id="updateBtn" type="submit" class="btn btn-primary">수정</button>
+				<button id="updateBtn" type="submit" class="btn btn-light">수정</button>
 				<button id="deleteBtn" type="submit" class="btn btn-primary"
 					formaction="coupleLogDelete">삭제</button>
 			</div>
-
+			
+			
 		</form>
 		<br> <br>
-
-
-
 	</div>
 </th:block>
 <th:block layout:fragment="script">
 	<script>
 		$(document).ready(function() {
 			$("#updateBtn").on("click", function() {
-				("수정되었습니다");
+				swal("수정되었습니다","","success");
 			});
 
 			$("#deleteBtn").on("click", function() {
-				alert("삭제되었습니다");
+				swal("삭제되었습니다","","success");
 			});
 
 		});
