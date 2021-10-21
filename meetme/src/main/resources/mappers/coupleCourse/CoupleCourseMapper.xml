@@ -56,7 +56,7 @@ from(
             FROM user_info
             WHERE user_id=(
                 SELECT ui.user_id
-                FROM couple_info ci join user_info ui
+                FROM couple_info ci left outer join user_info ui
                 on(ci.user_request = ui.user_id)
                 WHERE couple_id = #{coupleId}
             )
@@ -76,7 +76,7 @@ from(
             FROM user_info
             WHERE user_id=(
                 SELECT ui.user_id
-                FROM couple_info ci join user_info ui
+                FROM couple_info ci left outer join user_info ui
                 on(ci.user_received = ui.user_id)
                 WHERE couple_id = #{coupleId}
             )
@@ -141,7 +141,7 @@ from(
             FROM user_info
             WHERE user_id=(
                 SELECT ui.user_id
-                FROM couple_info ci join user_info ui
+                FROM couple_info ci left outer join user_info ui
                 on(ci.user_request = ui.user_id)
                 WHERE couple_id = #{coupleId}
             )
@@ -161,16 +161,15 @@ from(
             FROM user_info
             WHERE user_id=(
                 SELECT ui.user_id
-                FROM couple_info ci join user_info ui
+                FROM couple_info ci left outer join user_info ui
                 on(ci.user_received = ui.user_id)
-                WHERE couple_id = 1
+                WHERE couple_id = #{coupleId}
             )
         )
     ) user_received_img
     FROM
     course a, course_order b
-    WHERE a.user_id=1 
-    AND
+    WHERE 
         a.course_id=b.course_id 
     AND
         a.course_open='y'
