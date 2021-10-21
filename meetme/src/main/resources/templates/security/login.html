@@ -118,10 +118,10 @@
     <script type="text/javascript" th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function () {
             // 네이버 로그인 구현
-            let naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
+            let naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://ec2-3-141-206-88.us-east-2.compute.amazonaws.com/naver/login");
             let state = naverIdLogin.getUniqState();
             naverIdLogin.setButton("white", 2, 40);
-            naverIdLogin.setDomain("http://localhost:8000/login");
+            naverIdLogin.setDomain("http://ec2-3-141-206-88.us-east-2.compute.amazonaws.com");
             naverIdLogin.setPopup();
             naverIdLogin.setState(state);
             naverIdLogin.init_naver_id_login();

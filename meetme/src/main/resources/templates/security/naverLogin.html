@@ -21,7 +21,7 @@
 		$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
 		let naverIdLogin=null;
 		$(function() {
-			naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://localhost:8000/naver/login");
+			naverIdLogin = new naver_id_login("WrjXbVphPhh4Y5doCESn", "http://ec2-3-141-206-88.us-east-2.compute.amazonaws.com/naver/login");
 			// 접근 토큰 값 출력
 			// 네이버 사용자 프로필 조회
 			$.ajax({
