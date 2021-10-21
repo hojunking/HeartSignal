@@ -284,9 +284,12 @@ public class PostController {
 			String fileName = upload.getOriginalFilename();
 			byte[] bytes = upload.getBytes();
 
+			
 			// 이미지 경로 생성
-			String path = fileDir.getAbsolutePath() + "/ckImage/";
+//			String path = fileDir.getAbsolutePath() + "/ckImage/";
 			// fileDir는 전역 변수라 그냥 이미지 경로 설정해주면 된다.
+			
+			String path = request.getSession().getServletContext().getRealPath("/img/ckImage");
 			String ckUploadPath = path + uid + "_" + fileName;
 			File folder = new File(path);
 			// 해당 디렉토리 확인
@@ -331,7 +334,8 @@ public class PostController {
 	public void ckSubmit(@RequestParam(value = "uid") String uid, @RequestParam(value = "fileName") String fileName,
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 서버에 저장된 이미지 경로
-		String path = fileDir.getAbsolutePath() + "/ckImage/";
+//		String path = fileDir.getAbsolutePath() + "/ckImage/";
+		String path = request.getSession().getServletContext().getRealPath("/img/ckImage");
 		String sDirPath = path + uid + "_" + fileName;
 		File imgFile = new File(sDirPath);
 		// 사진 이미지 찾지 못하는 경우 예외처리로 빈 이미지 파일을 설정한다.
