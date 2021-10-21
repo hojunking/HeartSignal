@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,14 @@ public class RestCoupleLogController {
 	File fileDir = new File("src/main/resources/static/img/");
 
 	@PostMapping("/coupleLogImg")
-	public CoupleLogVO updateCoupleImage(MultipartFile file, CoupleLogVO vo) throws IllegalStateException, IOException {
-		String path = fileDir.getAbsolutePath() + "/coupleLog/";
+	public CoupleLogVO updateCoupleImage(MultipartFile file, CoupleLogVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
+//		String path = fileDir.getAbsolutePath() + "/coupleLog/";
+		String path = request.getSession().getServletContext().getRealPath("/img/coupleLog");
+		File filePath = new File(path);
+		if(!filePath.exists()) {
+			filePath.mkdirs();
+		}
+		
 		System.out.println(path);
 		MultipartFile ufile = file;
 		if (!ufile.isEmpty() && ufile.getSize() > 0) {

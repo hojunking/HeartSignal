@@ -44,7 +44,7 @@ public class MypageRestController {
 	@Autowired
 	ImageService imageService;
 
-	File fileDir = new File("src/main/resources/static/img/");
+//	File fileDir = new File("src/main/resources/static/img/");
 
 	// 수정하기 (이미지)
 	@PostMapping("/imgUpdate")
@@ -54,8 +54,14 @@ public class MypageRestController {
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		int r = 0;
+		
+		String path = request.getSession().getServletContext().getRealPath("/img/user");
+		File filePath = new File(path);
+		if(!filePath.exists()) {
+			filePath.mkdirs();
+		}
 		try {
-			String path = fileDir.getAbsolutePath() + "/user/";
+//			String path = fileDir.getAbsolutePath() + "/user/";
 			MultipartFile file = updateImage;
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
@@ -66,7 +72,7 @@ public class MypageRestController {
 
 				imgvo.setImgUrl(imgUrl);
 				r = imageService.insertImage(imgvo);
-
+				
 				file.transferTo(uufile); // 파일 옮기기
 
 				mypageUserInfoVO.setImgId(String.valueOf(imgvo.getImgId()));

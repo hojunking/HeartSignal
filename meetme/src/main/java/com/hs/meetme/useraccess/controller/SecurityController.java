@@ -42,8 +42,8 @@ public class SecurityController {
 	@Autowired
 	ImageService imageService;
 	
-	File fileDir = new File("src/main/resources/static/img/");
-
+//	File fileDir = new File("src/main/resources/static/img/");
+	
 	@GetMapping("/signUp")
 	public String signUp() {
 		return "security/signUp";
@@ -51,11 +51,14 @@ public class SecurityController {
 
 	@PostMapping("/signUp")
 	@Transactional
-	public String signUpPro(RedirectAttributes rttr, MultipartFile filepond, AccountVO vo, ImageVO imgvo) {
-		System.out.println(filepond);
-		System.out.println(vo);
+	public String signUpPro(RedirectAttributes rttr, MultipartFile filepond, AccountVO vo, ImageVO imgvo, HttpServletRequest request) {
+		String path = request.getSession().getServletContext().getRealPath("/img/user");
+		File filePath = new File(path);
+		if(!filePath.exists()) {
+			filePath.mkdirs();
+		}
 		try {
-			String path = fileDir.getAbsolutePath() + "/user/";
+//			String path = fileDir.getAbsolutePath() + "/user/";
 			MultipartFile file = filepond;
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
