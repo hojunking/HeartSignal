@@ -152,6 +152,11 @@
                                 <div class="btn-rise-bg bg-white"></div>
                                 <div class="btn-rise-text"><span>디데이설정</span></div>
                             </a>
+                            &nbsp;
+                            <a href="readCoupleInfo" class="btn btn-rise rounded-pill hover-lift btn-outline-white" data-bs-toggle="modal">
+                                <div class="btn-rise-bg bg-white"></div>
+                                <div class="btn-rise-text"><span>커플정보</span></div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -281,6 +286,34 @@ style="display: none;" data-bs-backdrop="static">
          </div>
      </div>
  </div>
+ 
+ <!-- 커플정보보기 모달창 -->
+<div class="modal fade" id="readCoupleInfo" tabindex="-1" aria-labelledby="readCoupleInfo" aria-hidden="true" style="display: none;"
+ data-bs-backdrop="static">
+     <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content border-0">
+             <div class="modal-header border-0 bg-white">
+                <button type="button" class="btn-close text-reset p-0 m-0 size-20 center-both ms-auto"
+                            data-bs-dismiss="modal" aria-label="Close">
+                           <i class="bi bi-x fs-5"></i>
+                 </button>
+             </div>
+             <div class="modal-body"style="padding: 0px;">
+                 <div class="position-relative  bg-white shadow-lg overflow-hidden">
+                     <div class="px-2 bg-white position-relative pt-2">
+                         <h4 class="mb-4 text-center" id="nickFind">커플정보</h4>
+                             <div class="input-group mb-3">
+                                 하어라얼아러아
+                             </div>
+                     </div>
+                 </div>
+             </div>
+                          <br>
+             
+         </div>
+     </div>
+ </div>
+ 
 
 <!--Offcanvas end white-->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd"
@@ -582,8 +615,8 @@ style="display: none;" data-bs-backdrop="static">
 					minContainerHeight : 400,
 					minContainerWidth : 400,
 					
-					minCropBoxWidth : 800,
-					minCropBoxHeight:320,
+					minCropBoxWidth : 840,
+					minCropBoxHeight:360,
 					minCanvasWidth : 400,
 					minCanvasHeight:400,
 					responsive : true,
