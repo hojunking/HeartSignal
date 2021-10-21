@@ -30,5 +30,9 @@ public class NoticeServiceImpl implements NoticeService{
 	public int confirmUpdate(NoticeVO vo) {
 		return map.confirmUpdate(vo);
 	}
+	@Override
+	public NoticeVO countNotice(NoticeVO vo) {
+		return map.countNotice(vo);
+	}
 
 }

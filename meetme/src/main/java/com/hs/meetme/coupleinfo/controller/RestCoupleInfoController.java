@@ -129,6 +129,12 @@ public class RestCoupleInfoController {
 		CoupleInfoVO vo = new CoupleInfoVO();
 		vo.setUserId(id);
 		vo = coupleService.coupleInfoSelect(vo);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(vo.getStartDate());
+		cal.add(Calendar.MONTH, vo.getSubTerm()); // 시작일에 구독기간(월) 더하기 => 만료일
+		Date endDate = cal.getTime();
+		vo.setEndDate(endDate);
 		return vo;
 	}
 

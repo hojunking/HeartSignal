@@ -138,7 +138,7 @@ public class RestPaymentController {
              e.printStackTrace();
         }
         payService.insertRefundInfo(vo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
-        
+      //구독 중 커플환불 시(insert) 커플테이블 활성화 상태 n, 구독기간 0으로 update TRIGGER 실행됩니다.
         
         //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
@@ -164,7 +164,7 @@ public class RestPaymentController {
 	        	accountVO.setCoupleStatus("n");
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        }else{  //구독 중 커플의 환불
-	        	cvo.setSubTerm(0); //구독기간 초기화
+	        	
 	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
 	        	accountVO.setCoupleStatus("e");
 	        	coupleService.userCoupleStatusUpdate(cvo);

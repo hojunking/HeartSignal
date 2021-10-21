@@ -143,6 +143,7 @@
 
             requestInfo();
             noticeCommentClick();
+            countNotice();
 
             //notice 클릭시 확인 상태로 변경하는 ajax
             function noticeCommentClick() {
@@ -165,7 +166,21 @@
                     });
                 })
             } //function 종료
-
+			//notice 숫자 카운트
+            function countNotice(){
+            	let id = userSession.userId;
+            	$.ajax({
+                    url: "/countNotice/" + id,
+                    dataType: "text",
+                    success: function (count) {
+                        console.log("댓글카운트",count);
+                        $('#alarm').text(count);
+                    },
+                    error:function (error){
+                    console.error();}
+                });
+            }
+            
             // requester 정보뿌리기
             function requestInfo() {
                 let userId = userSession.userId;
@@ -223,7 +238,6 @@
                                     .appendTo($("#noticeBlock"));
                             }
                         });
-
                     }
                 }); //ajax 끝
             }

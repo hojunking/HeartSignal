@@ -58,4 +58,10 @@
 	UPDATE NOTIFICATION SET NOTICE_CONFIRMED='y'
 	WHERE NOTICE_ID=#{noticeId}
 </update>
+<select id="countNotice" resultType="noticeVO">
+	SELECT COUNT(*) AS COUNT
+	FROM NOTIFICATION
+	WHERE USER_RECEIVED =#{userReceived}
+	AND NOTICE_CONFIRMED='n'
+</select>
 </mapper>
