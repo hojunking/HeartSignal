@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +31,7 @@ public class RestPaymentController {
 	@Autowired NoticeService noticeService;
 	//Account VO는 다 session update
 	@PostMapping("/payment") //결제
-	public String paymentInsert(PaymentVO vo, HttpServletRequest request) {
+	public CoupleInfoVO paymentInsert(PaymentVO vo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		payService.paymentInsert(vo); //결제정보 DB입력/
@@ -49,6 +48,9 @@ public class RestPaymentController {
 		
 			if(oc.getCoupleStatus().equals("n")) { //커플의 상태확인
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
+				
+				Date sysdate = new Date(); // 현재 날짜
+				oc.setStartDate(sysdate);	//현재 날짜를 시작일로 업데이트
 				oc.setCoupleStatus("y");		//커플의 상태 변경
 				
 				System.out.println("커플정보 갱신 :"+oc);
@@ -58,14 +60,14 @@ public class RestPaymentController {
 				oc.setUserId(oc.getUserRequest()); //userId에 req를 넣느다.
 				coupleService.userCoupleStatusUpdate(oc); //유저테이블의 coupleStatus 둘 다 y변경
 				accountVO.setCoupleStatus(oc.getCoupleStatus());
-				result="커플로그기간이 새롭게 갱신되었습니다.\n"
+				result="커플로그기간이 새롭게 갱신되었습니다."
 						+ "감사합니다.";
 									//커플테이블의 상태가 n일 때 기존커플테이블 갱신
-			
+				oc.setMessage(result);
 			}else if(oc.getCoupleStatus().equals("y")){ //커플 연장하기
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(oc.getStartDate());
-				cal.add(Calendar.MONTH, oc.getSubTerm()); //연장 기간 더하기
+				cal.add(Calendar.MONTH, vo.getSubTerm()); //연장 기간 더하기
 				Date endDate= cal.getTime();
 				
 				oc.setSubTerm(vo.getSubTerm());	//요금제 최신화
@@ -73,10 +75,12 @@ public class RestPaymentController {
 				coupleService.coupleInfoUpdate(oc); //커플테이블 최신화
 				
 			
-				result="커플로그기간 연장되었습니다.\n"
+				result="커플로그기간이 연장되었습니다."
 						+ "감사합니다."; //기존 커플의 연장 성공
+				oc.setMessage(result);
 			}else {
 				result="비정상적인 접근입니다.";
+				oc.setMessage(result);
 			}
 		
 		}else {
@@ -87,11 +91,12 @@ public class RestPaymentController {
 			oc =coupleService.read(oc);
 			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
 			accountVO.setCoupleStatus("w");
-			result="커플로그가 시작되었습니다. \n"
+			result="커플로그가 시작되었습니다."
 					+ "감사합니다.";
+			oc.setMessage(result);
 		}	//커플테이블에 대한 정보가 없을 때 신규테이블 생성
 		
-		return result;
+		return oc;
 	}
 	
 	
@@ -138,7 +143,7 @@ public class RestPaymentController {
              e.printStackTrace();
         }
         payService.insertRefundInfo(vo); //환불결과 DB에 저장 , 커플테이블 상태 비활성화
-        
+      //구독 중 커플환불 시(insert) 커플테이블 활성화 상태 n, 구독기간 0으로 update TRIGGER 실행됩니다.
         
         //커플 상태, 유저 커플상태 변경
         CoupleInfoVO cvo=new CoupleInfoVO();
@@ -164,12 +169,12 @@ public class RestPaymentController {
 	        	accountVO.setCoupleStatus("n");
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        }else{  //구독 중 커플의 환불
-	        	cvo.setSubTerm(0); //구독기간 초기화
+	        	
 	        	cvo.setCoupleStatus("e"); //커플상태 m(커플이지만 구독기간 끝남)으로 변경
 	        	accountVO.setCoupleStatus("e");
 	        	coupleService.userCoupleStatusUpdate(cvo);
 	        	message="환불되었습니다! \n"
-	        			+ "더 나은 우리 오늘 뭐해?가 되도록 노력하겠습니다.";
+	        			+ "더 나은 서비스를 위해 노력하겠습니다.";
 	        }
 	        
 		return message;

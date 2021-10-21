@@ -13,4 +13,5 @@ public interface NoticeMapper {
 		public int deleteNotice(NoticeVO noticeVO);       //나의 notice정보 삭제하기
 		public int insertNotice(NoticeVO vo); 			//알림 보내기
 		public int confirmUpdate(NoticeVO vo); 			//알림 읽었을때 상태 변화
+		public NoticeVO countNotice(NoticeVO vo); 		//알림카운트
 }

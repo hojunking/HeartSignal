@@ -18,8 +18,8 @@ public class NoticeVO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd:mm:ss")
 	private Date noticeDate;
 	private String noticeConfirmed;
-	
 	private String postId;
+	private int count;
 	
 	private String userId;
 	private String name;

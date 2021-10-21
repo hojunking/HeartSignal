@@ -65,4 +65,11 @@ public class NoticeRestController {
 		vo.setNoticeId(id);
 		noticeService.confirmUpdate(vo);
 	}
+	@GetMapping("/countNotice/{id}") //클릭 시 countNotice
+	public int getCountNotice(@PathVariable String id,NoticeVO vo) {
+		vo.setUserReceived(id);
+		vo= noticeService.countNotice(vo);
+		
+		return vo.getCount();
+	}
 }

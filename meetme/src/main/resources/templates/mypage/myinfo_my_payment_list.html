@@ -169,7 +169,7 @@
                                             class="d-block rounded-top d-md-none img-fluid">
                                         <div
                                             class="d-none d-md-flex overflow-hidden bg-shade-primary rounded-3 rounded-end-0 h-md-100 position-relative">
-                                            <img th:src="@{/img/008.jpg}" alt="" class="bg-image">
+                                            <img th:src="@{/img/refundingImg4.jpg}" alt="" class="bg-image">
                                         </div>
                                     </div>
                                     
@@ -244,7 +244,7 @@
     	$('#merchantUid').text("결제번호 : " +merchantUid);
     	
     	$('#goRefund').on('click',function(){
-      		
+      		$(this).attr('disabled','true');
     		$.ajax({
     			url : '../refund', //'../AddItemServlet.do'
     			method : 'post',
@@ -262,8 +262,13 @@
 					});
     			},
     			error : function(error) {
-    				console.log("문제발생");
     				console.log(error);
+    				swal("환불에 문제가 생겼습니다!","", "error",
+       						{button : {text : "확인",className : "btn btn-primary"}
+        				}).then(()=>{
+    			        	window.location.reload();
+    						console.log("응애!");
+    					});
     			}
     		});
       		

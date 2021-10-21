@@ -129,6 +129,12 @@ public class RestCoupleInfoController {
 		CoupleInfoVO vo = new CoupleInfoVO();
 		vo.setUserId(id);
 		vo = coupleService.coupleInfoSelect(vo);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(vo.getStartDate());
+		cal.add(Calendar.MONTH, vo.getSubTerm()); // 시작일에 구독기간(월) 더하기 => 만료일
+		Date endDate = cal.getTime();
+		vo.setEndDate(endDate);
 		return vo;
 	}
 
@@ -153,6 +159,8 @@ public class RestCoupleInfoController {
 			throws IllegalStateException, IOException {
 //		String path = fileDir.getAbsolutePath() + "/couple/";
 		String path = request.getSession().getServletContext().getRealPath("/img/couple");
+		
+		System.out.println("여기가 경로다"+path);
 		File filePath = new File(path);
 		if(!filePath.exists()) {
 			filePath.mkdirs();

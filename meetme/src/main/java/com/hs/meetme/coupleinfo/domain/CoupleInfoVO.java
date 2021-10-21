@@ -22,6 +22,7 @@ public class CoupleInfoVO extends ImageVO{
 	private Date coupleDate; //사귀기 시작한 날짜
 	private int imageId;	//커플대문
 	private int subTerm;	//구독기간(1,3,6,0)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
 	private Date startDate; //결제날(시작날)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
@@ -40,6 +41,7 @@ public class CoupleInfoVO extends ImageVO{
 	
 	private String imgUrl; //커플이미지 url
 	private String email;
+	private String message; //메시지보내기
 }
 
 
