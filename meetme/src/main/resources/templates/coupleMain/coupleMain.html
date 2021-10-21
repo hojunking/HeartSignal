@@ -226,7 +226,7 @@ style="display: none;" data-bs-backdrop="static">
 						<!--Get started image-->
                          <div class="position-relative my-4 overflow-hidden size-180 mx-auto rounded-circle" id="findLoveInfo"
                          style="display:none;">
-                                <img src="/img/coupleImage1.jpg" alt="" class="img-fluid">
+                                <img src="/img/coupleImage1.jpg" alt="" class="img-fluid" id="findLoveImg">
                             </div>
                      </div>
                      <div class="px-2 bg-white position-relative pt-2 mb-2">
@@ -514,6 +514,8 @@ style="display: none;" data-bs-backdrop="static">
 							if(datas.coupleStatus=='n'){
 								$('#noFind').remove();		//커플검색 알림메시지
 								$('#nickFind').text(datas.nickName); //검색결과 닉네임
+								console.log(datas.userImg);
+								$('#findLoveImg').attr('src',"/img/"+datas.userImg);
 								$('#findLoveInfo').css("display","block"); //사진까지 보여줌
 								
 								let search= $('.search');
@@ -537,7 +539,7 @@ style="display: none;" data-bs-backdrop="static">
 											{button : {text : "확인",className : "btn btn-primary"}
 											}).then(()=>{
 												$('#findLove').hide(); //모달창 닫기
-									        	window.location.reload();
+									        	location="/coupleMain?coupleStatus=s";
 												console.log("응애!");
 											});
 										}

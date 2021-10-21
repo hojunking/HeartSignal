@@ -212,13 +212,11 @@
                                             .append($('<div class="me-1 me-lg-2"/>')
                                                 .append($(
                                                         '<img class="avatar rounded-circle shadow"/>'
-                                                        ).attr('src', "/img/" + item
-                                                    .imgUrl)))
+                                                        ).attr('src', "/img/" + item.imgUrl)))
                                             .append($('<div class="flex-grow-1"/>')
                                                 .append($(
                                                         '<p class="text-dark fs-6 mb-0"/>')
-                                                    .html(userSession.name + "님의 게시글 " +
-                                                        item.noticeContent))
+                                                    .html(item.noticeContent))
                                                 .append($(
                                                     '<span class="text-muted d-block"/>'
                                                     ).html(item.noticeDate)))))

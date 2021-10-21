@@ -86,7 +86,7 @@ public class RestPaymentController {
 			
 			oc =coupleService.read(oc);
 			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
-			accountVO.setCoupleStatus(oc.getCoupleStatus());
+			accountVO.setCoupleStatus("w");
 			result="커플로그가 시작되었습니다. \n"
 					+ "감사합니다.";
 		}	//커플테이블에 대한 정보가 없을 때 신규테이블 생성
