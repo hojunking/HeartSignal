@@ -49,8 +49,8 @@
             <img th:src="@{|/img/user/${list.imgUrl}|}" alt="사진" class="size-40 rounded-circle me-2">
             <span class="text-muted d-inline-block">
                  By <a href="#!" class="text-dark" th:text="${list.nickname} "></a>
-               <span class="mx-3">|</span>
-               Hit <a href="#!" class="text-dark" th:text="${list.hit}"></a>
+               <span class="mx-2">|</span>
+               Hit <a href="#!" class="text-dark" th:text="${list.hit}"></a>회
             </span>
          </div>
          <section class="overflow-hidden">
@@ -90,7 +90,8 @@
                                                    <strong class="text-success fs-6" th:text="|[ ${c.courseComment} ]|"></strong>
                                                    <p th:text="|평균 비용 : ${c.avgCost}|"></p>
                                                    <p th:text="|주소 : ${c.address}|"></p>
-                                                   <p th:text="|설명 : ${c.description}|"></p>
+                                                   <p th:if="${not #strings.isEmpty(c.description)}" th:text="|설명 : ${c.description}|"></p>
+                                                
                                                 </div>
                                                 <div class="col-lg-4">
                                                   <img class="img-thumbnail rounded " th:src="${c.thumbnailHref}" alt="">
@@ -124,13 +125,13 @@
          <ul class="list-unstyled mb-5 mb-lg-10" id="commentsBody">
             <li th:each="list : ${cmt}" class="d-flex mb-3 justify-content-between commentWrap">
                <div class="row d-flex col-lg-12">
+                  <div class="me-1 col-lg-1 d-flex">
+                      <img th:src="@{|/img/user/${list.imgUrl}|}" alt="이미지" id="profileImg" class="size-50 rounded-circle">
+                  </div>
                   <div class="px-3 py-4 border rounded border-end col-lg-10">
-	                  <div class="me-3 col-lg-2">
-	                      <img th:src="@{|/img/user/${list.imgUrl}|}" alt="이미지" id="profileImg" class="size-50 rounded-circle">
-	                  </div>
                         <div class="d-flex mb-3 justify-content-between">
                            <div class="d-flex align-items-center">
-                                 <h6 class="mb-0 me-3" th:text="${list.nickname}"></h6>
+                                 <h6 class="mb-0 me-3 fs-5" th:text="${list.nickname}"></h6>
                                  <small class="text-muted" th:text="${#dates.format(list.comCreated,'yyyy.MM.dd.')}"></small>
                            </div>
                            <div th:if="${session.userSession.userId} == ${list.userId}">
@@ -153,22 +154,20 @@
                </div>
             </li>
          </ul>
-         <!--댓글 넣기-->
-
-         <!-- 댓글조회 -->
+   
 
          <!-- 댓글 입력 -->
          <h4 class="mb-4">Post a comment</h4>
             <form>
                <div class="mb-3">
                   <!--${session.userSession.imgUrl}로 만들어주셔여-->
-                  <img class="rounded-circle" th:src="@{|/img/africa.png|}" style="width: 2.5rem; height:2.5rem;">
+                  <img class="rounded-circle"  th:src="@{|/img/user/${session.userSession.imgUrl}|}" style="width: 2.5rem; height:2.5rem;">
                   <span class="pl-3" style="font-size: 1.6rem;" th:text="${session.userSession.nickname}"></span>
                </div>
                <div class="mb-3">
                    <textarea class="form-control" id="cmtContent" th:name="comContent" rows="10" placeholder="Comment"></textarea>
                </div>
-               <div class="d-flex align-items-center justify-content-between">
+               <div class="d-flex align-items-right justify-content-between">
                   <button type="button" class="cmtInsBtn btn btn-danger btn-hover-arrow btn-sm mb-1" style="float:right;">
                      댓글 등록
                   </button>
@@ -184,7 +183,7 @@
                   <button type="submit" name="submit" id="likeBtn" class="likeBtn rounded-pill btn btn-rise btn-outline-danger m-2"
                      th:classappend="${like} == 1 ? d-none" data-toggle="modal" data-target="#likeModal">
                      <div class="btn-rise-bg bg-danger"></div>
-                     <div class="btn-rise-text">좋아요</div>
+                     <div class="btn-rise-text">좋아요💖</div>
                   </button>
                </div>
                <div class="col-auto">
@@ -199,7 +198,7 @@
                      <button type="submit" name="submit" id="scrapBtn" class="scrapBtn rounded-pill btn btn-rise btn-outline-danger m-2"
                         th:classappend="${scrap} == 1 ? d-none" data-toggle="modal" data-target="#scrapModal">
                         <div class="btn-rise-bg bg-danger"></div>
-                        <div class="btn-rise-text">코스 스크랩</div>
+                        <div class="btn-rise-text">코스 스크랩✔ </div>
                      </button>
                   </div>
                   <div class="col-auto">
@@ -233,9 +232,11 @@
                   <i class="bi bi-x"></i>
                </button>
             </div>
-            <div class="modal-body">
-               <h6>스크랩 성공!!</h6>
-               <h6>마이페이지 나의 코스에서 확인 할 수 있어요</h6>
+            <div class="modal-body"  align="center">
+               <br>
+               <h5>스크랩 성공!!</h5>
+               <h6>마이페이지 나의 코스에서 확인 할 수 있어요❣</h6>
+               <br>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
@@ -256,9 +257,11 @@
                   <i class="bi bi-x"></i>
                </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"  align="center">
+               <br>
                <h6>스크랩 취소 성공!!</h6>
-               <h6>스크랩 취소에 성공했습니다. </h6>
+               <h6>스크랩 취소에 성공했습니다. 💦</h6>
+               <br>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
@@ -281,9 +284,11 @@
 
 
             </div>
-            <div class="modal-body">
-               <h6>좋아요 눌렀어요!</h6>
+            <div class="modal-body" align="center">
+               <br>
+               <h5 >좋아요 눌렀어요! 💖</h5>
                <h6>마이페이지 나의 스크랩에서 확인 할 수 있어요</h6>
+               <br>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
@@ -305,9 +310,10 @@
 
 
             </div>
-            <div class="modal-body">
-               <h6>좋아요 취소 되었어요</h6>
-               <h6>:(</h6>
+            <div class="modal-body"  align="center">
+               <br>
+               <h5>좋아요 취소 되었어요</h5>
+               <h6>😥</h6>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-primary likeChk" data-dismiss="modal">확인</button>
@@ -327,8 +333,10 @@
                   <i class="bi bi-x"></i>
                </button>
             </div>
-            <div class="modal-body">
-               <h6>정말 삭제 하시겠습니까?</h6>
+            <div class="modal-body" align="center">
+               <br>
+               <h5>정말 삭제 하시겠습니까❓  </h5>
+               <br>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-default likeChk" data-dismiss="modal">취소</button>
@@ -901,7 +909,7 @@
             .addClass("row d-flex col-lg-12 mb-3  commentWrap");
          let Wrap = $("<div />")
          	.addClass("px-3 py-4 border rounded border-end col-lg-10");
-         let imgDiv = $('<div />').addClass("me-3 col-lg-2");
+         let imgDiv = $('<div />').addClass("me-1 col-lg-1");
          let btnName = $('<div />').addClass("d-flex mb-3 justify-content-between");
          let profileImg = $("<img />")
             .addClass("size-50 arounded-circle")
@@ -946,10 +954,10 @@
          $(delBtn).append(delIcon);
 
          $(btnWrap).append(updBtn, delBtn);
-         $(imgDiv).append(profileImg,nickname );
+         $(imgDiv).append(profileImg );
          $(btnName).append(nickname,btnWrap)
-         $(Wrap).append(imgDiv,btnName, comContent)
-         $(commentWrap).append(Wrap);
+         $(Wrap).append(btnName, comContent)
+         $(commentWrap).append(imgDiv, Wrap);
          $("#commentsBody").append(commentWrap);
 
          //댓글 수 바꾸기
