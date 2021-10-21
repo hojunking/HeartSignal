@@ -159,6 +159,8 @@ public class RestCoupleInfoController {
 			throws IllegalStateException, IOException {
 //		String path = fileDir.getAbsolutePath() + "/couple/";
 		String path = request.getSession().getServletContext().getRealPath("/img/couple");
+		
+		System.out.println("여기가 경로다"+path);
 		File filePath = new File(path);
 		if(!filePath.exists()) {
 			filePath.mkdirs();

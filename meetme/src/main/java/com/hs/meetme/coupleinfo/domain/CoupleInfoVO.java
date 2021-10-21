@@ -41,6 +41,7 @@ public class CoupleInfoVO extends ImageVO{
 	
 	private String imgUrl; //커플이미지 url
 	private String email;
+	private String message; //메시지보내기
 }
 
 

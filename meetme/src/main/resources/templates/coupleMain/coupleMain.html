@@ -302,11 +302,11 @@ style="display: none;" data-bs-backdrop="static">
                  <div class="position-relative  bg-white shadow-lg overflow-hidden">
                      <div class="px-2 bg-white position-relative pt-2">
                          <h4 class="mb-2 text-center" id="nickFind">커플정보</h4>
-                             <div class="input-group m-3">
+                             <div class="input-group m-3 p-4" >
                                 <ul class="list-unstyled mb-0">
                                        <li class="d-flex mb-0 aos-init aos-animate" data-aos="fade-up">
                                            <div class="me-2">
-                                               <i class="fs-6 bi bi-info-circle"></i>
+                                               <i class="fs-6 bi bi-info-circle text-primary"></i>
                                            </div>
                                            <p class="mb-0">커플사용자	:&nbsp;
                                               <span id="userName1">12412</span>,
@@ -315,7 +315,7 @@ style="display: none;" data-bs-backdrop="static">
                                        </li>
                                        <li class="d-flex mb-0 aos-init aos-animate" data-aos="fade-up">
                                            <div class="me-2">
-                                               <i class="fs-6 bi bi-info-circle"></i>
+                                               <i class="fs-6 bi bi-info-circle text-primary"></i>
                                            </div> 
                                            <p class="mb-0">커플로그시작일	:&nbsp;<span id="sDate"></span>
                                             
@@ -323,14 +323,14 @@ style="display: none;" data-bs-backdrop="static">
                                        </li>
                                        <li class="d-flex mb-0 aos-init aos-animate" data-aos="fade-up">
                                            <div class="me-2">
-                                               <i class="fs-6 bi bi-info-circle"></i>
+                                               <i class="fs-6 bi bi-info-circle text-primary"></i>
                                            </div>
                                            <p class="mb-0">커플로그종료일	:&nbsp;<span id="eDate"></span>
                                            </p>
                                        </li>
                                        <li class="d-flex mb-0 aos-init aos-animate" data-aos="fade-up">
                                            <div class="me-2">
-                                               <i class="fs-6 bi bi-info-circle"></i>
+                                               <i class="fs-6 bi bi-info-circle text-primary"></i>
                                            </div>
                                            <p class="mb-0">구독권	:&nbsp;
                                               <span id="sTerm"></span>
@@ -338,7 +338,7 @@ style="display: none;" data-bs-backdrop="static">
                                        </li>
                                        <li class="d-flex mb-0 aos-init aos-animate" data-aos="fade-up">
                                            <div class="me-2">
-                                               <i class="fs-6 bi bi-info-circle"></i>
+                                               <i class="fs-6 bi bi-info-circle text-primary"></i>
                                            </div>
                                            <p class="mb-0">커플시작일	:&nbsp;
                                               <span id="cDate"></span>
@@ -446,13 +446,7 @@ style="display: none;" data-bs-backdrop="static">
 			let message= datas.name+"님의 커플로그 만료일은 "
 			 +datas.endDate+" 입니다.\n"
 			 +"제결제 하시겠습니까?";
-			   
-				/*  if (!confirm(message)) {
-					 	location="/";
-				    } else {
-				        location="coupleMain?coupleStatus="+datas.coupleStatus;
-				        // 확인(예) 버튼 클릭 시 이벤트
-				    } */
+	
 				 swal(message, {
 					  buttons: {
 					    cancel: "취소",
@@ -476,13 +470,6 @@ style="display: none;" data-bs-backdrop="static">
 					 +datas.endDate+" 입니다.\n"
 					 +datas.subTerm+"개월권 제결제 하시겠습니까?";
 			 
-				/*  if (!confirm(message)) {
-					 return;
-				 	} else {
-				        location="coupleMain?coupleStatus="+datas.coupleStatus;
-				        // 확인(예) 버튼 클릭 시 이벤트
-				    } */
-				 
 				 swal(message, {
 					  buttons: {
 					    cancel: "취소",
