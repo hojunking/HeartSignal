@@ -280,9 +280,7 @@
 		const showMyTags = $('.showMyTags');
 
 		$(function(){
-			if(userSession.coupleId != null){
-				endDate();
-			}
+			
 			
 			// 모달 내의 태그 중복 방지
 			for(let m of $(myTags).find('.btn-tag')){
@@ -361,24 +359,8 @@
 						console.log(err);
 					}
 				});	//아작스 끝
-			});
-			// 변경사항 저장 이벤트
-			
-			function endDate(){
-				$.ajax({
-					url:"../endDate",
-					method:"GET",
-					data: {
-						coupleId: Number(userSession.coupleId)
-					},
-					success: (data)=>{
-						$('#endDate').text('~'+data.endDate)
-					},
-					error: (err)=>{
-						console.log(err);
-					}
-				});	//아작스 끝
-			}
+			});	// 변경사항 저장 이벤트 끝
+						
 		}); // function 끝
 		
 	</script>
