@@ -370,7 +370,7 @@
 	<!-- 회원정보 수정 (패스워드) -->
 	<update id="userUpdatePassword" parameterType="MypageUserInfoVO">
 		UPDATE user_info
-		SET password=#{password}
+		SET password=#{password},
 		    updated=sysdate
 	  WHERE user_id = #{userId}
 	</update>
