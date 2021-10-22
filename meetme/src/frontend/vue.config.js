@@ -4,7 +4,7 @@ module.exports = {
         port: 3000,
         proxy: {
             '/api': {
-                target: 'http://localhost:8000',
+                target: 'http://ec2-3-141-206-88.us-east-2.compute.amazonaws.com:8000/',
                 ws: true,
                 changeOrigin: true
             }

@@ -17,35 +17,41 @@
 			font-family: 'Black Han Sans', sans-serif;
 			font-weight: 100;
 		}
-
-		.cusFont {
-			font-family: 'Black Han Sans', sans-serif;
-		}
-
+		
 		.cusFontIn {
 			font-family: 'Nanum Gothic', sans-serif;
 			font-weight: 600;
 			font-size: 15px;
 		}
 
-		.lightbox {
-			top: 50% !important;
-			transform: translateY(-50%);
+		.cusBtn {
+			width: 50px;
+			height: 30px;
+			font-size: 12px;
+			padding: 5px;
 		}
 
-		.lb-contents {
-			color: blue !important;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
+		.cusImg {
+			text-align: center;
+			background-color: #fbfbfb;
 		}
 
-		.lb-contents h1 {
-			color: blue !important;
+		.cusImgIn {
+			width: 456px;
+			height: 300px;
 		}
+
+		.main-content,
+		.cusFont {
+			font-family: 'Nanum Gothic', sans-serif;
+			font-weight: bold;
+		}
+
+		.cusFontBold {
+			font-family: 'Black Han Sans', sans-serif;
+		}
+		
+
 	</style>
 </th:block>
 
@@ -58,8 +64,6 @@
 				<span class="btn-rise-text cusFontIn">기록하기</span>
 			</a>
 		</div>
-
-
 
 		<br>
 		<div id="projects" data-isotope='{"layoutMode": "masonry"}' class="row g-2">
@@ -90,62 +94,42 @@
 				<!-- LOG LIST 끝 -->
 			</th:block>
 		</div>
+
+		<div id="noProjects" data-aos="fade-up" data-aos-delay="300" class="aos-init aos-animate d-none">
+			<section class="position-relative bg-light">
+				<div class="py-7 py-lg-12 container-fluid">
+					<div class="row align-items-center justify-content-around">
+						<div class="col-lg-6 mb-5 mb-lg-0">
+							<img src="/img/coupleCourse/phototo.jpg" alt="" style="border-radius:0.5em" class="img-fluid rounded-xl shadow-lg">
+						</div>
+						<div class="col-lg-6 col-xl-5">
+							<h2 class="mb-5 display-4 ms-lg-n15 position-relative cusFontBold aos-init aos-animate" data-aos="fade-right" data-aos-duration="800" style="font-weight:100">
+								<span class="text-primary" data-typed="{&quot;strings&quot;: [&quot;The best thing to hold onto inlife is each other&quot;,
+																					&quot;Love is not only something you feel,it is something you do&quot;, 
+																					&quot;The most important this in life is to learn how to give out love and to let it come in&quot;]}">Love is not only som</span><span class="typed-cursor"></span><br>
+							</h2>
+							<a href="/coupleCreateCourse/" class="link-underline">
+								Get started
+								<svg class="ms-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M0.937531 2.06247L13.0312 1.98959L12.9583 14.0833L11.3183 14.1006L11.3746 4.7957L1.58515 14.5852L0.435662 13.4357L10.2251 3.64621L0.920252 3.70256L0.937531 2.06247Z" fill="currentColor"></path>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
 	</div>
 	<!-- container-fluid -->
 </th:block>
 <th:block layout:fragment="script">
-	<!-- <script th:src="@{/js/lightbox/lightbox.min.js}"></script> -->
 	<script th:inline="javascript">
-		/* $(function(){
-			// lightbox 기본 설정
-			lightbox.option({
-				'resizeDuration': 400,
-				'fadeDuration': 400,
-				'positionFromTop': 0
-			});
-			// lightbox 기본 설정
+		let projects = $('#projects');
+		let noProjects = $('#noProjects');
 
-			const lightBox = $('#lightbox');
-			const lbContainer = $('.lb-container');
-
-			// lightbox 위치 설정
-			$('<div />')
-				.addClass('position-absolute')
-				.css({
-					top: '0',
-					left: '0',
-					width: '100vw',
-					height: '100vh'
-				})
-				.append(lightBox)
-				.appendTo('body');
-			// lightbox 위치 설정
-
-			// lightbox 닫기 버튼 위치 설정
-			$('.lb-dataContainer')
-				.prependTo(lightBox);
-			$('.lb-close')
-				.append($('<i class="fs-3 text-white bi bi-x"/>'));
-			// lightbox 닫기 버튼 위치 설정
-			
-			let lbContents = $('<div class="lb-contents"/>');
-			$(lbContents).css("color","blue");
-			
-			//$(lbContainer).click(()=>{});
-			
-			$(lbContainer).append(lbContents);
-			
-			
-			// 커플로그 상세 내용 (=> lbContents에 태그를 추가하는 방식으로)			
-			let contentIn = '';
-			contentIn += '<h1>'+'제목' +'</h1>'
-					  +'<h2>'+'내용' + '</h2>'
-					  +'<h2>'+'날짜'+'</h2>';
-					  
-			console.log("contentIn="+contentIn);
-			$(lbContents).html(contentIn);
-						 
-		}); */
+		if($(projects).children().length == 0){
+			$(noProjects).removeClass('d-none');
+		}
 
 		/*<![CDATA[*/
 		let result = /*[[${record}]]*/ '';
