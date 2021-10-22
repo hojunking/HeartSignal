@@ -91,6 +91,7 @@ public class RestPaymentController {
 			oc =coupleService.read(oc);
 			accountVO.setCoupleId(String.valueOf(oc.getCoupleId()));
 			accountVO.setCoupleStatus("w");
+			oc.setCoupleStatus("w");
 			result="커플로그가 시작되었습니다."
 					+ "감사합니다.";
 			oc.setMessage(result);
