@@ -144,7 +144,28 @@
             requestInfo();
             noticeCommentClick();
             countNotice();
-
+            
+            if(userSession.coupleId != null){
+				endDate();
+			}
+            //커플 만료 일자
+            function endDate(){
+				$.ajax({
+					url:"../endDate",
+					method:"GET",
+					data: {
+						coupleId: Number(userSession.coupleId)
+					},
+					success: (data)=>{
+						$('#endDate').text('~'+data.endDate)
+					},
+					error: (err)=>{
+						console.log(err);
+					}
+				});	//아작스 끝
+			}
+            
+            
             //notice 클릭시 확인 상태로 변경하는 ajax
             function noticeCommentClick() {
                 $('#noticeBlock').on('click', '.noticeComment', function () {
@@ -275,6 +296,9 @@
 
                 }); //ajax 끝
             })
+            
+            
+            
         }); // 페이지 로드 종료
 
         //커플신청받기 모달창 연결하기 

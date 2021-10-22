@@ -25,27 +25,8 @@
 
 	<!--Main content-->
 	<main class="main-content" id="main-content">
-		<section class="position-relative bg-white">
-			<div class="container position-relative pt-3 pb-4">
-				<div class="row">
-					<div class="col-md-6">
-						<nav class="d-md-flex" aria-label="breadcrumb">
-							<ol class="breadcrumb mb-0">
-								<li class="breadcrumb-item">
-									<a href="#!">Home</a>
-								</li>
-								<li class="breadcrumb-item active">
-									Profile
-								</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<!--/.row-->
 
-			</div>
-		</section>
-		<section class="position-relative">
+		<section class="position-relative pt-7">
 			<div class="container position-relative">
 				<div class="overflow-hidden">
 					<!--Profile info header-->
@@ -371,9 +352,9 @@
 			//주소 수정 하기 버튼 클릭
 			$("#address_reg").on('click', function () {
 				if ($("#addr1").val() == null || $("#addr1").val() == "") {
-					alert("주소를 검색해주세요")
+					swal("주소를 검색해주세요", '', 'info');
 				} else if ($("#addr3").val() == null || $("#addr3").val() == "") {
-					alert("상세주소를 입력해주세요")
+					swal("상세주소를 입력해주세요", '', 'info');
 				} else {
 					$.ajax({
 						url: "addressUpdate",
@@ -391,7 +372,7 @@
 							$("#address1").val(data.addrzonecode);
 							$("#address2").val(data.addrfull);
 							$("#address3").val(data.addrdetail);
-							alert("주소 수정 완료")
+							swal('주소가 수정되었습니다', '', 'success');
 							$("#u_address").css("display", "none");
 							$("#addrUpdateBtn").css("display", "block");
 							$("#u_address").find("input").val("");
@@ -417,9 +398,9 @@
 			//비밀번호 수정 하기 버튼 클릭
 			$("#password_reg").on('click', function () {
 				if (isPassword == false) {
-					alert("현재 비밀번호를 확인해주세요")
+					swal('현재 비밀번호를 확인해주세요', '', 'info');
 				} else if (isPassword2 == false) {
-					alert("새로운 비밀번호를 확인해주세요")
+					swal('새로운 비밀번호를 확인해주세요', '', 'info');
 				} else {
 					$.ajax({
 						url: "passwordUpdate",
@@ -433,7 +414,7 @@
 						contentType: "application/json;charset=UTF-8",
 						success: function (e) {
 							if (e == true) {
-								alert("비밀번호 수정완료");
+								swal('비밀번호가 수정완료 되었습니다', '', 'info');
 								$("#pass1").val("");
 								$("#pass2").val("");
 								$("#pass3").val("");
@@ -467,7 +448,7 @@
 						if (e == true) {
 							$("#pass1").attr("class", "form-control is-valid");
 							$("#password_message1").attr("class", "valid-feedback");
-							$("#password_message1").text("현재 비밀번호가 맞습니다");
+							$("#password_message1").text("현재 비밀번호와 일치합니다");
 							isPassword = true;
 						} else {
 							$("#pass1").attr("class", "form-control is-invalid");
@@ -549,7 +530,7 @@
 			//닉네임 수정 하기 버튼 클릭
 			$("#nickName_reg").on('click', function () {
 				if (isnickName == false) {
-					alert("닉네임을 확인해주세요")
+					swal('닉네임을 확인 해주세요', '', 'info');
 				} else {
 					$.ajax({
 						url: "nickNameUpdate",
@@ -564,7 +545,7 @@
 						success: function (data) {
 							$("#nickName").val(data.nickName);
 							$("#nick1").val("");
-							alert("닉네임 수정완료");
+							swal('닉네임이 수정되었습니다', '', 'success');
 							$("#u_nickName").css("display", "none");
 							$("#nickNameUpdateBtn").css("display", "block");
 
@@ -722,7 +703,7 @@
             $('#image_reg').on('click', function () {
 
             	if($('#updateImage').find('input').eq(1).val()==12345){
-            		alert("사진을 변경하시고 수정해주세요")
+            		swal("사진을 변경하시고 수정해주세요", '', 'info');
             		return
             	}
             	
@@ -799,7 +780,7 @@
 	            let birthDay = $(signUpBirthDate).val().substr(indexOfHyphen + 1, 5).replace('/', '-');
 	            
 				if (checkBirthDate == false) {
-					alert("생년월일을 확인해주세요")
+					swal("생년월일을 확인해주세요", '', 'info');
 					$("#birthDay1").focus();
 				} else {
 					$.ajax({
@@ -816,7 +797,7 @@
 						success: function (data) {
 							$("#birthDay").val(birthYear+"-"+birthDay);
 							$("#birthDay1").val("");
-							alert("생년월일 수정완료");
+							swal("생년월일이 변경되었습니다", '', 'success');
 							$("#u_birthDay").css("display", "none");
 							$("#birthDayUpdateBtn").css("display", "block");
 							$("#birthDay1").attr("class", "form-control mb-3");

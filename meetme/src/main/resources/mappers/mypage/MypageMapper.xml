@@ -307,14 +307,12 @@
 		  a.com_updated,
 		  a.user_id,
 		  a.post_id,
-		  a.log_id,
 		  a.com_distinct
 	      FROM post_comment a
          <where>
             <include refid="commentSearch"></include>
          
              <![CDATA[ ROWNUM <= #{cri.pageNum} * #{cri.amount} ]]>
-                       AND log_id IS NULL
                        AND user_id=#{userId}
          </where> )
       WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}

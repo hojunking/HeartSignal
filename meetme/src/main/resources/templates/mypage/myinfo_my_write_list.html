@@ -55,12 +55,12 @@
                                                 <span th:unless="${userInfo.coupleStatus.toString().equals('n')}"
                                                     class="small" th:text="커플"></span>
                                             </li>
-                                            <th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
-                                                <li class="d-flex justify-content-between align-items-center mb-2">
-                                                    <span class="small">구독권 이용기간</span>
-                                                    <span class="small">3개월</span>
-                                                </li>
-                                            </th:block>
+												<th:block th:unless="${userInfo.coupleStatus.toString().equals('n')}">
+													<li class="d-flex justify-content-between align-items-center mb-2">
+														<span class="small">구독권 이용기간</span>
+														<span class="small" id="endDate"></span>
+													</li>
+												</th:block>
                                         </ul>
                                         <div class="d-grid">
                                             <button class="btn btn-primary border shadow-sm mb-2 py-1" type="button"
