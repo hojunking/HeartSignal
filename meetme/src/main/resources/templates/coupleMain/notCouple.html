@@ -504,13 +504,8 @@
             }
         ]
         $(function () {
-
-
             let subTerm = 0; //정기권 기간
             let subPrice = 0; //정기권 가격
-
-
-
 
             $(".payment").on('click', function (e) {
 
@@ -539,6 +534,7 @@
                         }
                         let subTerm = payInfo[index].subTerm;
                         let subPrice = payInfo[index].subPrice;
+                        $(this).attr('disabled','true');
                         requestPay(subTerm, subPrice);
                     });
                 } else {
@@ -611,39 +607,41 @@
                             },
                             success: function (result) {
                                 console.log(result);
-                                swal(result, "", "success", {
+                                swal(result.message, "", "success", {
                                     button: {
                                         text: "확인",
                                         className: "btn btn-primary"
                                     }
                                 }).then(() => {
                                     $('#paymentInfo').hide(); //모달창 닫기
-                                    location.href = "/coupleMain?coupleStatus=w";
+                                    location.href = "/coupleMain?coupleStatus="+result.coupleStatus;
                                     console.log("응애!");
                                 });
                             },
                             error: function (error) {
                                 console.log(error);
-                                swal("결제에 실패했습니다. 관리자에게 문의해주세요!", "", "error", {
+                                swal("결제에 실패하였습니다. 관리자에게 문의해주세요!", "", "error", {
                                     button: {
                                         text: "확인",
                                         className: "btn btn-primary"
                                     }
                                 }).then(() => {
                                     $('#paymentInfo').hide(); //모달창 닫기
+                                    window.location.reload();
                                     console.log("응애!");
                                 });
                             }
                         });
                     } else {
                         console.log(rsp.error_msg);
-                        swal("결제에 실패하였습니다. 관리자에게 문의해주세요!", "", "error", {
+                        swal(rsp.error_msg, "", "error", {
                             button: {
                                 text: "확인",
                                 className: "btn btn-primary"
                             }
                         }).then(() => {
                             $('#paymentInfo').hide(); //모달창 닫기
+                            window.location.reload();
                             console.log("응애!");
                         });
                     }

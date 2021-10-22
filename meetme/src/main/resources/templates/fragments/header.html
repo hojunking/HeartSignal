@@ -36,8 +36,10 @@
                             data-bs-toggle="dropdown">
                             <!-- 프로필 img 링크 -->
                             <img th:src="|@{|/img/user/${session.userSession.imgUrl}|}|" alt="" class="avatar sm rounded-circle me-1">
-                            <th:block th:text="${session.userSession.nickname}"></th:block>
+                            <th:block th:text="${session.userSession.nickname}"></th:block>&nbsp;&nbsp;<i class="fs-6 bi bi-bell-fill text-danger" id="alarm"></i> 
                         </a>
+                         <!-- 알림요 -->
+                        
                         <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
                             <a th:href="@{/mypage/main}" class="dropdown-header border-bottom p-4">
                                 <div class="d-flex align-items-center">

@@ -169,9 +169,10 @@
                             <img th:src="@{/img/coupleCourse/phototo.jpg}" alt="" style="border-radius:0.5em" class="img-fluid rounded-xl shadow-lg">
                         </div>
                         <div class="col-lg-6 col-xl-5">
-                            <h2 class="mb-5 display-4 ms-lg-n15 position-relative cusFontBold" data-aos="fade-right" data-aos-duration="800" style="font-weight:100">We make <span class="text-primary"
-                                    data-typed='{"strings": ["Modern", "Good Memory", "Responsive", "Incredible"]}'></span><br>
-                                Together
+                            <h2 class="mb-5 display-4 ms-lg-n15 position-relative cusFontBold" data-aos="fade-right" data-aos-duration="800" style="font-weight:100">
+                             <span class="text-primary" data-typed='{"strings": ["The best thing to hold onto inlife is each other",
+                             													 "Love is not only something you feel,it is something you do", 
+                             													 "The most important this in life is to learn how to give out love and to let it come in"]}'></span><br>
                             </h2>
                             <a href="/coupleCreateCourse/" class="link-underline">
                                 Get started
@@ -199,12 +200,13 @@
 			let coupleId = $(obj).attr('data-coupleId');
 			let courseId = $(obj).attr('data-courseId');
 			// let result = confirm("삭제하시겠습니까?");
+			let ths = obj;
 
 			swal({
 				title: "삭제하시겠습니까?",
 				text: " ",
 				icon: "info", //"info,success,warning,error" 중 택1
-				buttons: ["NO", "YES"],
+				buttons: ["Cancel", "Ok"],
 			}).then((YES) => {
 				if(YES){
 					$.ajax({
@@ -221,7 +223,7 @@
 							if (result == true) {
 								swal("코스가 삭제 되었습니다.", "", "success");
 								$(ths).closest("article").remove();
-								if ($(ths).closest("article")) {
+								if ($('#courseList').children().length == 0) {
 									$('#emptyList').removeClass('d-none');
 									$('#courseList').addClass('d-none');
 								}
@@ -235,12 +237,9 @@
 				} else{
 					swal('삭제를 취소하였습니다.','','success')
 				}
-			});
+			}); 
 
-			console.log(courseId);
-			console.log(coupleId);
-			console.log(obj);
-			let ths = obj;
+			
 			// if (result) {
 			// 	$.ajax({
 			// 		url: "deleteCourse",

@@ -5,9 +5,7 @@
 <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
     <th:block layout:fragment="css">
       <style>
-         .container{
-            background-color:white;
-         }
+         
          li{
          list-style:none;
          }
@@ -88,7 +86,7 @@
                   </td> -->
                   <td th:text="${row.postId}"></td>
                   <td>
-                   	<li th:if="${row.region} != null"  th:text="|[${row.region}] ${row.postTitle}|">
+                   	<li th:if="${row.region} != null"  th:utext="|<span class='text-primary'>[${row.region}]</span> ${row.postTitle}|">
                    	<li th:if="${row.region} == null"  th:text=" ${row.postTitle}">
                   </td>
                   <td th:text="${row.nickname}"></td>

@@ -175,6 +175,19 @@
 			<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/ 
 			$(function() { 
+			//swarl
+			$('#btnSave').on("click", function(e){
+				e.preventDefault();
+				swal('수정 완료!', "", "success",
+				{button : {text : "확인",className : "btn btn-primary"}
+				})
+				.then(()=>{
+					$(e.target).closest('form').submit();
+				});
+			})
+
+
+
 				//모달만 스크롤하기 
 			$('head').append('<style type="text/css">.modal .modal-body {max-height: ' + ($('body').height() * .7) + 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');
 				
