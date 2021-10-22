@@ -52,7 +52,7 @@ public class BuildController {
 		if(user == null || user.getCoupleStatus().equals("n")) {
 			return "redirect:/coupleMain?coupleStatus=n";
 		}
-		
+		//
 		return "index";
 	}
 	
