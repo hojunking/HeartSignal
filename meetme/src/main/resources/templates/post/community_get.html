@@ -25,7 +25,7 @@
             <h2 class=" display-6 aos-init" data-aos="fade-down" data-aos-duration="100"
                th:text="${list.postTitle}" id="postTitle"></h2>
          </div>
-
+         <br>
          <!-- <div id="userCheck" class="row mt-3 d-flex justify-content-end"> -->
          <div id="userCheck" class="row">
             <div class="col-lg-9"></div>
@@ -905,6 +905,18 @@
       }
 
       function insertCallback(result) {
+
+         var today = new Date();   
+
+         var year = today.getFullYear();
+         var month = ('0' + (today.getMonth() + 1)).slice(-2);
+         var day = ('0' + today.getDate()).slice(-2);
+
+         var dateString = year + '.' + month  + '.' + day;
+
+         console.log("date === "+dateString);
+
+
          let commentWrap = $("<div />")
             .addClass("row d-flex col-lg-12 mb-3  commentWrap");
          let Wrap = $("<div />")
@@ -912,14 +924,17 @@
          let imgDiv = $('<div />').addClass("me-1 col-lg-1");
          let btnName = $('<div />').addClass("d-flex mb-3 justify-content-between");
          let profileImg = $("<img />")
-            .addClass("size-50 arounded-circle")
+            .addClass("size-50 rounded-circle")
             .attr({
                src: "/img/user/"+result.imgUrl,
                alt: "이미지",
                id: "profileImg"
             });
-        
-         let nickname = $("<span />").addClass("pl-2").text(result.nickname);
+         
+         let nicDateWrap = $('<div />').addClass("d-flex align-items-center")
+
+         let DateSmall = $('<small />').addClass("text-muted").text(dateString);
+         let nickname = $("<span />").addClass("pl-2 me-3 fs-5").text(result.nickname);
          let comContent = $("<span />").addClass("pl-2").attr("id", result.commentId).text(result.comContent);
 		 
          let btnWrap = $("<div />")
@@ -955,7 +970,8 @@
 
          $(btnWrap).append(updBtn, delBtn);
          $(imgDiv).append(profileImg );
-         $(btnName).append(nickname,btnWrap)
+         $(nicDateWrap).append(nickname,DateSmall)
+         $(btnName).append(nicDateWrap,btnWrap)
          $(Wrap).append(btnName, comContent)
          $(commentWrap).append(imgDiv, Wrap);
          $("#commentsBody").append(commentWrap);
