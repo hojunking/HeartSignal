@@ -418,6 +418,8 @@
 								$("#pass1").val("");
 								$("#pass2").val("");
 								$("#pass3").val("");
+								$("#u_password").css("display", "none");
+								$("#passwordUpdateBtn").css("display", "block");
 							}
 
 						},
@@ -481,7 +483,7 @@
 					$("#password_message3").text("8~16이자 이내 영대소문자, 숫자, 특문 하나 이상 조합")
 					isPassword2 = false;
 				} else {
-					$("#pass2").attr("class", "form-control is-valid");
+					$("#pass2").attr("class", "form-control mb-3 is-valid");
 					$("#password_message3").attr("class", "valid-feedback");
 					$("#password_message3").text("사용가능한 비밀번호입니다");
 					isPassword2 = true;
@@ -724,6 +726,8 @@
 					success: function (data) {
 						if(data){
 							swal('프로필사진이 수정되었습니다', '', 'success');
+							$("#imagebtn").css("display", "block");
+							$("#imageUpdateBtn").css("display", "none");
 						}else{
 							swal('실패했습니다..!', '', 'error');
 						}						
