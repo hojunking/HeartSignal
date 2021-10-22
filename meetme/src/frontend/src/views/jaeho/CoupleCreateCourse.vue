@@ -858,7 +858,7 @@ export default defineComponent ({
         let stompClient = null;
         const userEmail = ref(null);
         const connect = () => {
-            const serverURL = "http://3.141.206.88:8000/ws"
+            const serverURL = "http://ec2-3-141-206-88.us-east-2.compute.amazonaws.com:8000/ws"
             let socket = new SockJS(serverURL);
             stompClient = Stomp.over(socket);
             console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
