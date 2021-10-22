@@ -203,23 +203,23 @@
                     $(modalBtn).text('인증완료');
                     // 1-4)
                     // 자꾸하면 돈 나간다?!?!
-                    // $.ajax({
-                    //     url: '/certificate/phoneNumCheck',
-                    //     method: 'post',
-                    //     data: JSON.stringify({
-                    //         to: $(modalPhoneNum).val().replaceAll('-', ''),
-                    //         from: '01096400615',
-                    //     }),
-                    //     dataType: 'json',
-                    //     contentType: 'application/json;charset="utf-8"',
-                    //     success: (result) => {
-                    //         resultCheckNum = result;
-                    //         // console.log(result);
-                    //     },
-                    //     error: (error) => {
-                    //         console.log(error);
-                    //     }
-                    // });
+                    $.ajax({
+                        url: '/certificate/phoneNumCheck',
+                        method: 'post',
+                        data: JSON.stringify({
+                            to: $(modalPhoneNum).val().replaceAll('-', ''),
+                            from: '01096400615',
+                        }),
+                        dataType: 'json',
+                        contentType: 'application/json;charset="utf-8"',
+                        success: (result) => {
+                            resultCheckNum = result;
+                            // console.log(result);
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
     
                     // 2. 인증버튼(modalBtn)의 text가 '인증완료'라고 되어있을 경우
                     //  2-1) 발송된 인증번호(resultCheckNum)와 입력한 인증번호(modalCheckNum)를 비교한다
@@ -228,24 +228,24 @@
     
                     // 2.
                 } else {
-                    swal('인증이 완료되었습니다!', '', 'success');
-                        $(newPassword).closest('div').removeClass('d-none');
-                        $(passwordCheck).closest('div').removeClass('d-none');
-                        $('[name="phoneNum"]').val($(modalPhoneNum).val());
-                        $('#submit').removeClass('d-none');
-                        $('[href="#modalForm"]').addClass('d-none');
-                        $('#modalForm').modal('hide');
-                    // 2-1) true
-                    // if (resultCheckNum == $(modalCheckNum).val()) {
-                    //     // a.
-                    //     swal('인증이 완료되었습니다!', '', 'success');
+                    // swal('인증이 완료되었습니다!', '', 'success');
                     //     $(newPassword).closest('div').removeClass('d-none');
                     //     $(passwordCheck).closest('div').removeClass('d-none');
+                    //     $('[name="phoneNum"]').val($(modalPhoneNum).val());
+                    //     $('#submit').removeClass('d-none');
+                    //     $('[href="#modalForm"]').addClass('d-none');
                     //     $('#modalForm').modal('hide');
-                    //     // 2-1) false
-                    // } else {
-                    //     swal('인증에 실패했습니다..!', '', 'error');
-                    // }
+                    // 2-1) true
+                    if (resultCheckNum == $(modalCheckNum).val()) {
+                        // a.
+                        swal('인증이 완료되었습니다!', '', 'success');
+                        $(newPassword).closest('div').removeClass('d-none');
+                        $(passwordCheck).closest('div').removeClass('d-none');
+                        $('#modalForm').modal('hide');
+                        // 2-1) false
+                    } else {
+                        swal('인증에 실패했습니다..!', '', 'error');
+                    }
                 }
             });
             // ====================== 전화번호 인증 구현 ======================
