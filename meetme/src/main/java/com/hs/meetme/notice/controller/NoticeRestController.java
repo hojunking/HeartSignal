@@ -36,7 +36,7 @@ public class NoticeRestController {
 		myVo.setUserId(vo.getUserSent());
 		myVo= userService.getMyinfo(myVo);
 		
-		vo.setNoticeContent(myVo.getNickName()+"님이 커플 신청을 하셨습니다.\n"
+		vo.setNoticeContent(myVo.getNickName()+"님이 커플 신청을 하셨습니다."
 				+ "수락하시겠습니까?");
 		
 		noticeService.insertNotice(vo);
