@@ -40,7 +40,7 @@ public class MypageController {
 	@GetMapping("/main")
 	public String main(Model model, MyPageUserInfoVO myPageUserInfoVO, UserTagsVO userTagVO, NoticeVO noticeVO, HttpServletRequest request) {
 		
-		//세션 쓰는법
+		//세션 정보 쓰기
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
@@ -73,7 +73,7 @@ public class MypageController {
                                         @ModelAttribute("cri") Criteria cri,
                                         MyPageUserInfoVO myPageUserInfoVO,
                                         HttpServletRequest request) {
-		//세션 쓰는법
+		        //세션 정보 쓰기
 				HttpSession session = request.getSession();
 				AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 				String userId = accountVO.getUserId();
@@ -109,7 +109,7 @@ public class MypageController {
 			                           MyPageUserInfoVO myPageUserInfoVO,
 			                           @ModelAttribute("cri") Criteria cri,
 			                           HttpServletRequest request) {
-		//세션 쓰는법
+		//세션 정보 쓰기
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO)session.getAttribute("userSession");
 		String userId = accountVO.getUserId();
