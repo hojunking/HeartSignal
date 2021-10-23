@@ -46,11 +46,11 @@ public class MypageRestController {
 
 //	File fileDir = new File("src/main/resources/static/img/");
 
-	// 수정하기 (이미지)
+	//수정하기(프로필이미지)
 	@PostMapping("/imgUpdate")
 	@Transactional
 	public boolean imgUpdate(Model model, MultipartFile updateImage, MyPageUserInfoVO mypageUserInfoVO, ImageVO imgvo, HttpServletRequest request) {
-
+        //유저 세션 불러오기
 		HttpSession session = request.getSession();
 		AccountVO accountVO = (AccountVO) session.getAttribute("userSession");
 		int r = 0;
@@ -61,7 +61,7 @@ public class MypageRestController {
 			filePath.mkdirs();
 		}
 		try {
-//			String path = fileDir.getAbsolutePath() + "/user/";
+            //String path = fileDir.getAbsolutePath() + "/user/";
 			MultipartFile file = updateImage;
 			if (!file.isEmpty() && file.getSize() > 0) {
 				String filename = file.getOriginalFilename();
@@ -83,7 +83,6 @@ public class MypageRestController {
 			e.printStackTrace();
 			r = 0;
 		}
-
 		return r == 2 ? true : false;
 	}
 
@@ -160,7 +159,7 @@ public class MypageRestController {
 		return myPageUserInfoVO;
 	}
 
-	// 수정하기 (주소)
+	//수정하기 (주소)
 	@PutMapping("/addressUpdate")
 	public MyPageUserInfoVO addressUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -173,7 +172,7 @@ public class MypageRestController {
 	}
 
 	
-	//수정하기 (주소)
+	//수정하기 (생년월일)
 	@PutMapping("/birthDayUpdate")
 	public MyPageUserInfoVO birthDayUpdate(@RequestBody MyPageUserInfoVO myPageUserInfoVO) {
 		
