@@ -309,7 +309,7 @@
             // Extract info from data-bs-* attributes
             //var recipient = button.getAttribute('data-item')
             var item = $(button).data("item")
-            $('#requesterImg').attr('src', "/img/" + item.imgUrl);
+            $('#requesterImg').attr('src', "/img/user/" + item.imgUrl);
             $("#requester").text(item.name);
             $("#noticeContent").text(item.noticeContent);
             $('#accept').attr('data-coupleId', item.coupleId);
