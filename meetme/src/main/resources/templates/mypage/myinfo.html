@@ -396,7 +396,9 @@
 				if (isPassword == false) {
 					swal('현재 비밀번호를 확인해주세요', '', 'info');
 				} else if (isPassword2 == false) {
-					swal('새로운 비밀번호를 확인해주세요', '', 'info');
+					swal('새 비밀번호를 확인해주세요', '', 'info');
+				} else if (isPassword3 == false){
+					swal('새 비밀번호확인을 확인해주세요', '', 'info');
 				} else {
 					$.ajax({
 						url: "passwordUpdate",
