@@ -35,7 +35,7 @@ public class RestCoupleInfoController {
 	
 	File fileDir = new File("src/main/resources/static/img/");
 
-	@PostMapping("/validation")
+	@PostMapping("/validation") //커플기간 검증
 	public CoupleInfoVO checkExpiration(CoupleInfoVO vo) { // 커플아이디,유저아이디
 		CoupleInfoVO cvo = new CoupleInfoVO();
 		cvo = coupleService.read(vo); // 커플정보 들고오기
