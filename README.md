@@ -1,5 +1,5 @@
 # HeartSignal
-[![Build Status](https://app.travis-ci.com/Dinner-Time/HeartSignal.svg?branch=master)](https://app.travis-ci.com/Dinner-Time/HeartSignal)
+- Team: Taehoon, Inyoung, Jaeho, Hojun
 
 ### 프로젝트 : 오늘 우리 뭐해?
 <img width="80%" src="https://user-images.githubusercontent.com/84840627/192125574-a63d4a6f-8425-4bf7-9f0f-d3767ae000ab.jpg"/>
